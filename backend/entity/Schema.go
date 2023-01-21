@@ -30,7 +30,7 @@ type Screening_officer struct {
 
 	Name     string
 	Age      uint
-	Phone    uint
+	Phone    string
 	Email    string
 	Password string
 

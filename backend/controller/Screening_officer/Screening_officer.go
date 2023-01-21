@@ -29,7 +29,7 @@ func CreateScreening_officer(c *gin.Context) {
 	}
 
 	// 11: ค้นหา Gender ด้วย id
-	if tx := entity.DB().Where("Mem_Tel = ?", screening_officer.GenderID).First(&gender); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", screening_officer.GenderID).First(&gender); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Gender not found"})
 		return
 	}

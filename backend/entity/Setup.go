@@ -34,7 +34,7 @@ func SetupDatabase() {
 	)
 
 	db = database
-	
+
 	// Prefix data
 	Prefix_one := Prefix{
 		Description: "นาย",
@@ -69,12 +69,12 @@ func SetupDatabase() {
 	db.Model(&Education{}).Create(&Education_one)
 
 	Education_two := Education{
-		Description: "ปริญญาตรี",
+		Description: "ปริญญาโท",
 	}
 	db.Model(&Education{}).Create(&Education_two)
 
 	Education_three := Education{
-		Description: "ปริญญาตรี",
+		Description: "ปริญญาเอก",
 	}
 	db.Model(&Education{}).Create(&Education_three)
 

@@ -41,7 +41,7 @@ func GetPrefix(c *gin.Context) {
 
 	id := c.Param("id")
 
-	if err := entity.DB().Raw("SELECT * FROM prefixs WHERE id = ?", id).Scan(&Prefix).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Prefixes WHERE id = ?", id).Scan(&Prefix).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -59,7 +59,7 @@ func ListPrefix(c *gin.Context) {
 
 	var Prefix []entity.Prefix
 
-	if err := entity.DB().Raw("SELECT * FROM prefixs").Scan(&Prefix).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Prefixes").Scan(&Prefix).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -77,7 +77,7 @@ func DeletePrefix(c *gin.Context) {
 
 	id := c.Param("id")
 
-	if tx := entity.DB().Exec("DELETE FROM prefixs WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM Prefixes WHERE id = ?", id); tx.RowsAffected == 0 {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 

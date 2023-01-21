@@ -41,7 +41,7 @@ func GetGender(c *gin.Context) {
 
 	id := c.Param("id")
 
-	if err := entity.DB().Raw("SELECT * FROM genders WHERE id = ?", id).Scan(&Gender).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Genders WHERE id = ?", id).Scan(&Gender).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -59,7 +59,7 @@ func ListGender(c *gin.Context) {
 
 	var Gender []entity.Gender
 
-	if err := entity.DB().Raw("SELECT * FROM genders").Scan(&Gender).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Genders").Scan(&Gender).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -77,7 +77,7 @@ func DeleteGender(c *gin.Context) {
 
 	id := c.Param("id")
 
-	if tx := entity.DB().Exec("DELETE FROM genders WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM Genders WHERE id = ?", id); tx.RowsAffected == 0 {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 

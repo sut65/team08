@@ -41,7 +41,7 @@ func GetEducation(c *gin.Context) {
 
 	id := c.Param("id")
 
-	if err := entity.DB().Raw("SELECT * FROM educations WHERE id = ?", id).Scan(&Education).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Educations WHERE id = ?", id).Scan(&Education).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -59,7 +59,7 @@ func ListEducation(c *gin.Context) {
 
 	var Education []entity.Education
 
-	if err := entity.DB().Raw("SELECT * FROM educations").Scan(&Education).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Educations").Scan(&Education).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -77,7 +77,7 @@ func DeleteEducation(c *gin.Context) {
 
 	id := c.Param("id")
 
-	if tx := entity.DB().Exec("DELETE FROM educations WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM Educations WHERE id = ?", id); tx.RowsAffected == 0 {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 

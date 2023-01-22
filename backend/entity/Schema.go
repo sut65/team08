@@ -63,12 +63,18 @@ type Patiend struct {
 	GenderID   *uint
 	PrefixID   *uint
 	PolicingID *uint
-	Gender   Gender   `gorm:"references:id"`
-	Prefix   Prefix   `gorm:"references:id"`
-	Policing Policing `gorm:"references:id"`
+	Gender     Gender   `gorm:"references:id"`
+	Prefix     Prefix   `gorm:"references:id"`
+	Policing   Policing `gorm:"references:id"`
 }
 
 type Blood struct {
 	gorm.Model
-	BloodType		string
+	BloodType string
+}
+
+type Nationality struct {
+	gorm.Model
+	NationalityType string
+	Country         string
 }

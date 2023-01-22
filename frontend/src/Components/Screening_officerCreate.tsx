@@ -185,12 +185,14 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
 
           <Grid item xs={6}>
                 <p>ชื่อ</p>
-                <TextField fullWidth id="Name" type="string" variant="outlined"  onChange={(event) => setNames(event.target.value)} />
+                <TextField fullWidth id="Name" type="string" variant="outlined"  
+                onChange={(event) => setNames(event.target.value)} />
               </Grid>
           
           <Grid item xs={6}>
                 <p>อายุ</p>
-                <TextField fullWidth id="Age" type="number" variant="outlined"  onChange={(event) => setAges(event.target.value)} />
+                <TextField fullWidth id="Age" type="number" variant="outlined"  
+                onChange={(event) => setAges(event.target.value)} />
               </Grid> 
 
           <Grid item xs={6}>
@@ -219,7 +221,8 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
           <Grid item xs={6}>
                 <p>เบอร์โทร</p>
 
-                <TextField fullWidth id="Phone" type="string" variant="outlined"  onChange={(event) => setPhones(event.target.value)} />
+                <TextField fullWidth id="Phone" type="string" variant="outlined" 
+                onChange={(event) => setPhones(event.target.value)} />
               </Grid> 
 
           <Grid item xs={6}>
@@ -248,13 +251,16 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
           <Grid item xs={6}>
                 <p>อีเมล</p>
 
-                <TextField fullWidth id="Email" type="string" variant="outlined"  onChange={(event) => setEmails(event.target.value)} />
+                <TextField fullWidth id="Email" type="string" variant="outlined" 
+                value={Screening_officers.Email + ""}  
+                onChange={(event) => setEmails(event.target.value)} />
               </Grid> 
             
           <Grid item xs={6}>
                 <p>รหัสผ่าน</p>
-
-                <TextField fullWidth id="Password" type="string" variant="outlined"  onChange={(event) => setPasswords(event.target.value)} />
+                value={Screening_officers.Password+ ""} 
+                <TextField fullWidth id="Password" type="string" variant="outlined"  
+                onChange={(event) => setPasswords(event.target.value)} />
               </Grid> 
 
           <Grid item xs={12}>

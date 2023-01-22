@@ -78,3 +78,11 @@ type Nationality struct {
 	NationalityType string
 	Country         string
 }
+
+type AddressThailand struct {
+	gorm.Model
+	Province    string
+	District    string
+	Subdistrict string
+	Zipcode     string
+}

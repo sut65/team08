@@ -78,6 +78,14 @@ func main() {
 			r.POST("/Nationality", controller.CreateNationality)
 			r.PATCH("/Nationality", controller.UpdateNationality)
 			r.DELETE("/Nationality/:id", controller.DeleteNationality)
+
+			//AddressThailand
+			r.GET("/AddressThailands", controller.ListAddressThailand)
+			r.GET("/AddressThailand/:id", controller.GetAddressThailand)
+			r.GET("/ZipAddressThailand/:id", controller.GetZipAddressThailand)
+			r.POST("/AddressThailand", controller.CreateAddressThailand)
+			r.PATCH("/AddressThailand", controller.UpdateAddressThailand)
+			r.DELETE("/AddressThailand/:id", controller.DeleteAddressThailand)
 		}
 
 	}

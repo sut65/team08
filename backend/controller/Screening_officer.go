@@ -58,7 +58,7 @@ func CreateScreening_officer(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusCreated, gin.H{"data": screening_officer})
+	c.JSON(http.StatusCreated, gin.H{"data": sc})
 }
 
 // GET /Screening_officer/:id

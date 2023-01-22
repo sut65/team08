@@ -1,10 +1,9 @@
 package main
 
 import (
-	"github.com/sut65/team08/entity"
-
 	"github.com/sut65/team08/controller"
 
+	"github.com/sut65/team08/entity"
 
 	//"github.com/B6332907/SE-G08/middlewares"
 
@@ -46,8 +45,8 @@ func main() {
 			//Education
 			r.GET("/Educations", controller.ListEducation)
 			r.GET("/Education/:id", controller.GetEducation)
-			r.POST("/Education", controller.CreateEducation)
-			r.PATCH("/Education", controller.UpdateEducation)
+			r.POST("/Educations", controller.CreateEducation)
+			r.PATCH("/Educations", controller.UpdateEducation)
 			r.DELETE("/Education/:id", controller.DeleteEducation)
 
 			//Patiend

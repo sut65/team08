@@ -60,7 +60,7 @@ func CreatePatiend(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusCreated, gin.H{"data": patiend})
+	c.JSON(http.StatusCreated, gin.H{"data": sc})
 }
 
 // GET /Patiend/:id

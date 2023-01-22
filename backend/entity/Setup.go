@@ -31,6 +31,8 @@ func SetupDatabase() {
 		&Gender{},
 		&Education{},
 		&Screening_officer{},
+		&Policing{},
+		&Patiend{},
 	)
 
 	db = database
@@ -78,4 +80,35 @@ func SetupDatabase() {
 	}
 	db.Model(&Education{}).Create(&Education_three)
 
+	//Policing data
+
+	Policing_one := Policing{
+		Description: "สิทธิ์ข้าราชการ",
+	}
+	db.Model(&Policing{}).Create(&Policing_one)
+
+	Policing_two := Policing{
+		Description: "สิทธิ์บัตรทอง",
+	}
+	db.Model(&Policing{}).Create(&Policing_two)
+
+	Policing_three := Policing{
+		Description: "สิทธิ์ประกันสังคม",
+	}
+	db.Model(&Policing{}).Create(&Policing_three)
+
+	Policing_four := Policing{
+		Description: "สิทธิ์องค์กรคู่สัญญา",
+	}
+	db.Model(&Policing{}).Create(&Policing_four)
+
+	Policing_five := Policing{
+		Description: "ผู้ป่วยถือบัตรประกันสุขภาพ",
+	}
+	db.Model(&Policing{}).Create(&Policing_five)
+
+	Policing_six := Policing{
+		Description: "ไม่มี",
+	}
+	db.Model(&Policing{}).Create(&Policing_six)
 }

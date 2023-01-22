@@ -35,7 +35,7 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
     const [Name, setNames] = useState<string>("");
     const [Age, setAges] = useState<string>("");
     const [Phone, setPhones] = useState<string>("");
-    const [Adress, setAdresses] = useState<string>("");
+    const [Address, setAddresses] = useState<string>("");
     const [ID_card, setID_cards] = useState<string>("");
     const [Date_of_birth, setDate_of_births] = useState<string>("");
     
@@ -107,7 +107,7 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
       Age: (convertType(Age)),
       Phone: (Phone),
       ID_card: (ID_card),
-      Adress: (Adress),
+      Address: (Address),
       Date_of_birth: (Date_of_birth),
     };
     console.log(data)
@@ -219,7 +219,7 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
             </FormControl>
           </Grid>
           
-          <Grid item xs={10}>
+          <Grid item xs={6}>
                 <p>วันเดือนปีเกิด</p>
                 <TextField fullWidth id="Name" type="string" variant="outlined"  
                 onChange={(event) => setDate_of_births(event.target.value)} />
@@ -235,11 +235,6 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
                 <p>เบอร์โทร</p>
                 <TextField fullWidth id="Name" type="string" variant="outlined"  
                 onChange={(event) => setPhones(event.target.value)} />
-              </Grid>
-              <Grid item xs={12}>
-                <p>ที่อยู่</p>
-                <TextField fullWidth id="Name" type="string" variant="outlined"  
-                onChange={(event) => setAdresses(event.target.value)} />
               </Grid>
             
           <Grid item xs={6}>
@@ -264,6 +259,12 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
               </Select>
             </FormControl>
           </Grid>
+
+          <Grid item xs={12}>
+                <p>ที่อยู่</p>
+                <TextField fullWidth id="Name" type="string" variant="outlined"  
+                onChange={(event) => setAddresses(event.target.value)} />
+              </Grid>
 
           <Grid item xs={12}>
             <Button

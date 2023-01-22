@@ -7,7 +7,7 @@ export interface PatiendsInterface {
     Name?: string;
     Age?: number;
     Phone?: string;
-    Adress?: string;
+    Address?: string;
     Date_of_birth?: string;
     ID_card?: string;
 

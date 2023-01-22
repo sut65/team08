@@ -6,21 +6,21 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-import { Screening_officersInterface } from "../Models/IScreening_officer";
-import { GetScreening_officer } from "../Services/HttpClientService";
+import { PatiendsInterface } from "../Models/IPatiend";
+import { GetPatiend } from "../Services/HttpClientService";
 
 
-function Screening_officerList() {
-    const [Screening_officers, setScreening_officers] = useState<Screening_officersInterface[]>([]);
+function PatiendList() {
+    const [Patiends, setPatiends] = useState<PatiendsInterface[]>([]);
   
     useEffect(() => {
-      getScreening_officers();
+      getPatiends();
     }, []);
   
-    const getScreening_officers = async () => {
-      let res = await GetScreening_officer();
+    const getPatiends = async () => {
+      let res = await GetPatiend();
       if (res) {
-        setScreening_officers(res);
+        setPatiends(res);
       } 
     };
   
@@ -49,28 +49,33 @@ function Screening_officerList() {
         valueFormatter: (params) => params.value.Description,
       },
       {
+        field: "Date_of_birth",
+        headerName: "วันเดือนปีเกิด",
+        width: 300,
+      },
+      {
+        field: "ID_card",
+        headerName: "รหัสบัตรประชาชน",
+        width: 300,
+      },
+      {
         field: "Phone",
         headerName: "เบอร์โทร",
         width: 300,
       },
+
       {
-        field: "Education",
-        headerName: "ระดับการศึกษา",
+        field: "Policing",
+        headerName: "สิทธิการรักษา",
         width: 300,
         valueFormatter: (params) => params.value.Description,
       },
       {
-        field: "Email",
-        headerName: "อีเมล",
-        width: 300,
+        field: "Address",
+        headerName: "ที่อยู่",
+        width: 500,
 
       },
-      {
-        field: "Password",
-        headerName: "รหัสผ่าน",
-        width: 300,
-      },
-
     ];
   
     return (
@@ -89,23 +94,23 @@ function Screening_officerList() {
                 color="primary"
                 gutterBottom
               >
-                ข้อมูลเจ้าหน้าที่ฝ่ายคัดกรอง
+                ข้อมูลคนไข้
               </Typography>
             </Box>
             <Box>
               <Button
                 component={RouterLink}
-                to="/Screening_officerCreate"
+                to="/PatiendCreate"
                 variant="contained"
                 color="primary"
               >
-                สร้างข้อมูลเจ้าหน้าที่คนอื่น
+                สร้างข้อมูลคนไข้ลำดับต่อไป
               </Button>
             </Box>
           </Box>
           <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
             <DataGrid
-              rows={Screening_officers}
+              rows={Patiends}
               getRowId={(row) => row.ID}
               columns={columns}
               pageSize={5}
@@ -117,4 +122,4 @@ function Screening_officerList() {
     );
   }
   
-  export default Screening_officerList;
+  export default PatiendList;

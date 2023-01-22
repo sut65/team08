@@ -67,3 +67,8 @@ type Patiend struct {
 	Prefix   Prefix   `gorm:"references:id"`
 	Policing Policing `gorm:"references:id"`
 }
+
+type Blood struct {
+	gorm.Model
+	BloodType		string
+}

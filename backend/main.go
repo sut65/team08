@@ -73,7 +73,7 @@ func main() {
 			r.DELETE("/Blood/:id", controller.DeleteBlood)
 
 			//Nationality
-			r.GET("/Nationalitys", controller.ListNationality)
+			r.GET("/Nationalities", controller.ListNationality)
 			r.GET("/Nationality/:id", controller.GetNationality)
 			r.POST("/Nationality", controller.CreateNationality)
 			r.PATCH("/Nationality", controller.UpdateNationality)

@@ -177,7 +177,7 @@ async function CreateScreening_officer(data: Screening_officersInterface) {
       body: JSON.stringify(data),
     };
   
-    let res = await fetch(`${apiUrl}/Patiends`, requestOptions)
+    let res = await fetch(`${apiUrl}/Patiend`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {

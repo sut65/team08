@@ -26,6 +26,7 @@ import BookIcon from '@mui/icons-material/Book';
  import Screening_officerList from "./Components/Screening_officerList";
  import Screening_officerCreate from "./Components/Screening_officerCreate";
  import PatiendCreate from "./Components/PatiendCreate";
+ import PatiendList from "./Components/PatiendList";
 // import SignIn from "./components/SignIn";
 
 const drawerWidth = 240;
@@ -85,6 +86,7 @@ const menu = [
   { name: "สร้างข้อมูลฝ่ายคัดกรอง", icon: <PeopleIcon />, path: "/Screening_officerCreate" },
   { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
   { name: "บันทึกข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendCreate" },
+  { name: "ข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendList" },
 ];
 
 function App() {
@@ -194,6 +196,7 @@ function App() {
                 <Route path="/Screening_officerCreate" element={<Screening_officerCreate />} />
                 <Route path="/Screening_officerList" element={<Screening_officerList />} /> 
                 <Route path="/PatiendCreate" element={<PatiendCreate />} /> 
+                <Route path="/PatiendList" element={<PatiendList />} />
               </Routes>
             </Container>
           </Box>

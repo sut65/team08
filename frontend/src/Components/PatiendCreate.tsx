@@ -15,10 +15,10 @@ import TextField from "@mui/material/TextField";
 
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
-import { EducationsInterface } from "../Models/IEducation";
-import { Screening_officersInterface } from "../Models/IScreening_officer";
+import { PolicingsInterface } from "../Models/IPolicing";
+import { PatiendsInterface } from "../Models/IPatiend";
 
-import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Services/HttpClientService";
+import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -26,18 +26,19 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   
-  function Screening_officerCreate() {
-    const [Screening_officers, setScreening_officers] = useState<Screening_officersInterface>({});
+  function PatiendCreate() {
+    const [Patiends, setPatiends] = useState<PatiendsInterface>({});
     const [Genders, setGenders] = useState<GendersInterface[]>([]);
     const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
-    const [Educations, setEducations] = useState<EducationsInterface[]>([]);
+    const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
 
     const [Name, setNames] = useState<string>("");
     const [Age, setAges] = useState<string>("");
     const [Phone, setPhones] = useState<string>("");
-    const [Email, setEmails] = useState<string>("");
-    const [Password, setPasswords] = useState<string>("");
-
+    const [Adress, setAdresses] = useState<string>("");
+    const [ID_card, setID_cards] = useState<string>("");
+    const [Date_of_birth, setDate_of_births] = useState<string>("");
+    
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
@@ -53,10 +54,10 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
     };
 
     const handleChange = (event: SelectChangeEvent) => {
-      const name = event.target.name as keyof typeof Screening_officers;
+      const name = event.target.name as keyof typeof Patiends;
       const value = event.target.value;
-      setScreening_officers({
-          ...Screening_officers,
+      setPatiends({
+          ...Patiends,
           [name]: value,
       });
       console.log(`${name}: ${value}`);
@@ -76,10 +77,10 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
       console.log(res);
   }
 };
-  const getEducation = async () => {
-    let res = await GetEducation();
+  const getPolicing = async () => {
+    let res = await GetPolicing();
     if (res) {
-      setEducations(res);
+      setPolicings(res);
       console.log(res);
   }
 };
@@ -88,7 +89,7 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
   useEffect(() => {
     getGender();
     getPrefix();
-    getEducation();
+    getPolicing();
 
   }, []);
 
@@ -99,18 +100,18 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
 
   async function submit() {
     let data = {
-      PrefixID: convertType(Screening_officers.PrefixID),
-      GenderID: convertType(Screening_officers.GenderID),
-      EducationID: convertType(Screening_officers.EducationID),
+      PrefixID: convertType(Patiends.PrefixID),
+      GenderID: convertType(Patiends.GenderID),
+      PolicingID: convertType(Patiends.PolicingID),
       Name: (Name),
       Age: (convertType(Age)),
       Phone: (Phone),
-      Email: (Email),
-      Password: (Password),
+      ID_card: (ID_card),
+      Adress: (Adress),
+      Date_of_birth: (Date_of_birth),
     };
-    
     console.log(data)
-    let res = await CreateScreening_officer(data);
+    let res = await CreatePatiend(data);
     if (res) {
       setSuccess(true);
     } else {
@@ -154,7 +155,7 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
               color="primary"
               gutterBottom
             >
-              ประเมินผู้สอน
+              ข้อมูลผู้ป่วย
             </Typography>
           </Box>
         </Box>
@@ -165,7 +166,7 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
               <p>คำนำหน้า</p>
               <Select
                 native
-                value={Screening_officers.PrefixID + ""}
+                value={Patiends.PrefixID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "PrefixID",
@@ -195,12 +196,12 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
                 onChange={(event) => setAges(event.target.value)} />
               </Grid> 
 
-          <Grid item xs={6}>
+              <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>
               <Select
                 native
-                value={Screening_officers.GenderID + ""}
+                value={Patiends.GenderID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "GenderID",
@@ -217,29 +218,45 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
               </Select>
             </FormControl>
           </Grid>
+          
+          <Grid item xs={10}>
+                <p>วันเดือนปีเกิด</p>
+                <TextField fullWidth id="Name" type="string" variant="outlined"  
+                onChange={(event) => setDate_of_births(event.target.value)} />
+              </Grid>
 
           <Grid item xs={6}>
-                <p>เบอร์โทร</p>
-                <TextField fullWidth id="Phone" type="string" variant="outlined" 
-                onChange={(event) => setPhones(event.target.value)} />
-                
-              </Grid> 
+                <p>รหัสบัตรประชาชน</p>
+                <TextField fullWidth id="Name" type="string" variant="outlined"  
+                onChange={(event) => setID_cards(event.target.value)} />
+              </Grid>
 
+            <Grid item xs={6}>
+                <p>เบอร์โทร</p>
+                <TextField fullWidth id="Name" type="string" variant="outlined"  
+                onChange={(event) => setPhones(event.target.value)} />
+              </Grid>
+              <Grid item xs={12}>
+                <p>ที่อยู่</p>
+                <TextField fullWidth id="Name" type="string" variant="outlined"  
+                onChange={(event) => setAdresses(event.target.value)} />
+              </Grid>
+            
           <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
-              <p>ระดับการศึกษา</p>
+              <p>สิทธิการรักษา</p>
               <Select
                 native
-                value={Screening_officers.EducationID + ""}
+                value={Patiends.PolicingID + ""}
                 onChange={handleChange}
                 inputProps={{
-                  name: "EducationID",
+                  name: "PolicingID",
                 }}
               >
                 <option aria-label="None" value="">
-                  กรุณาเลือกระดับการศึกษา
+                  กรุณาเลือกสิทธิการรักษา
                 </option>
-                {Educations.map((item: EducationsInterface) => (
+                {Policings.map((item: PolicingsInterface) => (
                   <option value={item.ID} key={item.ID}>
                     {item.Description}
                   </option>
@@ -248,22 +265,10 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
             </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
-                <p>อีเมล</p>
-                <TextField fullWidth id="Email" type="string" variant="outlined"  
-                onChange={(event) => setEmails(event.target.value)} />
-              </Grid> 
-            
-          <Grid item xs={6}>
-                <p>รหัสผ่าน</p>
-                <TextField fullWidth id="Password" type="string" variant="outlined"
-                onChange={(event) => setPasswords(event.target.value)} />
-              </Grid> 
-
           <Grid item xs={12}>
             <Button
               component={RouterLink}
-              to="/Screening_officerCreate"
+              to="/PatiendCreate"
               variant="contained"
               color="inherit"
             >
@@ -284,4 +289,4 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
   );
 }
 
-export default Screening_officerCreate;
+export default PatiendCreate;

@@ -25,6 +25,7 @@ import BookIcon from '@mui/icons-material/Book';
 // import Home from "./components/Home";
  import Screening_officerList from "./Components/Screening_officerList";
  import Screening_officerCreate from "./Components/Screening_officerCreate";
+ import PatiendCreate from "./Components/PatiendCreate";
 // import SignIn from "./components/SignIn";
 
 const drawerWidth = 240;
@@ -82,7 +83,8 @@ const mdTheme = createTheme();
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
   { name: "สร้างข้อมูลฝ่ายคัดกรอง", icon: <PeopleIcon />, path: "/Screening_officerCreate" },
-   { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
+  { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
+  { name: "บันทึกข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendCreate" },
 ];
 
 function App() {
@@ -190,7 +192,8 @@ function App() {
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Routes>
                 <Route path="/Screening_officerCreate" element={<Screening_officerCreate />} />
-                <Route path="/Screening_officerList" element={<Screening_officerList />} />  
+                <Route path="/Screening_officerList" element={<Screening_officerList />} /> 
+                <Route path="/PatiendCreate" element={<PatiendCreate />} /> 
               </Routes>
             </Container>
           </Box>

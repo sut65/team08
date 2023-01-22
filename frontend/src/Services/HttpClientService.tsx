@@ -1,8 +1,32 @@
 import React from "react";
+import { PatiendsInterface } from "../Models/IPatiend";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 
 const apiUrl = "http://localhost:8080";
 
+
+async function GetPolicing() {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            //Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+        },
+    };
+
+    let res = await fetch(`${apiUrl}/Policings`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+            if (res.data) {
+                console.log(res.data);
+                return res.data;
+            } else {
+                return false;
+            }
+        });
+
+    return res;
+}
 
 async function GetGender() {
     const requestOptions = {
@@ -96,6 +120,29 @@ async function GetScreening_officer() {
     return res;
 }
 
+async function GetPatiend() {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            //Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+        },
+    };
+
+    let res = await fetch(`${apiUrl}/Patiends`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+            if (res.data) {
+                console.log(res.data);
+                return res.data;
+            } else {
+                return false;
+            }
+        });
+
+    return res;
+}
+
 async function CreateScreening_officer(data: Screening_officersInterface) {
     const requestOptions = {
       method: "POST",
@@ -120,10 +167,38 @@ async function CreateScreening_officer(data: Screening_officersInterface) {
     return res;
   }
 
+  async function CreatePatiend(data: PatiendsInterface) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        //Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+  
+    let res = await fetch(`${apiUrl}/Patiends`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+            console.log(res.data);
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+  }
+
   export {
+    GetPolicing,
     GetEducation,
     GetGender,
     GetPrefix,
     GetScreening_officer,
     CreateScreening_officer,
+    GetPatiend,
+    CreatePatiend,
+
   }

@@ -63,6 +63,14 @@ func main() {
 			r.PATCH("/Policing", controller.UpdatePolicing)
 			r.DELETE("/Policing/:id", controller.DeletePolicing)
 			// Run the server
+
+			//idea
+			//Blood
+			r.GET("/Bloods", controller.ListBlood)
+			r.GET("/Blood/:id", controller.GetBlood)
+			r.POST("/Blood", controller.CreateBlood)
+			r.PATCH("/Blood", controller.UpdateBlood)
+			r.DELETE("/Blood/:id", controller.DeleteBlood)
 		}
 
 	}

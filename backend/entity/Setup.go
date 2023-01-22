@@ -33,6 +33,9 @@ func SetupDatabase() {
 		&Screening_officer{},
 		&Policing{},
 		&Patiend{},
+
+		//idea
+		&Blood{},
 	)
 
 	db = database
@@ -111,4 +114,23 @@ func SetupDatabase() {
 		Description: "ไม่มี",
 	}
 	db.Model(&Policing{}).Create(&Policing_six)
+
+	//idea Blood data
+	Blood_A := Blood{
+		BloodType: "A",
+	}
+	db.Model(&Blood{}).Create(&Blood_A)
+	Blood_B := Blood{
+		BloodType: "B",
+	}
+	db.Model(&Blood{}).Create(&Blood_B)
+	Blood_AB := Blood{
+		BloodType: "AB",
+	}
+	db.Model(&Blood{}).Create(&Blood_AB)
+	Blood_O := Blood{
+		BloodType: "O",
+	}
+	db.Model(&Blood{}).Create(&Blood_O)
+
 }

@@ -64,13 +64,20 @@ func main() {
 			r.DELETE("/Policing/:id", controller.DeletePolicing)
 			// Run the server
 
-			//idea
+			//idea Nationality
 			//Blood
 			r.GET("/Bloods", controller.ListBlood)
 			r.GET("/Blood/:id", controller.GetBlood)
 			r.POST("/Blood", controller.CreateBlood)
 			r.PATCH("/Blood", controller.UpdateBlood)
 			r.DELETE("/Blood/:id", controller.DeleteBlood)
+
+			//Nationality
+			r.GET("/Nationalitys", controller.ListNationality)
+			r.GET("/Nationality/:id", controller.GetNationality)
+			r.POST("/Nationality", controller.CreateNationality)
+			r.PATCH("/Nationality", controller.UpdateNationality)
+			r.DELETE("/Nationality/:id", controller.DeleteNationality)
 		}
 
 	}

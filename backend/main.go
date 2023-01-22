@@ -3,7 +3,8 @@ package main
 import (
 	"github.com/sut65/team08/entity"
 
-	"github.com/sut65/team08/controller/Screening_officer"
+	"github.com/sut65/team08/controller"
+
 
 	//"github.com/B6332907/SE-G08/middlewares"
 
@@ -48,6 +49,20 @@ func main() {
 			r.POST("/Education", controller.CreateEducation)
 			r.PATCH("/Education", controller.UpdateEducation)
 			r.DELETE("/Education/:id", controller.DeleteEducation)
+
+			//Patiend
+			r.GET("/Patiends", controller.ListPatiend)
+			r.GET("/Patiend/:id", controller.GetPatiend)
+			r.POST("/Patiend", controller.CreatePatiend)
+			r.PATCH("/Patiend", controller.UpdatePatiend)
+			r.DELETE("/Patiend/:id", controller.DeletePatiend)
+
+			//Policing
+			r.GET("/Policings", controller.ListPolicing)
+			r.GET("/Policing/:id", controller.GetPolicing)
+			r.POST("/Policing", controller.CreatePolicing)
+			r.PATCH("/Policing", controller.UpdatePolicing)
+			r.DELETE("/Policing/:id", controller.DeletePolicing)
 			// Run the server
 		}
 

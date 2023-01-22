@@ -23,7 +23,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import BookIcon from '@mui/icons-material/Book';
 
 // import Home from "./components/Home";
-// import Teacher_assessmentList from "./components/Teacher_assessmentList";
+ import Screening_officerList from "./Components/Screening_officerList";
  import Screening_officerCreate from "./Components/Screening_officerCreate";
 // import SignIn from "./components/SignIn";
 
@@ -81,8 +81,8 @@ const mdTheme = createTheme();
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "สร้างข้อมูลเจ้าหน้าที่ฝ่ายคัดกรอง", icon: <PeopleIcon />, path: "/Screening_officerCreate" },
-  // { name: "List ประเมินผู้สอน", icon: <BookIcon />, path: "/Teacher_assessment" },
+  { name: "สร้างข้อมูลฝ่ายคัดกรอง", icon: <PeopleIcon />, path: "/Screening_officerCreate" },
+   { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
 ];
 
 function App() {
@@ -189,11 +189,8 @@ function App() {
             <Toolbar />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Routes>
-                {// <Route path="/" element={<Home />} />
                 <Route path="/Screening_officerCreate" element={<Screening_officerCreate />} />
-               // <Route path="/Teacher_assessment/create" element={<Teacher_assessmentCreate />} />  */
-              }
-              
+                <Route path="/Screening_officerList" element={<Screening_officerList />} />  
               </Routes>
             </Container>
           </Box>

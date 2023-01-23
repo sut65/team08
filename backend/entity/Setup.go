@@ -40,6 +40,7 @@ func SetupDatabase() {
 		&AddressThailand{},
 		&Marital{},
 		&Religion{},
+		&DocPrefix{},
 	)
 
 	db = database
@@ -52665,5 +52666,97 @@ func SetupDatabase() {
 		ReligionType: "อื่นๆ",
 	}
 	db.Model(&Religion{}).Create(&Religion_5)
+
+	DocPrefix_2 := DocPrefix{
+		PrefixNameTH: "นาย",
+		PrefixNameEN: "Mister",
+		PreInitialTH: "นาย",
+		PreInitialEN: "Mr.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_2)
+	DocPrefix_3 := DocPrefix{
+		PrefixNameTH: "นาง",
+		PrefixNameEN: "Mistress",
+		PreInitialTH: "นาง",
+		PreInitialEN: "Mrs.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_3)
+	DocPrefix_4 := DocPrefix{
+		PrefixNameTH: "นางสาว",
+		PrefixNameEN: "Misses",
+		PreInitialTH: "น.ส.",
+		PreInitialEN: "Miss",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_4)
+	DocPrefix_5 := DocPrefix{
+		PrefixNameTH: "เด็กชาย",
+		PrefixNameEN: "Master",
+		PreInitialTH: "ด.ช.",
+		PreInitialEN: "Mstr.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_5)
+	DocPrefix_6 := DocPrefix{
+		PrefixNameTH: "เด็กหญิง",
+		PrefixNameEN: "Misses",
+		PreInitialTH: "ด.ญ.",
+		PreInitialEN: "Miss",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_6)
+	DocPrefix_7 := DocPrefix{
+		PrefixNameTH: "นายแพทย์",
+		PrefixNameEN: "Doctor",
+		PreInitialTH: "น.พ.",
+		PreInitialEN: "Dr.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_7)
+	DocPrefix_8 := DocPrefix{
+		PrefixNameTH: "แพทย์หญิง",
+		PrefixNameEN: "Doctor",
+		PreInitialTH: "พ.ญ.",
+		PreInitialEN: "Dr.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_8)
+	DocPrefix_9 := DocPrefix{
+		PrefixNameTH: "ศาสตราจารย์",
+		PrefixNameEN: "Professor",
+		PreInitialTH: "ศ.",
+		PreInitialEN: "Prof.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_9)
+	DocPrefix_10 := DocPrefix{
+		PrefixNameTH: "ผู้ช่วยศาสตราจารย์",
+		PrefixNameEN: "Assistant Professor",
+		PreInitialTH: "ผศ.",
+		PreInitialEN: "Asst. Prof.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_10)
+	DocPrefix_11 := DocPrefix{
+		PrefixNameTH: "รองศาสตราจารย์",
+		PrefixNameEN: "Associate Professor",
+		PreInitialTH: "รศ.",
+		PreInitialEN: "Assoc. Prof.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_11)
+	DocPrefix_12 := DocPrefix{
+		PrefixNameTH: "ศาสตราจารย์ ด็อกเตอร์",
+		PrefixNameEN: "Professor Doctor",
+		PreInitialTH: "ศ.ดร.",
+		PreInitialEN: "Prof. Dr.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_12)
+	DocPrefix_13 := DocPrefix{
+		PrefixNameTH: "ผู้ช่วยศาสตราจารย์ ด็อกเตอร์",
+		PrefixNameEN: "Assistant Professor Doctor",
+		PreInitialTH: "ผศ.ดร.",
+		PreInitialEN: "Asst. Prof. Dr.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_13)
+	DocPrefix_14 := DocPrefix{
+		PrefixNameTH: "รองศาสตราจารย์ ด็อกเตอร์",
+		PrefixNameEN: "Associate Professor Doctor",
+		PreInitialTH: "รศ.ดร.",
+		PreInitialEN: "Assoc. Prof. Dr.",
+	}
+	db.Model(&DocPrefix{}).Create(&DocPrefix_14)
 
 }

@@ -100,6 +100,13 @@ func main() {
 			r.POST("/Religion", controller.CreateReligion)
 			r.PATCH("/Religion", controller.UpdateReligion)
 			r.DELETE("/Religion/:id", controller.DeleteReligion)
+
+			//DocPrefix
+			r.GET("/DocPrefixs", controller.ListDocPrefix)
+			r.GET("/DocPrefix/:id", controller.GetDocPrefix)
+			r.POST("/DocPrefix", controller.CreateDocPrefix)
+			r.PATCH("/DocPrefix", controller.UpdateDocPrefix)
+			r.DELETE("/DocPrefix/:id", controller.DeleteDocPrefix)
 		}
 
 	}

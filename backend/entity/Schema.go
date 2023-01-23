@@ -97,3 +97,11 @@ type Religion struct {
 	gorm.Model
 	ReligionType string
 }
+
+type DocPrefix struct {
+	gorm.Model
+	PrefixNameTH	string
+	PrefixNameEN	string
+	PreInitialTH	string
+	PreInitialEN	string
+}

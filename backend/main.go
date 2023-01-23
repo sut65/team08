@@ -79,6 +79,13 @@ func main() {
 			r.PATCH("/Nationality", controller.UpdateNationality)
 			r.DELETE("/Nationality/:id", controller.DeleteNationality)
 
+			//Marital
+			r.GET("/Maritals", controller.ListMarital)
+			r.GET("/Marital/:id", controller.GetMarital)
+			r.POST("/Marital", controller.CreateMarital)
+			r.PATCH("/Marital", controller.UpdateMarital)
+			r.DELETE("/Marital/:id", controller.DeleteMarital)
+
 			//AddressThailand
 			r.GET("/AddressThailands", controller.ListAddressThailand)
 			r.GET("/AddressThailand/:id", controller.GetAddressThailand)
@@ -86,6 +93,13 @@ func main() {
 			r.POST("/AddressThailand", controller.CreateAddressThailand)
 			r.PATCH("/AddressThailand", controller.UpdateAddressThailand)
 			r.DELETE("/AddressThailand/:id", controller.DeleteAddressThailand)
+
+			//Religion
+			r.GET("/Religions", controller.ListReligion)
+			r.GET("/Religion/:id", controller.GetReligion)
+			r.POST("/Religion", controller.CreateReligion)
+			r.PATCH("/Religion", controller.UpdateReligion)
+			r.DELETE("/Religion/:id", controller.DeleteReligion)
 		}
 
 	}

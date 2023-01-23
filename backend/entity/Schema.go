@@ -70,7 +70,8 @@ type Patiend struct {
 
 type Blood struct {
 	gorm.Model
-	BloodType string
+	Phenotype string
+	Genotype string
 }
 
 type Nationality struct {
@@ -85,4 +86,14 @@ type AddressThailand struct {
 	District    string
 	Subdistrict string
 	Zipcode     string
+}
+
+type Marital struct {
+	gorm.Model
+	MaritalStatus string
+}
+
+type Religion struct {
+	gorm.Model
+	ReligionType string
 }

@@ -38,6 +38,8 @@ func SetupDatabase() {
 		&Blood{},
 		&Nationality{},
 		&AddressThailand{},
+		&Marital{},
+		&Religion{},
 	)
 
 	db = database
@@ -119,19 +121,23 @@ func SetupDatabase() {
 
 	//idea Blood data
 	Blood_A := Blood{
-		BloodType: "A",
+		Phenotype: "A",
+		Genotype: "AA, AO",
 	}
 	db.Model(&Blood{}).Create(&Blood_A)
 	Blood_B := Blood{
-		BloodType: "B",
+		Phenotype: "B",
+		Genotype: "BB, BO",
 	}
 	db.Model(&Blood{}).Create(&Blood_B)
 	Blood_AB := Blood{
-		BloodType: "AB",
+		Phenotype: "AB",
+		Genotype: "AB",
 	}
 	db.Model(&Blood{}).Create(&Blood_AB)
 	Blood_O := Blood{
-		BloodType: "O",
+		Phenotype: "O",
+		Genotype: "OO",
 	}
 	db.Model(&Blood{}).Create(&Blood_O)
 
@@ -52617,5 +52623,47 @@ func SetupDatabase() {
 		Zipcode: "96130",
 	}
 	db.Model(&AddressThailand{}).Create(&AddressThailand_7426)
+
+	Marital_1 := Marital{
+		MaritalStatus: "โสด",
+	}
+	db.Model(&Marital{}).Create(&Marital_1)
+	Marital_2 := Marital{
+		MaritalStatus: "สมรส",
+	}
+	db.Model(&Marital{}).Create(&Marital_2)
+	Marital_3 := Marital{
+		MaritalStatus: "หม้าย",
+	}
+	db.Model(&Marital{}).Create(&Marital_3)
+	Marital_4 := Marital{
+		MaritalStatus: "หย่า",
+	}
+	db.Model(&Marital{}).Create(&Marital_4)
+	Marital_5 := Marital{
+		MaritalStatus: "แยกกันอยู่",
+	}
+	db.Model(&Marital{}).Create(&Marital_5)
+
+	Religion_1 := Religion{
+		ReligionType: "พุทธ",
+	}
+	db.Model(&Religion{}).Create(&Religion_1)
+	Religion_2 := Religion{
+		ReligionType: "อิสลาม",
+	}
+	db.Model(&Religion{}).Create(&Religion_2)
+	Religion_3 := Religion{
+		ReligionType: "คริสต์",
+	}
+	db.Model(&Religion{}).Create(&Religion_3)
+	Religion_4 := Religion{
+		ReligionType: "ฮินดู",
+	}
+	db.Model(&Religion{}).Create(&Religion_4)
+	Religion_5 := Religion{
+		ReligionType: "อื่นๆ",
+	}
+	db.Model(&Religion{}).Create(&Religion_5)
 
 }

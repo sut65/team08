@@ -21,12 +21,14 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import BookIcon from '@mui/icons-material/Book';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 // import Home from "./components/Home";
  import Screening_officerList from "./Components/Screening_officerList";
  import Screening_officerCreate from "./Components/Screening_officerCreate";
  import PatiendCreate from "./Components/PatiendCreate";
  import PatiendList from "./Components/PatiendList";
+ import Doctor from "./Components/Doctor";
 // import SignIn from "./components/SignIn";
 
 const drawerWidth = 240;
@@ -87,6 +89,7 @@ const menu = [
   { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
   { name: "บันทึกข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendCreate" },
   { name: "ข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendList" },
+  { name: "ข้อมูลแพทย์", icon: <LocalHospitalIcon />, path: "/Doctor" },
 ];
 
 function App() {
@@ -197,6 +200,7 @@ function App() {
                 <Route path="/Screening_officerList" element={<Screening_officerList />} /> 
                 <Route path="/PatiendCreate" element={<PatiendCreate />} /> 
                 <Route path="/PatiendList" element={<PatiendList />} />
+                <Route path="/Doctor" element={<Doctor />} />
               </Routes>
             </Container>
           </Box>

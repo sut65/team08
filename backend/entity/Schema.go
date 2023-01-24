@@ -124,8 +124,8 @@ type DocPrefix struct {
 
 type Doctor struct {
 	gorm.Model
-	DocterCode   string
-	DocterIDCard string
+	DocterCode   string		`gorm:"uniqueIndex"`
+	DocterIDCard string		`gorm:"uniqueIndex"`
 	DocPrefixID	*uint
 	FirstNameTH  string
 	LastNameTH   string
@@ -143,7 +143,7 @@ type Doctor struct {
 	TelPhone   string
 	TelOffice  string
 
-	Email       string
+	Email       string		`gorm:"uniqueIndex"`
 	AllAddress  string
 	Subdistrict string
 	District    string
@@ -173,6 +173,8 @@ type Doctor struct {
 	EducationMajor string
 
 	University     string
+	DocPassword	   string 	`json:"-"`
+
 	StartEducation time.Time
 	EndEducation   time.Time
 

@@ -1,7 +1,7 @@
 package entity
 
 import (
-	//"golang.org/x/crypto/bcrypt"
+	"golang.org/x/crypto/bcrypt"
 	"time"
 
 	"gorm.io/driver/sqlite"
@@ -52765,20 +52765,25 @@ func SetupDatabase() {
 	}
 	db.Model(&DocPrefix{}).Create(&DocPrefix_13)
 
-	t1, err := time.Parse("2006-01-02", "2001-07-05")
-	t2, err := time.Parse("2006-01-02", "2001-07-04")
+	t1, _ := time.Parse("2006-01-02", "2001-07-05")
+	t2, _ := time.Parse("2006-01-02", "2001-07-04")
 
-	t3, err := time.Parse("2006-01-01", "2018-01-01")
-	t4, err := time.Parse("2006-01-01", "2020-01-01")
+	t3, _ := time.Parse("2006-01-01", "2018-01-01")
+	t4, _ := time.Parse("2006-01-01", "2020-01-01")
 
-	t5, err := time.Parse("2006-01-01", "2019-01-01")
-	t6, err := time.Parse("2006-01-01", "2021-01-01")
+	t5, _ := time.Parse("2006-01-01", "2019-01-01")
+	t6, _ := time.Parse("2006-01-01", "2021-01-01")
 
 	// t1 := time.Now()
 
+	idCardOne := "1234567890111"
+	passwordOne, _ := bcrypt.GenerateFromPassword([]byte(idCardOne), 14)
+	idCardTwo := "0987654321000"
+	passwordTwo, _ := bcrypt.GenerateFromPassword([]byte(idCardTwo), 14)
+
 	db.Model(&Doctor{}).Create(&Doctor{
 		DocterCode:   "D6300114",
-		DocterIDCard: "1234567890111",
+		DocterIDCard: idCardOne,
 		FirstNameTH:  "บุญญฤทธิ์",
 		LastNameTH:   "มงคลการ",
 		FirstNameEN:  "Bunyalit",
@@ -52826,11 +52831,13 @@ func SetupDatabase() {
 
 		DocFaPrefix: DocPrefix_2,
 		DocMoPrefix: DocPrefix_3,
+
+		DocPassword: string(passwordOne),
 	})
 
 	db.Model(&Doctor{}).Create(&Doctor{
 		DocterCode: "D6300237",
-		DocterIDCard: "1234567890222",
+		DocterIDCard: idCardTwo,
 		FirstNameTH: "มงคล",
 		LastNameTH: "สุทน",
 		FirstNameEN: "Mongkhon",
@@ -52883,5 +52890,7 @@ func SetupDatabase() {
 		DocFaPrefix: DocPrefix_2,
 		DocMoPrefix: DocPrefix_3,
 		DocWiPrefix: DocPrefix_4,
+
+		DocPassword: string(passwordTwo),
 	})
 }

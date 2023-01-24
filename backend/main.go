@@ -107,6 +107,13 @@ func main() {
 			r.POST("/DocPrefix", controller.CreateDocPrefix)
 			r.PATCH("/DocPrefix", controller.UpdateDocPrefix)
 			r.DELETE("/DocPrefix/:id", controller.DeleteDocPrefix)
+
+			//Doctor
+			r.GET("/Doctors", controller.ListDoctor)
+			r.GET("/Doctor/:id", controller.GetDoctor)
+			r.POST("/Doctor", controller.CreateDoctor)
+			r.PATCH("/Doctor", controller.UpdateDoctor)
+			r.DELETE("/Doctor/:id", controller.DeleteDoctor)
 		}
 
 	}

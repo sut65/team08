@@ -352,9 +352,11 @@ async function CreateDoctor(data: PatiendsInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        // console.log(res.data);
+        console.log("เข้า fetch(`${apiUrl}/Doctor` แล้ววววววววว")
+        console.log(res.data);
         return res.data;
       } else {
+        console.log("ไม่เข้า fetchhhhhhhhhhhhh")
         return false;
       }
     });

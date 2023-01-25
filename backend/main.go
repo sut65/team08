@@ -21,6 +21,10 @@ func main() {
 	{
 		//router.Use(middlewares.Authorizes())
 		{
+			// J
+
+			// --------------------------
+			
 			// Screening_officer
 			r.GET("/Screening_officers", controller.ListScreening_officer)
 			r.GET("/Screening_officer/:id", controller.GetScreening_officer)

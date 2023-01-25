@@ -50,10 +50,25 @@ func SetupDatabase() {
 		&Status{},
 		&Track{},
 		&Treatment{},
+
+		// J
+		&Building{}, &Room{}, &State{}, &Save_ITI{}, Operating_Room{},
 		
 	)
 
 	db = database
+	
+	// J
+	db.Model(&Building{}).Create(&Building{Name: "ตึก A"})
+	db.Model(&Building{}).Create(&Building{Name: "ตึก B"})
+	db.Model(&Building{}).Create(&Building{Name: "ตึก C"})
+	db.Model(&Building{}).Create(&Building{Name: "ตึก D"})
+	db.Model(&Room{}).Create(&Room{Name: "ห้อง A"})
+	db.Model(&Room{}).Create(&Room{Name: "ห้อง B"})
+	db.Model(&Room{}).Create(&Room{Name: "ห้อง C"})
+	db.Model(&Room{}).Create(&Room{Name: "ห้อง D"})
+	db.Model(&State{}).Create(&State{Name: "ต้องได้รับการผ่าตัด"})
+	db.Model(&State{}).Create(&State{Name: "นอนดูอาการ"})
 
 	// Prefix data
 	Prefix_one := Prefix{

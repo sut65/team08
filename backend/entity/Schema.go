@@ -255,4 +255,54 @@ type Treatment struct {
 
 	DiseaseID *uint
 	Disease   Disease `gorm:"references:id"`
+
+	Save_ITI *Save_ITI `gorm:"foreignkey:TreatmentID"`
+}
+
+// J
+type Building struct {
+	gorm.Model
+	Name     string     `gorm:"uniqueIndex"`
+	Save_ITI []Save_ITI `gorm:"foreignKey:BuildingID"`
+}
+
+type Room struct {
+	gorm.Model
+	Name     string     `gorm:"uniqueIndex"`
+	Save_ITI []Save_ITI `gorm:"foreignKey:RoomID"`
+}
+
+type State struct {
+	gorm.Model
+	Name     string     `gorm:"uniqueIndex"`
+	Save_Save_ITI []Save_ITI `gorm:"foreignKey:StateID"`
+}
+
+type Save_ITI struct {
+	gorm.Model
+	Date_checkin  time.Time
+	Date_checkout time.Time
+	
+	Treatment   Treatment `gorm:"references:id"`
+	TreatmentID *uint
+	Building    Building `gorm:"references:id"`
+	BuildingID  *uint
+	Room        Room `gorm:"references:id"`
+	RoomID      *uint
+	State       State `gorm:"references:id"`
+	StateID     *uint
+
+	Operating_Room *Operating_Room `gorm:"foreignkey:Save_ITIID"`
+}
+
+type Operating_Room struct {
+	gorm.Model
+	Datetime  time.Time
+
+	Save_ITI Save_ITI `gorm:"references:id"`
+	Save_ITIID *uint
+	Building    Building `gorm:"references:id"`
+	BuildingID  *uint
+	Room        Room `gorm:"references:id"`
+	RoomID      *uint
 }

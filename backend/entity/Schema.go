@@ -70,6 +70,19 @@ type Patiend struct {
 	Gender     Gender   `gorm:"references:id"`
 	Prefix     Prefix   `gorm:"references:id"`
 	Policing   Policing `gorm:"references:id"`
+
+	//Gg
+	DiseaseID *uint
+	// เป็นข้อมูล user เมื่อ join ตาราง
+	Disease Disease `gorm:"references:id"`
+
+	StatusID *uint
+	// เป็นข้อมูล user เมื่อ join ตาราง
+	Status Status `gorm:"references:id"`
+
+	TrackID *uint
+	// เป็นข้อมูล user เมื่อ join ตาราง
+	Track Track `gorm:"references:id"`
 }
 
 type Blood struct {
@@ -192,5 +205,54 @@ type Doctor struct {
 	DocFaPrefix	DocPrefix	`gorm:"references:id"`
 	DocMoPrefix DocPrefix	`gorm:"references:id"`
 	DocWiPrefix DocPrefix	`gorm:"references:id"`
+	//Gg
+	Treatments []Treatment `gorm:"foreignKey:DoctorID"`
+}
 
+//ระบบข้อมูลการรักษา ของกริม
+// โรค Disease
+type Disease struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	//1 โรค มีผู้ป่วยหลายคน
+	Patiends []Patiend `gorm:"foreignKey:DiseaseID"`
+}
+// สถานะการรักษา Status
+type Status struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	//1 สถานะ มีผู้ป่วยหลายคน
+	Patiends []Patiend `gorm:"foreignKey:StatusID"`
+}
+// สถานะติดตามผล Status
+type Track struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	//1 สถานะติดตามผล มีผู้ป่วยหลายคน
+	Patiends []Patiend `gorm:"foreignKey:TrackID"`
+}
+// การรักษา
+type Treatment struct {
+	gorm.Model
+	TREATMENT_ID string
+	TREATMENT    string
+	DATE         time.Time
+	APPOINTMENT  string
+	CONCLUSION   string
+	GUIDANCE     string
+
+	DoctorID *uint
+	Doctor   Doctor `gorm:"references:id"`
+
+	StatusID *uint
+	Status   Status `gorm:"references:id"`
+
+	TrackID *uint
+	Track   Track `gorm:"references:id"`
+
+	PatiendID *uint
+	Patiend   Patiend `gorm:"references:id"`
+
+	DiseaseID *uint
+	Disease   Disease `gorm:"references:id"`
 }

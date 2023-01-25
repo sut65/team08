@@ -44,6 +44,13 @@ func SetupDatabase() {
 		&Religion{},
 		&DocPrefix{},
 		&Doctor{},
+
+		//Gg
+		&Disease{},
+		&Status{},
+		&Track{},
+		&Treatment{},
+		
 	)
 
 	db = database
@@ -52893,4 +52900,94 @@ func SetupDatabase() {
 
 		DocPassword: string(passwordTwo),
 	})
+
+	//Gg
+	// Disease Data
+	D1 := Disease{
+		Name: "โรคความดันโลหิตสูง",
+	}
+	db.Model(&Disease{}).Create(&D1)
+
+	D2 := Disease{
+		Name: "ออฟฟิศซินโดรม",
+	}
+	db.Model(&Disease{}).Create(&D2)
+
+	D3 := Disease{
+		Name: "โรคเครียดลงกระเพาะ",
+	}
+	db.Model(&Disease{}).Create(&D3)
+
+	D4 := Disease{
+		Name: "โรคหัวใจ",
+	}
+	db.Model(&Disease{}).Create(&D4)
+
+	D5 := Disease{
+		Name: "โรคเบาหวาน",
+	}
+	db.Model(&Disease{}).Create(&D5)
+
+	D6 := Disease{
+		Name: "โรคหลอดเลือดหัวใจตีบตัน",
+	}
+	db.Model(&Disease{}).Create(&D6)
+
+	D7 := Disease{
+		Name: "โรคหลอดเลือดสมอง",
+	}
+	db.Model(&Disease{}).Create(&D7)
+
+	//  Status  Data
+	S1 := Status{
+		Name: "เข้ารับการรักษา",
+	}
+	db.Model(&Status{}).Create(&S1)
+
+	S2 := Status{
+		Name: "ส่งตรวจแลป",
+	}
+	db.Model(&Status{}).Create(&S2)
+
+	S3 := Status{
+		Name: "นอนโรงพยาบาล ติดตามผลการรักษา",
+	}
+	db.Model(&Status{}).Create(&S3)
+
+	S4 := Status{
+		Name: "รักษาหายแล้ว",
+	}
+	db.Model(&Status{}).Create(&S4)
+
+	S5 := Status{
+		Name: "ปฏิเสธการรักษา",
+	}
+	db.Model(&Status{}).Create(&S5)
+
+	//  Track  Data
+	T1 := Track{
+		Name: "นัด",
+	}
+	db.Model(&Track{}).Create(&T1)
+
+	T2 := Track{
+		Name: "จ่ายยา",
+	}
+	db.Model(&Track{}).Create(&T2)
+
+	T3 := Track{
+		Name: "นัด และจ่ายยา",
+	}
+	db.Model(&Track{}).Create(&T3)
+
+	T4 := Track{
+		Name: "ไม่นัด",
+	}
+	db.Model(&Track{}).Create(&T4)
+
+	T5 := Track{
+		Name: "ไม่จ่ายยา",
+	}
+	db.Model(&Track{}).Create(&T5)
 }
+

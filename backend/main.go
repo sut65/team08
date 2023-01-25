@@ -114,6 +114,36 @@ func main() {
 			r.POST("/Doctor", controller.CreateDoctor)
 			r.PATCH("/Doctor", controller.UpdateDoctor)
 			r.DELETE("/Doctor/:id", controller.DeleteDoctor)
+
+			//Gg
+			// โรค
+			r.GET("/diseases", controller.ListDiseases)
+			r.GET("/diseases/:id", controller.GetDisease)
+			r.POST("/disease", controller.CreateDisease)
+			r.PATCH("/disease", controller.UpdateDisease)
+			r.DELETE("/disease/:id", controller.DeleteDisease)
+
+			// สถานะ
+			r.GET("/statuses", controller.ListStatuses)
+			r.GET("/status/:id", controller.GetStatus)
+			r.POST("/statuses", controller.CreateStatus)
+			r.PATCH("/statuses", controller.UpdateStatus)
+			r.DELETE("/status/:id", controller.DeleteStatus)
+
+			// สถานะ
+			r.GET("/tracks", controller.ListTracks)
+			r.GET("/tracks/:id", controller.GetTrack)
+			r.POST("/tracks", controller.CreateTrack)
+			r.PATCH("/tracks", controller.UpdateTrack)
+			r.DELETE("/track/:id", controller.DeleteTrack)
+
+			// ตารางหลัก ข้อมูลการรักษา
+			r.GET("/treatments", controller.ListTreatment)
+			r.GET("/treatments/:id", controller.GetTreatment)
+			r.POST("/treatments", controller.CreateTreatment)
+			r.PATCH("/treatments", controller.UpdateTreatment)
+			r.DELETE("/treatment/:id", controller.DeleteTreatment)
+
 		}
 
 	}

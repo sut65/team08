@@ -77,7 +77,9 @@ function Doctor() {
   const [Marital, setMarital] = useState<MaritalInterface[]>([]);
   const [Religion, setReligion] = useState<ReligionInterface[]>([]);
   const [Nationality, setNationality] = useState<NationalityInterface[]>([]);
-  const [AddressThailand, setAddressThailand] = useState<AddressThailandInterface[]>([]);
+  const [AddressThailand, setAddressThailand] = useState<
+    AddressThailandInterface[]
+  >([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [Educations, setEducations] = useState<EducationsInterface[]>([]);
   const [Doctor, setDoctor] = useState<DoctorInterface>({});
@@ -89,6 +91,44 @@ function Doctor() {
   const [ID_card, setID_cards] = useState<string>("");
   const [Date_of_birth, setDate_of_births] = useState<string>("");
 
+  const [DocterCode, setDocterCode] = useState<string>("");
+  const [DocterIDCar, setDocterIDCar] = useState<string>("");
+  const [FirstNameTH, setFirstNameTH] = useState<string>("");
+  const [LastNameTH, setLastNameTH] = useState<string>("");
+  const [FirstNameEN, setFirstNameEN] = useState<string>("");
+  const [LastNameEN, setLastNameEN] = useState<string>("");
+
+  const [TelPhone, setTelPhone] = useState<string>("");
+  const [ReOther, setReOther] = useState<string>("");
+  const [TelOffice, setTelOffice] = useState<string>("");
+  const [Email, setEmail] = useState<string>("");
+  const [AllAddress, setAllAddress] = useState<string>("");
+
+  const [Subdistrict, setSubdistrict] = useState<string>("");
+  const [District, setDistrict] = useState<string>("");
+  const [Province, setProvince] = useState<string>("");
+  const [FaIDCard, setFaIDCard] = useState<string>("");
+
+  const [FaFirstName, setFaFirstName] = useState<string>("");
+  const [FaLastName, setFaLastName] = useState<string>("");
+  const [FaOccupation, setFaOccupation] = useState<string>("");
+  const [MoIDCard, setMoIDCard] = useState<string>("");
+
+  const [MoFirstName, setMoFirstName] = useState<string>("");
+  const [MoLastName, setMoLastName] = useState<string>("");
+  const [MoOccupation, setMoOccupation] = useState<string>("");
+  const [WiIDCard, setWiIDCard] = useState<string>("");
+
+  const [WiFirstName, setWiFirstName] = useState<string>("");
+  const [WiLastName, setWiLastName] = useState<string>("");
+  const [WiOccupation, setWiOccupation] = useState<string>("");
+  const [WiPhone, setWiPhone] = useState<string>("");
+
+  const [EducationName, setEducationName] = useState<string>("");
+  const [EducationMajor, setEducationMajor] = useState<string>("");
+  const [University, setUniversity] = useState<string>("");
+  const [DocPassword, setDocPassword] = useState<string>("");
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -97,7 +137,7 @@ function Doctor() {
   );
 
   const handleClick = () => {
-    setIsDisabled(false)
+    setIsDisabled(false);
   };
 
   const handleClose = (
@@ -164,7 +204,7 @@ function Doctor() {
       console.log(res);
     }
   };
-    const getBlood = async () => {
+  const getBlood = async () => {
     let res = await GetBlood();
     if (res) {
       setBlood(res);
@@ -191,7 +231,6 @@ function Doctor() {
       setNationality(res);
       console.log("OkkkOkkkOkkkk");
       console.log(res);
-
     }
   };
   const getAddressThailand = async () => {
@@ -227,7 +266,7 @@ function Doctor() {
     getPolicing();
     getDocPrefix();
     getEducations();
-    setIsDisabled(!isDisabled)
+    setIsDisabled(!isDisabled);
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -237,18 +276,56 @@ function Doctor() {
 
   async function submit() {
     let data = {
-      PrefixID: convertType(Patiends.PrefixID),
-      GenderID: convertType(Patiends.GenderID),
-      PolicingID: convertType(Patiends.PolicingID),
-      Name: Name,
-      Age: convertType(Age),
-      Phone: Phone,
-      ID_card: ID_card,
-      Address: Address,
-      Date_of_birth: Date_of_birth,
+      DocterCode: DocterCode,
+	    DocterIDCard: DocterIDCar,
+      DocPrefixID: convertType(Doctor.DocPrefixID),
+      FirstNameTH: FirstNameTH,
+      LastNameTH: LastNameTH,
+      FirstNameEN: FirstNameEN,
+      LastNameEN: LastNameEN,
+      GenderID: convertType(Doctor.GenderID),
+      BloodID: convertType(Doctor.BloodID),
+      MaritalID: convertType(Doctor.MaritalID),
+      Birthday: "2001-03-03",
+      ReligionID: convertType(Doctor.ReligionID),
+      ReOther: ReOther,
+      NationalityID: convertType(Doctor.NationalityID),
+      CountryID: convertType(Doctor.CountryID),
+      TelPhone: TelPhone,
+      TelOffice: TelOffice,
+      Email: "id@gmail.com",
+      AllAddress: AllAddress,
+      Subdistrict: Subdistrict,
+      District: District,
+      Province: Province,
+      AddressID: convertType("98"),
+      FaIDCard: FaIDCard,
+      DocFaPrefixID: convertType(Doctor.DocFaPrefixID),
+      FaFirstName: FaFirstName,
+      FaLastName: FaLastName,
+      FaOccupation: FaOccupation,
+      MoIDCard: MoIDCard,
+      DocMoPrefixID: convertType(Doctor.DocMoPrefixID),
+      MoFirstName: MoFirstName,
+      MoLastName: MoLastName,
+      MoOccupation: MoOccupation,
+      WiIDCard: WiIDCard,
+      DocWiPrefixID: convertType(Doctor.DocWiPrefixID),
+      WiFirstName: WiFirstName,
+      WiLastName: WiLastName,
+      WiOccupation: WiOccupation,
+      WiPhone: WiPhone,
+      EducationID: convertType(Doctor.EducationID),
+      EducationName: EducationName,
+      EducationMajor: EducationMajor,
+      University: University,
+      DocPassword: DocPassword,
+      StartEducation: "2001-03-03",
+      EndEducation: "2001-03-03",
+
     };
     console.log(data);
-    let res = await CreatePatiend(data);
+    let res = await CreateDoctor(data);
     if (res) {
       setSuccess(true);
     } else {
@@ -322,7 +399,9 @@ function Doctor() {
               variant="outlined"
               onClick={handleClickOpen}
               startIcon={<SearchIcon />}
-            >Find</Button>
+            >
+              Find
+            </Button>
           </Grid>
           <Grid item xs={3}>
             <Button
@@ -369,22 +448,22 @@ function Doctor() {
                     <TextField
                       label="ชื่อจริง"
                       fullWidth
-                      id="Name"
+                      id="FirstNameTH"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setFirstNameTH(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="นามสกุล"
                       fullWidth
-                      id="Name"
+                      id="LastNameTH"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setLastNameTH(event.target.value)}
                     />
                   </Grid>
 
@@ -393,22 +472,22 @@ function Doctor() {
                     <TextField
                       label="First Name"
                       fullWidth
-                      id="Name"
+                      id="FirstNameEN"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setFirstNameEN(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={4.5}>
                     <TextField
                       label="Last Name"
                       fullWidth
-                      id="Name"
+                      id="LastNameEN"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setLastNameEN(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3}>
@@ -519,7 +598,7 @@ function Doctor() {
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setReOther(event.target.value)}
                     />
                   </Grid>
 
@@ -570,22 +649,22 @@ function Doctor() {
                     <TextField
                       label="รหัสประจำตัวแพทย์"
                       fullWidth
-                      id="Name"
+                      id="DocterCode"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setDocterCode(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="หมายเลขบัตรประชาชน"
                       fullWidth
-                      id="Name"
+                      id="DocterIDCar"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setDocterIDCar(event.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -611,7 +690,9 @@ function Doctor() {
                       // onClick={handleClickOpen}
                       onClick={handleClick}
                       startIcon={<SearchIcon />}
-                    >Find</Button>
+                    >
+                      Find
+                    </Button>
                   </Grid>
                   <Grid item xs={7}></Grid>
 
@@ -620,33 +701,33 @@ function Doctor() {
                     <TextField
                       label="ที่อยู่"
                       fullWidth
-                      id="Name"
+                      id="AllAddress"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setAllAddress(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
                       label="ตำบล"
                       fullWidth
-                      id="Name"
+                      id="Subdistrict"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setSubdistrict(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
                       label="อำเภอ"
                       fullWidth
-                      id="Name"
+                      id="District"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setDistrict(event.target.value)}
                     />
                   </Grid>
 
@@ -655,33 +736,33 @@ function Doctor() {
                     <TextField
                       label="จังหวัด"
                       fullWidth
-                      id="Name"
+                      id="Province"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setProvince(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3.5}>
                     <TextField
                       label="เบอร์โทรศัพท์"
                       fullWidth
-                      id="Name"
+                      id="TelPhone"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setTelPhone(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3.5}>
                     <TextField
                       label="โทรสาร"
                       fullWidth
-                      id="Name"
+                      id="TelOffice"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setTelOffice(event.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -714,44 +795,44 @@ function Doctor() {
                     <TextField
                       label="ชื่อจริง"
                       fullWidth
-                      id="Name"
+                      id="FaFirstName"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setFaFirstName(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="นามสกุล"
                       fullWidth
-                      id="Name"
+                      id="FaLastName"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setFaLastName(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
                       label="อาชีพ"
                       fullWidth
-                      id="Name"
+                      id="FaOccupation"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setFaOccupation(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="เลขบัตรประชาชน"
                       fullWidth
-                      id="Name"
+                      id="FaIDCard"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setFaIDCard(event.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -784,44 +865,44 @@ function Doctor() {
                     <TextField
                       label="ชื่อจริง"
                       fullWidth
-                      id="Name"
+                      id="MoFirstName"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setMoFirstName(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="นามสกุล"
                       fullWidth
-                      id="Name"
+                      id="MoLastName"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setMoLastName(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
                       label="อาชีพ"
                       fullWidth
-                      id="Name"
+                      id="MoOccupation"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setMoOccupation(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="เลขบัตรประชาชน"
                       fullWidth
-                      id="Name"
+                      id="MoIDCard"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setMoIDCard(event.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -854,55 +935,55 @@ function Doctor() {
                     <TextField
                       label="ชื่อจริง"
                       fullWidth
-                      id="Name"
+                      id="WiFirstName"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setWiFirstName(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="นามสกุล"
                       fullWidth
-                      id="Name"
+                      id="WiLastName"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setWiLastName(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
                       label="อาชีพ"
                       fullWidth
-                      id="Name"
+                      id="WiOccupation"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setWiOccupation(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="เลขบัตรประชาชน"
                       fullWidth
-                      id="Name"
+                      id="WiIDCard"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setWiIDCard(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={4}>
                     <TextField
                       label="เบอร์โทร"
                       fullWidth
-                      id="Name"
+                      id="WiPhone"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setWiPhone(event.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -914,10 +995,10 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
+                        value={Doctor.EducationID + ""}
                         onChange={handleChange}
                         inputProps={{
-                          name: "GenderID",
+                          name: "EducationID",
                         }}
                       >
                         <option aria-label="None" value="">
@@ -935,62 +1016,62 @@ function Doctor() {
                     <TextField
                       label="ชื่อปริญา"
                       fullWidth
-                      id="Name"
+                      id="EducationName"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setEducationName(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={5}>
                     <TextField
                       label="สาขาวิชาเอก"
                       fullWidth
-                      id="Name"
+                      id="EducationMajor"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setEducationMajor(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={7}>
                     <TextField
                       label="สถานศึกษา"
                       fullWidth
-                      id="Name"
+                      id="University"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      onChange={(event) => setUniversity(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
                       label="ปีที่เข้ารับการศึกษา"
                       fullWidth
-                      id="Name"
+                      id="StartEducation	"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      // onChange={(event) => setNames(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
                       label="ปีที่จบการศึกษา"
                       fullWidth
-                      id="Name"
+                      id="EndEducation"
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setNames(event.target.value)}
+                      // onChange={(event) => setNames(event.target.value)}
                     />
                   </Grid>
                 </Grid>
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose}>ยกเลิก</Button>
-                <Button onClick={handleClose}>บันทึกข้อมูล</Button>
+                <Button onClick={submit}>บันทึกข้อมูล</Button>
               </DialogActions>
             </Dialog>
           </Grid>
@@ -1010,15 +1091,16 @@ function Doctor() {
               variant="contained"
               color="inherit"
             >
-              กลับ
+              กลับสู่หน้าหลัก
             </Button>
             <Button
               style={{ float: "right" }}
-              onClick={submit}
+              // onClick={submit}
+              // to="/"
               variant="contained"
               color="primary"
             >
-              บันทึก
+              บันทึกหลอกๆ
             </Button>
           </Grid>
         </Grid>

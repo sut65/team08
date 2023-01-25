@@ -16,6 +16,7 @@ func CreateTreatment(c *gin.Context) {
 	var patiend entity.Patiend
 	var status entity.Status
 	var track entity.Track
+	var doctor entity.Doctor
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร watchVideo
 	if err := c.ShouldBindJSON(&treatment); err != nil {
@@ -23,34 +24,40 @@ func CreateTreatment(c *gin.Context) {
 		return
 	}
 
-	// 9: ค้นหา video ด้วย id              //ของเราเป็น ค้นหา Disease ด้วย id
+	// 9: ค้นหา ค้นหา Disease ด้วย id
 	if tx := entity.DB().Where("id = ?", treatment.DiseaseID).First(&disease); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "video not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Disease not found"})
 		return
 	}
 
-	// 10: ค้นหา resolution ด้วย id			//ของเราเป็น ค้นหา Patiend ด้วย id
+	// 10: ค้นหา Patiend ด้วย id
 	if tx := entity.DB().Where("id = ?", treatment.PatiendID).First(&patiend); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "resolution not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Patiend not found"})
 		return
 	}
 
-	// 11: ค้นหา playlist ด้วย id				//ของเราเป็น ค้นหา Status ด้วย id
+	// 11: ค้นหา Status ด้วย id
 	if tx := entity.DB().Where("id = ?", treatment.StatusID).First(&status); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "playlist not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Status not found"})
 		return
 	}
-	// 11: ค้นหา playlist ด้วย id				//ของเราเป็น ค้นหา Track ด้วย id
+	// 12: ค้นหา Track ด้วย id
 	if tx := entity.DB().Where("id = ?", treatment.TrackID).First(&track); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "playlist not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Track not found"})
+		return
+	}
+	// 13: ค้นหา doctor ด้วย id
+	if tx := entity.DB().Where("id = ?", treatment.DoctorID).First(&doctor); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "doctor not found"})
 		return
 	}
 	// 12: สร้าง WatchVideo
 	wv := entity.Treatment{
-		Disease:      disease, // โยงความสัมพันธ์กับ Entity Resolution		//**โยงความสัมพันธ์กับ Entity Collegeyear
-		Patiend:      patiend, // โยงความสัมพันธ์กับ Entity Video				//**โยงความสัมพันธ์กับ Entity Faculty
-		Status:       status,  // โยงความสัมพันธ์กับ Entity Playlist				Teacher
-		Track:        track,
+		Disease:      disease, // โยงความสัมพันธ์กับ Entity
+		Patiend:      patiend, // โยงความสัมพันธ์กับ Entity
+		Status:       status,  // โยงความสัมพันธ์กับ Entity
+		Track:        track,   // โยงความสัมพันธ์กับ Entity
+		Doctor:       doctor,  // โยงความสัมพันธ์กับ Entity
 		TREATMENT_ID: treatment.TREATMENT_ID,
 		TREATMENT:    treatment.TREATMENT,
 		DATE:         treatment.DATE,
@@ -71,7 +78,7 @@ func CreateTreatment(c *gin.Context) {
 func GetTreatment(c *gin.Context) {
 	var treatment entity.Treatment
 	id := c.Param("id")
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Preload("Doctor").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -81,7 +88,7 @@ func GetTreatment(c *gin.Context) {
 // GET /
 func ListTreatment(c *gin.Context) {
 	var treatment []entity.Treatment
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments").Find(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Preload("Doctor").Raw("SELECT * FROM treatments").Find(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

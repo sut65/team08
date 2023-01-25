@@ -33,6 +33,13 @@ import { PolicingsInterface } from "../Models/IPolicing";
 import { PatiendsInterface } from "../Models/IPatiend";
 
 import { DocPrefixInterface } from "../Models/IDocPrefix";
+import { BloodInterface } from "../Models/IBlood";
+import { MaritalInterface } from "../Models/IMarital";
+import { ReligionInterface } from "../Models/IReligion";
+import { NationalityInterface } from "../Models/INationality";
+import { AddressThailandInterface } from "../Models/IAddressThailand";
+import { EducationsInterface } from "../Models/IEducation";
+import { DoctorInterface } from "../Models/IDoctor";
 
 import {
   GetPolicing,
@@ -40,6 +47,17 @@ import {
   GetPrefix,
   GetDocPrefix,
   CreatePatiend,
+  GetEducation,
+  GetScreening_officer,
+  CreateScreening_officer,
+  GetPatiend,
+  GetBlood,
+  GetMarital,
+  GetReligion,
+  GetNationality,
+  GetAddressThailand,
+  GetDoctor,
+  CreateDoctor,
 } from "../Services/HttpClientService";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -55,6 +73,14 @@ function Doctor() {
   const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
 
   const [DocPrefix, setDocPrefix] = useState<DocPrefixInterface[]>([]);
+  const [Blood, setBlood] = useState<BloodInterface[]>([]);
+  const [Marital, setMarital] = useState<MaritalInterface[]>([]);
+  const [Religion, setReligion] = useState<ReligionInterface[]>([]);
+  const [Nationality, setNationality] = useState<NationalityInterface[]>([]);
+  const [AddressThailand, setAddressThailand] = useState<AddressThailandInterface[]>([]);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [Educations, setEducations] = useState<EducationsInterface[]>([]);
+  const [Doctor, setDoctor] = useState<DoctorInterface>({});
 
   const [Name, setNames] = useState<string>("");
   const [Age, setAges] = useState<string>("");
@@ -69,6 +95,10 @@ function Doctor() {
   const [valueDate, setValueDate] = React.useState<Dayjs | null>(
     dayjs("2000-01-01T21:11:54")
   );
+
+  const handleClick = () => {
+    setIsDisabled(false)
+  };
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -87,6 +117,16 @@ function Doctor() {
     const value = event.target.value;
     setPatiends({
       ...Patiends,
+      [name]: value,
+    });
+    console.log(`${name}: ${value}`);
+  };
+
+  const handleChangeDoctor = (event: SelectChangeEvent) => {
+    const name = event.target.name as keyof typeof Doctor;
+    const value = event.target.value;
+    setDoctor({
+      ...Doctor,
       [name]: value,
     });
     console.log(`${name}: ${value}`);
@@ -124,6 +164,50 @@ function Doctor() {
       console.log(res);
     }
   };
+    const getBlood = async () => {
+    let res = await GetBlood();
+    if (res) {
+      setBlood(res);
+      console.log(res);
+    }
+  };
+  const getMarital = async () => {
+    let res = await GetMarital();
+    if (res) {
+      setMarital(res);
+      console.log(res);
+    }
+  };
+  const getReligion = async () => {
+    let res = await GetReligion();
+    if (res) {
+      setReligion(res);
+      console.log(res);
+    }
+  };
+  const getNationality = async () => {
+    let res = await GetNationality();
+    if (res) {
+      setNationality(res);
+      console.log("OkkkOkkkOkkkk");
+      console.log(res);
+
+    }
+  };
+  const getAddressThailand = async () => {
+    let res = await GetAddressThailand();
+    if (res) {
+      setAddressThailand(res);
+      console.log(res);
+    }
+  };
+  const getEducations = async () => {
+    let res = await GetEducation();
+    if (res) {
+      setEducations(res);
+      console.log(res);
+    }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -133,10 +217,17 @@ function Doctor() {
   };
 
   useEffect(() => {
+    getBlood();
+    getMarital();
+    getReligion();
+    getNationality();
+    getAddressThailand();
     getGender();
     getPrefix();
     getPolicing();
     getDocPrefix();
+    getEducations();
+    setIsDisabled(!isDisabled)
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -257,10 +348,10 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.DocPrefixID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "DocPrefixID",
                         }}
                       >
                         <option aria-label="None" value="">
@@ -339,8 +430,8 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.GenderID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
                           name: "GenderID",
                         }}
@@ -348,9 +439,9 @@ function Doctor() {
                         <option aria-label="None" value="">
                           เพศ
                         </option>
-                        {DocPrefix.map((item: DocPrefixInterface) => (
+                        {Genders.map((item: GendersInterface) => (
                           <option value={item.ID} key={item.ID}>
-                            {item.PreInitialTH}
+                            {item.Description}
                           </option>
                         ))}
                       </Select>
@@ -360,18 +451,18 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.BloodID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "BloodID",
                         }}
                       >
                         <option aria-label="None" value="">
                           หมู่โลหิต
                         </option>
-                        {DocPrefix.map((item: DocPrefixInterface) => (
+                        {Blood.map((item: BloodInterface) => (
                           <option value={item.ID} key={item.ID}>
-                            {item.PreInitialTH}
+                            {item.Phenotype}
                           </option>
                         ))}
                       </Select>
@@ -381,18 +472,18 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.MaritalID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "MaritalID",
                         }}
                       >
                         <option aria-label="None" value="">
                           สถานภาพ
                         </option>
-                        {DocPrefix.map((item: DocPrefixInterface) => (
+                        {Marital.map((item: MaritalInterface) => (
                           <option value={item.ID} key={item.ID}>
-                            {item.PreInitialTH}
+                            {item.MaritalStatus}
                           </option>
                         ))}
                       </Select>
@@ -402,18 +493,18 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.ReligionID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "ReligionID",
                         }}
                       >
                         <option aria-label="None" value="">
                           ศาสนา
                         </option>
-                        {DocPrefix.map((item: DocPrefixInterface) => (
+                        {Religion.map((item: ReligionInterface) => (
                           <option value={item.ID} key={item.ID}>
-                            {item.PreInitialTH}
+                            {item.ReligionType}
                           </option>
                         ))}
                       </Select>
@@ -421,8 +512,8 @@ function Doctor() {
                   </Grid>
                   <Grid item xs={2}>
                     <TextField
-                      label="อื่นๆ "
-                      // disabled
+                      label="โปรดระบุฯ "
+                      disabled={isDisabled}
                       fullWidth
                       id="ddaa"
                       type="string"
@@ -437,18 +528,18 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.NationalityID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "NationalityID",
                         }}
                       >
                         <option aria-label="None" value="">
                           สัญชาติ
                         </option>
-                        {DocPrefix.map((item: DocPrefixInterface) => (
+                        {Nationality.map((item: NationalityInterface) => (
                           <option value={item.ID} key={item.ID}>
-                            {item.PreInitialTH}
+                            {item.NationalityType}
                           </option>
                         ))}
                       </Select>
@@ -458,18 +549,18 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.CountryID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "CountryID",
                         }}
                       >
                         <option aria-label="None" value="">
                           เชื้อชาติ
                         </option>
-                        {DocPrefix.map((item: DocPrefixInterface) => (
+                        {Nationality.map((item: NationalityInterface) => (
                           <option value={item.ID} key={item.ID}>
-                            {item.PreInitialTH}
+                            {item.NationalityType}
                           </option>
                         ))}
                       </Select>
@@ -517,7 +608,8 @@ function Doctor() {
                     <Button
                       fullWidth
                       variant="outlined"
-                      onClick={handleClickOpen}
+                      // onClick={handleClickOpen}
+                      onClick={handleClick}
                       startIcon={<SearchIcon />}
                     >Find</Button>
                   </Grid>
@@ -601,10 +693,10 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.DocFaPrefixID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "DocFaPrefixID",
                         }}
                       >
                         <option aria-label="None" value="">
@@ -671,10 +763,10 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.DocMoPrefixID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "DocMoPrefixID",
                         }}
                       >
                         <option aria-label="None" value="">
@@ -741,10 +833,10 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
-                        value={Patiends.GenderID + ""}
-                        onChange={handleChange}
+                        value={Doctor.DocWiPrefixID + ""}
+                        onChange={handleChangeDoctor}
                         inputProps={{
-                          name: "GenderID",
+                          name: "DocWiPrefixID",
                         }}
                       >
                         <option aria-label="None" value="">
@@ -831,9 +923,9 @@ function Doctor() {
                         <option aria-label="None" value="">
                           ระดับการศึกษาสูงสุด
                         </option>
-                        {DocPrefix.map((item: DocPrefixInterface) => (
+                        {Educations.map((item: EducationsInterface) => (
                           <option value={item.ID} key={item.ID}>
-                            {item.PreInitialTH}
+                            {item.Description}
                           </option>
                         ))}
                       </Select>

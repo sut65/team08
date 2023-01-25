@@ -1,7 +1,8 @@
-import React from "react";
+//import React from "react";
 import { PatiendsInterface } from "../Models/IPatiend";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { DoctorInterface } from "../Models/IDoctor";
+import { TreatmentsInterface } from "../Models/ITreatment";
 
 const apiUrl = "http://localhost:8080";
 
@@ -337,7 +338,7 @@ async function CreatePatiend(data: PatiendsInterface) {
 
   return res;
 }
-
+//เดียร์น่าจะลืมแก้
 async function CreateDoctor(data: PatiendsInterface) {
   const requestOptions = {
     method: "POST",
@@ -364,6 +365,119 @@ async function CreateDoctor(data: PatiendsInterface) {
   return res;
 }
 
+//Gg
+async function GetTreatment() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/treatments`, requestOptions) //////////
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
+async function GetStatus() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+         // Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/statuses`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
+async function GetTrack() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+         // Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/tracks`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
+
+async function GetDisease() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/diseases`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
+async function Treatment(data: TreatmentsInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/treatments`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
 export {
   GetPolicing,
   GetEducation,
@@ -381,4 +495,11 @@ export {
   GetAddressThailand,
   GetDoctor,
   CreateDoctor,
+
+  //Gg
+  GetTreatment,
+  GetStatus,
+  GetDisease,
+  GetTrack,
+  Treatment,
 };

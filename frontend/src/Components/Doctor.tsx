@@ -67,6 +67,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function Doctor() {
+  const apiUrl = "http://localhost:8080";
+  const requestOptionsGet = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  };
+
   const [Patiends, setPatiends] = useState<PatiendsInterface>({});
   const [Genders, setGenders] = useState<GendersInterface[]>([]);
   const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
@@ -82,14 +88,8 @@ function Doctor() {
   >([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [Educations, setEducations] = useState<EducationsInterface[]>([]);
-  const [Doctor, setDoctor] = useState<DoctorInterface>({});
-
-  const [Name, setNames] = useState<string>("");
-  const [Age, setAges] = useState<string>("");
-  const [Phone, setPhones] = useState<string>("");
-  const [Address, setAddresses] = useState<string>("");
-  const [ID_card, setID_cards] = useState<string>("");
-  const [Date_of_birth, setDate_of_births] = useState<string>("");
+  const [Doctor, setDoctor] = useState<Partial<DoctorInterface>>({});
+  const [DoctorA, setDoctorA] = useState<DoctorInterface[]>([]);
 
   const [DocterCode, setDocterCode] = useState<string>("");
   const [DocterIDCar, setDocterIDCar] = useState<string>("");
@@ -136,8 +136,25 @@ function Doctor() {
     dayjs("2000-01-01T21:11:54")
   );
 
-  const handleClick = () => {
+  const handleClickAnyRegion = () => {
+    console.log(Doctor.ReligionID);
     setIsDisabled(false);
+  };
+  
+  const getDocCode = async () => {
+    let new_Date: Date = new Date();
+    let result: string = new_Date.toLocaleString();
+
+    fetch(`${apiUrl}/Doctors`, requestOptionsGet)
+    .then((response) => response.json())
+    .then((res) => {
+        // console.log(res.data.length);
+        let num: number = ((+(result[7]+result[8]))*1000)+(res.data.length)+1
+        let docid: string = "D"+num.toString();
+        // console.log("The date is: " + docid);
+        setDocterCode(docid);
+
+    });
   };
 
   const handleClose = (
@@ -159,7 +176,7 @@ function Doctor() {
       ...Patiends,
       [name]: value,
     });
-    console.log(`${name}: ${value}`);
+    // console.log(`${name}: ${value}`);
   };
 
   const handleChangeDoctor = (event: SelectChangeEvent) => {
@@ -169,7 +186,13 @@ function Doctor() {
       ...Doctor,
       [name]: value,
     });
-    console.log(`${name}: ${value}`);
+
+    // console.log(Doctor.ReligionID)
+    if(event.target.value==="5") {
+      setIsDisabled(false);
+    }else{
+      setIsDisabled(true);
+    }
   };
 
   const handleChangeDate = (newValue: Dayjs | null) => {
@@ -180,71 +203,81 @@ function Doctor() {
     let res = await GetGender();
     if (res) {
       setGenders(res);
-      console.log(res);
+      // console.log(res);
     }
   };
   const getDocPrefix = async () => {
     let res = await GetDocPrefix();
     if (res) {
       setDocPrefix(res);
-      console.log(res);
+      // console.log(res);
     }
   };
   const getPrefix = async () => {
     let res = await GetPrefix();
     if (res) {
       setPrefixs(res);
-      console.log(res);
+      // console.log(res);
     }
   };
   const getPolicing = async () => {
     let res = await GetPolicing();
     if (res) {
       setPolicings(res);
-      console.log(res);
+      // console.log(res);
     }
   };
   const getBlood = async () => {
     let res = await GetBlood();
     if (res) {
       setBlood(res);
-      console.log(res);
+      // console.log(res);
     }
   };
+  const getDoctor = async () => {
+    let res = await GetDoctor();
+    if (res) {
+      setDoctor(res);
+      setDoctorA(res);
+      // console.log("set Doctor & DoctorA");
+      // console.log(res);
+    }
+  };
+
   const getMarital = async () => {
     let res = await GetMarital();
     if (res) {
       setMarital(res);
-      console.log(res);
+      // console.log(res);
     }
   };
   const getReligion = async () => {
     let res = await GetReligion();
     if (res) {
       setReligion(res);
-      console.log(res);
+      // console.log(res);
     }
   };
   const getNationality = async () => {
     let res = await GetNationality();
     if (res) {
       setNationality(res);
-      console.log("OkkkOkkkOkkkk");
-      console.log(res);
+      // // console.log("OkkkOkkkOkkkk");
+      // // console.log(res);
     }
   };
   const getAddressThailand = async () => {
     let res = await GetAddressThailand();
     if (res) {
       setAddressThailand(res);
-      console.log(res);
+      // console.log(res);
     }
   };
   const getEducations = async () => {
     let res = await GetEducation();
     if (res) {
       setEducations(res);
-      console.log(res);
+      // console.log(res);
     }
   };
 
@@ -256,6 +289,7 @@ function Doctor() {
   };
 
   useEffect(() => {
+    getDoctor();
     getBlood();
     getMarital();
     getReligion();
@@ -267,6 +301,8 @@ function Doctor() {
     getDocPrefix();
     getEducations();
     setIsDisabled(!isDisabled);
+    getDocCode();
+
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -282,23 +318,26 @@ function Doctor() {
       FirstNameTH: FirstNameTH,
       LastNameTH: LastNameTH,
       FirstNameEN: FirstNameEN,
+
       LastNameEN: LastNameEN,
       GenderID: convertType(Doctor.GenderID),
       BloodID: convertType(Doctor.BloodID),
       MaritalID: convertType(Doctor.MaritalID),
-      Birthday: "2001-03-03",
+      
       ReligionID: convertType(Doctor.ReligionID),
       ReOther: ReOther,
       NationalityID: convertType(Doctor.NationalityID),
       CountryID: convertType(Doctor.CountryID),
       TelPhone: TelPhone,
       TelOffice: TelOffice,
-      Email: "id@gmail.com",
+
+      Email: Email,
       AllAddress: AllAddress,
       Subdistrict: Subdistrict,
       District: District,
       Province: Province,
       AddressID: convertType("98"),
+
       FaIDCard: FaIDCard,
       DocFaPrefixID: convertType(Doctor.DocFaPrefixID),
       FaFirstName: FaFirstName,
@@ -306,30 +345,35 @@ function Doctor() {
       FaOccupation: FaOccupation,
       MoIDCard: MoIDCard,
       DocMoPrefixID: convertType(Doctor.DocMoPrefixID),
+
       MoFirstName: MoFirstName,
       MoLastName: MoLastName,
       MoOccupation: MoOccupation,
       WiIDCard: WiIDCard,
       DocWiPrefixID: convertType(Doctor.DocWiPrefixID),
       WiFirstName: WiFirstName,
+      
       WiLastName: WiLastName,
       WiOccupation: WiOccupation,
       WiPhone: WiPhone,
       EducationID: convertType(Doctor.EducationID),
       EducationName: EducationName,
       EducationMajor: EducationMajor,
+
       University: University,
       DocPassword: DocPassword,
-      StartEducation: "2001-03-03",
-      EndEducation: "2001-03-03",
-
     };
+    console.log("กดดดดดดดด");
     console.log(data);
     let res = await CreateDoctor(data);
+    // console.log(res);
     if (res) {
       setSuccess(true);
+      getDocCode();
+      // console.log("เข้า");
     } else {
       setError(true);
+      // console.log("ไม่เข้า");
     }
   }
 
@@ -647,12 +691,14 @@ function Doctor() {
                   </Grid>
                   <Grid item xs={2.6}>
                     <TextField
+                      disabled
                       label="รหัสประจำตัวแพทย์"
                       fullWidth
                       id="DocterCode"
                       type="string"
                       variant="outlined"
                       size="small"
+                      defaultValue={DocterCode}
                       onChange={(event) => setDocterCode(event.target.value)}
                     />
                   </Grid>
@@ -688,13 +734,23 @@ function Doctor() {
                       fullWidth
                       variant="outlined"
                       // onClick={handleClickOpen}
-                      onClick={handleClick}
+                      // onClick={handleClickAnyRegion}
                       startIcon={<SearchIcon />}
                     >
                       Find
                     </Button>
                   </Grid>
-                  <Grid item xs={7}></Grid>
+                  <Grid item xs={6.7}>
+                  <TextField
+                      label="อีเมล์"
+                      fullWidth
+                      id="Email"
+                      type="string"
+                      variant="outlined"
+                      size="small"
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </Grid>
 
                   {/* <ที่อยู่ ตำบล อำเภอ/> */}
                   <Grid item xs={6}>
@@ -996,7 +1052,7 @@ function Doctor() {
                       <Select
                         native
                         value={Doctor.EducationID + ""}
-                        onChange={handleChange}
+                        onChange={handleChangeDoctor}
                         inputProps={{
                           name: "EducationID",
                         }}

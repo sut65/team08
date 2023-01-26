@@ -8,6 +8,7 @@ import { AddressThailandInterface } from "./IAddressThailand";
 import { EducationsInterface } from "./IEducation";
 
 export interface DoctorInterface {
+	ID?: number;
     DocterCode?:   string,
 	DocterIDCar?: string,
 	DocPrefixID?:	number,
@@ -19,7 +20,7 @@ export interface DoctorInterface {
 	GenderID?:	number,
 	BloodID?:		number,
 	MaritalID?:	number,
-	Birthday?:   Date | null,
+
 	ReligionID?:	number,
 	ReOther?:    string,
 	NationalityID?:	number,
@@ -59,17 +60,23 @@ export interface DoctorInterface {
 	University?:     string,
 	DocPassword?:	   string,
 
-	StartEducation?: Date | null,
-	EndEducation?:   Date | null,
+	// StartEducation?: Date | null,
+	// EndEducation?:   Date | null,
+	// Birthday?:   Date | null,
+
+	DocFaPrefix?: DocPrefixInterface,
+	DocMoPrefix?: DocPrefixInterface,
+	DocWiPrefix?: DocPrefixInterface,
+
 
     Gender?: GendersInterface,
     Blood?: BloodInterface,
     Marital?: MaritalInterface,
     Religion?: ReligionInterface,
+
     Nationality?: NationalityInterface,
     Country?: NationalityInterface,
     Address?: AddressThailandInterface,
     DocPrefix?: DocPrefixInterface,
     Education?: EducationsInterface,
-
 }

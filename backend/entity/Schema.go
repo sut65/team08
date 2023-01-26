@@ -13,6 +13,7 @@ type Gender struct {
 	Patiend           []Patiend           `gorm:"foreignKey:GenderID"`
 	Screening_officer []Screening_officer `gorm:"foreignKey:GenderID"`
 	Doctor            []Doctor            `gorm:"foreignKey:GenderID"`
+	Med_Employee      []Med_Employee `gorm:"foreignKey:GenderID"`
 }
 
 type Prefix struct {
@@ -21,6 +22,7 @@ type Prefix struct {
 
 	Patiend           []Patiend           `gorm:"foreignKey:PrefixID"`
 	Screening_officer []Screening_officer `gorm:"foreignKey:PrefixID"`
+	Med_Employee     []Med_Employee `gorm:"foreignKey:PrefixID"`
 }
 
 type Education struct {
@@ -29,6 +31,7 @@ type Education struct {
 
 	Screening_officer []Screening_officer `gorm:"foreignKey:EducationID"`
 	Doctor            []Doctor            `gorm:"foreignKey:EducationID"`
+	Med_Employee []Med_Employee `gorm:"foreignKey:EducationID"`
 }
 
 type Screening_officer struct {
@@ -381,3 +384,23 @@ type Appoint struct {
 	Levelcure         Levelcure         `gorm:"references:id"`
 	Department        Department        `gorm:"references:id"`
 }
+
+//Leo
+//ADD
+type Med_Employee struct {
+	gorm.Model
+	Name     string
+	Age      uint
+	Phone    string
+	Email    string
+	Password string
+
+	GenderID      *uint
+	PrefixID      *uint
+	EducationID   *uint
+	Gender        Gender          `gorm:"references:id"`
+	Prefix        Prefix          `gorm:"references:id"`
+	Education     Education       `gorm:"references:id"`
+	//Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_EmployeeID"`
+}
+

@@ -9,6 +9,7 @@ import { DispenseInterface } from "../Models/IDispense";
 import { AppointInterface } from "../Models/IAppoint";
 import { MedEmployeeInterface } from "../Models/IMedEmployee";
 import { MedicalEquimentInterface } from "../Models/IMedEquipment";
+import { RequestInterface } from "../Models/IRequest";
 
 const apiUrl = "http://localhost:8080";
 
@@ -1114,6 +1115,73 @@ async function GetMedEmployee() {
   
     return res;
   }
+
+  //Gg
+  //ระบบการเบิก
+async function Request(data: RequestInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/requests`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function GetLocation() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/locations`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function GetRequest() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/requests`, requestOptions) //////////
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
   
 
 
@@ -1176,5 +1244,9 @@ export {
   GetMedStatus,
   MedicalEquipments,
 
-  
+  //Gg
+  Request,
+  GetLocation,
+  GetRequest,
+
 };

@@ -43,6 +43,8 @@ import MedEmployees from "./Components/MedEmployees";
 import MedEmployeesCreate from "./Components/MedEmployeesCreate";
 import MedicalEquipmentCreate from "./Components/MedicalEquipmentCreate";
 import MedicalEquipments from "./Components/MedicalEquipment";
+import RequestCreate from "./Components/RequestCreate";
+import Request from "./Components/Request";
 
 // import SignIn from "./components/SignIn";
 
@@ -118,6 +120,10 @@ const menu = [
   { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
   { name: "MedicalEmployee", icon: <BookIcon />, path: "/medemployees" },
   { name: "MedicalEquipment", icon: <BookIcon />, path: "/medicalequipment" },
+
+  //Gg
+  { name: "บันทึกการเบิกอุปกรณ์แลป", icon: <PeopleIcon />, path: "request/create" },
+  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <BookIcon />, path: "requests" },
 ];
 
 function App() {
@@ -243,6 +249,10 @@ function App() {
                 <Route path="/medemployees/create" element={<MedEmployeesCreate/>}/>
                 <Route path="/medicalequipment" element={<MedicalEquipments />} />
                 <Route path="/medicalequipment/create" element={<MedicalEquipmentCreate />}/>
+
+                <Route path="/requests" element={<Request />} />
+                <Route path="/request/create" element={<RequestCreate />} />
+                
               </Routes>
             </Container>
           </Box>

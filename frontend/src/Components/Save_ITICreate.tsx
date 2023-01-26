@@ -207,7 +207,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
                 </option>
                 {treatment.map((item: TreatmentsInterface) => (
                   <option value={item.ID} key={item.ID}>
-                    {item.TREATMENT}
+                    {item.TREATMENT_ID}
                   </option>
                 ))}
               </Select>

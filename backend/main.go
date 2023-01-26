@@ -207,6 +207,28 @@ func main() {
 			r.PATCH("/dispense", controller.UpdateDispense)
 			r.DELETE("/dispense/:id", controller.DeleteDispense)
 
+			//Aern2
+			// Departments Routes 6
+			r.GET("/department", controller.ListDepartments)
+			r.GET("/department/:id", controller.GetDepartment)
+			r.POST("/department", controller.CreateDepartment)
+			r.PATCH("/department", controller.UpdateDepartment)
+			r.DELETE("/department/:id", controller.DeleteDepartment)
+
+			// Levelcure Routes 7
+			r.GET("/levelcure", controller.ListLevelcures)
+			r.GET("/levelcure/:id", controller.GetLevelcure)
+			r.POST("/levelcure", controller.CreateLevelcure)
+			r.PATCH("/levelcure", controller.UpdateLevelcure)
+			r.DELETE("/levelcure/:id", controller.DeleteLevelcure)
+
+			// Appoint Routes 9
+			r.GET("/appoint", controller.ListAppoints)
+			r.GET("/appoint/:id", controller.GetAppoint)
+			r.POST("/appoint", controller.CreateAppoint)
+			r.PATCH("/appoint", controller.UpdateAppoint)
+			r.DELETE("/appoint/:id", controller.DeleteAppoint)
+
 		}
 
 	}

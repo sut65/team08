@@ -54,6 +54,7 @@ func SetupDatabase() {
 
 		// J
 		&Building{}, &Room{}, &State{}, &Save_ITI{}, Operating_Room{},
+
 		//Aern
 		&Drug{},
 		&Practice{},

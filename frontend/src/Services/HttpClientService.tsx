@@ -7,6 +7,7 @@ import { Save_ITIsInterface } from "../Models/ISave_ITI";
 import { Operating_RoomsInterface } from "../Models/IOperating_Room";
 import { DispenseInterface } from "../Models/IDispense";
 import { AppointInterface } from "../Models/IAppoint";
+import { MedEmployeeInterface } from "../Models/IMedEmployee";
 
 const apiUrl = "http://localhost:8080";
 
@@ -970,6 +971,57 @@ async function GetLevelcure() {
   return res;
 }
 
+//LEO
+async function GetMedEmployee() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      //Authorization: Bearer ${localStorage.getItem("token")},
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/medemployees`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+
+  }
+
+  async function CreateMedEmployee(data: MedEmployeeInterface) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        //Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+  
+    let res = await fetch(`${apiUrl}/medemployees`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          // console.log(res.data);
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+  }
+  
+
+
 
 export {
   GetPolicing,
@@ -1021,5 +1073,10 @@ export {
   GetLevelcure,
   GetDepartment,
   ListReady_Appoint,
+
+  //LEO
+  GetMedEmployee,
+  CreateMedEmployee,
+
   
 };

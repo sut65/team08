@@ -39,6 +39,8 @@ import DispenseList from "./Components/DispenseList";
 import DispenseCreate from "./Components/DispenseCreate";
 import AppointList from "./Components/AppointList";
 import Appoint from "./Components/Appoint";
+import MedEmployees from "./Components/MedEmployees";
+import MedEmployeesCreate from "./Components/MedEmployeesCreate";
 
 // import SignIn from "./components/SignIn";
 
@@ -112,6 +114,7 @@ const menu = [
   { name: "ข้อมูลการจ่ายยา", icon: <BookIcon />, path: "/DispenseList" },
   { name: "บันทึกข้อมูลการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "AppointCreate" },
   { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
+  { name: "MedicalEmployee", icon: <BookIcon />, path: "/medemployees" },
  
 ];
 
@@ -234,6 +237,8 @@ function App() {
                 <Route path="/DispenseCreate" element={<DispenseCreate />} />
                 <Route path="/AppointList" element={<AppointList />} />
                 <Route path="/AppointCreate" element={<Appoint />} />
+                <Route path="/medemployees" element={<MedEmployees />} />
+                <Route path="/medemployees/create" element={<MedEmployeesCreate/>}/>
 
               </Routes>
             </Container>

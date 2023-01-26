@@ -53,10 +53,10 @@ func CreateTreatment(c *gin.Context) {
 	// }
 	// 12: สร้าง WatchVideo
 	wv := entity.Treatment{
-		Disease:      disease, // โยงความสัมพันธ์กับ Entity
-		Patiend:      patiend, // โยงความสัมพันธ์กับ Entity
-		Status:       status,  // โยงความสัมพันธ์กับ Entity
-		Track:        track,   // โยงความสัมพันธ์กับ Entity
+		Disease: disease, // โยงความสัมพันธ์กับ Entity
+		Patiend: patiend, // โยงความสัมพันธ์กับ Entity
+		Status:  status,  // โยงความสัมพันธ์กับ Entity
+		Track:   track,   // โยงความสัมพันธ์กับ Entity
 		//Doctor:       doctor,  // โยงความสัมพันธ์กับ Entity
 		TREATMENT_ID: treatment.TREATMENT_ID,
 		TREATMENT:    treatment.TREATMENT,
@@ -135,4 +135,13 @@ func ListReady_Treat(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": save_itis})
+}
+
+func ListReady_Dispense(c *gin.Context) {
+	var ListDispense []entity.Treatment
+	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.track_id = 2 OR sa.track_id = 3").Find(&ListDispense).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": ListDispense})
 }

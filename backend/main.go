@@ -182,6 +182,7 @@ func main() {
 			r.PATCH("/treatments", controller.UpdateTreatment)
 			r.DELETE("/treatment/:id", controller.DeleteTreatment)
 			r.GET("/treatments/ready", controller.ListReady_Treat)
+			r.GET("/treatments/readyyy", controller.ListReady_Dispense)
 
 			//Aern
 

@@ -6,31 +6,31 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-import { Save_ITIsInterface } from "../Models/ISave_ITI";
-import { ListSave_ITIs } from "../Services/HttpClientService";
+import { Operating_RoomsInterface } from "../Models/IOperating_Room";
+import { GetOperating_Room } from "../Services/HttpClientService";
 
 
-function Save_ITIList() {
-    const [Save_ITIs, setSave_ITIs] = useState<Save_ITIsInterface[]>([]);
+function Operating_RoomList() {
+    const [Operating_Rooms, setOperating_Rooms] = useState<Operating_RoomsInterface[]>([]);
   
     useEffect(() => {
-      getSave_ITIs();
+      getOperating_Rooms();
     }, []);
   
-    const getSave_ITIs = async () => {
-      let res = await ListSave_ITIs();
+    const getOperating_Rooms = async () => {
+      let res = await GetOperating_Room();
       if (res) {
-        setSave_ITIs(res);
+        setOperating_Rooms(res);
       } 
     };
   
     const columns: GridColDef[] = [
       { field: "ID", headerName: "ลำดับ", width: 50 },
       {
-        field: "TreatmentID",
-        headerName: "การรักษา",
-        width: 100,
-        valueFormatter: (params) => params.value.Name,
+        field: "Save_ITI",
+        headerName: "คนไข้ภายในที่ได้รับการผ่าตัด",
+        width: 200,
+        valueFormatter: (params) => params.value.ID,
       },
       {
         field: "Building",
@@ -44,15 +44,7 @@ function Save_ITIList() {
         width: 100,
         valueFormatter: (params) => params.value.Name,
       },
-      {
-        field: "State",
-        headerName: "สถานะ",
-        width: 175,
-        valueFormatter: (params) => params.value.Name,
-      },
-      { field: "Date_checkin", headerName: "วันเวลาที่เข้า", width: 200 },
-      { field: "Date_checkout", headerName: "วันเวลาที่ออก", width: 200 },
-
+      { field: "Datetime", headerName: "วันเวลาที่จอง", width: 200 },
     ];
   
     return (
@@ -71,23 +63,23 @@ function Save_ITIList() {
                 color="primary"
                 gutterBottom
               >
-                ข้อมูลการรักษาคนไข้ภายใน
+                ข้อมูลการจองห้องผ่าตัด
               </Typography>
             </Box>
             <Box>
               <Button
                 component={RouterLink}
-                to="/save_itiCreate"
+                to="/operating_roomCreate"
                 variant="contained"
                 color="primary"
               >
-                จัดการข้อมูลการรักษาคนไข้ภายใน
+                จองห้องผ่าตัด
               </Button>
             </Box>
           </Box>
           <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
             <DataGrid
-              rows={Save_ITIs}
+              rows={Operating_Rooms}
               getRowId={(row) => row.ID}
               columns={columns}
               pageSize={5}
@@ -99,4 +91,4 @@ function Save_ITIList() {
     );
   }
   
-  export default Save_ITIList;
+  export default Operating_RoomList;

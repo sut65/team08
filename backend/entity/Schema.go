@@ -257,6 +257,11 @@ type Treatment struct {
 	Disease   Disease `gorm:"references:id"`
 
 	Save_ITI *Save_ITI `gorm:"foreignkey:TreatmentID"`
+
+	// Save_ITIID *uint
+	// // เป็นข้อมูล user เมื่อ join ตาราง
+	// Save_ITI Save_ITI `gorm:"references:id"`
+
 }
 
 // J

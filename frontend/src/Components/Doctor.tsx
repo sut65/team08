@@ -83,9 +83,7 @@ function Doctor() {
   const [Marital, setMarital] = useState<MaritalInterface[]>([]);
   const [Religion, setReligion] = useState<ReligionInterface[]>([]);
   const [Nationality, setNationality] = useState<NationalityInterface[]>([]);
-  const [AddressThailand, setAddressThailand] = useState<
-    AddressThailandInterface[]
-  >([]);
+  const [AddressThailand, setAddressThailand] = useState<AddressThailandInterface[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [Educations, setEducations] = useState<EducationsInterface[]>([]);
   const [Doctor, setDoctor] = useState<Partial<DoctorInterface>>({});

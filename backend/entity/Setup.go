@@ -64,6 +64,9 @@ func SetupDatabase() {
 		&Levelcure{},
 		//LEO
 		&Med_Employee{},
+		&Brand{},
+		&Med_Status{},
+		&Med_Equipment{},
 
 	)
 
@@ -53088,4 +53091,32 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิสวัสดิการการรักษาพยาบาลของข้าราชการ").Scan(&Levelcure_1)
 	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิประกันสังคม").Scan(&Levelcure_2)
 	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิหลักประกันสุขภาพ30บาท").Scan(&Levelcure_3)
+	
+
+	// LEO
+	brand_1 := Brand{
+		Brand_name: "ALPK2",
+	}
+	db.Model(&Brand{}).Create(&brand_1)
+
+	brand_2 := Brand{
+		Brand_name: "3M",
+	}
+	db.Model(&Brand{}).Create(&brand_2)
+
+	brand_3 := Brand{
+		Brand_name: "KAWE",
+	}
+	db.Model(&Brand{}).Create(&brand_3)
+
+	// Status Data
+	status_A := Med_Status{
+		Status_name: "Ready",
+	}
+	db.Model(&Med_Status{}).Create(&status_A)
+
+	status_B := Med_Status{
+		Status_name: "Not Ready",
+	}
+	db.Model(&Med_Status{}).Create(&status_B)
 }

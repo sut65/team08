@@ -264,12 +264,14 @@ type Building struct {
 	gorm.Model
 	Name     string     `gorm:"uniqueIndex"`
 	Save_ITI []Save_ITI `gorm:"foreignKey:BuildingID"`
+	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
 }
 
 type Room struct {
 	gorm.Model
 	Name     string     `gorm:"uniqueIndex"`
 	Save_ITI []Save_ITI `gorm:"foreignKey:RoomID"`
+	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
 }
 
 type State struct {
@@ -283,8 +285,8 @@ type Save_ITI struct {
 	Date_checkin  time.Time
 	Date_checkout time.Time
 	
-	TREATMENT   Treatment `gorm:"references:id"`
-	TREATMENT_ID *uint
+	Treatment   Treatment `gorm:"references:id"`
+	TreatmentID *uint
 	Building    Building `gorm:"references:id"`
 	BuildingID  *uint
 	Room        Room `gorm:"references:id"`

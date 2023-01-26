@@ -121,8 +121,8 @@ type Marital struct {
 type Religion struct {
 	gorm.Model
 	ReligionType string
-	
-	Doctor       []Doctor `gorm:"foreignKey:ReligionID"`
+
+	Doctor []Doctor `gorm:"foreignKey:ReligionID"`
 }
 
 type DocPrefix struct {
@@ -132,84 +132,87 @@ type DocPrefix struct {
 	PreInitialTH string
 	PreInitialEN string
 
-	Doctor       []Doctor `gorm:"foreignKey:DocPrefixID"`
+	Doctor []Doctor `gorm:"foreignKey:DocPrefixID"`
 }
 
 type Doctor struct {
 	gorm.Model
-	DocterCode   string		
-	DocterIDCard string		
-	DocPrefixID	*uint
+	DocterCode   string
+	DocterIDCard string
+	DocPrefixID  *uint
 	FirstNameTH  string
 	LastNameTH   string
 	FirstNameEN  string
 
-	LastNameEN string
-	GenderID	*uint
-	BloodID		*uint
-	MaritalID	*uint
-	Birthday   time.Time
-	ReligionID	*uint
-	ReOther    string
-	NationalityID	*uint
-	CountryID		*uint
-	TelPhone   string
-	TelOffice  string
+	LastNameEN    string
+	GenderID      *uint
+	BloodID       *uint
+	MaritalID     *uint
+	Birthday      time.Time
+	ReligionID    *uint
+	ReOther       string
+	NationalityID *uint
+	CountryID     *uint
+	TelPhone      string
+	TelOffice     string
 
-	Email       string		
+	Email       string
 	AllAddress  string
 	Subdistrict string
 	District    string
 	Province    string
-	AddressID	*uint
+	AddressID   *uint
 
-	FaIDCard     string
-	DocFaPrefixID	*uint
-	FaFirstName  string
-	FaLastName   string
-	FaOccupation string
-	MoIDCard     string
-	DocMoPrefixID	*uint
+	FaIDCard      string
+	DocFaPrefixID *uint
+	FaFirstName   string
+	FaLastName    string
+	FaOccupation  string
+	MoIDCard      string
+	DocMoPrefixID *uint
 
-	MoFirstName  string
-	MoLastName   string
-	MoOccupation string
-	WiIDCard     string
-	DocWiPrefixID	*uint
-	WiFirstName  string
+	MoFirstName   string
+	MoLastName    string
+	MoOccupation  string
+	WiIDCard      string
+	DocWiPrefixID *uint
+	WiFirstName   string
 
 	WiLastName     string
 	WiOccupation   string
 	WiPhone        string
-	EducationID	*uint
+	EducationID    *uint
 	EducationName  string
 	EducationMajor string
 
-	University     string
-	DocPassword	   string
+	University  string
+	DocPassword string
 
 	StartEducation time.Time
 	EndEducation   time.Time
 
-	DocPrefix	DocPrefix	`gorm:"references:id"`
-	Gender		Gender		`gorm:"references:id"`
-	Blood		Blood		`gorm:"references:id"`
-	Marital		Marital		`gorm:"references:id"`
-	Religion	Religion	`gorm:"references:id"`
-	Address		AddressThailand		`gorm:"references:id"`
-	Education	Education	`gorm:"references:id"`
+	DocPrefix DocPrefix       `gorm:"references:id"`
+	Gender    Gender          `gorm:"references:id"`
+	Blood     Blood           `gorm:"references:id"`
+	Marital   Marital         `gorm:"references:id"`
+	Religion  Religion        `gorm:"references:id"`
+	Address   AddressThailand `gorm:"references:id"`
+	Education Education       `gorm:"references:id"`
 
-	Nationality	Nationality `gorm:"references:id"`
-	Country		Nationality `gorm:"references:id"`
+	Nationality Nationality `gorm:"references:id"`
+	Country     Nationality `gorm:"references:id"`
 
-	DocFaPrefix	DocPrefix	`gorm:"references:id"`
-	DocMoPrefix DocPrefix	`gorm:"references:id"`
-	DocWiPrefix DocPrefix	`gorm:"references:id"`
+	DocFaPrefix DocPrefix `gorm:"references:id"`
+	DocMoPrefix DocPrefix `gorm:"references:id"`
+	DocWiPrefix DocPrefix `gorm:"references:id"`
 	//Gg
 	Treatments []Treatment `gorm:"foreignKey:DoctorID"`
+
+	//Aern
+	Dispense []Dispense `gorm:"foreignkey:DoctorID"`
 }
 
-//ระบบข้อมูลการรักษา ของกริม
+// ระบบข้อมูลการรักษา ของกริม
 // โรค Disease
 type Disease struct {
 	gorm.Model
@@ -217,6 +220,7 @@ type Disease struct {
 	//1 โรค มีผู้ป่วยหลายคน
 	Patiends []Patiend `gorm:"foreignKey:DiseaseID"`
 }
+
 // สถานะการรักษา Status
 type Status struct {
 	gorm.Model
@@ -224,6 +228,7 @@ type Status struct {
 	//1 สถานะ มีผู้ป่วยหลายคน
 	Patiends []Patiend `gorm:"foreignKey:StatusID"`
 }
+
 // สถานะติดตามผล Status
 type Track struct {
 	gorm.Model
@@ -231,6 +236,7 @@ type Track struct {
 	//1 สถานะติดตามผล มีผู้ป่วยหลายคน
 	Patiends []Patiend `gorm:"foreignKey:TrackID"`
 }
+
 // การรักษา
 type Treatment struct {
 	gorm.Model
@@ -258,30 +264,28 @@ type Treatment struct {
 
 	Save_ITI *Save_ITI `gorm:"foreignkey:TreatmentID"`
 
-	// Save_ITIID *uint
-	// // เป็นข้อมูล user เมื่อ join ตาราง
-	// Save_ITI Save_ITI `gorm:"references:id"`
-
+	//Aern
+	Dispense []Dispense `gorm:"foreignkey:TreatmentID"`
 }
 
 // J
 type Building struct {
 	gorm.Model
-	Name     string     `gorm:"uniqueIndex"`
-	Save_ITI []Save_ITI `gorm:"foreignKey:BuildingID"`
+	Name           string           `gorm:"uniqueIndex"`
+	Save_ITI       []Save_ITI       `gorm:"foreignKey:BuildingID"`
 	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
 }
 
 type Room struct {
 	gorm.Model
-	Name     string     `gorm:"uniqueIndex"`
-	Save_ITI []Save_ITI `gorm:"foreignKey:RoomID"`
+	Name           string           `gorm:"uniqueIndex"`
+	Save_ITI       []Save_ITI       `gorm:"foreignKey:RoomID"`
 	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
 }
 
 type State struct {
 	gorm.Model
-	Name     string     `gorm:"uniqueIndex"`
+	Name          string     `gorm:"uniqueIndex"`
 	Save_Save_ITI []Save_ITI `gorm:"foreignKey:StateID"`
 }
 
@@ -289,7 +293,7 @@ type Save_ITI struct {
 	gorm.Model
 	Date_checkin  time.Time
 	Date_checkout time.Time
-	
+
 	Treatment   Treatment `gorm:"references:id"`
 	TreatmentID *uint
 	Building    Building `gorm:"references:id"`
@@ -304,12 +308,44 @@ type Save_ITI struct {
 
 type Operating_Room struct {
 	gorm.Model
-	Datetime  time.Time
+	Datetime time.Time
 
-	Save_ITI Save_ITI `gorm:"references:id"`
+	Save_ITI   Save_ITI `gorm:"references:id"`
 	Save_ITIID *uint
-	Building    Building `gorm:"references:id"`
-	BuildingID  *uint
-	Room        Room `gorm:"references:id"`
-	RoomID      *uint
+	Building   Building `gorm:"references:id"`
+	BuildingID *uint
+	Room       Room `gorm:"references:id"`
+	RoomID     *uint
+}
+
+// Aern
+type Drug struct {
+	gorm.Model
+	Name string
+
+	Dispense []Dispense `gorm:"foreignkey:DrugID"`
+}
+
+type Practice struct {
+	gorm.Model
+
+	Name     string
+	Dispense []Dispense `gorm:"foreignkey:PracticeID"`
+}
+
+type Dispense struct {
+	gorm.Model
+	Date time.Time
+
+	Number      string
+	Text        string
+	DoctorID    *uint
+	TreatmentID *uint
+	DrugID      *uint
+	PracticeID  *uint
+
+	Doctor    Doctor    `gorm:"references:id"`
+	Treatment Treatment `gorm:"references:id"`
+	Drug      Drug      `gorm:"references:id"`
+	Practice  Practice  `gorm:"references:id"`
 }

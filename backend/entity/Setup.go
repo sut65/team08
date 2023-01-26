@@ -62,6 +62,9 @@ func SetupDatabase() {
 		&Appoint{},
 		&Department{},
 		&Levelcure{},
+		//LEO
+		&Med_Employee{},
+
 	)
 
 	db = database

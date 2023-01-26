@@ -8,6 +8,7 @@ import { Operating_RoomsInterface } from "../Models/IOperating_Room";
 import { DispenseInterface } from "../Models/IDispense";
 import { AppointInterface } from "../Models/IAppoint";
 import { MedEmployeeInterface } from "../Models/IMedEmployee";
+import { MedicalEquimentInterface } from "../Models/IMedEquipment";
 
 const apiUrl = "http://localhost:8080";
 
@@ -1019,8 +1020,101 @@ async function GetMedEmployee() {
   
     return res;
   }
+  async function  GetBrand() {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        //Authorization: Bearer ${localStorage.getItem("token")},
+        "Content-Type": "application/json",
+      },
+    };
   
-
+    let res = await fetch(`${apiUrl}/brands`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data);
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+  
+    }
+  
+    async function  GetMedStatus() {
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          //Authorization: Bearer ${localStorage.getItem("token")},
+          "Content-Type": "application/json",
+        },
+      };
+    
+      let res = await fetch(`${apiUrl}/medstatuses`, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.data) {
+            console.log(res.data);
+            return res.data;
+          } else {
+            return false;
+          }
+        });
+    
+      return res;
+    
+      }
+  
+  
+  async function MedicalEquipments(data: MedicalEquimentInterface) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+       // Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+  
+    let res = await fetch(`${apiUrl}/medicalequipments`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+  }
+  
+  async function GetMedicalEquipments() {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        //Authorization: Bearer ${localStorage.getItem("token")},
+        "Content-Type": "application/json",
+      },
+    };
+  
+    let res = await fetch(`${apiUrl}/medicalequipments`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data);
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+  }
+  
 
 
 export {
@@ -1077,6 +1171,10 @@ export {
   //LEO
   GetMedEmployee,
   CreateMedEmployee,
+  GetMedicalEquipments,
+  GetBrand,
+  GetMedStatus,
+  MedicalEquipments,
 
   
 };

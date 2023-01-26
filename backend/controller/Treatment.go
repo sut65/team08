@@ -16,7 +16,7 @@ func CreateTreatment(c *gin.Context) {
 	var patiend entity.Patiend
 	var status entity.Status
 	var track entity.Track
-	var doctor entity.Doctor
+	//var doctor entity.Doctor
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร watchVideo
 	if err := c.ShouldBindJSON(&treatment); err != nil {
@@ -46,18 +46,18 @@ func CreateTreatment(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Track not found"})
 		return
 	}
-	// 13: ค้นหา doctor ด้วย id
-	if tx := entity.DB().Where("id = ?", treatment.DoctorID).First(&doctor); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "doctor not found"})
-		return
-	}
+	// // 13: ค้นหา doctor ด้วย id
+	// if tx := entity.DB().Where("id = ?", treatment.DoctorID).First(&doctor); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "doctor not found"})
+	// 	return
+	// }
 	// 12: สร้าง WatchVideo
 	wv := entity.Treatment{
 		Disease:      disease, // โยงความสัมพันธ์กับ Entity
 		Patiend:      patiend, // โยงความสัมพันธ์กับ Entity
 		Status:       status,  // โยงความสัมพันธ์กับ Entity
 		Track:        track,   // โยงความสัมพันธ์กับ Entity
-		Doctor:       doctor,  // โยงความสัมพันธ์กับ Entity
+		//Doctor:       doctor,  // โยงความสัมพันธ์กับ Entity
 		TREATMENT_ID: treatment.TREATMENT_ID,
 		TREATMENT:    treatment.TREATMENT,
 		DATE:         treatment.DATE,
@@ -78,7 +78,7 @@ func CreateTreatment(c *gin.Context) {
 func GetTreatment(c *gin.Context) {
 	var treatment entity.Treatment
 	id := c.Param("id")
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Preload("Doctor").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -88,7 +88,7 @@ func GetTreatment(c *gin.Context) {
 // GET /
 func ListTreatment(c *gin.Context) {
 	var treatment []entity.Treatment
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Preload("Doctor").Raw("SELECT * FROM treatments").Find(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments").Find(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

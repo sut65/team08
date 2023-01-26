@@ -1,4 +1,4 @@
-import { TreatmentInterface } from "./ITreatment";
+import { TreatmentsInterface } from "./ITreatment";
 import { BuildingInterface } from "./IBuilding";
 import { RoomInterface } from "./IRoom";
 import { StateInterface } from "./IState";
@@ -7,7 +7,7 @@ export interface Save_ITIsInterface {
     ID?: number;
 
     TreatmentID?: number;
-    Treatment?: TreatmentInterface;
+    Treatment?: TreatmentsInterface;
 
     BuildingID?: number;
     Building?: BuildingInterface;

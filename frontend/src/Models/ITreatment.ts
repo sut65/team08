@@ -6,7 +6,7 @@ import { TrackInterface } from "./ITrack";
 
 export interface TreatmentsInterface {
     ID?: number;
-    TREATMENT_ID?: number;
+    TREATMENT_ID?: string;
     TREATMENT?: string;
     DATE?: Date | null;
     APPOINTMENT?: string;

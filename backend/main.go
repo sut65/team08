@@ -230,6 +230,14 @@ func main() {
 			r.PATCH("/appoint", controller.UpdateAppoint)
 			r.DELETE("/appoint/:id", controller.DeleteAppoint)
 
+			//LEO
+			// Medical Equipment Employee Routes
+			r.GET("/medemployees", controller.ListMedEmployees)
+			r.GET("/medemployees/:id", controller.GetMedEmployee)
+			r.POST("/medemployees", controller.CreateMedEmployee)
+			r.PATCH("/medemployees", controller.UpdateMedEmployee)
+			r.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
+
 		}
 
 	}

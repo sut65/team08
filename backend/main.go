@@ -21,6 +21,44 @@ func main() {
 	{
 		//router.Use(middlewares.Authorizes())
 		{
+			// J
+			//Building
+			r.GET("/Buildings", controller.ListBuildings)
+			r.GET("/Building/:id", controller.GetBuilding)
+			r.POST("/Building", controller.CreateBuilding)
+			r.PATCH("/Building", controller.UpdateBuilding)
+			r.DELETE("/Building/:id", controller.DeleteBuilding)
+
+			//Room
+			r.GET("/Rooms", controller.ListRooms)
+			r.GET("/Room/:id", controller.GetRoom)
+			r.POST("/Room", controller.CreateRoom)
+			r.PATCH("/Room", controller.UpdateRoom)
+			r.DELETE("/Room/:id", controller.DeleteRoom)
+
+			//State
+			r.GET("/States", controller.ListStates)
+			r.GET("/State/:id", controller.GetState)
+			r.POST("/States", controller.CreateState)
+			r.PATCH("/States", controller.UpdateState)
+			r.DELETE("/State/:id", controller.DeleteState)
+
+			//Save_ITI
+			r.GET("/Save_ITIs", controller.ListSave_ITIs)
+			r.GET("/Save_ITI/:id", controller.GetSave_ITI)
+			r.POST("/Save_ITIs", controller.CreateSave_ITI)
+			r.PATCH("/Save_ITI", controller.UpdateSave_ITI)
+			r.DELETE("/Save_ITI/:id", controller.DeleteSave_ITI)
+			r.GET("/Save_ITIs/ready", controller.ListReady_Save)
+
+			//Operating_Room
+			r.GET("/Operating_Rooms", controller.ListOperating_Rooms)
+			r.GET("/Operating_Room/:id", controller.GetOperating_Room)
+			r.POST("/Operating_Rooms", controller.CreateOperating_Room)
+			r.PATCH("/Operating_Room", controller.UpdateOperating_Room)
+			r.DELETE("/Operating_Room/:id", controller.DeleteOperating_Room)
+			//---------------------------------------------------
+
 			// Screening_officer
 			r.GET("/Screening_officers", controller.ListScreening_officer)
 			r.GET("/Screening_officer/:id", controller.GetScreening_officer)
@@ -114,6 +152,37 @@ func main() {
 			r.POST("/Doctor", controller.CreateDoctor)
 			r.PATCH("/Doctor", controller.UpdateDoctor)
 			r.DELETE("/Doctor/:id", controller.DeleteDoctor)
+
+			//Gg
+			// โรค
+			r.GET("/diseases", controller.ListDiseases)
+			r.GET("/diseases/:id", controller.GetDisease)
+			r.POST("/disease", controller.CreateDisease)
+			r.PATCH("/disease", controller.UpdateDisease)
+			r.DELETE("/disease/:id", controller.DeleteDisease)
+
+			// สถานะ
+			r.GET("/statuses", controller.ListStatuses)
+			r.GET("/status/:id", controller.GetStatus)
+			r.POST("/statuses", controller.CreateStatus)
+			r.PATCH("/statuses", controller.UpdateStatus)
+			r.DELETE("/status/:id", controller.DeleteStatus)
+
+			// สถานะ
+			r.GET("/tracks", controller.ListTracks)
+			r.GET("/tracks/:id", controller.GetTrack)
+			r.POST("/tracks", controller.CreateTrack)
+			r.PATCH("/tracks", controller.UpdateTrack)
+			r.DELETE("/track/:id", controller.DeleteTrack)
+
+			// ตารางหลัก ข้อมูลการรักษา ************************************************************
+			r.GET("/treatments", controller.ListTreatment)
+			r.GET("/treatments/:id", controller.GetTreatment)
+			r.POST("/treatments", controller.CreateTreatment)
+			r.PATCH("/treatments", controller.UpdateTreatment)
+			r.DELETE("/treatment/:id", controller.DeleteTreatment)
+			r.GET("/treatments/ready", controller.ListReady_Treat)
+
 		}
 
 	}

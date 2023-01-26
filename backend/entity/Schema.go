@@ -70,6 +70,19 @@ type Patiend struct {
 	Gender     Gender   `gorm:"references:id"`
 	Prefix     Prefix   `gorm:"references:id"`
 	Policing   Policing `gorm:"references:id"`
+
+	//Gg
+	DiseaseID *uint
+	// เป็นข้อมูล user เมื่อ join ตาราง
+	Disease Disease `gorm:"references:id"`
+
+	StatusID *uint
+	// เป็นข้อมูล user เมื่อ join ตาราง
+	Status Status `gorm:"references:id"`
+
+	TrackID *uint
+	// เป็นข้อมูล user เมื่อ join ตาราง
+	Track Track `gorm:"references:id"`
 }
 
 type Blood struct {
@@ -124,8 +137,8 @@ type DocPrefix struct {
 
 type Doctor struct {
 	gorm.Model
-	DocterCode   string		`gorm:"uniqueIndex"`
-	DocterIDCard string		`gorm:"uniqueIndex"`
+	DocterCode   string		
+	DocterIDCard string		
 	DocPrefixID	*uint
 	FirstNameTH  string
 	LastNameTH   string
@@ -143,7 +156,7 @@ type Doctor struct {
 	TelPhone   string
 	TelOffice  string
 
-	Email       string		`gorm:"uniqueIndex"`
+	Email       string		
 	AllAddress  string
 	Subdistrict string
 	District    string
@@ -173,7 +186,7 @@ type Doctor struct {
 	EducationMajor string
 
 	University     string
-	DocPassword	   string 	`json:"-"`
+	DocPassword	   string
 
 	StartEducation time.Time
 	EndEducation   time.Time
@@ -192,5 +205,111 @@ type Doctor struct {
 	DocFaPrefix	DocPrefix	`gorm:"references:id"`
 	DocMoPrefix DocPrefix	`gorm:"references:id"`
 	DocWiPrefix DocPrefix	`gorm:"references:id"`
+	//Gg
+	Treatments []Treatment `gorm:"foreignKey:DoctorID"`
+}
 
+//ระบบข้อมูลการรักษา ของกริม
+// โรค Disease
+type Disease struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	//1 โรค มีผู้ป่วยหลายคน
+	Patiends []Patiend `gorm:"foreignKey:DiseaseID"`
+}
+// สถานะการรักษา Status
+type Status struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	//1 สถานะ มีผู้ป่วยหลายคน
+	Patiends []Patiend `gorm:"foreignKey:StatusID"`
+}
+// สถานะติดตามผล Status
+type Track struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	//1 สถานะติดตามผล มีผู้ป่วยหลายคน
+	Patiends []Patiend `gorm:"foreignKey:TrackID"`
+}
+// การรักษา
+type Treatment struct {
+	gorm.Model
+	TREATMENT_ID string
+	TREATMENT    string
+	DATE         time.Time
+	APPOINTMENT  string
+	CONCLUSION   string
+	GUIDANCE     string
+
+	DoctorID *uint
+	Doctor   Doctor `gorm:"references:id"`
+
+	StatusID *uint
+	Status   Status `gorm:"references:id"`
+
+	TrackID *uint
+	Track   Track `gorm:"references:id"`
+
+	PatiendID *uint
+	Patiend   Patiend `gorm:"references:id"`
+
+	DiseaseID *uint
+	Disease   Disease `gorm:"references:id"`
+
+	Save_ITI *Save_ITI `gorm:"foreignkey:TreatmentID"`
+
+	// Save_ITIID *uint
+	// // เป็นข้อมูล user เมื่อ join ตาราง
+	// Save_ITI Save_ITI `gorm:"references:id"`
+
+}
+
+// J
+type Building struct {
+	gorm.Model
+	Name     string     `gorm:"uniqueIndex"`
+	Save_ITI []Save_ITI `gorm:"foreignKey:BuildingID"`
+	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
+}
+
+type Room struct {
+	gorm.Model
+	Name     string     `gorm:"uniqueIndex"`
+	Save_ITI []Save_ITI `gorm:"foreignKey:RoomID"`
+	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
+}
+
+type State struct {
+	gorm.Model
+	Name     string     `gorm:"uniqueIndex"`
+	Save_Save_ITI []Save_ITI `gorm:"foreignKey:StateID"`
+}
+
+type Save_ITI struct {
+	gorm.Model
+	Date_checkin  time.Time
+	Date_checkout time.Time
+	
+	Treatment   Treatment `gorm:"references:id"`
+	TreatmentID *uint
+	Building    Building `gorm:"references:id"`
+	BuildingID  *uint
+	Room        Room `gorm:"references:id"`
+	RoomID      *uint
+	State       State `gorm:"references:id"`
+	StateID     *uint
+
+	Operating_Room *Operating_Room `gorm:"foreignkey:Save_ITIID"`
+}
+
+type Operating_Room struct {
+	gorm.Model
+	Datetime  time.Time
+
+	Save_ITI Save_ITI `gorm:"references:id"`
+	Save_ITIID *uint
+	Building    Building `gorm:"references:id"`
+	BuildingID  *uint
+	Room        Room `gorm:"references:id"`
+	RoomID      *uint
 }

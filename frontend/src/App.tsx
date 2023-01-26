@@ -29,6 +29,13 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
  import PatiendCreate from "./Components/PatiendCreate";
  import PatiendList from "./Components/PatiendList";
  import Doctor from "./Components/Doctor";
+ import Treatment from "./Components/Treatment";
+ import TreatmentCreate from "./Components/TreatmentCreate";
+ import Save_ITI from "./Components/Save_ITI";
+ import Save_ITICreate from "./Components/Save_ITICreate";
+ import Operating_Room from "./Components/Operating_Room";
+ import Operating_RoomCreate from "./Components/Operating_RoomCreate";
+
 // import SignIn from "./components/SignIn";
 
 const drawerWidth = 240;
@@ -90,6 +97,14 @@ const menu = [
   { name: "บันทึกข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendCreate" },
   { name: "ข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendList" },
   { name: "ข้อมูลแพทย์", icon: <LocalHospitalIcon />, path: "/Doctor" },
+  { name: "บันทึกข้อการรักษา", icon: <PeopleIcon />, path: "/Treatment/create" }, //Gg
+  { name: "ข้อมูลการรักษา", icon: <BookIcon />, path: "Treatments" }, //Gg
+  //J
+  { name: "จัดการข้อมูลคนไข้ภายใน", icon: <PeopleIcon />, path: "/Save_ITICreate" },
+  { name: "ข้อมูลคนไข้ภายใน", icon: <BookIcon />, path: "/Save_ITI" },
+  { name: "จองห้องผ่าตัด", icon: <PeopleIcon />, path: "/Operating_RoomCreate" },
+  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <BookIcon />, path: "/Operating_Room"}
+ 
 ];
 
 function App() {
@@ -201,6 +216,13 @@ function App() {
                 <Route path="/PatiendCreate" element={<PatiendCreate />} /> 
                 <Route path="/PatiendList" element={<PatiendList />} />
                 <Route path="/Doctor" element={<Doctor />} />
+                <Route path="/Treatments" element={<Treatment />} />
+                <Route path="/Treatment/create" element={<TreatmentCreate />} />
+                <Route path="/Save_ITICreate" element={<Save_ITICreate />} />
+                <Route path="/Save_ITI" element={<Save_ITI />} />
+                <Route path="/Operating_RoomCreate" element={<Operating_RoomCreate />} />
+                <Route path="/Operating_Room" element={<Operating_Room />} />
+
               </Routes>
             </Container>
           </Box>

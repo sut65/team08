@@ -691,6 +691,54 @@ async function GetReady_Save_ITI(id: any) {
 }
 //---------------------------------------------
 
+// ทำให้คนไข้ภายในขึ้น นอนรักษาโรงพยาบาล
+
+async function ListReady_Treat() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/treatments/ready`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log(res.data);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
+async function GetReady_Treat(id: any) {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+// ****************
+  let res = await fetch(`${apiUrl}/treatments/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log(res.data);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
 export {
   GetPolicing,
   GetEducation,
@@ -715,6 +763,9 @@ export {
   GetDisease,
   GetTrack,
   Treatment,
+  ListReady_Treat,
+  GetReady_Treat,
+
 
   //J
   GetState,

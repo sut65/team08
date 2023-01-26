@@ -181,6 +181,7 @@ func main() {
 			r.POST("/treatments", controller.CreateTreatment)
 			r.PATCH("/treatments", controller.UpdateTreatment)
 			r.DELETE("/treatment/:id", controller.DeleteTreatment)
+			r.GET("/treatments/ready", controller.ListReady_Treat)
 
 		}
 

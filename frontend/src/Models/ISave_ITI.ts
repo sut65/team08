@@ -6,8 +6,8 @@ import { StateInterface } from "./IState";
 export interface Save_ITIsInterface {
     ID?: number;
 
-    TreatmentID?: number;
-    Treatment?: TreatmentsInterface;
+    TREATMENT_ID?: number;
+    TREATMENT?: TreatmentsInterface;
 
     BuildingID?: number;
     Building?: BuildingInterface;

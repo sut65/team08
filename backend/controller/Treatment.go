@@ -127,3 +127,12 @@ func UpdateTreatment(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": treatment})
 }
+
+func ListReady_Treat(c *gin.Context) {
+	var save_itis []entity.Treatment
+	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.status_id = 3").Find(&save_itis).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": save_itis})
+}

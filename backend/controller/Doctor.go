@@ -88,9 +88,11 @@ func CreateDoctor(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", Doctor.DocWiPrefixID).First(&DocWiPrefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
-		return
+	if *Doctor.DocWiPrefixID != 99 {
+		if tx := entity.DB().Where("id = ?", Doctor.DocWiPrefixID).First(&DocWiPrefix); tx.RowsAffected == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+			return
+		}
 	}
 
 	createDoctor := entity.Doctor{

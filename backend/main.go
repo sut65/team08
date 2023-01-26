@@ -238,6 +238,29 @@ func main() {
 			r.PATCH("/medemployees", controller.UpdateMedEmployee)
 			r.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
 
+			
+			// Brand Routes
+			r.GET("/brands", controller.ListBrands)
+			r.GET("/brands/:id", controller.GetBrand)
+			r.POST("/brands", controller.CreateBrand)
+			r.PATCH("/brands", controller.UpdateBrand)
+			r.DELETE("/brands/:id", controller.DeleteBrand)
+
+			// Status Routes
+			r.GET("/medstatuses", controller.ListMedStatuses)
+			r.GET("/medstatuses/:id", controller.GetMedStatus)
+			r.POST("/medstatuses", controller.CreateMedStatus)
+			r.PATCH("/medstatuses", controller.UpdateMedStatus)
+			r.DELETE("/medstatuses/:id", controller.DeleteMedStatus)
+
+			// med equipment Routes
+			r.GET("/medicalequipments", controller.ListMedEquipments)
+			r.GET("/medicalequipment/:id", controller.GetMedEquipment)
+			r.POST("/medicalequipments", controller.CreateMedEquipment)
+			r.PATCH("/medicalequipments", controller.UpdateMedEquipment)
+			r.DELETE("/medicalequipments/:id", controller.DeleteMedEquipment)
+
+
 		}
 
 	}

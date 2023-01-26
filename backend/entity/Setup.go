@@ -1,8 +1,9 @@
 package entity
 
 import (
-	"golang.org/x/crypto/bcrypt"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -57,6 +58,9 @@ func SetupDatabase() {
 		&Drug{},
 		&Practice{},
 		&Dispense{},
+		&Appoint{},
+		&Department{},
+		&Levelcure{},
 	)
 
 	db = database
@@ -53038,4 +53042,46 @@ func SetupDatabase() {
 		Name: "ไม่จ่ายยา",
 	}
 	db.Model(&Track{}).Create(&T5)
+
+	db.Model(&Department{}).Create(&Department{Name: "แผนกฉุกเฉินและอุบัติเหตุ – Emergency Room"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกผู้ป่วยนอก – Outpatient Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกผู้ป่วยใน – Inpatient Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกรังสีกรรม – Radiology Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกศัลยกรรม – Surgical Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกวิสัญญี – Department of Anaesthesia"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกกุมารเวชกรรม – Pediatrics Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกสูตินรีเวชกรรม – Obstretic – Gynecology Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกเวชศาสตร์ฟื้นฟู – Physical Therapy Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกอายุรกรรม – Doctor Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกจักษุ – Ophthalmology Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกหู คอ จมูก – Ear nose and throat Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกเภสัชกรรม – Phamarceutical Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกจิตเวช – Psychology Department"})
+
+	var Department_1, Department_2, Department_3, Department_4, Department_5, Department_6 Department
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกฉุกเฉินและอุบัติเหตุ – Emergency Room").Scan(&Department_1)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกผู้ป่วยนอก – Outpatient Department").Scan(&Department_2)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกผู้ป่วยใน – Inpatient Department").Scan(&Department_3)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกรังสีกรรม – Radiology Department").Scan(&Department_4)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกศัลยกรรม – Surgical Department").Scan(&Department_5)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกวิสัญญี – Department of Anaesthesia").Scan(&Department_6)
+
+	var Department_7, Department_8, Department_9, Department_10, Department_11, Department_12, Department_13, Department_14 Department
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกกุมารเวชกรรม – Pediatrics Department").Scan(&Department_7)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกสูตินรีเวชกรรม – Obstretic – Gynecology Department").Scan(&Department_8)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกเวชศาสตร์ฟื้นฟู – Physical Therapy Department").Scan(&Department_9)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกอายุรกรรม – Doctor Department").Scan(&Department_10)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกจักษุ – Ophthalmology Department").Scan(&Department_11)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกหู คอ จมูก – Ear nose and throat Department").Scan(&Department_12)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกเภสัชกรรม – Phamarceutical Department").Scan(&Department_13)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แแผนกจิตเวช – Psychology Department").Scan(&Department_14)
+
+	db.Model(&Levelcure{}).Create(&Levelcure{Name: "สิทธิสวัสดิการการรักษาพยาบาลของข้าราชการ"})
+	db.Model(&Levelcure{}).Create(&Levelcure{Name: "สิทธิประกันสังคม"})
+	db.Model(&Levelcure{}).Create(&Levelcure{Name: "สิทธิหลักประกันสุขภาพ30บาท"})
+
+	var Levelcure_1, Levelcure_2, Levelcure_3 Practice
+	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิสวัสดิการการรักษาพยาบาลของข้าราชการ").Scan(&Levelcure_1)
+	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิประกันสังคม").Scan(&Levelcure_2)
+	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิหลักประกันสุขภาพ30บาท").Scan(&Levelcure_3)
 }

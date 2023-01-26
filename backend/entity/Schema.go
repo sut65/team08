@@ -426,5 +426,30 @@ type Med_Equipment struct {
 	Med_EmployeeID *uint
 	Med_Employee   Med_Employee `gorm:"references:id"`
 }
+//Gg 
+//สถานที่
+type Location struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	//1 สถสนที่ มีหลายการเบิก
+	Requests []Request `gorm:"foreignKey:LocationID"`
+}
+//ตารางหลัก การเบิก
+type Request struct {
+	gorm.Model
+	R_ID string
+	R_NAME string
+	QUANTITY    string //int
+	TIME         time.Time
+	
+	Med_EmployeeID *uint
+	Med_Employee   Med_Employee `gorm:"references:id"`
+
+	Med_EquipmentID *uint
+	Med_Equipment   Med_Equipment `gorm:"references:id"`
+
+	LocationID *uint
+	Location   Location `gorm:"references:id"`
+}
 
 

@@ -401,6 +401,30 @@ type Med_Employee struct {
 	Gender        Gender          `gorm:"references:id"`
 	Prefix        Prefix          `gorm:"references:id"`
 	Education     Education       `gorm:"references:id"`
-	//Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_EmployeeID"`
+	Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_EmployeeID"`
 }
+type Brand struct {
+	gorm.Model
+	Brand_name    string
+	Med_Equipment []Med_Equipment `gorm:"foreignKey:BrandID"`
+}
+//ข้อมูลสถานะของอุปกรณ์
+type Med_Status struct {
+	gorm.Model
+	Status_name   string
+	Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_StatusID"`
+}
+//ข้อมูลอุปกรณ์ *****************
+type Med_Equipment struct {
+	gorm.Model
+	Equipment      string
+	Quantity       uint
+	BrandID        *uint
+	Brand          Brand `gorm:"references:id"`
+	Med_StatusID   *uint
+	Med_Status     Med_Status `gorm:"references:id"`
+	Med_EmployeeID *uint
+	Med_Employee   Med_Employee `gorm:"references:id"`
+}
+
 

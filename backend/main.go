@@ -183,6 +183,7 @@ func main() {
 			r.DELETE("/treatment/:id", controller.DeleteTreatment)
 			r.GET("/treatments/ready", controller.ListReady_Treat)
 			r.GET("/treatments/readyyy", controller.ListReady_Dispense)
+			r.GET("/treatments/readyapp", controller.ListReady_Appoint)
 
 			//Aern
 

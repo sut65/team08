@@ -145,3 +145,12 @@ func ListReady_Dispense(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": ListDispense})
 }
+
+func ListReady_Appoint(c *gin.Context) {
+	var ListDispense []entity.Treatment
+	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.track_id = 1 OR sa.track_id = 3").Find(&ListDispense).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": ListDispense})
+}

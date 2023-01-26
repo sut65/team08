@@ -37,6 +37,8 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
  import Operating_RoomCreate from "./Components/Operating_RoomCreate";
 import DispenseList from "./Components/DispenseList";
 import DispenseCreate from "./Components/DispenseCreate";
+import AppointList from "./Components/AppointList";
+import Appoint from "./Components/Appoint";
 
 // import SignIn from "./components/SignIn";
 
@@ -108,6 +110,8 @@ const menu = [
   { name: "ข้อมูลการจองห้องผ่าตัด", icon: <BookIcon />, path: "/Operating_Room"},
   { name: "บันทึกข้อมูลการจ่ายยา", icon: <BookIcon />, path: "DispenseCreate" },
   { name: "ข้อมูลการจ่ายยา", icon: <BookIcon />, path: "/DispenseList" },
+  { name: "บันทึกข้อมูลการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "AppointCreate" },
+  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
  
 ];
 
@@ -228,6 +232,8 @@ function App() {
                 <Route path="/Operating_Room" element={<Operating_Room />} />
                 <Route path="/DispenseList" element={<DispenseList />} />
                 <Route path="/DispenseCreate" element={<DispenseCreate />} />
+                <Route path="/AppointList" element={<AppointList />} />
+                <Route path="/AppointCreate" element={<Appoint />} />
 
               </Routes>
             </Container>

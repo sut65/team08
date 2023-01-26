@@ -85,6 +85,7 @@ function Doctor() {
   const [Nationality, setNationality] = useState<NationalityInterface[]>([]);
   const [AddressThailand, setAddressThailand] = useState<AddressThailandInterface[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabledPrefix, setIsDisabledPrefix] = useState(false);
   const [Educations, setEducations] = useState<EducationsInterface[]>([]);
   const [Doctor, setDoctor] = useState<Partial<DoctorInterface>>({});
   const [DoctorA, setDoctorA] = useState<DoctorInterface[]>([]);
@@ -155,6 +156,22 @@ function Doctor() {
     });
   };
 
+  // const getDocCode = async () => {
+  //   let new_Date: Date = new Date();
+  //   let result: string = new_Date.toLocaleString();
+
+  //   fetch(`${apiUrl}/Doctors`, requestOptionsGet)
+  //   .then((response) => response.json())
+  //   .then((res) => {
+  //       // console.log(res.data.length);
+  //       let num: number = ((+(result[7]+result[8]))*1000)+(res.data.length)+1
+  //       let docid: string = "D"+num.toString();
+  //       // console.log("The date is: " + docid);
+  //       setDocterCode(docid);
+
+  //   });
+  // };
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -184,12 +201,40 @@ function Doctor() {
       ...Doctor,
       [name]: value,
     });
+  };
+
+  const handleChangeReligion = (event: SelectChangeEvent) => {
+    const name = event.target.name as keyof typeof Doctor;
+    const value = event.target.value;
+    setDoctor({
+      ...Doctor,
+      [name]: value,
+    });
 
     // console.log(Doctor.ReligionID)
     if(event.target.value==="5") {
       setIsDisabled(false);
     }else{
       setIsDisabled(true);
+    }
+  };
+  const handleChangeMarital = (event: SelectChangeEvent) => {
+    const name = event.target.name as keyof typeof Doctor;
+    const value = event.target.value;
+    setDoctor({
+      ...Doctor,
+      [name]: value,
+    });
+
+    // console.log(Doctor.ReligionID)
+    if(event.target.value==="0"){
+      setIsDisabledPrefix(true);
+    }else if(event.target.value==="1"){
+      setIsDisabledPrefix(true);
+    }else if(event.target.value==="4"){
+      setIsDisabledPrefix(true);
+    }else{
+      setIsDisabledPrefix(false);
     }
   };
 
@@ -300,6 +345,7 @@ function Doctor() {
     getEducations();
     setIsDisabled(!isDisabled);
     getDocCode();
+    getDocCode();
 
   }, []);
 
@@ -307,6 +353,18 @@ function Doctor() {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
   };
+
+  const convertTypePrefix = (data: string | number | undefined) => {
+    let val = typeof data === "string" ? parseInt(data) : data
+    if(typeof val === "undefined"){
+      return 99
+    }else if(val > 0){
+      return val
+    }else{
+      return 99
+    }
+  };
+
 
   async function submit() {
     let data = {
@@ -348,7 +406,7 @@ function Doctor() {
       MoLastName: MoLastName,
       MoOccupation: MoOccupation,
       WiIDCard: WiIDCard,
-      DocWiPrefixID: convertType(Doctor.DocWiPrefixID),
+      DocWiPrefixID: convertTypePrefix(Doctor.DocWiPrefixID),
       WiFirstName: WiFirstName,
       
       WiLastName: WiLastName,
@@ -594,7 +652,7 @@ function Doctor() {
                       <Select
                         native
                         value={Doctor.MaritalID + ""}
-                        onChange={handleChangeDoctor}
+                        onChange={handleChangeMarital}
                         inputProps={{
                           name: "MaritalID",
                         }}
@@ -615,7 +673,7 @@ function Doctor() {
                       <Select
                         native
                         value={Doctor.ReligionID + ""}
-                        onChange={handleChangeDoctor}
+                        onChange={handleChangeReligion}
                         inputProps={{
                           name: "ReligionID",
                         }}
@@ -968,6 +1026,7 @@ function Doctor() {
                     <FormControl fullWidth variant="outlined" size="small">
                       <Select
                         native
+                        disabled={isDisabledPrefix}
                         value={Doctor.DocWiPrefixID + ""}
                         onChange={handleChangeDoctor}
                         inputProps={{
@@ -989,6 +1048,7 @@ function Doctor() {
                     <TextField
                       label="ชื่อจริง"
                       fullWidth
+                      disabled={isDisabledPrefix}
                       id="WiFirstName"
                       type="string"
                       variant="outlined"
@@ -1000,6 +1060,7 @@ function Doctor() {
                     <TextField
                       label="นามสกุล"
                       fullWidth
+                      disabled={isDisabledPrefix}
                       id="WiLastName"
                       type="string"
                       variant="outlined"
@@ -1011,6 +1072,7 @@ function Doctor() {
                     <TextField
                       label="อาชีพ"
                       fullWidth
+                      disabled={isDisabledPrefix}
                       id="WiOccupation"
                       type="string"
                       variant="outlined"
@@ -1022,6 +1084,7 @@ function Doctor() {
                     <TextField
                       label="เลขบัตรประชาชน"
                       fullWidth
+                      disabled={isDisabledPrefix}
                       id="WiIDCard"
                       type="string"
                       variant="outlined"
@@ -1033,6 +1096,7 @@ function Doctor() {
                     <TextField
                       label="เบอร์โทร"
                       fullWidth
+                      disabled={isDisabledPrefix}
                       id="WiPhone"
                       type="string"
                       variant="outlined"

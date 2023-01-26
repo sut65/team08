@@ -35,6 +35,10 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
  import Save_ITICreate from "./Components/Save_ITICreate";
  import Operating_Room from "./Components/Operating_Room";
  import Operating_RoomCreate from "./Components/Operating_RoomCreate";
+import DispenseList from "./Components/DispenseList";
+import DispenseCreate from "./Components/DispenseCreate";
+import AppointList from "./Components/AppointList";
+import Appoint from "./Components/Appoint";
 
 // import SignIn from "./components/SignIn";
 
@@ -103,7 +107,11 @@ const menu = [
   { name: "จัดการข้อมูลคนไข้ภายใน", icon: <PeopleIcon />, path: "/Save_ITICreate" },
   { name: "ข้อมูลคนไข้ภายใน", icon: <BookIcon />, path: "/Save_ITI" },
   { name: "จองห้องผ่าตัด", icon: <PeopleIcon />, path: "/Operating_RoomCreate" },
-  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <BookIcon />, path: "/Operating_Room"}
+  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <BookIcon />, path: "/Operating_Room"},
+  { name: "บันทึกข้อมูลการจ่ายยา", icon: <BookIcon />, path: "DispenseCreate" },
+  { name: "ข้อมูลการจ่ายยา", icon: <BookIcon />, path: "/DispenseList" },
+  { name: "บันทึกข้อมูลการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "AppointCreate" },
+  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
  
 ];
 
@@ -222,6 +230,10 @@ function App() {
                 <Route path="/Save_ITI" element={<Save_ITI />} />
                 <Route path="/Operating_RoomCreate" element={<Operating_RoomCreate />} />
                 <Route path="/Operating_Room" element={<Operating_Room />} />
+                <Route path="/DispenseList" element={<DispenseList />} />
+                <Route path="/DispenseCreate" element={<DispenseCreate />} />
+                <Route path="/AppointList" element={<AppointList />} />
+                <Route path="/AppointCreate" element={<Appoint />} />
 
               </Routes>
             </Container>

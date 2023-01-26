@@ -182,6 +182,53 @@ func main() {
 			r.PATCH("/treatments", controller.UpdateTreatment)
 			r.DELETE("/treatment/:id", controller.DeleteTreatment)
 			r.GET("/treatments/ready", controller.ListReady_Treat)
+			r.GET("/treatments/readyyy", controller.ListReady_Dispense)
+			r.GET("/treatments/readyapp", controller.ListReady_Appoint)
+
+			//Aern
+
+			// Drug Routes
+			r.GET("/drugs", controller.ListDrugs)
+			r.GET("/drug/:id", controller.GetDrug)
+			r.POST("/drugs", controller.CreateDrug)
+			r.PATCH("/drugs", controller.UpdateDrug)
+			r.DELETE("/drugs/:id", controller.DeleteDrug)
+
+			// Practice Routes
+			r.GET("/practice", controller.ListPractices)
+			r.GET("/practice/:id", controller.GetPractice)
+			r.POST("/practice", controller.CreatePractice)
+			r.PATCH("/practice", controller.UpdatePractice)
+			r.DELETE("/practice/:id", controller.DeletePractice)
+
+			// Dispense Routes
+			r.GET("/dispense", controller.ListDispenses)
+			r.GET("/dispense/:id", controller.GetDispense)
+			r.POST("/dispense", controller.CreateDispense)
+			r.PATCH("/dispense", controller.UpdateDispense)
+			r.DELETE("/dispense/:id", controller.DeleteDispense)
+
+			//Aern2
+			// Departments Routes 6
+			r.GET("/department", controller.ListDepartments)
+			r.GET("/department/:id", controller.GetDepartment)
+			r.POST("/department", controller.CreateDepartment)
+			r.PATCH("/department", controller.UpdateDepartment)
+			r.DELETE("/department/:id", controller.DeleteDepartment)
+
+			// Levelcure Routes 7
+			r.GET("/levelcure", controller.ListLevelcures)
+			r.GET("/levelcure/:id", controller.GetLevelcure)
+			r.POST("/levelcure", controller.CreateLevelcure)
+			r.PATCH("/levelcure", controller.UpdateLevelcure)
+			r.DELETE("/levelcure/:id", controller.DeleteLevelcure)
+
+			// Appoint Routes 9
+			r.GET("/appoint", controller.ListAppoints)
+			r.GET("/appoint/:id", controller.GetAppoint)
+			r.POST("/appoint", controller.CreateAppoint)
+			r.PATCH("/appoint", controller.UpdateAppoint)
+			r.DELETE("/appoint/:id", controller.DeleteAppoint)
 
 		}
 

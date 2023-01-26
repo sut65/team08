@@ -46,6 +46,7 @@ type Screening_officer struct {
 	Gender      Gender    `gorm:"references:id"`
 	Prefix      Prefix    `gorm:"references:id"`
 	Education   Education `gorm:"references:id"`
+	Appoint     []Appoint `gorm:"foreignkey:Screening_officerID"`
 }
 
 type Policing struct {
@@ -266,6 +267,7 @@ type Treatment struct {
 
 	//Aern
 	Dispense []Dispense `gorm:"foreignkey:TreatmentID"`
+	Appoint  []Appoint  `gorm:"foreignkey:TreatmentID"`
 }
 
 // J
@@ -348,4 +350,34 @@ type Dispense struct {
 	Treatment Treatment `gorm:"references:id"`
 	Drug      Drug      `gorm:"references:id"`
 	Practice  Practice  `gorm:"references:id"`
+}
+
+type Levelcure struct {
+	gorm.Model
+
+	Name    string
+	Appoint []Appoint `gorm:"foreignkey:LevelcureID"`
+}
+
+type Department struct {
+	gorm.Model
+
+	Name    string
+	Appoint []Appoint `gorm:"foreignkey:DepartmentID"`
+}
+type Appoint struct {
+	gorm.Model
+	Date_now     time.Time
+	Date_appoint time.Time
+	Text_appoint string
+
+	Screening_officerID *uint
+	TreatmentID         *uint
+	LevelcureID         *uint
+	DepartmentID        *uint
+
+	Screening_officer Screening_officer `gorm:"references:id"`
+	Treatment         Treatment         `gorm:"references:id"`
+	Levelcure         Levelcure         `gorm:"references:id"`
+	Department        Department        `gorm:"references:id"`
 }

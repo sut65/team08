@@ -5,6 +5,8 @@ import { DoctorInterface } from "../Models/IDoctor";
 import { TreatmentsInterface } from "../Models/ITreatment";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 import { Operating_RoomsInterface } from "../Models/IOperating_Room";
+import { DispenseInterface } from "../Models/IDispense";
+import { AppointInterface } from "../Models/IAppoint";
 
 const apiUrl = "http://localhost:8080";
 
@@ -744,6 +746,230 @@ async function GetReady_Treat(id: any) {
 
   return res;
 }
+//เอิร์น
+async function GetDrug() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/drugs`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+async function GetPractice() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/practice`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+async function GetDispense() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/dispense`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function CreateDispense(data: DispenseInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/dispense`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+async function ListReady_Dispense() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/treatments/readyyy`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log(res.data);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function ListReady_Appoint() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/treatments/readyapp`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log(res.data);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function CreateAppoint(data: AppointInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/appoint`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+async function GetAppoint() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/appoint`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+async function GetDepartment() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/department`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetLevelcure() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/levelcure`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 
 export {
   GetPolicing,
@@ -783,4 +1009,17 @@ export {
   CreateOperating_Room,
   ListReady_Save,
   GetReady_Save_ITI,
+
+  //Aern
+  GetDrug,
+  GetPractice,
+  GetDispense,
+  CreateDispense,
+  ListReady_Dispense,
+  CreateAppoint,
+  GetAppoint,
+  GetLevelcure,
+  GetDepartment,
+  ListReady_Appoint,
+  
 };

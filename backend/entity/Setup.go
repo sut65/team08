@@ -1,8 +1,9 @@
 package entity
 
 import (
-	"golang.org/x/crypto/bcrypt"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -53,11 +54,49 @@ func SetupDatabase() {
 
 		// J
 		&Building{}, &Room{}, &State{}, &Save_ITI{}, Operating_Room{},
-		
+
+		//Aern
+		&Drug{},
+		&Practice{},
+		&Dispense{},
+		&Appoint{},
+		&Department{},
+		&Levelcure{},
 	)
 
 	db = database
-	
+	//Aern
+	db.Model(&Practice{}).Create(&Practice{Name: "ยาก่อนอาหาร ควรรับประทานก่อนอาหารอย่างน้อย 30 นาที"})
+	db.Model(&Practice{}).Create(&Practice{Name: "ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที"})
+	db.Model(&Practice{}).Create(&Practice{Name: "ยาก่อนนอน ควรรับประทานยาก่อนเข้านอน 15 – 30 นาที"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Abacavir (อะบาคาเวียร์)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Acetylcysteine (อะเซทิลซิสเทอีน)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Betahistine (เบตาฮีสทีน)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Budesonide (บูเดโซไนด์)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Clozapine (โคลซาปีน)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Fentanyl (เฟนทานิล))"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Hydroxyurea (ไฮดรอกซียูเรีย)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Lanolin (ลาโนลิน)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "ยาขับเสมหะ"})
+	db.Model(&Drug{}).Create(&Drug{Name: "โอเมพราโซล (Omeprazole)"})
+
+	var Drug_1, Drug_2, Drug_3, Drug_4, Drug_5, Drug_6, Drug_7, Drug_8, Drug_9, Drug_10 Drug
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Abacavir (อะบาคาเวียร์)").Scan(&Drug_1)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Acetylcysteine (อะเซทิลซิสเทอีน)").Scan(&Drug_2)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Betahistine (เบตาฮีสทีน)").Scan(&Drug_3)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Budesonide (บูเดโซไนด์)").Scan(&Drug_4)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Clozapine (โคลซาปีน)").Scan(&Drug_5)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Fentanyl (เฟนทานิล))").Scan(&Drug_6)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Hydroxyurea (ไฮดรอกซียูเรีย)").Scan(&Drug_7)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Lanolin (ลาโนลิน)").Scan(&Drug_8)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "ยาขับเสมหะ").Scan(&Drug_9)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "โอเมพราโซล (Omeprazole)").Scan(&Drug_10)
+
+	var Practice_1, Practice_2, Practice_3 Practice
+	db.Raw("SELECT * FROM practices WHERE name = ?", "ยาก่อนอาหาร ควรรับประทานก่อนอาหารอย่างน้อย 30 นาที").Scan(&Practice_1)
+	db.Raw("SELECT * FROM practices WHERE name = ?", "ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที").Scan(&Practice_2)
+	db.Raw("SELECT * FROM practices WHERE name = ?", "ยาก่อนนอน ควรรับประทานยาก่อนเข้านอน 15 – 30 นาที").Scan(&Practice_3)
+
 	// J
 	db.Model(&Building{}).Create(&Building{Name: "ตึก A"})
 	db.Model(&Building{}).Create(&Building{Name: "ตึก B"})
@@ -52816,7 +52855,7 @@ func SetupDatabase() {
 		TelOffice:  "044641001",
 
 		Email:       "b.mongkhonkan@gmail.com",
-		AllAddress:     "24 หมู่ 3",
+		AllAddress:  "24 หมู่ 3",
 		Subdistrict: "โคกสูง",
 		District:    "หนองกี่",
 		Province:    "บุรีรัมย์",
@@ -52841,15 +52880,15 @@ func SetupDatabase() {
 
 		DocPrefix: DocPrefix_11,
 		Gender:    Gender_one,
-		Blood:   Blood_AB,
-		Marital: Marital_1,
+		Blood:     Blood_AB,
+		Marital:   Marital_1,
 
-		Religion: Religion_1,
-		Address: AddressThailand_1917,
+		Religion:  Religion_1,
+		Address:   AddressThailand_1917,
 		Education: Education_three,
 
 		Nationality: Nationality_89,
-		Country: Nationality_21,
+		Country:     Nationality_21,
 
 		DocFaPrefix: DocPrefix_2,
 		DocMoPrefix: DocPrefix_3,
@@ -52858,56 +52897,56 @@ func SetupDatabase() {
 	})
 
 	db.Model(&Doctor{}).Create(&Doctor{
-		DocterCode: "D6300237",
+		DocterCode:   "D6300237",
 		DocterIDCard: idCardTwo,
-		FirstNameTH: "มงคล",
-		LastNameTH: "สุทน",
-		FirstNameEN: "Mongkhon",
+		FirstNameTH:  "มงคล",
+		LastNameTH:   "สุทน",
+		FirstNameEN:  "Mongkhon",
 
 		LastNameEN: "Suthon",
-		Birthday: t2,
-		TelPhone: "0928626111",
-		TelOffice: "044641002",
+		Birthday:   t2,
+		TelPhone:   "0928626111",
+		TelOffice:  "044641002",
 
-		Email: "m.suthon@gmail.com",
-		AllAddress: "1/21 หมู่ 7",
+		Email:       "m.suthon@gmail.com",
+		AllAddress:  "1/21 หมู่ 7",
 		Subdistrict: "ดอนอะราง",
-		District: "หนองกี่",
-		Province: "บุรีรัมย์",
+		District:    "หนองกี่",
+		Province:    "บุรีรัมย์",
 
-		FaIDCard: "1000067890222",
-		FaFirstName: "ประวิทย์",
-		FaLastName: "สุทน",
+		FaIDCard:     "1000067890222",
+		FaFirstName:  "ประวิทย์",
+		FaLastName:   "สุทน",
 		FaOccupation: "ค้าขาย",
-		MoIDCard: "2000067890222",
+		MoIDCard:     "2000067890222",
 
-		MoFirstName: "นาง",
-		MoLastName: "สุทน",
+		MoFirstName:  "นาง",
+		MoLastName:   "สุทน",
 		MoOccupation: "ข้าราชการ",
-		WiIDCard: "3000067890222",
-		WiFirstName: "ณัฐธิดา",
+		WiIDCard:     "3000067890222",
+		WiFirstName:  "ณัฐธิดา",
 
-		WiLastName: "สุทธิธรรม",
-		WiOccupation: "ธุรกิจส่วนตัว",
-		WiPhone: "0837520194",
-		EducationName: "แพทยศาสตร์บัณฑิต",
+		WiLastName:     "สุทธิธรรม",
+		WiOccupation:   "ธุรกิจส่วนตัว",
+		WiPhone:        "0837520194",
+		EducationName:  "แพทยศาสตร์บัณฑิต",
 		EducationMajor: "แพทยศาสตร์",
 
-		University: "มหาวิทยาลัยสงขลานครินทร์",
+		University:     "มหาวิทยาลัยสงขลานครินทร์",
 		StartEducation: t5,
-		EndEducation: t6,
+		EndEducation:   t6,
 
 		DocPrefix: DocPrefix_12,
-		Gender: Gender_one,
-		Blood: Blood_O,
-		Marital: Marital_2,
+		Gender:    Gender_one,
+		Blood:     Blood_O,
+		Marital:   Marital_2,
 
-		Religion: Religion_1,
-		Address: AddressThailand_1917,
+		Religion:  Religion_1,
+		Address:   AddressThailand_1917,
 		Education: Education_two,
 
 		Nationality: Nationality_89,
-		Country: Nationality_11,
+		Country:     Nationality_11,
 
 		DocFaPrefix: DocPrefix_2,
 		DocMoPrefix: DocPrefix_3,
@@ -53004,5 +53043,46 @@ func SetupDatabase() {
 		Name: "ไม่จ่ายยา",
 	}
 	db.Model(&Track{}).Create(&T5)
-}
 
+	db.Model(&Department{}).Create(&Department{Name: "แผนกฉุกเฉินและอุบัติเหตุ – Emergency Room"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกผู้ป่วยนอก – Outpatient Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกผู้ป่วยใน – Inpatient Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกรังสีกรรม – Radiology Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกศัลยกรรม – Surgical Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกวิสัญญี – Department of Anaesthesia"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกกุมารเวชกรรม – Pediatrics Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกสูตินรีเวชกรรม – Obstretic – Gynecology Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกเวชศาสตร์ฟื้นฟู – Physical Therapy Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกอายุรกรรม – Doctor Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกจักษุ – Ophthalmology Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกหู คอ จมูก – Ear nose and throat Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกเภสัชกรรม – Phamarceutical Department"})
+	db.Model(&Department{}).Create(&Department{Name: "แผนกจิตเวช – Psychology Department"})
+
+	var Department_1, Department_2, Department_3, Department_4, Department_5, Department_6 Department
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกฉุกเฉินและอุบัติเหตุ – Emergency Room").Scan(&Department_1)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกผู้ป่วยนอก – Outpatient Department").Scan(&Department_2)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกผู้ป่วยใน – Inpatient Department").Scan(&Department_3)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกรังสีกรรม – Radiology Department").Scan(&Department_4)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกศัลยกรรม – Surgical Department").Scan(&Department_5)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกวิสัญญี – Department of Anaesthesia").Scan(&Department_6)
+
+	var Department_7, Department_8, Department_9, Department_10, Department_11, Department_12, Department_13, Department_14 Department
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกกุมารเวชกรรม – Pediatrics Department").Scan(&Department_7)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกสูตินรีเวชกรรม – Obstretic – Gynecology Department").Scan(&Department_8)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกเวชศาสตร์ฟื้นฟู – Physical Therapy Department").Scan(&Department_9)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกอายุรกรรม – Doctor Department").Scan(&Department_10)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกจักษุ – Ophthalmology Department").Scan(&Department_11)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกหู คอ จมูก – Ear nose and throat Department").Scan(&Department_12)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แผนกเภสัชกรรม – Phamarceutical Department").Scan(&Department_13)
+	db.Raw("SELECT * FROM departments WHERE name = ?", "แแผนกจิตเวช – Psychology Department").Scan(&Department_14)
+
+	db.Model(&Levelcure{}).Create(&Levelcure{Name: "สิทธิสวัสดิการการรักษาพยาบาลของข้าราชการ"})
+	db.Model(&Levelcure{}).Create(&Levelcure{Name: "สิทธิประกันสังคม"})
+	db.Model(&Levelcure{}).Create(&Levelcure{Name: "สิทธิหลักประกันสุขภาพ30บาท"})
+
+	var Levelcure_1, Levelcure_2, Levelcure_3 Practice
+	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิสวัสดิการการรักษาพยาบาลของข้าราชการ").Scan(&Levelcure_1)
+	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิประกันสังคม").Scan(&Levelcure_2)
+	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิหลักประกันสุขภาพ30บาท").Scan(&Levelcure_3)
+}

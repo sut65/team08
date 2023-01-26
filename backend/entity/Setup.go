@@ -53,11 +53,45 @@ func SetupDatabase() {
 
 		// J
 		&Building{}, &Room{}, &State{}, &Save_ITI{}, Operating_Room{},
-		
+		//Aern
+		&Drug{},
+		&Practice{},
+		&Dispense{},
 	)
 
 	db = database
-	
+	//Aern
+	db.Model(&Practice{}).Create(&Practice{Name: "ยาก่อนอาหาร ควรรับประทานก่อนอาหารอย่างน้อย 30 นาที"})
+	db.Model(&Practice{}).Create(&Practice{Name: "ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที"})
+	db.Model(&Practice{}).Create(&Practice{Name: "ยาก่อนนอน ควรรับประทานยาก่อนเข้านอน 15 – 30 นาที"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Abacavir (อะบาคาเวียร์)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Acetylcysteine (อะเซทิลซิสเทอีน)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Betahistine (เบตาฮีสทีน)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Budesonide (บูเดโซไนด์)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Clozapine (โคลซาปีน)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Fentanyl (เฟนทานิล))"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Hydroxyurea (ไฮดรอกซียูเรีย)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Lanolin (ลาโนลิน)"})
+	db.Model(&Drug{}).Create(&Drug{Name: "ยาขับเสมหะ"})
+	db.Model(&Drug{}).Create(&Drug{Name: "โอเมพราโซล (Omeprazole)"})
+
+	var Drug_1, Drug_2, Drug_3, Drug_4, Drug_5, Drug_6, Drug_7, Drug_8, Drug_9, Drug_10 Drug
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Abacavir (อะบาคาเวียร์)").Scan(&Drug_1)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Acetylcysteine (อะเซทิลซิสเทอีน)").Scan(&Drug_2)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Betahistine (เบตาฮีสทีน)").Scan(&Drug_3)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Budesonide (บูเดโซไนด์)").Scan(&Drug_4)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Clozapine (โคลซาปีน)").Scan(&Drug_5)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Fentanyl (เฟนทานิล))").Scan(&Drug_6)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Hydroxyurea (ไฮดรอกซียูเรีย)").Scan(&Drug_7)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Lanolin (ลาโนลิน)").Scan(&Drug_8)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "ยาขับเสมหะ").Scan(&Drug_9)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "โอเมพราโซล (Omeprazole)").Scan(&Drug_10)
+
+	var Practice_1, Practice_2, Practice_3 Practice
+	db.Raw("SELECT * FROM practices WHERE name = ?", "ยาก่อนอาหาร ควรรับประทานก่อนอาหารอย่างน้อย 30 นาที").Scan(&Practice_1)
+	db.Raw("SELECT * FROM practices WHERE name = ?", "ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที").Scan(&Practice_2)
+	db.Raw("SELECT * FROM practices WHERE name = ?", "ยาก่อนนอน ควรรับประทานยาก่อนเข้านอน 15 – 30 นาที").Scan(&Practice_3)
+
 	// J
 	db.Model(&Building{}).Create(&Building{Name: "ตึก A"})
 	db.Model(&Building{}).Create(&Building{Name: "ตึก B"})
@@ -52816,7 +52850,7 @@ func SetupDatabase() {
 		TelOffice:  "044641001",
 
 		Email:       "b.mongkhonkan@gmail.com",
-		AllAddress:     "24 หมู่ 3",
+		AllAddress:  "24 หมู่ 3",
 		Subdistrict: "โคกสูง",
 		District:    "หนองกี่",
 		Province:    "บุรีรัมย์",
@@ -52841,15 +52875,15 @@ func SetupDatabase() {
 
 		DocPrefix: DocPrefix_11,
 		Gender:    Gender_one,
-		Blood:   Blood_AB,
-		Marital: Marital_1,
+		Blood:     Blood_AB,
+		Marital:   Marital_1,
 
-		Religion: Religion_1,
-		Address: AddressThailand_1917,
+		Religion:  Religion_1,
+		Address:   AddressThailand_1917,
 		Education: Education_three,
 
 		Nationality: Nationality_89,
-		Country: Nationality_21,
+		Country:     Nationality_21,
 
 		DocFaPrefix: DocPrefix_2,
 		DocMoPrefix: DocPrefix_3,
@@ -52858,56 +52892,56 @@ func SetupDatabase() {
 	})
 
 	db.Model(&Doctor{}).Create(&Doctor{
-		DocterCode: "D6300237",
+		DocterCode:   "D6300237",
 		DocterIDCard: idCardTwo,
-		FirstNameTH: "มงคล",
-		LastNameTH: "สุทน",
-		FirstNameEN: "Mongkhon",
+		FirstNameTH:  "มงคล",
+		LastNameTH:   "สุทน",
+		FirstNameEN:  "Mongkhon",
 
 		LastNameEN: "Suthon",
-		Birthday: t2,
-		TelPhone: "0928626111",
-		TelOffice: "044641002",
+		Birthday:   t2,
+		TelPhone:   "0928626111",
+		TelOffice:  "044641002",
 
-		Email: "m.suthon@gmail.com",
-		AllAddress: "1/21 หมู่ 7",
+		Email:       "m.suthon@gmail.com",
+		AllAddress:  "1/21 หมู่ 7",
 		Subdistrict: "ดอนอะราง",
-		District: "หนองกี่",
-		Province: "บุรีรัมย์",
+		District:    "หนองกี่",
+		Province:    "บุรีรัมย์",
 
-		FaIDCard: "1000067890222",
-		FaFirstName: "ประวิทย์",
-		FaLastName: "สุทน",
+		FaIDCard:     "1000067890222",
+		FaFirstName:  "ประวิทย์",
+		FaLastName:   "สุทน",
 		FaOccupation: "ค้าขาย",
-		MoIDCard: "2000067890222",
+		MoIDCard:     "2000067890222",
 
-		MoFirstName: "นาง",
-		MoLastName: "สุทน",
+		MoFirstName:  "นาง",
+		MoLastName:   "สุทน",
 		MoOccupation: "ข้าราชการ",
-		WiIDCard: "3000067890222",
-		WiFirstName: "ณัฐธิดา",
+		WiIDCard:     "3000067890222",
+		WiFirstName:  "ณัฐธิดา",
 
-		WiLastName: "สุทธิธรรม",
-		WiOccupation: "ธุรกิจส่วนตัว",
-		WiPhone: "0837520194",
-		EducationName: "แพทยศาสตร์บัณฑิต",
+		WiLastName:     "สุทธิธรรม",
+		WiOccupation:   "ธุรกิจส่วนตัว",
+		WiPhone:        "0837520194",
+		EducationName:  "แพทยศาสตร์บัณฑิต",
 		EducationMajor: "แพทยศาสตร์",
 
-		University: "มหาวิทยาลัยสงขลานครินทร์",
+		University:     "มหาวิทยาลัยสงขลานครินทร์",
 		StartEducation: t5,
-		EndEducation: t6,
+		EndEducation:   t6,
 
 		DocPrefix: DocPrefix_12,
-		Gender: Gender_one,
-		Blood: Blood_O,
-		Marital: Marital_2,
+		Gender:    Gender_one,
+		Blood:     Blood_O,
+		Marital:   Marital_2,
 
-		Religion: Religion_1,
-		Address: AddressThailand_1917,
+		Religion:  Religion_1,
+		Address:   AddressThailand_1917,
 		Education: Education_two,
 
 		Nationality: Nationality_89,
-		Country: Nationality_11,
+		Country:     Nationality_11,
 
 		DocFaPrefix: DocPrefix_2,
 		DocMoPrefix: DocPrefix_3,
@@ -53005,4 +53039,3 @@ func SetupDatabase() {
 	}
 	db.Model(&Track{}).Create(&T5)
 }
-

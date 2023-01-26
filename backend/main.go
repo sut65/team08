@@ -183,6 +183,29 @@ func main() {
 			r.DELETE("/treatment/:id", controller.DeleteTreatment)
 			r.GET("/treatments/ready", controller.ListReady_Treat)
 
+			//Aern
+
+			// Drug Routes
+			r.GET("/drugs", controller.ListDrugs)
+			r.GET("/drug/:id", controller.GetDrug)
+			r.POST("/drugs", controller.CreateDrug)
+			r.PATCH("/drugs", controller.UpdateDrug)
+			r.DELETE("/drugs/:id", controller.DeleteDrug)
+
+			// Practice Routes
+			r.GET("/practice", controller.ListPractices)
+			r.GET("/practice/:id", controller.GetPractice)
+			r.POST("/practice", controller.CreatePractice)
+			r.PATCH("/practice", controller.UpdatePractice)
+			r.DELETE("/practice/:id", controller.DeletePractice)
+
+			// Dispense Routes
+			r.GET("/dispense", controller.ListDispenses)
+			r.GET("/dispense/:id", controller.GetDispense)
+			r.POST("/dispense", controller.CreateDispense)
+			r.PATCH("/dispense", controller.UpdateDispense)
+			r.DELETE("/dispense/:id", controller.DeleteDispense)
+
 		}
 
 	}

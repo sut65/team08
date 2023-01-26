@@ -21,7 +21,7 @@ import { RoomInterface } from "../Models/IRoom";
 import { StateInterface } from "../Models/IState";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 
-import {GetTreatment,GetBuilding,GetRoom,GetState,CreateSave_ITI} from "../Services/HttpClientService";
+import {GetTreatment,GetBuilding,GetRoom,GetState,CreateSave_ITI,GetReady_Treat,ListReady_Treat} from "../Services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -40,6 +40,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
     const [Building, setBuilding] = useState<BuildingInterface[]>([]);
     const [Room, setRoom] = useState<RoomInterface[]>([]);
     const [State, setState] = useState<StateInterface[]>([]);
+    const [TreatOne, setTreatOne] = useState<Save_ITIsInterface[]>([]);
 
     // const [Date_checkin, setDate_checkin] = useState<string>("");
     // const [Time_checkin, setTime_checkin] = useState<string>("");
@@ -66,6 +67,15 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
       }, 1000);
     }
 
+    const onChange_Save = async (e: SelectChangeEvent) =>{
+      const id = e.target.value
+      let res = await GetReady_Treat(id);
+      if (res) {
+        setTreatOne(res);
+        console.log(res);
+      }
+    }
+
     const handleChange = (event: SelectChangeEvent) => {
       const name = event.target.name as keyof typeof Save_ITIs;
       const value = event.target.value;
@@ -77,7 +87,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
   };
   
   const getTreatment = async () => {
-    let res = await GetTreatment();
+    let res = await ListReady_Treat();
     if (res) {
       setTreatment(res);
       console.log(res);
@@ -119,7 +129,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
   async function submit() {
     let data = {
-      TREATMENT_ID: convertType(Save_ITIs.TREATMENT_ID),
+      TreatmentID: convertType(Save_ITIs.TreatmentID),
       BuildingID: convertType(Save_ITIs.BuildingID),
       RoomID: convertType(Save_ITIs.RoomID),
       StateID: convertType(Save_ITIs.StateID),
@@ -186,10 +196,10 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
               <p>การรักษา</p>
               <Select
                 native
-                value={Save_ITIs.TREATMENT_ID + ""}
+                value={Save_ITIs.TreatmentID + ""}
                 onChange={handleChange}
                 inputProps={{
-                  name: "TREATMENT_ID",
+                  name: "TreatmentID",
                 }}
               >
                 <option aria-label="None" value="">

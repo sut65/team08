@@ -283,8 +283,8 @@ type Save_ITI struct {
 	Date_checkin  time.Time
 	Date_checkout time.Time
 	
-	Treatment   Treatment `gorm:"references:id"`
-	TreatmentID *uint
+	TREATMENT   Treatment `gorm:"references:id"`
+	TREATMENT_ID *uint
 	Building    Building `gorm:"references:id"`
 	BuildingID  *uint
 	Room        Room `gorm:"references:id"`

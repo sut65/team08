@@ -21,7 +21,7 @@ func CreateSave_ITI(c *gin.Context) {
 	// c.JSON(http.StatusOK, gin.H{"data": save_iti})
 
 	var Save_ITI entity.Save_ITI
-	var Treatment entity.Treatment
+	var TREATMENT entity.Treatment
 	var Building entity.Building
 	var Room entity.Room
 	var State entity.State
@@ -33,7 +33,7 @@ func CreateSave_ITI(c *gin.Context) {
 	}
 
 	// 10 ค้นหา Treatment ด้วย id
-	if tx := entity.DB().Where("id = ?", Save_ITI.TreatmentID).First(&Treatment); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", Save_ITI.TREATMENT_ID).First(&TREATMENT); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "not found Treatment"})
 		return
 	}
@@ -61,7 +61,7 @@ func CreateSave_ITI(c *gin.Context) {
 		Date_checkin: Save_ITI.Date_checkin,
 		Date_checkout: Save_ITI.Date_checkout,
 
-		Treatment: 	Treatment,
+		TREATMENT: 	TREATMENT,
 		Building:  	Building,
 		Room:		Room,
 		State:		State,

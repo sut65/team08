@@ -68,9 +68,35 @@ func SetupDatabase() {
 		&Med_Status{},
 		&Med_Equipment{},
 
+		//
+		&Location{},
+		&Request{},
 	)
 
 	db = database
+
+	//Gg
+	//สถานที่ --------------------
+	L1 := Location{
+		Name: "อาคารอุบัติเหตุและเวชศาสตร์ฉุกเฉิน",
+	}
+	db.Model(&Location{}).Create(&L1)
+	L2 := Location{
+		Name: "อาคารเทคนิคการแทพย์",
+	}
+	db.Model(&Location{}).Create(&L2)
+	L3 := Location{
+		Name: "อาคารวิจัย",
+	}
+	db.Model(&Location{}).Create(&L3)
+	L4 := Location{
+		Name: "อาคารอายุรกรรม",
+	}
+	db.Model(&Location{}).Create(&L4)
+	L5 := Location{
+		Name: "อาคารเวชศาสตร์ฟื้นฟู",
+	}
+	db.Model(&Location{}).Create(&L5)
 	//Aern
 	db.Model(&Practice{}).Create(&Practice{Name: "ยาก่อนอาหาร ควรรับประทานก่อนอาหารอย่างน้อย 30 นาที"})
 	db.Model(&Practice{}).Create(&Practice{Name: "ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที"})
@@ -53091,7 +53117,6 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิสวัสดิการการรักษาพยาบาลของข้าราชการ").Scan(&Levelcure_1)
 	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิประกันสังคม").Scan(&Levelcure_2)
 	db.Raw("SELECT * FROM levelcures WHERE name = ?", "สิทธิหลักประกันสุขภาพ30บาท").Scan(&Levelcure_3)
-	
 
 	// LEO
 	brand_1 := Brand{

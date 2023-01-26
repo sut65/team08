@@ -327,5 +327,5 @@ function DispenseCreate() {
     </Container>
   );
 }
-
+//เหลือ load 
 export default DispenseCreate;

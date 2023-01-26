@@ -238,7 +238,6 @@ func main() {
 			r.PATCH("/medemployees", controller.UpdateMedEmployee)
 			r.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
 
-			
 			// Brand Routes
 			r.GET("/brands", controller.ListBrands)
 			r.GET("/brands/:id", controller.GetBrand)
@@ -260,6 +259,18 @@ func main() {
 			r.PATCH("/medicalequipments", controller.UpdateMedEquipment)
 			r.DELETE("/medicalequipments/:id", controller.DeleteMedEquipment)
 
+			//Gg
+			r.GET("/locations", controller.ListLocations) ////---------------------
+			r.GET("/locations/:id", controller.GetLocation)
+			r.POST("/locations", controller.CreateLocation)
+			r.PATCH("/locations", controller.UpdateLocation)
+			r.DELETE("/location/:id", controller.DeleteLocation)
+
+			r.GET("/requests", controller.ListRequest) ////------------------------
+			r.GET("/requests/:id", controller.GetRequest)
+			r.POST("/requests", controller.CreateRequest)
+			r.PATCH("/requests", controller.UpdateRequest)
+			r.DELETE("/request/:id", controller.DeleteRequest)
 
 		}
 

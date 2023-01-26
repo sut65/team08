@@ -323,6 +323,8 @@ async function CreatePatiend(data: PatiendsInterface) {
     },
     body: JSON.stringify(data),
   };
+  console.log("แสดง requestOptions")
+  console.log(requestOptions);
 
   let res = await fetch(`${apiUrl}/Patiend`, requestOptions)
     .then((response) => response.json())
@@ -338,7 +340,7 @@ async function CreatePatiend(data: PatiendsInterface) {
   return res;
 }
 
-async function CreateDoctor(data: PatiendsInterface) {
+async function CreateDoctor(data: DoctorInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -347,16 +349,20 @@ async function CreateDoctor(data: PatiendsInterface) {
     },
     body: JSON.stringify(data),
   };
+  console.log("แสดง requestOptions")
+  console.log(requestOptions);
 
   let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
+      // console.log(res.data);
       if (res.data) {
         console.log("เข้า fetch(`${apiUrl}/Doctor` แล้ววววววววว")
         console.log(res.data);
         return res.data;
       } else {
         console.log("ไม่เข้า fetchhhhhhhhhhhhh")
+        // console.log(res.data);
         return false;
       }
     });

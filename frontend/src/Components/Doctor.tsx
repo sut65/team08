@@ -18,6 +18,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import {
+  DataGrid,
+  GridRowsProp,
+  GridColDef,
+  GridRowParams,
+} from "@mui/x-data-grid";
 
 import AddIcon from "@mui/icons-material/Add";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -83,7 +89,9 @@ function Doctor() {
   const [Marital, setMarital] = useState<MaritalInterface[]>([]);
   const [Religion, setReligion] = useState<ReligionInterface[]>([]);
   const [Nationality, setNationality] = useState<NationalityInterface[]>([]);
-  const [AddressThailand, setAddressThailand] = useState<AddressThailandInterface[]>([]);
+  const [AddressThailand, setAddressThailand] = useState<
+    AddressThailandInterface[]
+  >([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isDisabledPrefix, setIsDisabledPrefix] = useState(false);
   const [Educations, setEducations] = useState<EducationsInterface[]>([]);
@@ -140,21 +148,20 @@ function Doctor() {
     console.log(Doctor.ReligionID);
     setIsDisabled(false);
   };
-  
+
   const getDocCode = async () => {
     let new_Date: Date = new Date();
     let result: string = new_Date.toLocaleString();
 
     fetch(`${apiUrl}/Doctors`, requestOptionsGet)
-    .then((response) => response.json())
-    .then((res) => {
+      .then((response) => response.json())
+      .then((res) => {
         // console.log(res.data.length);
-        let num: number = ((+(result[7]+result[8]))*1000)+(res.data.length)+1
-        let docid: string = "D"+num.toString();
+        let num: number = +(result[7] + result[8]) * 1000 + res.data.length + 1;
+        let docid: string = "D" + num.toString();
         // console.log("The date is: " + docid);
         setDocterCode(docid);
-
-    });
+      });
   };
 
   const handleClose = (
@@ -206,9 +213,9 @@ function Doctor() {
     });
 
     // console.log(Doctor.ReligionID)
-    if(event.target.value==="5") {
+    if (event.target.value === "5") {
       setIsDisabled(false);
-    }else{
+    } else {
       setIsDisabled(true);
     }
   };
@@ -221,13 +228,13 @@ function Doctor() {
     });
 
     // console.log(Doctor.ReligionID)
-    if(event.target.value==="0"){
+    if (event.target.value === "0") {
       setIsDisabledPrefix(true);
-    }else if(event.target.value==="1"){
+    } else if (event.target.value === "1") {
       setIsDisabledPrefix(true);
-    }else if(event.target.value==="4"){
+    } else if (event.target.value === "4") {
       setIsDisabledPrefix(true);
-    }else{
+    } else {
       setIsDisabledPrefix(false);
     }
   };
@@ -350,21 +357,44 @@ function Doctor() {
   };
 
   const convertTypePrefix = (data: string | number | undefined) => {
-    let val = typeof data === "string" ? parseInt(data) : data
-    if(typeof val === "undefined"){
-      return 99
-    }else if(val > 0){
-      return val
-    }else{
-      return 99
+    let val = typeof data === "string" ? parseInt(data) : data;
+    if (typeof val === "undefined") {
+      return 99;
+    } else if (val > 0) {
+      return val;
+    } else {
+      return 99;
     }
   };
 
+  const columns: GridColDef[] = [
+    { field: "ID", headerName: "รหัสการจอง", width: 100 },
+    {
+      field: "Member",
+      headerName: "ชื่อสมาชิก",
+      width: 180,
+      valueFormatter: (params) => params.value.Member_Name,
+    },
+    {
+      field: "Location",
+      headerName: "สถานที่",
+      width: 180,
+      valueFormatter: (params) => params.value.Location_Name,
+    },
+    {
+      field: "Sport_Type",
+      headerName: "ประเภทกีฬา",
+      width: 150,
+      valueFormatter: (params) => params.value.Sport_Type_Name,
+    },
+    { field: "Time_In", headerName: "เวลาเข้า", width: 200 },
+    { field: "Time_Out", headerName: "เวลาออก", width: 200 },
+  ];
 
   async function submit() {
     let data = {
       DocterCode: DocterCode,
-	    DocterIDCard: DocterIDCar,
+      DocterIDCard: DocterIDCar,
       DocPrefixID: convertType(Doctor.DocPrefixID),
       FirstNameTH: FirstNameTH,
       LastNameTH: LastNameTH,
@@ -374,7 +404,7 @@ function Doctor() {
       GenderID: convertType(Doctor.GenderID),
       BloodID: convertType(Doctor.BloodID),
       MaritalID: convertType(Doctor.MaritalID),
-      
+
       ReligionID: convertType(Doctor.ReligionID),
       ReOther: ReOther,
       NationalityID: convertType(Doctor.NationalityID),
@@ -403,7 +433,7 @@ function Doctor() {
       WiIDCard: WiIDCard,
       DocWiPrefixID: convertTypePrefix(Doctor.DocWiPrefixID),
       WiFirstName: WiFirstName,
-      
+
       WiLastName: WiLastName,
       WiOccupation: WiOccupation,
       WiPhone: WiPhone,
@@ -792,7 +822,7 @@ function Doctor() {
                     </Button>
                   </Grid>
                   <Grid item xs={6.7}>
-                  <TextField
+                    <TextField
                       label="อีเมล์"
                       fullWidth
                       id="Email"
@@ -1144,7 +1174,9 @@ function Doctor() {
                       type="string"
                       variant="outlined"
                       size="small"
-                      onChange={(event) => setEducationMajor(event.target.value)}
+                      onChange={(event) =>
+                        setEducationMajor(event.target.value)
+                      }
                     />
                   </Grid>
                   <Grid item xs={7}>
@@ -1188,15 +1220,20 @@ function Doctor() {
               </DialogActions>
             </Dialog>
           </Grid>
-
-          <Grid item xs={6}>
-            <p>โชว์ข้อมูลแพทย์ทั้งหมด</p>
-            <p>1.</p>
-            <p>2.</p>
-            <p>3.</p>
-            <p>4.</p>
-            <p>5.</p>
-          </Grid>
+        </Grid>
+        <Grid container spacing={1} sx={{ marginX: 0.5, marginY: 0, padding: 2 }}>
+          <div style={{ height: 300, width: "98.5%" }}>
+          <p>โชว์ข้อมูลแพทย์ทั้งหมด</p>
+            <DataGrid
+              rows={Prefixs}
+              getRowId={(row) => row.ID}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+            />
+          </div>
+        </Grid>
+        <Grid container spacing={1} sx={{ marginY: 4,padding: 2 }}>
           <Grid item xs={12}>
             <Button
               component={RouterLink}

@@ -131,6 +131,7 @@ function Doctor() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [openD, setOpenD] = React.useState(false);
   const [valueDate, setValueDate] = React.useState<Dayjs | null>(
     dayjs("2000-01-01T21:11:54")
   );
@@ -156,22 +157,6 @@ function Doctor() {
     });
   };
 
-  // const getDocCode = async () => {
-  //   let new_Date: Date = new Date();
-  //   let result: string = new_Date.toLocaleString();
-
-  //   fetch(`${apiUrl}/Doctors`, requestOptionsGet)
-  //   .then((response) => response.json())
-  //   .then((res) => {
-  //       // console.log(res.data.length);
-  //       let num: number = ((+(result[7]+result[8]))*1000)+(res.data.length)+1
-  //       let docid: string = "D"+num.toString();
-  //       // console.log("The date is: " + docid);
-  //       setDocterCode(docid);
-
-  //   });
-  // };
-
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -182,6 +167,15 @@ function Doctor() {
     setSuccess(false);
     setError(false);
     setOpen(false);
+  };
+  const handleCloseD = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenD(false);
   };
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -325,7 +319,8 @@ function Doctor() {
   };
 
   const handleClickOpen = () => {
-    setOpen(true);
+    // setOpen(true);
+    setOpenD(true);
   };
   const touchPage = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -346,7 +341,7 @@ function Doctor() {
     setIsDisabled(!isDisabled);
     getDocCode();
     getDocCode();
-
+    setIsDisabledPrefix(true);
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -512,7 +507,7 @@ function Doctor() {
               Add New
             </Button>
             <Dialog
-              open={open}
+              open={openD}
               // onClose={touchPage(false)}
               fullWidth
               maxWidth="md"
@@ -1188,7 +1183,7 @@ function Doctor() {
                 </Grid>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClose}>ยกเลิก</Button>
+                <Button onClick={handleCloseD}>ยกเลิก</Button>
                 <Button onClick={submit}>บันทึกข้อมูล</Button>
               </DialogActions>
             </Dialog>

@@ -83,6 +83,7 @@ func CreateScreening_officer(c *gin.Context) {
 		Phone:       screening_officer.Phone,
 		Email:       screening_officer.Email,
 		House_ID:    screening_officer.House_ID,
+		District:    screening_officer.District,
 		Subdistrict: screening_officer.Subdistrict,
 		Province:    screening_officer.Province,
 		Address:     addressThailand,

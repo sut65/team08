@@ -61,11 +61,13 @@ type Screening_officer struct {
 	District    string
 	Province    string
 	AddressID   *uint
+
 	//หน้าต่างข้อมูลการศึกษา
 	EducationID    *uint
 	EducationName  string
 	EducationMajor string
 	University     string
+
 	//foreignKey
 	Address       AddressThailand `gorm:"references:id"`
 	Country       Nationality     `gorm:"references:id"`
@@ -94,12 +96,10 @@ type Patiend struct {
 	LastNameTH      string
 	FirstNameEN     string
 	LastNameEN      string
-
 	GenderID   *uint
 	BloodID    *uint
 	ReligionID *uint
 	Birthday   time.Time
-
 	NationalityID   *uint
 	CountryID       *uint
 	ScreeningIDCard string `gorm:"uniqueIndex"`
@@ -113,11 +113,11 @@ type Patiend struct {
 	AddressID   *uint
 
 	//หน้าต่างญาติผู้ป่วย
-	relative_GeneralPrefixID *uint
-	relative_FirstName       string
-	relative_LastName        string
-	relative_Occupation      string
-	relative_Phone           string
+	Relative_GeneralPrefixID *uint
+	Relative_FirstName       string
+	Relative_LastName        string
+	Relative_Occupation      string
+	Relative_Phone           string
 
 	//สถานะต่างๆขอผู้ป่วย
 	PolicingID *uint

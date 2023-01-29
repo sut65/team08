@@ -12,9 +12,16 @@ import (
 func CreatePatiend(c *gin.Context) {
 
 	var patiend entity.Patiend
-	var prefix entity.Prefix
+	var generalPrefix entity.GeneralPrefix
 	var gender entity.Gender
+	var blood entity.Blood
+	var religion entity.Religion
+	var nationality entity.Nationality
+	var addressThailand entity.AddressThailand
+	var disease entity.Disease
 	var policing entity.Policing
+	var status entity.Status
+	var track entity.Track
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Patiend
 	if err := c.ShouldBindJSON(&patiend); err != nil {
@@ -22,37 +29,87 @@ func CreatePatiend(c *gin.Context) {
 		return
 	}
 
-	// 10: ค้นหา prefix ด้วย id
-	if tx := entity.DB().Where("id = ?", patiend.PrefixID).First(&prefix); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", patiend.GeneralPrefixID).First(&generalPrefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
 		return
 	}
 
-	// 11: ค้นหา Gender ด้วย id
 	if tx := entity.DB().Where("id = ?", patiend.GenderID).First(&gender); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Gender not found"})
 		return
 	}
 
-	// 12: ค้นหา Policing ด้วย id
 	if tx := entity.DB().Where("id = ?", patiend.PolicingID).First(&policing); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "policing not found"})
 		return
 	}
 
-	// 12: สร้าง Patiend
+	if tx := entity.DB().Where("id = ?", patiend.BloodID).First(&blood); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "blood not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", patiend.ReligionID).First(&religion); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "religion not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", patiend.NationalityID).First(&nationality); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", patiend.AddressID).First(&addressThailand); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "addressThailand not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", patiend.DiseaseID).First(&disease); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "disease not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", patiend.StatusID).First(&status); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "status not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", patiend.TrackID).First(&track); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "trak not found"})
+		return
+	}
+
+	// สร้าง Patiend
 	sc := entity.Patiend{
-		Prefix:   prefix,   // โยงความสัมพันธ์กับ Entity Prefix
-		Gender:   gender,   // โยงความสัมพันธ์กับ Entity Gender
-		Policing: policing, // โยงความสัมพันธ์กับ Entity Policing
+		GeneralPrefix:   generalPrefix,
+		FirstNameTH:     patiend.FirstNameTH,
+		LastNameTH:      patiend.LastNameTH,
+		FirstNameEN:     patiend.FirstNameEN,
+		LastNameEN:      patiend.LastNameEN,
+		Gender:          gender,
+		Blood:           blood,
+		Religion:        religion,
+		Birthday:        patiend.Birthday,
+		Nationality:     nationality,
+		Country:         nationality,
+		ScreeningIDCard: patiend.ScreeningIDCard,
 
-		Name:          patiend.Name,          // ตั้งค่าฟิลด์ name
-		Age:           patiend.Age,           // ตั้งค่าฟิลด์ age
-		Date_of_birth: patiend.Date_of_birth, // ตั้งค่าฟิลด์ Date_of_birth
-		Address:       patiend.Address,       // ตั้งค่าฟิลด์ Address
-		ID_card:       patiend.ID_card,       // ตั้งค่าฟิลด์ ID_card
-		Phone:         patiend.Phone,         // ตั้งค่าฟิลด์ Phone
+		Phone:       patiend.Phone,
+		House_ID:    patiend.House_ID,
+		District:    patiend.District,
+		Subdistrict: patiend.Subdistrict,
+		Province:    patiend.Province,
+		Address:     addressThailand,
 
+		Relative_FirstName:  patiend.Relative_FirstName,
+		Relative_LastName:   patiend.Relative_LastName,
+		Relative_Occupation: patiend.Relative_Occupation,
+		Relative_Phone:      patiend.Relative_Phone,
+
+		Policing: policing,
+		Disease:  disease,
+		Status:   status,
+		Track:    track,
 	}
 
 	// 13: บันทึก

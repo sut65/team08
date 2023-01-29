@@ -12,9 +12,13 @@ import (
 func CreateScreening_officer(c *gin.Context) {
 
 	var screening_officer entity.Screening_officer
-	var prefix entity.Prefix
+	var generalPrefix entity.GeneralPrefix
 	var gender entity.Gender
+	var blood entity.Blood
+	var religion entity.Religion
+	var nationality entity.Nationality
 	var education entity.Education
+	var addressThailand entity.AddressThailand
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Screening_officer
 	if err := c.ShouldBindJSON(&screening_officer); err != nil {
@@ -23,8 +27,8 @@ func CreateScreening_officer(c *gin.Context) {
 	}
 
 	// 10: ค้นหา prefix ด้วย id
-	if tx := entity.DB().Where("id = ?", screening_officer.PrefixID).First(&prefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+	if tx := entity.DB().Where("id = ?", screening_officer.GeneralPrefixID).First(&generalPrefix); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "GeneralPrefix not found"})
 		return
 	}
 
@@ -39,18 +43,54 @@ func CreateScreening_officer(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
 		return
 	}
+	// 13: ค้นหา blood ด้วย id
+	if tx := entity.DB().Where("id = ?", screening_officer.BloodID).First(&blood); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "blood not found"})
+		return
+	}
+	// 14: ค้นหา religion ด้วย id
+	if tx := entity.DB().Where("id = ?", screening_officer.ReligionID).First(&religion); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "religion not found"})
+		return
+	}
+	// 15: ค้นหา religion ด้วย id
+	if tx := entity.DB().Where("id = ?", screening_officer.NationalityID).First(&nationality); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
+		return
+	}
 
-	// 12: สร้าง Screening_officer
+	// 16: ค้นหา religion ด้วย id
+	if tx := entity.DB().Where("id = ?", screening_officer.AddressThailandID).First(&addressThailand); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
+		return
+	}
+
+	// 16: สร้าง Screening_officer
 	sc := entity.Screening_officer{
-		Prefix:    prefix,                     // โยงความสัมพันธ์กับ Entity Prefix
-		Gender:    gender,                     // โยงความสัมพันธ์กับ Entity Gender
-		Education: education,                  // โยงความสัมพันธ์กับ Entity Education
-		Name:      screening_officer.Name,     // ตั้งค่าฟิลด์ name
-		Age:       screening_officer.Age,      // ตั้งค่าฟิลด์ age
-		Phone:     screening_officer.Phone,    // ตั้งค่าฟิลด์ phone
-		Email:     screening_officer.Email,    // ตั้งค่าฟิลด์ email
-		Password:  screening_officer.Password, // ตั้งค่าฟิลด์ password
+		GeneralPrefix:   generalPrefix,
+		FirstNameTH:     screening_officer.FirstNameTH,
+		LastNameTH:      screening_officer.LastNameTH,
+		FirstNameEN:     screening_officer.FirstNameEN,
+		LastNameEN:      screening_officer.LastNameEN,
+		Gender:          gender,
+		Blood:           blood,
+		Religion:        religion,
+		Birthday:        screening_officer.Birthday,
+		Nationality:     nationality,
+		Country:         nationality,
+		ScreeningIDCard: screening_officer.ScreeningIDCard,
 
+		Phone:           screening_officer.Phone,
+		Email:           screening_officer.Email,
+		House_ID:        screening_officer.House_ID,
+		Subdistrict:     screening_officer.Subdistrict,
+		Province:        screening_officer.Province,
+		AddressThailand: addressThailand,
+
+		Education:      education,
+		EducationName:  screening_officer.EducationName,
+		EducationMajor: screening_officer.EducationMajor,
+		University:     screening_officer.University,
 	}
 
 	// 13: บันทึก

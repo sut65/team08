@@ -54,27 +54,27 @@ type Screening_officer struct {
 	ScreeningIDCard string `gorm:"uniqueIndex"`
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
-	Phone             string
-	Email             string
-	House_ID          string
-	Subdistrict       string
-	District          string
-	Province          string
-	AddressThailandID *uint
+	Phone       string
+	Email       string
+	House_ID    string
+	Subdistrict string
+	District    string
+	Province    string
+	AddressID   *uint
 	//หน้าต่างข้อมูลการศึกษา
 	EducationID    *uint
 	EducationName  string
 	EducationMajor string
 	University     string
 	//foreignKey
-	AddressThailand AddressThailand `gorm:"references:id"`
-	Country         Nationality     `gorm:"references:id"`
-	Nationality     Nationality     `gorm:"references:id"`
-	Religion        Religion        `gorm:"references:id"`
-	Gender          Gender          `gorm:"references:id"`
-	GeneralPrefix   GeneralPrefix   `gorm:"references:id"`
-	Education       Education       `gorm:"references:id"`
-	Blood           Blood           `gorm:"references:id"`
+	Address       AddressThailand `gorm:"references:id"`
+	Country       Nationality     `gorm:"references:id"`
+	Nationality   Nationality     `gorm:"references:id"`
+	Religion      Religion        `gorm:"references:id"`
+	Gender        Gender          `gorm:"references:id"`
+	GeneralPrefix GeneralPrefix   `gorm:"references:id"`
+	Education     Education       `gorm:"references:id"`
+	Blood         Blood           `gorm:"references:id"`
 
 	Appoint []Appoint `gorm:"foreignkey:Screening_officerID"`
 }
@@ -88,32 +88,55 @@ type Policing struct {
 
 type Patiend struct {
 	gorm.Model
-	Name          string
-	Age           uint
-	Date_of_birth string
-	Address       string
-	ID_card       string
-	Phone         string
-
-	GenderID        *uint
+	//หน้าต่างข้อมูลส่วนตัวของคนไข้
 	GeneralPrefixID *uint
-	PolicingID      *uint
-	Gender          Gender        `gorm:"references:id"`
-	GeneralPrefix   GeneralPrefix `gorm:"references:id"`
-	Policing        Policing      `gorm:"references:id"`
+	FirstNameTH     string
+	LastNameTH      string
+	FirstNameEN     string
+	LastNameEN      string
 
-	//Gg
-	DiseaseID *uint
-	// เป็นข้อมูล user เมื่อ join ตาราง
-	Disease Disease `gorm:"references:id"`
+	GenderID   *uint
+	BloodID    *uint
+	ReligionID *uint
+	Birthday   time.Time
 
-	StatusID *uint
-	// เป็นข้อมูล user เมื่อ join ตาราง
-	Status Status `gorm:"references:id"`
+	NationalityID   *uint
+	CountryID       *uint
+	ScreeningIDCard string `gorm:"uniqueIndex"`
 
-	TrackID *uint
-	// เป็นข้อมูล user เมื่อ join ตาราง
-	Track Track `gorm:"references:id"`
+	//หน้าต่างข้อมูลการติดต่อส่วนตัว
+	Phone       string
+	House_ID    string
+	Subdistrict string
+	District    string
+	Province    string
+	AddressID   *uint
+
+	//หน้าต่างญาติผู้ป่วย
+	relative_GeneralPrefixID *uint
+	relative_FirstName       string
+	relative_LastName        string
+	relative_Occupation      string
+	relative_Phone           string
+
+	//สถานะต่างๆขอผู้ป่วย
+	PolicingID *uint
+	DiseaseID  *uint
+	StatusID   *uint
+	TrackID    *uint
+
+	//foreignKey
+	Address       AddressThailand `gorm:"references:id"`
+	Country       Nationality     `gorm:"references:id"`
+	Nationality   Nationality     `gorm:"references:id"`
+	Religion      Religion        `gorm:"references:id"`
+	Blood         Blood           `gorm:"references:id"`
+	Gender        Gender          `gorm:"references:id"`
+	GeneralPrefix GeneralPrefix   `gorm:"references:id"`
+	Policing      Policing        `gorm:"references:id"`
+	Disease       Disease         `gorm:"references:id"`
+	Status        Status          `gorm:"references:id"`
+	Track         Track           `gorm:"references:id"`
 }
 
 type Blood struct {
@@ -121,7 +144,9 @@ type Blood struct {
 	Phenotype string
 	Genotype  string
 
-	Doctor []Doctor `gorm:"foreignKey:BloodID"`
+	Doctor            []Doctor            `gorm:"foreignKey:BloodID"`
+	Screening_officer []Screening_officer `gorm:"foreignKey:BloodID"`
+	Patiend           []Patiend           `gorm:"foreignKey:BloodID"`
 }
 
 type Nationality struct {
@@ -129,7 +154,9 @@ type Nationality struct {
 	NationalityType string
 	Country         string
 
-	Doctor []Doctor `gorm:"foreignKey:NationalityID"`
+	Doctor            []Doctor            `gorm:"foreignKey:NationalityID"`
+	Screening_officer []Screening_officer `gorm:"foreignKey:NationalityID"`
+	Patiend           []Patiend           `gorm:"foreignKey:NationalityID"`
 }
 
 type AddressThailand struct {
@@ -139,7 +166,9 @@ type AddressThailand struct {
 	Subdistrict string
 	Zipcode     string
 
-	Doctor []Doctor `gorm:"foreignKey:AddressID"`
+	Doctor            []Doctor            `gorm:"foreignKey:AddressID"`
+	Screening_officer []Screening_officer `gorm:"foreignKey:AddressID"`
+	Patiend           []Patiend           `gorm:"foreignKey:AddressID"`
 }
 
 type Marital struct {
@@ -153,7 +182,9 @@ type Religion struct {
 	gorm.Model
 	ReligionType string
 
-	Doctor []Doctor `gorm:"foreignKey:ReligionID"`
+	Doctor            []Doctor            `gorm:"foreignKey:ReligionID"`
+	Screening_officer []Screening_officer `gorm:"foreignKey:ReligionID"`
+	Patiend           []Patiend           `gorm:"foreignKey:ReligionID"`
 }
 
 type DocPrefix struct {

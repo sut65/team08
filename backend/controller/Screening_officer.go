@@ -60,7 +60,7 @@ func CreateScreening_officer(c *gin.Context) {
 	}
 
 	// 16: ค้นหา religion ด้วย id
-	if tx := entity.DB().Where("id = ?", screening_officer.AddressThailandID).First(&addressThailand); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", screening_officer.AddressID).First(&addressThailand); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
 		return
 	}
@@ -80,12 +80,12 @@ func CreateScreening_officer(c *gin.Context) {
 		Country:         nationality,
 		ScreeningIDCard: screening_officer.ScreeningIDCard,
 
-		Phone:           screening_officer.Phone,
-		Email:           screening_officer.Email,
-		House_ID:        screening_officer.House_ID,
-		Subdistrict:     screening_officer.Subdistrict,
-		Province:        screening_officer.Province,
-		AddressThailand: addressThailand,
+		Phone:       screening_officer.Phone,
+		Email:       screening_officer.Email,
+		House_ID:    screening_officer.House_ID,
+		Subdistrict: screening_officer.Subdistrict,
+		Province:    screening_officer.Province,
+		Address:     addressThailand,
 
 		Education:      education,
 		EducationName:  screening_officer.EducationName,

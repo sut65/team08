@@ -67,11 +67,11 @@ func main() {
 			r.DELETE("/Screening_officers/:id", controller.DeleteScreening_officer)
 
 			//Prefix
-			r.GET("/Prefixs", controller.ListPrefix)
-			r.GET("/Prefix/:id", controller.GetPrefix)
-			r.POST("/Prefix", controller.CreatePrefix)
-			r.PATCH("/Prefix", controller.UpdatePrefix)
-			r.DELETE("/Prefix/:id", controller.DeletePrefix)
+			r.GET("/Prefixs", controller.ListGeneralPrefix)
+			r.GET("/Prefix/:id", controller.GetGeneralPrefix)
+			r.POST("/Prefix", controller.CreateGeneralPrefix)
+			r.PATCH("/Prefix", controller.UpdateGeneralPrefix)
+			r.DELETE("/Prefix/:id", controller.DeleteGeneralPrefix)
 
 			//Gender
 			r.GET("/Genders", controller.ListGender)

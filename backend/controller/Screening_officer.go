@@ -106,7 +106,7 @@ func CreateScreening_officer(c *gin.Context) {
 func GetScreening_officer(c *gin.Context) {
 	var screening_officer entity.Screening_officer
 	id := c.Param("id")
-	if err := entity.DB().Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM screening_officers WHERE id = ?", id).Find(&screening_officer).Error; err != nil {
+	if err := entity.DB().Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("GeneralPrefix").Raw("SELECT * FROM screening_officers WHERE id = ?", id).Find(&screening_officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -116,7 +116,7 @@ func GetScreening_officer(c *gin.Context) {
 // GET /screening_officer
 func ListScreening_officer(c *gin.Context) {
 	var screening_officer []entity.Screening_officer
-	if err := entity.DB().Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM screening_officers").Find(&screening_officer).Error; err != nil {
+	if err := entity.DB().Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("GeneralPrefix").Raw("SELECT * FROM screening_officers").Find(&screening_officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -124,7 +124,7 @@ func CreatePatiend(c *gin.Context) {
 func GetPatiend(c *gin.Context) {
 	var patiend entity.Patiend
 	id := c.Param("id")
-	if err := entity.DB().Preload("Gender").Preload("Policing").Preload("Prefix").Raw("SELECT * FROM patiends WHERE id = ?", id).Find(&patiend).Error; err != nil {
+	if err := entity.DB().Preload("Track").Preload("Status").Preload("Disease").Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Policing").Preload("GeneralPrefix").Raw("SELECT * FROM patiends WHERE id = ?", id).Find(&patiend).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -134,7 +134,7 @@ func GetPatiend(c *gin.Context) {
 // GET /patiend
 func ListPatiend(c *gin.Context) {
 	var patiend []entity.Patiend
-	if err := entity.DB().Preload("Gender").Preload("Policing").Preload("Prefix").Raw("SELECT * FROM patiends").Find(&patiend).Error; err != nil {
+	if err := entity.DB().Preload("Track").Preload("Status").Preload("Disease").Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Policing").Preload("GeneralPrefix").Raw("SELECT * FROM patiends").Find(&patiend).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

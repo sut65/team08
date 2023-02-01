@@ -17,7 +17,6 @@ func CreatePatient(c *gin.Context) {
 	var blood entity.Blood
 	var religion entity.Religion
 	var nationality entity.Nationality
-	var policing entity.Policing
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Patient
 	if err := c.ShouldBindJSON(&patient); err != nil {
@@ -32,11 +31,6 @@ func CreatePatient(c *gin.Context) {
 
 	if tx := entity.DB().Where("id = ?", patient.GenderID).First(&gender); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Gender not found"})
-		return
-	}
-
-	if tx := entity.DB().Where("id = ?", patient.PolicingID).First(&policing); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "policing not found"})
 		return
 	}
 
@@ -58,8 +52,7 @@ func CreatePatient(c *gin.Context) {
 	// สร้าง Patient
 	sc := entity.Patient{
 		Prefix:      Prefix,
-		FirstNameTH: patient.FirstNameTH,
-		LastNameTH:  patient.LastNameTH,
+		Patient_Name: patient.Patient_Name,
 		Age:         patient.Age,
 		Gender:      gender,
 		Blood:       blood,
@@ -67,7 +60,6 @@ func CreatePatient(c *gin.Context) {
 		Birthday:    patient.Birthday,
 		Nationality: nationality,
 		IDCard:      patient.IDCard,
-		Policing:    policing,
 		Phone:       patient.Phone,
 		House_ID:    patient.House_ID,
 
@@ -85,7 +77,7 @@ func CreatePatient(c *gin.Context) {
 func GetPatient(c *gin.Context) {
 	var patient entity.Patient
 	id := c.Param("id")
-	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Policing").Preload("Prefix").Raw("SELECT * FROM patients WHERE id = ?", id).Find(&patient).Error; err != nil {
+	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Prefix").Raw("SELECT * FROM patients WHERE id = ?", id).Find(&patient).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -95,7 +87,7 @@ func GetPatient(c *gin.Context) {
 // GET /patient
 func ListPatient(c *gin.Context) {
 	var patient []entity.Patient
-	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Policing").Preload("Prefix").Raw("SELECT * FROM patients").Find(&patient).Error; err != nil {
+	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Prefix").Raw("SELECT * FROM patients").Find(&patient).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

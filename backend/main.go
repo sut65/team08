@@ -90,16 +90,10 @@ func main() {
 			//Patient
 			r.GET("/Patients", controller.ListPatient)
 			r.GET("/Patient/:id", controller.GetPatient)
-			r.POST("/Patient", controller.CreatePatient)
-			r.PATCH("/Patient", controller.UpdatePatient)
+			r.POST("/Patients", controller.CreatePatient)
+			r.PATCH("/Patients", controller.UpdatePatient)
 			r.DELETE("/Patient/:id", controller.DeletePatient)
 
-			//Policing
-			r.GET("/Policings", controller.ListPolicing)
-			r.GET("/Policing/:id", controller.GetPolicing)
-			r.POST("/Policing", controller.CreatePolicing)
-			r.PATCH("/Policing", controller.UpdatePolicing)
-			r.DELETE("/Policing/:id", controller.DeletePolicing)
 			// Run the server
 
 			//idea Nationality

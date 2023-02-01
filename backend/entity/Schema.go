@@ -72,19 +72,12 @@ type Screening_officer struct {
 	Appoint []Appoint `gorm:"foreignkey:Screening_officerID"`
 }
 
-type Policing struct {
-	gorm.Model
-	Description string
-
-	Patient []Patient `gorm:"foreignKey:PolicingID"`
-}
 
 type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
 	PrefixID      *uint
-	FirstNameTH   string
-	LastNameTH    string
+	Patient_Name  string
 	Age           uint
 	GenderID      *uint
 	BloodID       *uint
@@ -92,7 +85,7 @@ type Patient struct {
 	Birthday      string
 	NationalityID *uint
 	IDCard        string `gorm:"uniqueIndex"`
-	PolicingID    *uint
+
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
 	Phone     string
@@ -106,7 +99,6 @@ type Patient struct {
 	Blood       Blood           `gorm:"references:id"`
 	Gender      Gender          `gorm:"references:id"`
 	Prefix      Prefix          `gorm:"references:id"`
-	Policing    Policing        `gorm:"references:id"`
 
 	Treatment []Treatment `gorm:"foreignKey:PatientID"`
 }

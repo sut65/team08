@@ -20,7 +20,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { DiseasesInterface } from "../Models/IDisease";
 import { DoctorInterface } from "../Models/IDoctor";
 import { TreatmentsInterface } from "../Models/ITreatment";
-import { PatiendsInterface } from "../Models/IPatiend";
+import { PatientsInterface } from "../Models/IPatient";
 import { StatusInterface } from "../Models/IStatus";
 import { TrackInterface } from "../Models/ITrack";
 //box
@@ -28,7 +28,7 @@ import {
   GetDisease,
   GetStatus,
   GetDoctor,
-  GetPatiend,
+  GetPatient,
   GetTrack,
   Treatment,
 } from "../Services/HttpClientService";
@@ -51,7 +51,7 @@ function TreatmentCreate() {
   const [Disease, setDisease] = useState<DiseasesInterface[]>([]);
   const [Status, setStatus] = useState<StatusInterface[]>([]);
   const [Track, setTrack] = useState<TrackInterface[]>([]);
-  const [Patient, setPatient] = useState<PatiendsInterface[]>([]);
+  const [Patient, setPatient] = useState<PatientsInterface[]>([]);
   const [doctor, setDoctors] = useState<DoctorInterface[]>([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -108,8 +108,8 @@ function TreatmentCreate() {
     }
   };
 
-  const getPatiend = async () => {
-    let res = await GetPatiend();
+  const getPatient = async () => {
+    let res = await GetPatient();
     if (res) {
       setPatient(res);
     }
@@ -119,7 +119,7 @@ function TreatmentCreate() {
     getDisease();
     getStatus();
     getTrack();
-    getPatiend();
+    getPatient();
     getDoctor();
   }, []);
 
@@ -133,7 +133,7 @@ function TreatmentCreate() {
       DiseaseID: convertType(treatment.DiseaseID),
       StatusID: convertType(treatment.StatusID),
       TrackID: convertType(treatment.TrackID),
-      PatiendID: convertType(treatment.PatiendID),
+      PatientID: convertType(treatment.PatientID),
       DoctorID: convertType(treatment.DoctorID),
 
       TREATMENT_ID: (TREATMENT_ID),
@@ -217,18 +217,18 @@ function TreatmentCreate() {
                 <p>ผู้ป่วย</p>
                 <Select
                   native
-                  value={treatment.PatiendID + ""}
+                  value={treatment.PatientID + ""}
                   onChange={handleChange}
                   inputProps={{
-                    name: "PatiendID",
+                    name: "PatientID",
                   }}
                 >
                   <option aria-label="None" value="">
                     กรุณาเลือกผู้ป่วย
                   </option>
-                  {Patient.map((item: PatiendsInterface) => (
+                  {Patient.map((item: PatientsInterface) => (
                     <option value={item.ID} key={item.ID}>
-                      {item.Name}
+                      {item.FirstNameTH}
                     </option>
                   ))}
                 </Select>

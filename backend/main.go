@@ -67,11 +67,11 @@ func main() {
 			r.DELETE("/Screening_officers/:id", controller.DeleteScreening_officer)
 
 			//Prefix
-			r.GET("/Prefixs", controller.ListGeneralPrefix)
-			r.GET("/Prefix/:id", controller.GetGeneralPrefix)
-			r.POST("/Prefix", controller.CreateGeneralPrefix)
-			r.PATCH("/Prefix", controller.UpdateGeneralPrefix)
-			r.DELETE("/Prefix/:id", controller.DeleteGeneralPrefix)
+			r.GET("/Prefixs", controller.ListPrefix)
+			r.GET("/Prefix/:id", controller.GetPrefix)
+			r.POST("/Prefix", controller.CreatePrefix)
+			r.PATCH("/Prefix", controller.UpdatePrefix)
+			r.DELETE("/Prefix/:id", controller.DeletePrefix)
 
 			//Gender
 			r.GET("/Genders", controller.ListGender)
@@ -87,12 +87,12 @@ func main() {
 			r.PATCH("/Educations", controller.UpdateEducation)
 			r.DELETE("/Education/:id", controller.DeleteEducation)
 
-			//Patiend
-			r.GET("/Patiends", controller.ListPatiend)
-			r.GET("/Patiend/:id", controller.GetPatiend)
-			r.POST("/Patiend", controller.CreatePatiend)
-			r.PATCH("/Patiend", controller.UpdatePatiend)
-			r.DELETE("/Patiend/:id", controller.DeletePatiend)
+			//Patient
+			r.GET("/Patients", controller.ListPatient)
+			r.GET("/Patient/:id", controller.GetPatient)
+			r.POST("/Patient", controller.CreatePatient)
+			r.PATCH("/Patient", controller.UpdatePatient)
+			r.DELETE("/Patient/:id", controller.DeletePatient)
 
 			//Policing
 			r.GET("/Policings", controller.ListPolicing)

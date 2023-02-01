@@ -12,13 +12,12 @@ import (
 func CreateScreening_officer(c *gin.Context) {
 
 	var screening_officer entity.Screening_officer
-	var generalPrefix entity.GeneralPrefix
+	var Prefix entity.Prefix
 	var gender entity.Gender
 	var blood entity.Blood
 	var religion entity.Religion
 	var nationality entity.Nationality
 	var education entity.Education
-	var addressThailand entity.AddressThailand
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Screening_officer
 	if err := c.ShouldBindJSON(&screening_officer); err != nil {
@@ -27,8 +26,8 @@ func CreateScreening_officer(c *gin.Context) {
 	}
 
 	// 10: ค้นหา prefix ด้วย id
-	if tx := entity.DB().Where("id = ?", screening_officer.GeneralPrefixID).First(&generalPrefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "GeneralPrefix not found"})
+	if tx := entity.DB().Where("id = ?", screening_officer.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
 		return
 	}
 
@@ -59,19 +58,11 @@ func CreateScreening_officer(c *gin.Context) {
 		return
 	}
 
-	// 16: ค้นหา religion ด้วย id
-	if tx := entity.DB().Where("id = ?", screening_officer.AddressID).First(&addressThailand); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
-		return
-	}
-
 	// 16: สร้าง Screening_officer
 	sc := entity.Screening_officer{
-		GeneralPrefix:   generalPrefix,
+		Prefix:          Prefix,
 		FirstNameTH:     screening_officer.FirstNameTH,
 		LastNameTH:      screening_officer.LastNameTH,
-		FirstNameEN:     screening_officer.FirstNameEN,
-		LastNameEN:      screening_officer.LastNameEN,
 		Gender:          gender,
 		Blood:           blood,
 		Religion:        religion,
@@ -79,14 +70,8 @@ func CreateScreening_officer(c *gin.Context) {
 		Nationality:     nationality,
 		Country:         nationality,
 		ScreeningIDCard: screening_officer.ScreeningIDCard,
-
-		Phone:       screening_officer.Phone,
-		Email:       screening_officer.Email,
-		House_ID:    screening_officer.House_ID,
-		District:    screening_officer.District,
-		Subdistrict: screening_officer.Subdistrict,
-		Province:    screening_officer.Province,
-		Address:     addressThailand,
+		Phone:           screening_officer.Phone,
+		Email:           screening_officer.Email,
 
 		Education:      education,
 		EducationName:  screening_officer.EducationName,
@@ -106,7 +91,7 @@ func CreateScreening_officer(c *gin.Context) {
 func GetScreening_officer(c *gin.Context) {
 	var screening_officer entity.Screening_officer
 	id := c.Param("id")
-	if err := entity.DB().Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("GeneralPrefix").Raw("SELECT * FROM screening_officers WHERE id = ?", id).Find(&screening_officer).Error; err != nil {
+	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM screening_officers WHERE id = ?", id).Find(&screening_officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -116,7 +101,7 @@ func GetScreening_officer(c *gin.Context) {
 // GET /screening_officer
 func ListScreening_officer(c *gin.Context) {
 	var screening_officer []entity.Screening_officer
-	if err := entity.DB().Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("GeneralPrefix").Raw("SELECT * FROM screening_officers").Find(&screening_officer).Error; err != nil {
+	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM screening_officers").Find(&screening_officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

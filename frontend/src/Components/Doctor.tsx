@@ -36,7 +36,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
 import { PolicingsInterface } from "../Models/IPolicing";
-import { PatiendsInterface } from "../Models/IPatiend";
+import { PatientsInterface } from "../Models/IPatient";
 
 import { DocPrefixInterface } from "../Models/IDocPrefix";
 import { BloodInterface } from "../Models/IBlood";
@@ -52,11 +52,11 @@ import {
   GetGender,
   GetPrefix,
   GetDocPrefix,
-  CreatePatiend,
+  CreatePatient,
   GetEducation,
   GetScreening_officer,
   CreateScreening_officer,
-  GetPatiend,
+  GetPatient,
   GetBlood,
   GetMarital,
   GetReligion,
@@ -79,7 +79,7 @@ function Doctor() {
     headers: { "Content-Type": "application/json" },
   };
 
-  const [Patiends, setPatiends] = useState<PatiendsInterface>({});
+  const [Patients, setPatients] = useState<PatientsInterface>({});
   const [Genders, setGenders] = useState<GendersInterface[]>([]);
   const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
   const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
@@ -186,10 +186,10 @@ function Doctor() {
   };
 
   const handleChange = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof Patiends;
+    const name = event.target.name as keyof typeof Patients;
     const value = event.target.value;
-    setPatiends({
-      ...Patiends,
+    setPatients({
+      ...Patients,
       [name]: value,
     });
     // console.log(`${name}: ${value}`);

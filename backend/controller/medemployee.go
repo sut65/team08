@@ -12,7 +12,7 @@ import (
 func CreateMedEmployee(c *gin.Context) {
 
 	var med_employee entity.Med_Employee
-	var generalPrefix entity.GeneralPrefix
+	var Prefix entity.Prefix
 	var gender entity.Gender
 	var education entity.Education
 
@@ -22,9 +22,9 @@ func CreateMedEmployee(c *gin.Context) {
 		return
 	}
 
-	// 10: ค้นหา generalPrefix ด้วย id
-	if tx := entity.DB().Where("id = ?", med_employee.GeneralPrefixID).First(&generalPrefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "generalPrefix not found"})
+	// 10: ค้นหา Prefix ด้วย id
+	if tx := entity.DB().Where("id = ?", med_employee.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
 		return
 	}
 
@@ -42,7 +42,7 @@ func CreateMedEmployee(c *gin.Context) {
 
 	// 12: สร้าง med_employee
 	sc := entity.Med_Employee{
-		GeneralPrefix:    generalPrefix,                // โยงความสัมพันธ์กับ Entity GeneralPrefix
+		Prefix:    Prefix,                // โยงความสัมพันธ์กับ Entity Prefix
 		Gender:    gender,                // โยงความสัมพันธ์กับ Entity Gender
 		Education: education,             // โยงความสัมพันธ์กับ Entity Education
 		Name:      med_employee.Name,     // ตั้งค่าฟิลด์ name
@@ -65,7 +65,7 @@ func CreateMedEmployee(c *gin.Context) {
 func GetMedEmployee(c *gin.Context) {
 	var med_employee entity.Med_Employee
 	id := c.Param("id")
-	if err := entity.DB().Preload("Gender").Preload("Education").Preload("GeneralPrefix").Raw("SELECT * FROM med_employees WHERE id = ?", id).Find(&med_employee).Error; err != nil {
+	if err := entity.DB().Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM med_employees WHERE id = ?", id).Find(&med_employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,7 +75,7 @@ func GetMedEmployee(c *gin.Context) {
 // GET /med_employee
 func ListMedEmployees(c *gin.Context) {
 	var med_employee []entity.Med_Employee
-	if err := entity.DB().Preload("Gender").Preload("Education").Preload("GeneralPrefix").Raw("SELECT * FROM med_employees").Find(&med_employee).Error; err != nil {
+	if err := entity.DB().Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM med_employees").Find(&med_employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

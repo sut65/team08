@@ -1,6 +1,6 @@
 import { DiseasesInterface } from "./IDisease";
 import { DoctorInterface } from "./IDoctor";
-import { PatiendsInterface } from "./IPatiend";
+import { PatientsInterface } from "./IPatient";
 import { StatusInterface } from "./IStatus";
 import { TrackInterface } from "./ITrack";
 
@@ -22,8 +22,8 @@ export interface TreatmentsInterface {
     Track?: TrackInterface;
     TrackID?: number; // foreignkey.ID?
 
-    Patiend?: PatiendsInterface;
-    PatiendID?: number;  // foreignkey.ID?
+    Patient?: PatientsInterface;
+    PatientID?: number;  // foreignkey.ID?
 
     Disease?: DiseasesInterface;
     DiseaseID?: number;  // foreignkey.ID?

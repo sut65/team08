@@ -972,6 +972,29 @@ async function GetLevelcure() {
 
   return res;
 }
+//ดึงข้อมูลการรักษา
+async function Treatment_Disease_Text(id:any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/treatments/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 
 //LEO
 async function GetMedEmployee() {
@@ -1235,6 +1258,7 @@ export {
   GetLevelcure,
   GetDepartment,
   ListReady_Appoint,
+  Treatment_Disease_Text,
 
   //LEO
   GetMedEmployee,

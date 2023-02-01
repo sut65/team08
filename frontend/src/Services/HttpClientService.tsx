@@ -13,28 +13,7 @@ import { RequestInterface } from "../Models/IRequest";
 
 const apiUrl = "http://localhost:8080";
 
-async function GetPolicing() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
 
-  let res = await fetch(`${apiUrl}/Policings`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        // console.log(res.data);
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
 
 async function GetGender() {
   const requestOptions = {
@@ -331,10 +310,10 @@ async function CreatePatient(data: PatientsInterface) {
     },
     body: JSON.stringify(data),
   };
-  console.log("แสดง requestOptions")
+
   console.log(requestOptions);
 
-  let res = await fetch(`${apiUrl}/Patient`, requestOptions)
+  let res = await fetch(`${apiUrl}/Patients`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1209,7 +1188,7 @@ async function GetRequest() {
 
 
 export {
-  GetPolicing,
+
   GetEducation,
   GetGender,
   GetPrefix,

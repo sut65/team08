@@ -19,9 +19,10 @@ import { BuildingInterface } from "../Models/IBuilding";
 import { RoomInterface } from "../Models/IRoom";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 
-import {GetBuilding,GetRoom,ListReady_Save,CreateOperating_Room, GetReady_Save_ITI} from "../Services/HttpClientService";
+import {GetBuilding,GetRoom,ListReady_Save,CreateOperating_Room,GetReady_Save_ITI,GetReady_Treat} from "../Services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Operating_RoomsInterface } from "../Models/IOperating_Room";
+import { TreatmentsInterface } from "../Models/ITreatment";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -38,7 +39,10 @@ function Operating_RoomCreate() {
   const [Building, setBuilding] = useState<BuildingInterface[]>([]);
   const [Room, setRoom] = useState<RoomInterface[]>([]);
   const [Save_ITIOne, setSave_ITIOne] = useState<Save_ITIsInterface>({
-    State:{Name:"กรุณาเลือก"}
+    State:{Name:"-----"}
+  });
+  const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
+    Patient:{FirstNameTH:"-----"}
   });
  
   // const [Date_checkin, setDate_checkin] = useState<string>("");
@@ -71,6 +75,7 @@ function Operating_RoomCreate() {
     const name = e.target.name as keyof typeof Operating_Rooms;
     const value = e.target.value;
     let res = await GetReady_Save_ITI(id);
+    let res1 = await GetReady_Treat(id);
     if (res) {
       setOperating_Rooms({
         ...Operating_Rooms,
@@ -79,6 +84,15 @@ function Operating_RoomCreate() {
       console.log(`${name}: ${value}`);
       setSave_ITIOne(res);
       console.log(res);
+    }
+    if (res1) {
+      setOperating_Rooms({
+        ...Operating_Rooms,
+        [name]: value,
+      });
+      console.log(`${name}: ${value}`);
+      setTreatOne(res1);
+      console.log(res1);
     }
   }
 
@@ -247,7 +261,7 @@ return (
             inputProps={{
               name: "Explain",
             }}
-            // value={request.Explain + ""}
+            value={TreatOne?.Patient?.FirstNameTH + "" || "aa"}
             // onChange={handleInputChange_Text}
           />
         </FormControl>

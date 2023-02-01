@@ -33,6 +33,7 @@ import {
   Treatment,
 } from "../Services/HttpClientService";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { Typography } from '@mui/material';
 //import moment from 'moment';
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -182,11 +183,18 @@ function TreatmentCreate() {
             display={"flex"}
             sx={{
               marginTop: 2,
-              paddingX: 2,
-              paddingY: 2,
             }}
           >
-            <h2>Creat Treatment</h2>
+            <Box sx={{ paddingX: 2, paddingY: 1 }}>
+              <Typography
+                component="h2"
+                variant="h6"
+                color="primary"
+                gutterBottom
+              >
+                ข้อมูลการรักษา
+              </Typography>
+            </Box>
           </Box>
           <hr />
           <Grid container spacing={2} sx={{ padding: 2 }} >
@@ -198,10 +206,9 @@ function TreatmentCreate() {
                 type="string"
                 variant="outlined"
                 onChange={(event) => setTREATMENT_ID(event.target.value)} />
-              {/*<Item>ชื่อนามสกุล</Item>*/}
             </Grid>
             <Grid item xs={6}>
-              <p>การรักษา</p>
+              <p>อาการเบื้องต้น</p>
               <TextField
                 fullWidth
                 id="TREATMENT"
@@ -313,7 +320,7 @@ function TreatmentCreate() {
             </Grid>
 
             <Grid item xs={6}>
-              <p>ผลการรักษา</p>
+              <p>สรุปผลการรักษา</p>
               <TextField
                 fullWidth
                 id="CONCLUSION"

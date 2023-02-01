@@ -6,7 +6,7 @@ import { ReligionInterface } from "./IReligion";
 import { NationalityInterface } from "./INationality";
 import { AddressThailandInterface } from "./IAddressThailand";
 
-export interface PatiendsInterface {
+export interface PatientsInterface {
     ID?: number;
 
     FirstNameTH?: string;

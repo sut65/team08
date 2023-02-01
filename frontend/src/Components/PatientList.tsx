@@ -6,21 +6,21 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-import { PatiendsInterface } from "../Models/IPatiend";
-import { GetPatiend } from "../Services/HttpClientService";
+import { PatientsInterface } from "../Models/IPatient";
+import { GetPatient } from "../Services/HttpClientService";
 
 
-function PatiendList() {
-    const [Patiends, setPatiends] = useState<PatiendsInterface[]>([]);
+function PatientList() {
+    const [Patients, setPatients] = useState<PatientsInterface[]>([]);
   
     useEffect(() => {
-      getPatiends();
+      getPatients();
     }, []);
   
-    const getPatiends = async () => {
-      let res = await GetPatiend();
+    const getPatients = async () => {
+      let res = await GetPatient();
       if (res) {
-        setPatiends(res);
+        setPatients(res);
       } 
     };
   
@@ -100,7 +100,7 @@ function PatiendList() {
             <Box>
               <Button
                 component={RouterLink}
-                to="/PatiendCreate"
+                to="/PatientCreate"
                 variant="contained"
                 color="primary"
               >
@@ -110,7 +110,7 @@ function PatiendList() {
           </Box>
           <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
             <DataGrid
-              rows={Patiends}
+              rows={Patients}
               getRowId={(row) => row.ID}
               columns={columns}
               pageSize={5}
@@ -122,4 +122,4 @@ function PatiendList() {
     );
   }
   
-  export default PatiendList;
+  export default PatientList;

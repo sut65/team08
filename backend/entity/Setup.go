@@ -35,7 +35,7 @@ func SetupDatabase() {
 		&Education{},
 		&Screening_officer{},
 		&Policing{},
-		&Patiend{},
+		&Patient{},
 
 		//idea
 		&Blood{},

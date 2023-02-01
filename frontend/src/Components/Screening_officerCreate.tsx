@@ -37,7 +37,6 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetRel
     const [Religions, setReligions] = useState<ReligionInterface[]>([]);
     const [Educations, setEducations] = useState<EducationsInterface[]>([]);
     const [Nationalitys, setNationalitys] = useState<NationalityInterface[]>([]);
-    const [Countrys, setCountrys] = useState<NationalityInterface[]>([]);
 
     const [FirstNameTH, setFirstNameTHs] = useState<string>("");
     const [LastNameTH, setLastNameTHs] = useState<string>("");
@@ -116,17 +115,9 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetRel
   }
 };
 
-  const getCountry = async () => {
-    let res = await GetNationality();
-    if (res) {
-      setCountrys(res);
-      console.log(res);
-  }
-};
-
 
   useEffect(() => {
-    getGender(); getPrefix(); getEducation(); getBlood(); getReligion(); getNationality(); getCountry(); }, []);
+    getGender(); getPrefix(); getEducation(); getBlood(); getReligion(); getNationality(); }, []);
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
@@ -345,16 +336,16 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetRel
               <p>เชื้อชาติ</p>
               <Select
                 native
-                value={Screening_officers.CountryID + ""}
+                value={Screening_officers.NationalityID + ""}
                 onChange={handleChange}
                 inputProps={{
-                  name: "CountryID",
+                  name: "NationalityID",
                 }}
               >
                 <option aria-label="None" value="">
                   กรุณาเลือกเชื้อชาติ
                 </option>
-                {Countrys.map((item: NationalityInterface) => (
+                {Nationalitys.map((item: NationalityInterface) => (
                   <option value={item.ID} key={item.ID}>
                     {item.Country}
                   </option>

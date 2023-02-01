@@ -10,7 +10,7 @@ type Gender struct {
 	gorm.Model
 	Description string
 
-	Patiend           []Patiend           `gorm:"foreignKey:GenderID"`
+	Patient           []Patient           `gorm:"foreignKey:GenderID"`
 	Screening_officer []Screening_officer `gorm:"foreignKey:GenderID"`
 	Doctor            []Doctor            `gorm:"foreignKey:GenderID"`
 	Med_Employee      []Med_Employee      `gorm:"foreignKey:GenderID"`
@@ -20,7 +20,7 @@ type Prefix struct {
 	gorm.Model
 	Description string
 
-	Patiend           []Patiend           `gorm:"foreignKey:PrefixID"`
+	Patient           []Patient           `gorm:"foreignKey:PrefixID"`
 	Screening_officer []Screening_officer `gorm:"foreignKey:PrefixID"`
 	Med_Employee      []Med_Employee      `gorm:"foreignKey:PrefixID"`
 }
@@ -76,10 +76,10 @@ type Policing struct {
 	gorm.Model
 	Description string
 
-	Patiend []Patiend `gorm:"foreignKey:PolicingID"`
+	Patient []Patient `gorm:"foreignKey:PolicingID"`
 }
 
-type Patiend struct {
+type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
 	PrefixID      *uint
@@ -108,7 +108,7 @@ type Patiend struct {
 	Prefix      Prefix          `gorm:"references:id"`
 	Policing    Policing        `gorm:"references:id"`
 
-	Treatment []Treatment `gorm:"foreignKey:PatiendID"`
+	Treatment []Treatment `gorm:"foreignKey:PatientID"`
 }
 
 type Blood struct {
@@ -118,7 +118,7 @@ type Blood struct {
 
 	Doctor            []Doctor            `gorm:"foreignKey:BloodID"`
 	Screening_officer []Screening_officer `gorm:"foreignKey:BloodID"`
-	Patiend           []Patiend           `gorm:"foreignKey:BloodID"`
+	Patient           []Patient           `gorm:"foreignKey:BloodID"`
 }
 
 type Nationality struct {
@@ -128,7 +128,7 @@ type Nationality struct {
 
 	Doctor            []Doctor            `gorm:"foreignKey:NationalityID"`
 	Screening_officer []Screening_officer `gorm:"foreignKey:NationalityID"`
-	Patiend           []Patiend           `gorm:"foreignKey:NationalityID"`
+	Patient           []Patient           `gorm:"foreignKey:NationalityID"`
 }
 
 type AddressThailand struct {
@@ -139,7 +139,7 @@ type AddressThailand struct {
 	Zipcode     string
 
 	Doctor  []Doctor  `gorm:"foreignKey:AddressID"`
-	Patiend []Patiend `gorm:"foreignKey:AddressID"`
+	Patient []Patient `gorm:"foreignKey:AddressID"`
 }
 
 type Marital struct {
@@ -155,7 +155,7 @@ type Religion struct {
 
 	Doctor            []Doctor            `gorm:"foreignKey:ReligionID"`
 	Screening_officer []Screening_officer `gorm:"foreignKey:ReligionID"`
-	Patiend           []Patiend           `gorm:"foreignKey:ReligionID"`
+	Patient           []Patient           `gorm:"foreignKey:ReligionID"`
 }
 
 type DocPrefix struct {
@@ -289,8 +289,8 @@ type Treatment struct {
 	TrackID *uint
 	Track   Track `gorm:"references:id"`
 
-	PatiendID *uint
-	Patiend   Patiend `gorm:"references:id"`
+	PatientID *uint
+	Patient   Patient `gorm:"references:id"`
 
 	DiseaseID *uint
 	Disease   Disease `gorm:"references:id"`

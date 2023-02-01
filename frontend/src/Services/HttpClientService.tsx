@@ -1,5 +1,5 @@
 //import React from "react";
-import { PatiendsInterface } from "../Models/IPatiend";
+import { PatientsInterface } from "../Models/IPatient";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { DoctorInterface } from "../Models/IDoctor";
 import { TreatmentsInterface } from "../Models/ITreatment";
@@ -253,7 +253,7 @@ async function GetScreening_officer() {
   return res;
 }
 
-async function GetPatiend() {
+async function GetPatient() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -262,7 +262,7 @@ async function GetPatiend() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/Patiends`, requestOptions)
+  let res = await fetch(`${apiUrl}/Patients`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -322,7 +322,7 @@ async function CreateScreening_officer(data: Screening_officersInterface) {
   return res;
 }
 
-async function CreatePatiend(data: PatiendsInterface) {
+async function CreatePatient(data: PatientsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -334,7 +334,7 @@ async function CreatePatiend(data: PatiendsInterface) {
   console.log("แสดง requestOptions")
   console.log(requestOptions);
 
-  let res = await fetch(`${apiUrl}/Patiend`, requestOptions)
+  let res = await fetch(`${apiUrl}/Patient`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1192,8 +1192,8 @@ export {
   GetPrefix,
   GetScreening_officer,
   CreateScreening_officer,
-  GetPatiend,
-  CreatePatiend,
+  GetPatient,
+  CreatePatient,
   GetDocPrefix,
   GetBlood,
   GetMarital,

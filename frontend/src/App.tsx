@@ -26,8 +26,8 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 // import Home from "./components/Home";
  import Screening_officerList from "./Components/Screening_officerList";
  import Screening_officerCreate from "./Components/Screening_officerCreate";
- import PatiendCreate from "./Components/PatiendCreate";
- import PatiendList from "./Components/PatiendList";
+ import PatientCreate from "./Components/PatientCreate";
+ import PatientList from "./Components/PatientList";
  import Doctor from "./Components/Doctor";
  import Treatment from "./Components/Treatment";
  import TreatmentCreate from "./Components/TreatmentCreate";
@@ -102,27 +102,15 @@ const mdTheme = createTheme();
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "สร้างข้อมูลฝ่ายคัดกรอง", icon: <PeopleIcon />, path: "/Screening_officerCreate" },
-  { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
-  { name: "บันทึกข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendCreate" },
-  { name: "ข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendList" },
+  { name: "ข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
+  { name: "ข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatientList" },
   { name: "ข้อมูลแพทย์", icon: <LocalHospitalIcon />, path: "/Doctor" },
-  { name: "บันทึกข้อการรักษา", icon: <PeopleIcon />, path: "/Treatment/create" }, //Gg
   { name: "ข้อมูลการรักษา", icon: <BookIcon />, path: "Treatments" }, //Gg
-  //J
-  { name: "จัดการข้อมูลคนไข้ภายใน", icon: <PeopleIcon />, path: "/Save_ITICreate" },
-  { name: "ข้อมูลคนไข้ภายใน", icon: <BookIcon />, path: "/Save_ITI" },
-  { name: "จองห้องผ่าตัด", icon: <PeopleIcon />, path: "/Operating_RoomCreate" },
   { name: "ข้อมูลการจองห้องผ่าตัด", icon: <BookIcon />, path: "/Operating_Room"},
-  { name: "บันทึกข้อมูลการจ่ายยา", icon: <BookIcon />, path: "DispenseCreate" },
   { name: "ข้อมูลการจ่ายยา", icon: <BookIcon />, path: "/DispenseList" },
-  { name: "บันทึกข้อมูลการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "AppointCreate" },
   { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
-  { name: "MedicalEmployee", icon: <BookIcon />, path: "/medemployees" },
-  { name: "MedicalEquipment", icon: <BookIcon />, path: "/medicalequipment" },
-
-  //Gg
-  { name: "บันทึกการเบิกอุปกรณ์แลป", icon: <PeopleIcon />, path: "request/create" },
+  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <BookIcon />, path: "/medemployees" },
+  { name: "ข้อมูลอปุกรณ์แลป", icon: <BookIcon />, path: "/medicalequipment" },
   { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <BookIcon />, path: "requests" },
 ];
 
@@ -232,8 +220,8 @@ function App() {
               <Routes>
                 <Route path="/Screening_officerCreate" element={<Screening_officerCreate />} />
                 <Route path="/Screening_officerList" element={<Screening_officerList />} /> 
-                <Route path="/PatiendCreate" element={<PatiendCreate />} /> 
-                <Route path="/PatiendList" element={<PatiendList />} />
+                <Route path="/PatientCreate" element={<PatientCreate />} /> 
+                <Route path="/PatientList" element={<PatientList />} />
                 <Route path="/Doctor" element={<Doctor />} />
                 <Route path="/Treatments" element={<Treatment />} />
                 <Route path="/Treatment/create" element={<TreatmentCreate />} />

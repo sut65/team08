@@ -87,12 +87,12 @@ func main() {
 			r.PATCH("/Educations", controller.UpdateEducation)
 			r.DELETE("/Education/:id", controller.DeleteEducation)
 
-			//Patiend
-			r.GET("/Patiends", controller.ListPatiend)
-			r.GET("/Patiend/:id", controller.GetPatiend)
-			r.POST("/Patiend", controller.CreatePatiend)
-			r.PATCH("/Patiend", controller.UpdatePatiend)
-			r.DELETE("/Patiend/:id", controller.DeletePatiend)
+			//Patient
+			r.GET("/Patients", controller.ListPatient)
+			r.GET("/Patient/:id", controller.GetPatient)
+			r.POST("/Patient", controller.CreatePatient)
+			r.PATCH("/Patient", controller.UpdatePatient)
+			r.DELETE("/Patient/:id", controller.DeletePatient)
 
 			//Policing
 			r.GET("/Policings", controller.ListPolicing)

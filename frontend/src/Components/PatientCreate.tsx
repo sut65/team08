@@ -16,13 +16,13 @@ import TextField from "@mui/material/TextField";
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
 import { PolicingsInterface } from "../Models/IPolicing";
-import { PatiendsInterface } from "../Models/IPatiend";
+import { PatientsInterface } from "../Models/IPatient";
 import { AddressThailandInterface } from "../Models/IAddressThailand";
 import { BloodInterface } from "../Models/IBlood";
 import { NationalityInterface } from "../Models/INationality";
 import { ReligionInterface } from "../Models/IReligion";
 
-import {GetPolicing,GetGender,GetPrefix,CreatePatiend,GetAddressThailand,GetBlood,GetNationality,GetReligion} from "../Services/HttpClientService";
+import {GetPolicing,GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBlood,GetNationality,GetReligion} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -30,8 +30,8 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,GetAddressThailand,GetBloo
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   
-  function PatiendCreate() {
-    const [Patiends, setPatiends] = useState<PatiendsInterface>({});
+  function PatientCreate() {
+    const [Patients, setPatients] = useState<PatientsInterface>({});
     const [Genders, setGenders] = useState<GendersInterface[]>([]);
     const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
     const [Address, setAddress] = useState<AddressThailandInterface[]>([]);
@@ -65,10 +65,10 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,GetAddressThailand,GetBloo
     };
 
     const handleChange = (event: SelectChangeEvent) => {
-      const name = event.target.name as keyof typeof Patiends;
+      const name = event.target.name as keyof typeof Patients;
       const value = event.target.value;
-      setPatiends({
-          ...Patiends,
+      setPatients({
+          ...Patients,
           [name]: value,
       });
       console.log(`${name}: ${value}`);
@@ -146,13 +146,13 @@ const getAddress = async () => {
 
   async function submit() {
     let data = {
-      PrefixID: convertType(Patiends.PrefixID),
-      GenderID: convertType(Patiends.GenderID),
-      PolicingID: convertType(Patiends.PolicingID),
-      AddressID: convertType(Patiends.AddressID),
-      NationalityID: convertType(Patiends.NationalityID),
-      ReligionID: convertType(Patiends.ReligionID),
-      BloodID: convertType(Patiends.BloodID),
+      PrefixID: convertType(Patients.PrefixID),
+      GenderID: convertType(Patients.GenderID),
+      PolicingID: convertType(Patients.PolicingID),
+      AddressID: convertType(Patients.AddressID),
+      NationalityID: convertType(Patients.NationalityID),
+      ReligionID: convertType(Patients.ReligionID),
+      BloodID: convertType(Patients.BloodID),
 
       FirstNameTH: (FirstNameTH),
       LastNameTH: (LastNameTH),
@@ -164,7 +164,7 @@ const getAddress = async () => {
      
     };
     console.log(data)
-    let res = await CreatePatiend(data);
+    let res = await CreatePatient(data);
     if (res) {
       setSuccess(true);
     } else {
@@ -220,7 +220,7 @@ const getAddress = async () => {
               <p>คำนำหน้า</p>
               <Select
                 native
-                value={Patiends.PrefixID + ""}
+                value={Patients.PrefixID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "PrefixID",
@@ -255,7 +255,7 @@ const getAddress = async () => {
               <p>เพศ</p>
               <Select
                 native
-                value={Patiends.GenderID + ""}
+                value={Patients.GenderID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "GenderID",
@@ -278,7 +278,7 @@ const getAddress = async () => {
               <p>กรุ๊ปเลือด</p>
               <Select
                 native
-                value={Patiends.BloodID + ""}
+                value={Patients.BloodID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "BloodID",
@@ -301,7 +301,7 @@ const getAddress = async () => {
               <p>ศาสนา</p>
               <Select
                 native
-                value={Patiends.ReligionID + ""}
+                value={Patients.ReligionID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "ReligionID",
@@ -330,7 +330,7 @@ const getAddress = async () => {
               <p>สัญชาติ</p>
               <Select
                 native
-                value={Patiends.NationalityID + ""}
+                value={Patients.NationalityID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "NationalityID",
@@ -353,7 +353,7 @@ const getAddress = async () => {
               <p>เชื้อชาติ</p>
               <Select
                 native
-                value={Patiends.NationalityID + ""}
+                value={Patients.NationalityID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "NationalityID",
@@ -390,7 +390,7 @@ const getAddress = async () => {
               <p>สิทธิการรักษา</p>
               <Select
                 native
-                value={Patiends.PolicingID + ""}
+                value={Patients.PolicingID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "PolicingID",
@@ -427,7 +427,7 @@ const getAddress = async () => {
               <p>ตำบล</p>
               <Select
                 native
-                value={Patiends.AddressID + ""}
+                value={Patients.AddressID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "AddressID",
@@ -450,7 +450,7 @@ const getAddress = async () => {
               <p>อำเภอ</p>
               <Select
                 native
-                value={Patiends.AddressID + ""}
+                value={Patients.AddressID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "AddressID",
@@ -473,7 +473,7 @@ const getAddress = async () => {
               <p>จังหวัด</p>
               <Select
                 native
-                value={Patiends.AddressID + ""}
+                value={Patients.AddressID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "AddressID",
@@ -496,7 +496,7 @@ const getAddress = async () => {
               <p>รหัสไปรณีย์</p>
               <Select
                 native
-                value={Patiends.AddressID + ""}
+                value={Patients.AddressID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "AddressID",
@@ -521,7 +521,7 @@ const getAddress = async () => {
           <Grid item xs={12}>
             <Button
               component={RouterLink}
-              to="/PatiendCreate"
+              to="/PatientCreate"
               variant="contained"
               color="inherit"
             >
@@ -542,4 +542,4 @@ const getAddress = async () => {
   );
 }
 
-export default PatiendCreate;
+export default PatientCreate;

@@ -23,28 +23,28 @@ function MedicalEquipments() {
   };
 
   const columns: GridColDef[] = [
-    { field: "ID", headerName: "ID", width: 50 },
+    { field: "ID", headerName: "ลำดับ", width: 50 },
     {
       field: "Equipment",
-      headerName: "Equipment",
+      headerName: "อุปกรณ์",
       width: 150,
       valueFormatter: (params) => params.value.Equipment,
     },
     {
       field: "Brand",
-      headerName: "Brand",
+      headerName: "ยี่ห้อ",
       width: 150,
       valueFormatter: (params) => params.value.Brand_name,
     },
     {
       field: "Med_Status",
-      headerName: "Status",
+      headerName: "สถานะ",
       width: 150,
       valueFormatter: (params) => params.value.Status_name,
     },
     {
       field: "Quantity",
-      headerName: "Quantity",
+      headerName: "จำนวน",
       width: 150,
       valueFormatter: (params) => params.value.Quantity ,
     },
@@ -72,7 +72,7 @@ function MedicalEquipments() {
               color="primary"
               gutterBottom
             >
-              Medical Equipment Information
+              ข้อมูลอุปกรณ์แพทย์
             </Typography>
           </Box>
           <Box>
@@ -82,7 +82,7 @@ function MedicalEquipments() {
               variant="contained"
               color="primary"
             >
-              Create Medical Equipment
+              บันทึกข้อมูลอุปกรณ์
             </Button>
           </Box>
         </Box>

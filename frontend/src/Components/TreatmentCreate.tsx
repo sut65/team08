@@ -244,7 +244,7 @@ function TreatmentCreate() {
 
             <Grid item xs={6}>
               <FormControl fullWidth variant="outlined">
-                <p>โรค</p>
+                <p>โรคจากการวินิจฉัย</p>
                 <Select
                   native
                   value={treatment.DiseaseID + ""}

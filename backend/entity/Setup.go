@@ -53125,23 +53125,57 @@ func SetupDatabase() {
 	db.Model(&Brand{}).Create(&brand_1)
 
 	brand_2 := Brand{
-		Brand_name: "3M",
+		Brand_name: "AirForce ONE",
 	}
 	db.Model(&Brand{}).Create(&brand_2)
 
 	brand_3 := Brand{
-		Brand_name: "KAWE",
+		Brand_name: "A & D Medical",
 	}
 	db.Model(&Brand{}).Create(&brand_3)
 
+	brand_4 := Brand{
+		Brand_name: "Beurer",
+	}
+	db.Model(&Brand{}).Create(&brand_4)
+
+	brand_5 := Brand{
+		Brand_name: "Contour",
+	}
+	db.Model(&Brand{}).Create(&brand_5)
+
+	brand_6 := Brand{
+		Brand_name: "Easy Max",
+	}
+	db.Model(&Brand{}).Create(&brand_6)
+
+	brand_7 := Brand{
+		Brand_name: "Good Win",
+	}
+	db.Model(&Brand{}).Create(&brand_7)
+
+	brand_8 := Brand{
+		Brand_name: "Microlife",
+	}
+	db.Model(&Brand{}).Create(&brand_8)
+
+	brand_9 := Brand{
+		Brand_name: "OMRON",
+	}
+	db.Model(&Brand{}).Create(&brand_9)
+
+	brand_10 := Brand{
+		Brand_name: "Yuwell",
+	}
+	db.Model(&Brand{}).Create(&brand_10)
 	// Status Data
 	status_A := Med_Status{
-		Status_name: "Ready",
+		Status_name: "พร้อมใช้งาน",
 	}
 	db.Model(&Med_Status{}).Create(&status_A)
 
 	status_B := Med_Status{
-		Status_name: "Not Ready",
+		Status_name: "ไม่พร้อมใช้งาน",
 	}
 	db.Model(&Med_Status{}).Create(&status_B)
 }

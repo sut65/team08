@@ -17,8 +17,12 @@ import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
 import { PolicingsInterface } from "../Models/IPolicing";
 import { PatiendsInterface } from "../Models/IPatiend";
+import { AddressThailandInterface } from "../Models/IAddressThailand";
+import { BloodInterface } from "../Models/IBlood";
+import { NationalityInterface } from "../Models/INationality";
+import { ReligionInterface } from "../Models/IReligion";
 
-import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpClientService";
+import {GetPolicing,GetGender,GetPrefix,CreatePatiend,GetAddressThailand,GetBlood,GetNationality,GetReligion} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -30,14 +34,21 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
     const [Patiends, setPatiends] = useState<PatiendsInterface>({});
     const [Genders, setGenders] = useState<GendersInterface[]>([]);
     const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
+    const [Address, setAddress] = useState<AddressThailandInterface[]>([]);
+    const [Bloods, setBloods] = useState<BloodInterface[]>([]);
+    const [Nationalitys, setNationalitys] = useState<NationalityInterface[]>([]);
+    const [Religions, setReligions] = useState<ReligionInterface[]>([]);
     const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
 
-    const [Name, setNames] = useState<string>("");
+    const [FirstNameTH, setFirstNameTHs] = useState<string>("");
+    const [LastNameTH, setLastNameTHs] = useState<string>("");
     const [Age, setAges] = useState<string>("");
+    const [Birthday, setBirthdays] = useState<string>("");
+    const [IDCard, setIDCards] = useState<string>("");
     const [Phone, setPhones] = useState<string>("");
-    const [Address, setAddresses] = useState<string>("");
-    const [ID_card, setID_cards] = useState<string>("");
-    const [Date_of_birth, setDate_of_births] = useState<string>("");
+    const [House_ID, setHouse_IDs] = useState<string>("");
+
+
     
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -85,11 +96,46 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
   }
 };
 
+  const getBlood = async () => {
+    let res = await GetBlood();
+    if (res) {
+      setBloods(res);
+      console.log(res);
+  }
+};
+
+  const getNationality = async () => {
+    let res = await GetNationality();
+    if (res) {
+      setNationalitys(res);
+      console.log(res);
+  }
+};
+
+  const getReligion = async () => {
+      let res = await GetReligion();
+      if (res) {
+        setReligions(res);
+        console.log(res);
+    }
+};
+const getAddress = async () => {
+  let res = await GetAddressThailand();
+  if (res) {
+    setAddress(res);
+    console.log(res);
+}
+};
+
 
   useEffect(() => {
     getGender();
     getPrefix();
     getPolicing();
+    getReligion();
+    getNationality();
+    getAddress();
+    getBlood();
 
   }, []);
 
@@ -103,12 +149,19 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
       PrefixID: convertType(Patiends.PrefixID),
       GenderID: convertType(Patiends.GenderID),
       PolicingID: convertType(Patiends.PolicingID),
-      Name: (Name),
+      AddressID: convertType(Patiends.AddressID),
+      NationalityID: convertType(Patiends.NationalityID),
+      ReligionID: convertType(Patiends.ReligionID),
+      BloodID: convertType(Patiends.BloodID),
+
+      FirstNameTH: (FirstNameTH),
+      LastNameTH: (LastNameTH),
+      Birthday: (Birthday),
+      IDCard: (IDCard),
       Age: (convertType(Age)),
       Phone: (Phone),
-      ID_card: (ID_card),
-      Address: (Address),
-      Date_of_birth: (Date_of_birth),
+      House_ID: (House_ID),
+     
     };
     console.log(data)
     let res = await CreatePatiend(data);
@@ -161,7 +214,8 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={6}>
+        <Grid item xs={12}><h3>ข้อมูลส่วนตัว</h3>  </Grid>
+          <Grid item xs={3}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>
               <Select
@@ -184,19 +238,19 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
             </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={4.5}>
                 <p>ชื่อ</p>
-                <TextField fullWidth id="Name" type="string" variant="outlined"  
-                onChange={(event) => setNames(event.target.value)} />
+                <TextField fullWidth id="FirstNameTH" type="string" variant="outlined"  
+                onChange={(event) => setFirstNameTHs(event.target.value)} />
+              </Grid>
+
+          <Grid item xs={4.5}>
+                <p>นามสกุล</p>
+                <TextField fullWidth id="LastNameTH" type="string" variant="outlined"  
+                onChange={(event) => setLastNameTHs(event.target.value)} />
               </Grid>
           
-          <Grid item xs={6}>
-                <p>อายุ</p>
-                <TextField fullWidth id="Age" type="number" variant="outlined"  
-                onChange={(event) => setAges(event.target.value)} />
-              </Grid> 
-
-              <Grid item xs={6}>
+              <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>
               <Select
@@ -218,26 +272,120 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
               </Select>
             </FormControl>
           </Grid>
-          
-          <Grid item xs={6}>
+
+          <Grid item xs={4}>
+            <FormControl fullWidth variant="outlined">
+              <p>กรุ๊ปเลือด</p>
+              <Select
+                native
+                value={Patiends.BloodID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "BloodID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกกรุ๊ปเลือด
+                </option>
+                {Bloods.map((item: BloodInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.Phenotype}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={4}>
+            <FormControl fullWidth variant="outlined">
+              <p>ศาสนา</p>
+              <Select
+                native
+                value={Patiends.ReligionID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "ReligionID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกศาสนา
+                </option>
+                {Religions.map((item: ReligionInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.ReligionType}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={4}>
                 <p>วันเดือนปีเกิด</p>
-                <TextField fullWidth id="Name" type="string" variant="outlined"  
-                onChange={(event) => setDate_of_births(event.target.value)} />
+                <TextField fullWidth id="Birthday" type="string" variant="outlined"  
+                onChange={(event) => setBirthdays(event.target.value)} />
               </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={4}>
+            <FormControl fullWidth variant="outlined">
+              <p>สัญชาติ</p>
+              <Select
+                native
+                value={Patiends.NationalityID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "NationalityID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกสัญชาติ
+                </option>
+                {Nationalitys.map((item: NationalityInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.NationalityType}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={4}>
+            <FormControl fullWidth variant="outlined">
+              <p>เชื้อชาติ</p>
+              <Select
+                native
+                value={Patiends.NationalityID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "NationalityID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกเชื้อชาติ
+                </option>
+                {Nationalitys.map((item: NationalityInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.Country}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          
+          <Grid item xs={3.5}>
+                <p>อายุ</p>
+                <TextField fullWidth id="ScreeningIDCard" type="number" variant="outlined"  
+                onChange={(event) => setAges(event.target.value)} />
+              </Grid>
+
+          <Grid item xs={5.5}>
                 <p>รหัสบัตรประชาชน</p>
-                <TextField fullWidth id="Name" type="string" variant="outlined"  
-                onChange={(event) => setID_cards(event.target.value)} />
+                <TextField fullWidth id="IDCard" type="string" variant="outlined"  
+                onChange={(event) => setIDCards(event.target.value)} />
               </Grid>
 
-            <Grid item xs={6}>
-                <p>เบอร์โทร</p>
-                <TextField fullWidth id="Name" type="string" variant="outlined"  
-                onChange={(event) => setPhones(event.target.value)} />
-              </Grid>
-            
-          <Grid item xs={6}>
+          
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>สิทธิการรักษา</p>
               <Select
@@ -259,12 +407,116 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatiend,} from "../Services/HttpCl
               </Select>
             </FormControl>
           </Grid>
+          <Grid item xs={12}><h3>ข้อมูลการติดต่อ</h3>  </Grid>
 
-          <Grid item xs={12}>
-                <p>ที่อยู่</p>
-                <TextField fullWidth id="Name" type="string" variant="outlined"  
-                onChange={(event) => setAddresses(event.target.value)} />
+          <Grid item xs={6}>
+                <p>เบอร์โทรศัพท์</p>
+                <TextField fullWidth id="Phone" type="string" variant="outlined"  
+                onChange={(event) => setPhones(event.target.value)} />
               </Grid>
+          <Grid item xs={6}> </Grid>
+
+          <Grid item xs={6}>
+                <p>บ้านเลขที่</p>
+                <TextField fullWidth id="House_ID" type="string" variant="outlined"  
+                onChange={(event) => setHouse_IDs(event.target.value)} />
+              </Grid>
+          
+              <Grid item xs={6}>
+            <FormControl fullWidth variant="outlined">
+              <p>ตำบล</p>
+              <Select
+                native
+                value={Patiends.AddressID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "AddressID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกตำบล
+                </option>
+                {Address.map((item: AddressThailandInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.Subdistrict}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          
+          <Grid item xs={6}>
+            <FormControl fullWidth variant="outlined">
+              <p>อำเภอ</p>
+              <Select
+                native
+                value={Patiends.AddressID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "AddressID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกสัญชาติ
+                </option>
+                {Address.map((item: AddressThailandInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.District}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <FormControl fullWidth variant="outlined">
+              <p>จังหวัด</p>
+              <Select
+                native
+                value={Patiends.AddressID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "AddressID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกจังหวัด
+                </option>
+                {Address.map((item: AddressThailandInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.Province}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <FormControl fullWidth variant="outlined">
+              <p>รหัสไปรณีย์</p>
+              <Select
+                native
+                value={Patiends.AddressID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "AddressID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกรหัสไปรณีย์
+                </option>
+                {Address.map((item: AddressThailandInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.Zipcode}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          
+      
+
 
           <Grid item xs={12}>
             <Button

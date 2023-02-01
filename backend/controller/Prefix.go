@@ -8,20 +8,12 @@ import (
 	"net/http"
 )
 
-// POST /GeneralPrefix
+// POST /Prefix
 
-func CreateGeneralPrefix(c *gin.Context) {
+func CreatePrefix(c *gin.Context) {
 
-	var GeneralPrefix entity.GeneralPrefix
-	if err := c.ShouldBindJSON(&GeneralPrefix); err != nil {
-
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		return
-
-	}
-
-	if err := entity.DB().Create(&GeneralPrefix).Error; err != nil {
+	var Prefix entity.Prefix
+	if err := c.ShouldBindJSON(&Prefix); err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -29,19 +21,27 @@ func CreateGeneralPrefix(c *gin.Context) {
 
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": GeneralPrefix})
+	if err := entity.DB().Create(&Prefix).Error; err != nil {
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": Prefix})
 
 }
 
-// GET /GeneralPrefix/:id
+// GET /Prefix/:id
 
-func GetGeneralPrefix(c *gin.Context) {
+func GetPrefix(c *gin.Context) {
 
-	var GeneralPrefix entity.GeneralPrefix
+	var Prefix entity.Prefix
 
 	id := c.Param("id")
 
-	if err := entity.DB().Raw("SELECT * FROM GeneralPrefixes WHERE id = ?", id).Scan(&GeneralPrefix).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Prefixes WHERE id = ?", id).Scan(&Prefix).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -49,17 +49,17 @@ func GetGeneralPrefix(c *gin.Context) {
 
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": GeneralPrefix})
+	c.JSON(http.StatusOK, gin.H{"data": Prefix})
 
 }
 
-// GET /GeneralPrefix
+// GET /Prefix
 
-func ListGeneralPrefix(c *gin.Context) {
+func ListPrefix(c *gin.Context) {
 
-	var GeneralPrefix []entity.GeneralPrefix
+	var Prefix []entity.Prefix
 
-	if err := entity.DB().Raw("SELECT * FROM GeneralPrefixes").Scan(&GeneralPrefix).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Prefixes").Scan(&Prefix).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -67,17 +67,17 @@ func ListGeneralPrefix(c *gin.Context) {
 
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": GeneralPrefix})
+	c.JSON(http.StatusOK, gin.H{"data": Prefix})
 
 }
 
-// DELETE /GeneralPrefix/:id
+// DELETE /Prefix/:id
 
-func DeleteGeneralPrefix(c *gin.Context) {
+func DeletePrefix(c *gin.Context) {
 
 	id := c.Param("id")
 
-	if tx := entity.DB().Exec("DELETE FROM GeneralPrefixes WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM Prefixes WHERE id = ?", id); tx.RowsAffected == 0 {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 
@@ -91,11 +91,11 @@ func DeleteGeneralPrefix(c *gin.Context) {
 
 // PATCH /Teaching_duration
 
-func UpdateGeneralPrefix(c *gin.Context) {
+func UpdatePrefix(c *gin.Context) {
 
-	var GeneralPrefix entity.GeneralPrefix
+	var Prefix entity.Prefix
 
-	if err := c.ShouldBindJSON(&GeneralPrefix); err != nil {
+	if err := c.ShouldBindJSON(&Prefix); err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -103,7 +103,7 @@ func UpdateGeneralPrefix(c *gin.Context) {
 
 	}
 
-	if tx := entity.DB().Where("id = ?", GeneralPrefix.ID).First(&GeneralPrefix); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", Prefix.ID).First(&Prefix); tx.RowsAffected == 0 {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 
@@ -111,7 +111,7 @@ func UpdateGeneralPrefix(c *gin.Context) {
 
 	}
 
-	if err := entity.DB().Save(&GeneralPrefix).Error; err != nil {
+	if err := entity.DB().Save(&Prefix).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -119,6 +119,6 @@ func UpdateGeneralPrefix(c *gin.Context) {
 
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": GeneralPrefix})
+	c.JSON(http.StatusOK, gin.H{"data": Prefix})
 
 }

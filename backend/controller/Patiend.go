@@ -12,16 +12,13 @@ import (
 func CreatePatiend(c *gin.Context) {
 
 	var patiend entity.Patiend
-	var generalPrefix entity.GeneralPrefix
+	var Prefix entity.Prefix
 	var gender entity.Gender
 	var blood entity.Blood
 	var religion entity.Religion
 	var nationality entity.Nationality
 	var addressThailand entity.AddressThailand
-	var disease entity.Disease
 	var policing entity.Policing
-	var status entity.Status
-	var track entity.Track
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Patiend
 	if err := c.ShouldBindJSON(&patiend); err != nil {
@@ -29,7 +26,7 @@ func CreatePatiend(c *gin.Context) {
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", patiend.GeneralPrefixID).First(&generalPrefix); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", patiend.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
 		return
 	}
@@ -64,52 +61,23 @@ func CreatePatiend(c *gin.Context) {
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", patiend.DiseaseID).First(&disease); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "disease not found"})
-		return
-	}
-
-	if tx := entity.DB().Where("id = ?", patiend.StatusID).First(&status); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "status not found"})
-		return
-	}
-
-	if tx := entity.DB().Where("id = ?", patiend.TrackID).First(&track); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "trak not found"})
-		return
-	}
-
 	// สร้าง Patiend
 	sc := entity.Patiend{
-		GeneralPrefix:   generalPrefix,
+		Prefix:          Prefix,
 		FirstNameTH:     patiend.FirstNameTH,
 		LastNameTH:      patiend.LastNameTH,
-		FirstNameEN:     patiend.FirstNameEN,
-		LastNameEN:      patiend.LastNameEN,
+		Age:             patiend.Age,
 		Gender:          gender,
 		Blood:           blood,
 		Religion:        religion,
 		Birthday:        patiend.Birthday,
 		Nationality:     nationality,
-		Country:         nationality,
-		ScreeningIDCard: patiend.ScreeningIDCard,
-
+		IDCard: patiend.IDCard,
+		Policing: policing,
 		Phone:       patiend.Phone,
 		House_ID:    patiend.House_ID,
-		District:    patiend.District,
-		Subdistrict: patiend.Subdistrict,
-		Province:    patiend.Province,
 		Address:     addressThailand,
 
-		Relative_FirstName:  patiend.Relative_FirstName,
-		Relative_LastName:   patiend.Relative_LastName,
-		Relative_Occupation: patiend.Relative_Occupation,
-		Relative_Phone:      patiend.Relative_Phone,
-
-		Policing: policing,
-		Disease:  disease,
-		Status:   status,
-		Track:    track,
 	}
 
 	// 13: บันทึก
@@ -124,7 +92,7 @@ func CreatePatiend(c *gin.Context) {
 func GetPatiend(c *gin.Context) {
 	var patiend entity.Patiend
 	id := c.Param("id")
-	if err := entity.DB().Preload("Track").Preload("Status").Preload("Disease").Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Policing").Preload("GeneralPrefix").Raw("SELECT * FROM patiends WHERE id = ?", id).Find(&patiend).Error; err != nil {
+	if err := entity.DB().Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Policing").Preload("Prefix").Raw("SELECT * FROM patiends WHERE id = ?", id).Find(&patiend).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -134,7 +102,7 @@ func GetPatiend(c *gin.Context) {
 // GET /patiend
 func ListPatiend(c *gin.Context) {
 	var patiend []entity.Patiend
-	if err := entity.DB().Preload("Track").Preload("Status").Preload("Disease").Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Policing").Preload("GeneralPrefix").Raw("SELECT * FROM patiends").Find(&patiend).Error; err != nil {
+	if err := entity.DB().Preload("AddressThailand").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Policing").Preload("Prefix").Raw("SELECT * FROM patiends").Find(&patiend).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -30,7 +30,7 @@ func SetupDatabase() {
 	// Migrate the schema
 
 	database.AutoMigrate(
-		&GeneralPrefix{},
+		&Prefix{},
 		&Gender{},
 		&Education{},
 		&Screening_officer{},
@@ -142,20 +142,20 @@ func SetupDatabase() {
 	db.Model(&State{}).Create(&State{Name: "นอนดูอาการ"})
 
 	// Prefix data
-	GeneralPrefix_one := GeneralPrefix{
+	Prefix_one := Prefix{
 		Description: "นาย",
 	}
-	db.Model(&GeneralPrefix{}).Create(&GeneralPrefix_one)
+	db.Model(&Prefix{}).Create(&Prefix_one)
 
-	GeneralPrefix_two := GeneralPrefix{
+	Prefix_two := Prefix{
 		Description: "นาง",
 	}
-	db.Model(&GeneralPrefix{}).Create(&GeneralPrefix_two)
+	db.Model(&Prefix{}).Create(&Prefix_two)
 
-	GeneralPrefix_three := GeneralPrefix{
+	Prefix_three := Prefix{
 		Description: "นางสาว",
 	}
-	db.Model(&GeneralPrefix{}).Create(&GeneralPrefix_three)
+	db.Model(&Prefix{}).Create(&Prefix_three)
 
 	// Gender data
 	Gender_one := Gender{

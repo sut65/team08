@@ -205,7 +205,7 @@ function Appoints() {
                 </option>
                 {treatment.map((item: TreatmentsInterface) => (
                   <option value={item.ID} key={item.ID}>
-                    {item.Patiend?.Name}
+                    {item.Patiend?.FirstNameTH}
                   </option>
                 ))}
               </Select>

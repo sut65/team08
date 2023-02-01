@@ -21,7 +21,7 @@ import { RoomInterface } from "../Models/IRoom";
 import { StateInterface } from "../Models/IState";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 
-import {GetTreatment,GetBuilding,GetRoom,GetState,CreateSave_ITI,GetReady_Treat,ListReady_Treat} from "../Services/HttpClientService";
+import {GetBuilding,GetRoom,GetState,CreateSave_ITI,GetReady_Treat,ListReady_Treat} from "../Services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -40,7 +40,9 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
     const [Building, setBuilding] = useState<BuildingInterface[]>([]);
     const [Room, setRoom] = useState<RoomInterface[]>([]);
     const [State, setState] = useState<StateInterface[]>([]);
-    const [TreatOne, setTreatOne] = useState<Save_ITIsInterface[]>([]);
+    const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
+      Patient:{FirstNameTH:"-----"}
+    });
 
     // const [Date_checkin, setDate_checkin] = useState<string>("");
     // const [Time_checkin, setTime_checkin] = useState<string>("");
@@ -66,25 +68,41 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
         window.location.reload();
       }, 1000);
     }
+// เอาฟังก์ชั่นมารวมกัน
+  const final_Change =async (e: SelectChangeEvent) => {
+  const id = e.target.value
+  const name = e.target.name as keyof typeof Save_ITIs;
+  const value = e.target.value;
+  let res = await GetReady_Treat(id);
+  if (res) {
+  setSave_ITIs({
+      ...Save_ITIs,
+      [name]: value,
+  });
+  }
+  console.log(`${name}: ${value}`);
+  setTreatOne(res);
+  console.log(TreatOne);
+}
+// เพิ่มฟังก์ชั่น
+const onChange_Save = async (e: SelectChangeEvent) =>{
+  const id = e.target.value
+  let res = await GetReady_Treat(id);
+  if (res) {
+    setTreatOne(res);
+    console.log(res);
+  }
+}
 
-    const onChange_Save = async (e: SelectChangeEvent) =>{
-      const id = e.target.value
-      let res = await GetReady_Treat(id);
-      if (res) {
-        setTreatOne(res);
-        console.log(res);
-      }
-    }
-
-    const handleChange = (event: SelectChangeEvent) => {
-      const name = event.target.name as keyof typeof Save_ITIs;
-      const value = event.target.value;
-      setSave_ITIs({
-          ...Save_ITIs,
-          [name]: value,
-      });
-      console.log(`${name}: ${value}`);
-  };
+const handleChange = (event: SelectChangeEvent) => {
+  const name = event.target.name as keyof typeof Save_ITIs;
+  const value = event.target.value;
+  setSave_ITIs({
+      ...Save_ITIs,
+      [name]: value,
+  });
+  console.log(`${name}: ${value}`);
+};
   
   const getTreatment = async () => {
     let res = await ListReady_Treat();
@@ -197,7 +215,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
               <Select
                 native
                 value={Save_ITIs.TreatmentID + ""}
-                onChange={handleChange}
+                onChange={final_Change}
                 inputProps={{
                   name: "TreatmentID",
                 }}
@@ -236,13 +254,14 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
           <FormControl fullWidth >
             <TextField
               required
-              id="Explain"
+              id="Patiend"
               type="string"
               label=""
               inputProps={{
-                name: "Explain",
+                name: "Patiend",
               }}
-              // value={request.Explain + ""}
+              // แก้ไขตัวแปร ******************
+              value={TreatOne?.Patient?.FirstNameTH + "" || "aa"}
               // onChange={handleInputChange_Text}
             />
           </FormControl>

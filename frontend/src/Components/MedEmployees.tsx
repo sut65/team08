@@ -90,7 +90,7 @@ function MedEmployee() {
               color="primary"
               gutterBottom
             >
-              Medical Equipment Employee Information
+              ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์
             </Typography>
           </Box>
           <Box>
@@ -100,7 +100,7 @@ function MedEmployee() {
               variant="contained"
               color="primary"
             >
-              Create Medical Employee
+              บันทึกข้อมูลเจ้าหน้าที่เทคนิคการแพทย์
             </Button>
           </Box>
         </Box>

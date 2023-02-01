@@ -235,7 +235,7 @@ function TreatmentCreate() {
                   </option>
                   {Patient.map((item: PatientsInterface) => (
                     <option value={item.ID} key={item.ID}>
-                      {item.FirstNameTH}
+                      {item.Patient_Name}
                     </option>
                   ))}
                 </Select>

@@ -239,7 +239,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
                 </option>
                 {treatment.map((item: TreatmentsInterface) => (
                   <option value={item.ID} key={item.ID}>
-                    {item.Patient?.FirstNameTH}
+                    {item.Patient?.Patient_Name}
                   </option>
                 ))}
               </Select>

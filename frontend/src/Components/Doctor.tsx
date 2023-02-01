@@ -35,7 +35,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
-import { PolicingsInterface } from "../Models/IPolicing";
 import { PatientsInterface } from "../Models/IPatient";
 
 import { DocPrefixInterface } from "../Models/IDocPrefix";
@@ -48,7 +47,6 @@ import { EducationsInterface } from "../Models/IEducation";
 import { DoctorInterface } from "../Models/IDoctor";
 
 import {
-  GetPolicing,
   GetGender,
   GetPrefix,
   GetDocPrefix,
@@ -82,8 +80,6 @@ function Doctor() {
   const [Patients, setPatients] = useState<PatientsInterface>({});
   const [Genders, setGenders] = useState<GendersInterface[]>([]);
   const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
-  const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
-
   const [DocPrefix, setDocPrefix] = useState<DocPrefixInterface[]>([]);
   const [Blood, setBlood] = useState<BloodInterface[]>([]);
   const [Marital, setMarital] = useState<MaritalInterface[]>([]);
@@ -264,13 +260,7 @@ function Doctor() {
       // console.log(res);
     }
   };
-  const getPolicing = async () => {
-    let res = await GetPolicing();
-    if (res) {
-      setPolicings(res);
-      // console.log(res);
-    }
-  };
+
   const getBlood = async () => {
     let res = await GetBlood();
     if (res) {
@@ -342,7 +332,6 @@ function Doctor() {
     getAddressThailand();
     getGender();
     getPrefix();
-    getPolicing();
     getDocPrefix();
     getEducations();
     setIsDisabled(!isDisabled);

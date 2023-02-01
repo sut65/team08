@@ -15,14 +15,14 @@ import TextField from "@mui/material/TextField";
 
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
-import { PolicingsInterface } from "../Models/IPolicing";
+
 import { PatientsInterface } from "../Models/IPatient";
 import { AddressThailandInterface } from "../Models/IAddressThailand";
 import { BloodInterface } from "../Models/IBlood";
 import { NationalityInterface } from "../Models/INationality";
 import { ReligionInterface } from "../Models/IReligion";
 
-import {GetPolicing,GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBlood,GetNationality,GetReligion} from "../Services/HttpClientService";
+import {GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBlood,GetNationality,GetReligion} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -38,10 +38,9 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBloo
     const [Bloods, setBloods] = useState<BloodInterface[]>([]);
     const [Nationalitys, setNationalitys] = useState<NationalityInterface[]>([]);
     const [Religions, setReligions] = useState<ReligionInterface[]>([]);
-    const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
 
-    const [FirstNameTH, setFirstNameTHs] = useState<string>("");
-    const [LastNameTH, setLastNameTHs] = useState<string>("");
+    const [Patient_Name, setPatient_Names] = useState<string>("");
+
     const [Age, setAges] = useState<string>("");
     const [Birthday, setBirthdays] = useState<string>("");
     const [IDCard, setIDCards] = useState<string>("");
@@ -88,13 +87,6 @@ import {GetPolicing,GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBloo
       console.log(res);
   }
 };
-  const getPolicing = async () => {
-    let res = await GetPolicing();
-    if (res) {
-      setPolicings(res);
-      console.log(res);
-  }
-};
 
   const getBlood = async () => {
     let res = await GetBlood();
@@ -131,7 +123,6 @@ const getAddress = async () => {
   useEffect(() => {
     getGender();
     getPrefix();
-    getPolicing();
     getReligion();
     getNationality();
     getAddress();
@@ -148,14 +139,12 @@ const getAddress = async () => {
     let data = {
       PrefixID: convertType(Patients.PrefixID),
       GenderID: convertType(Patients.GenderID),
-      PolicingID: convertType(Patients.PolicingID),
       AddressID: convertType(Patients.AddressID),
       NationalityID: convertType(Patients.NationalityID),
       ReligionID: convertType(Patients.ReligionID),
       BloodID: convertType(Patients.BloodID),
 
-      FirstNameTH: (FirstNameTH),
-      LastNameTH: (LastNameTH),
+      Patient_Name: (Patient_Name),
       Birthday: (Birthday),
       IDCard: (IDCard),
       Age: (convertType(Age)),
@@ -215,7 +204,7 @@ const getAddress = async () => {
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
         <Grid item xs={12}><h3>ข้อมูลส่วนตัว</h3>  </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>
               <Select
@@ -238,17 +227,13 @@ const getAddress = async () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={4.5}>
-                <p>ชื่อ</p>
-                <TextField fullWidth id="FirstNameTH" type="string" variant="outlined"  
-                onChange={(event) => setFirstNameTHs(event.target.value)} />
+          <Grid item xs={8}>
+                <p>ชื่อ-นามสกุล</p>
+                <TextField fullWidth id="Patient_Name" type="string" variant="outlined"  
+                onChange={(event) => setPatient_Names(event.target.value)} />
               </Grid>
 
-          <Grid item xs={4.5}>
-                <p>นามสกุล</p>
-                <TextField fullWidth id="LastNameTH" type="string" variant="outlined"  
-                onChange={(event) => setLastNameTHs(event.target.value)} />
-              </Grid>
+
           
               <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
@@ -384,29 +369,6 @@ const getAddress = async () => {
                 onChange={(event) => setIDCards(event.target.value)} />
               </Grid>
 
-          
-          <Grid item xs={4}>
-            <FormControl fullWidth variant="outlined">
-              <p>สิทธิการรักษา</p>
-              <Select
-                native
-                value={Patients.PolicingID + ""}
-                onChange={handleChange}
-                inputProps={{
-                  name: "PolicingID",
-                }}
-              >
-                <option aria-label="None" value="">
-                  กรุณาเลือกสิทธิการรักษา
-                </option>
-                {Policings.map((item: PolicingsInterface) => (
-                  <option value={item.ID} key={item.ID}>
-                    {item.Description}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
           <Grid item xs={12}><h3>ข้อมูลการติดต่อ</h3>  </Grid>
 
           <Grid item xs={6}>

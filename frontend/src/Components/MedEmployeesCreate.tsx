@@ -154,7 +154,7 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
               color="primary"
               gutterBottom
             >
-              ประเมินผู้สอน
+              ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์
             </Typography>
           </Box>
         </Box>

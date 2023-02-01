@@ -46,6 +46,17 @@ import MedicalEquipments from "./Components/MedicalEquipment";
 import RequestCreate from "./Components/RequestCreate";
 import Request from "./Components/Request";
 
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import NoteIcon from '@mui/icons-material/Note';
+import SickIcon from '@mui/icons-material/Sick';
+import MedicationIcon from '@mui/icons-material/Medication';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import HotelIcon from '@mui/icons-material/Hotel';
 // import SignIn from "./components/SignIn";
 
 const drawerWidth = 240;
@@ -98,21 +109,33 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const mdTheme = createTheme();
+const mdTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#009688',
+    },
+    secondary: {
+      main: '#BB8F5B',
+    },
+  },
+});
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "ข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
-  { name: "ข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatientList" },
-  { name: "ข้อมูลแพทย์", icon: <LocalHospitalIcon />, path: "/Doctor" },
-  { name: "ข้อมูลการรักษา", icon: <BookIcon />, path: "Treatments" }, //Gg
-  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <BookIcon />, path: "/Operating_Room"},
-  { name: "ข้อมูลการจ่ายยา", icon: <BookIcon />, path: "/DispenseList" },
-  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
-  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <BookIcon />, path: "/medemployees" },
-  { name: "ข้อมูลอปุกรณ์แลป", icon: <BookIcon />, path: "/medicalequipment" },
-  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <BookIcon />, path: "requests" },
+  { name: "ข้อมูลฝ่ายคัดกรอง", icon: <AccountCircleIcon />, path: "/Screening_officerList" },
+  { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" },
+  { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" },
+  { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" }, 
+  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" }, 
+  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room"},
+  { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" },
+  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <CalendarMonthIcon />, path: "/AppointList" },
+  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" },
+  { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" },
+  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" },
+
 ];
+
 
 function App() {
   const [token, setToken] = useState<String>("");

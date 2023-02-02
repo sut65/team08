@@ -10,16 +10,39 @@ import { AppointInterface } from "../Models/IAppoint";
 import { MedEmployeeInterface } from "../Models/IMedEmployee";
 import { MedicalEquimentInterface } from "../Models/IMedEquipment";
 import { RequestInterface } from "../Models/IRequest";
+import { SigninInterface } from "../Models/ISignin";
 
 const apiUrl = "http://localhost:8080";
 
+async function Login(data: SigninInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/login`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("uid", res.data.id);
+              localStorage.setItem("role", res.data.role);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
 
 
 async function GetGender() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -42,7 +65,7 @@ async function GetPrefix() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -51,7 +74,7 @@ async function GetPrefix() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        // console.log(res.data);
+         console.log(res.data);
         return res.data;
       } else {
         return false;
@@ -64,7 +87,7 @@ async function GetDocPrefix() {
     const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
     },
 };
@@ -85,7 +108,7 @@ async function GetBlood() {
     const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
     },
 };
@@ -106,7 +129,7 @@ async function GetMarital() {
     const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
     },
 };
@@ -127,7 +150,7 @@ async function GetReligion() {
     const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
     },
 };
@@ -148,7 +171,7 @@ async function GetNationality() {
     const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
     },
 };
@@ -169,7 +192,7 @@ async function GetAddressThailand() {
     const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
     },
 };
@@ -190,7 +213,7 @@ async function GetEducation() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -213,7 +236,7 @@ async function GetScreening_officer() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -236,7 +259,7 @@ async function GetPatient() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -258,7 +281,7 @@ async function GetDoctor() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -281,7 +304,7 @@ async function CreateScreening_officer(data: Screening_officersInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -305,7 +328,7 @@ async function CreatePatient(data: PatientsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -331,7 +354,7 @@ async function CreateDoctor(data: DoctorInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -362,7 +385,7 @@ async function GetTreatment() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -384,7 +407,7 @@ async function GetStatus() {
   const requestOptions = {
       method: "GET",
       headers: {
-         // Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
       },
   };
@@ -406,7 +429,7 @@ async function GetTrack() {
   const requestOptions = {
       method: "GET",
       headers: {
-         // Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
       },
   };
@@ -429,7 +452,7 @@ async function GetDisease() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
       },
   };
@@ -451,7 +474,7 @@ async function Treatment(data: TreatmentsInterface) {
   const requestOptions = {
       method: "POST",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
@@ -475,7 +498,7 @@ async function GetBuilding() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -498,7 +521,7 @@ async function GetRoom() {
   const requestOptions = {
       method: "GET",
       headers: {
-         // Authorization: `Bearer ${localStorage.getItem("token")}`,
+         Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -521,7 +544,7 @@ async function GetState() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -544,7 +567,7 @@ async function ListSave_ITIs() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -567,7 +590,7 @@ async function CreateSave_ITI(data: Save_ITIsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -591,7 +614,7 @@ async function GetOperating_Room() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -614,7 +637,7 @@ async function CreateOperating_Room(data: Operating_RoomsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -638,7 +661,7 @@ async function ListReady_Save() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -661,7 +684,7 @@ async function GetReady_Save_ITI(id: any) {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -687,7 +710,7 @@ async function ListReady_Treat() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -710,7 +733,7 @@ async function GetReady_Treat(id: any) {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -777,7 +800,7 @@ async function GetDispense() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -822,7 +845,7 @@ async function ListReady_Dispense() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -844,7 +867,7 @@ async function ListReady_Appoint() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -888,7 +911,7 @@ async function GetAppoint() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -910,7 +933,7 @@ async function GetDepartment() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -933,7 +956,7 @@ async function GetLevelcure() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -956,7 +979,7 @@ async function Treatment_Disease_Text(id:any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -1004,7 +1027,7 @@ async function GetMedEmployee() {
     const requestOptions = {
       method: "POST",
       headers: {
-        //Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
@@ -1076,7 +1099,7 @@ async function GetMedEmployee() {
     const requestOptions = {
       method: "POST",
       headers: {
-       // Authorization: `Bearer ${localStorage.getItem("token")}`,
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
@@ -1124,7 +1147,7 @@ async function Request(data: RequestInterface) {
   const requestOptions = {
       method: "POST",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
@@ -1146,7 +1169,7 @@ async function GetLocation() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
       },
   };
@@ -1167,7 +1190,7 @@ async function GetRequest() {
   const requestOptions = {
       method: "GET",
       headers: {
-          //Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json"
       },
   };
@@ -1188,7 +1211,7 @@ async function GetRequest() {
 
 
 export {
-
+  Login,
   GetEducation,
   GetGender,
   GetPrefix,

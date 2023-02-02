@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/sut65/team08/controller"
+	"github.com/sut65/team08/middlewares"
 
 	"github.com/sut65/team08/entity"
 
@@ -16,10 +17,10 @@ func main() {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
-	//router := r.Group("/")
+	router := r.Group("/")
 
 	{
-		//router.Use(middlewares.Authorizes())
+		router.Use(middlewares.Authorizes())
 		{
 			// J
 			//Building
@@ -270,9 +271,9 @@ func main() {
 
 	}
 	// Signup User Route
-	//r.POST("/signup", controller.CreatePrefix)
+	r.POST("/signup", controller.CreatePrefix)
 	// login User Route
-	//r.POST("/login", controller.Login)
+	r.POST("/login", controller.Login)
 
 	// Run the server go run main.go
 	r.Run()

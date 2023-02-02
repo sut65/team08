@@ -203,7 +203,7 @@ type Doctor struct {
 	DocWiPrefixID *uint
 	WiFirstName   string
 
-	WiLastName     string
+	WiLastName     string 
 	WiOccupation   string
 	WiPhone        string
 	EducationID    *uint
@@ -423,6 +423,7 @@ type Med_Employee struct {
 	Prefix        Prefix          `gorm:"references:id"`
 	Education     Education       `gorm:"references:id"`
 	Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_EmployeeID"`
+	Request []Request `gorm:"foreignKey:Med_EmployeeID"`
 }
 type Brand struct {
 	gorm.Model

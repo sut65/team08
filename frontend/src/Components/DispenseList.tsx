@@ -6,14 +6,25 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { DispenseInterface } from "../Models/IDispense";
-import { GetDispense } from "../Services/HttpClientService";
+import { GetDispense ,GetTreatment } from "../Services/HttpClientService";
+import { TreatmentsInterface } from "../Models/ITreatment";
 
 function DispenseList() {
   const [Dispenses, setDispenses] = useState<DispenseInterface[]>([]);
+  const [treatment, setTreatment] = useState<TreatmentsInterface[]>([]);
 
   useEffect(() => {
     getDispenses();
+    getTreatment();
   }, []);
+
+  const getTreatment = async () => {
+    let res = await GetTreatment();
+    if (res) {
+      setTreatment(res);
+      console.log(res);
+    }
+  };
 
   const getDispenses = async () => {
     let res = await GetDispense();
@@ -23,19 +34,19 @@ function DispenseList() {
     }
   };
 
+
   const columns: GridColDef[] = [
     { field: "ID", headerName: "ลำดับ", width: 50 },
     {
       field: "Treatment",
-      headerName: "ผู้ป่วย",
+      headerName: "หมายเลขการรักษา",
       width: 200,
-      valueFormatter: (params) => params.value.Name,
+      valueFormatter: (params) => params.value.TREATMENT_ID,
     },
-    { field: "ID", headerName: "ลำดับ", width: 50 },
     {
       field: "Drug",
       headerName: "ยาที่จ่าย",
-      width: 200,
+      width: 250,
       valueFormatter: (params) => params.value.Name,
     },
     {
@@ -46,9 +57,8 @@ function DispenseList() {
     },
     {
       field: "Number",
-      headerName: "การรับประทานยา",
+      headerName: "จำนวนยา",
       width: 150,
-      // valueFormatter: (params) => params.value.Number,
     },
   ];
 
@@ -84,7 +94,7 @@ function DispenseList() {
         </Box>
         <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
           <DataGrid
-            rows={Dispenses}
+            rows={Dispenses }
             getRowId={(row) => row.ID}
             columns={columns}
             pageSize={5}

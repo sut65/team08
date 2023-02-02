@@ -42,14 +42,17 @@ func CreateMedEmployee(c *gin.Context) {
 
 	// 12: สร้าง med_employee
 	sc := entity.Med_Employee{
-		Prefix:    Prefix,                // โยงความสัมพันธ์กับ Entity Prefix
-		Gender:    gender,                // โยงความสัมพันธ์กับ Entity Gender
-		Education: education,             // โยงความสัมพันธ์กับ Entity Education
-		Name:      med_employee.Name,     // ตั้งค่าฟิลด์ name
-		Age:       med_employee.Age,      // ตั้งค่าฟิลด์ age
-		Phone:     med_employee.Phone,    // ตั้งค่าฟิลด์ phone
-		Email:     med_employee.Email,    // ตั้งค่าฟิลด์ email
-		Password:  med_employee.Password, // ตั้งค่าฟิลด์ password
+		Prefix:         Prefix,                      // โยงความสัมพันธ์กับ Entity Prefix
+		Gender:         gender,                      // โยงความสัมพันธ์กับ Entity Gender
+		Education:      education,                   // โยงความสัมพันธ์กับ Entity Education
+		Name:           med_employee.Name,           // ตั้งค่าฟิลด์ name
+		Age:            med_employee.Age,            // ตั้งค่าฟิลด์ age
+		Phone:          med_employee.Phone,          // ตั้งค่าฟิลด์ phone
+		Email:          med_employee.Email,          // ตั้งค่าฟิลด์ email
+		University:     med_employee.University,     // ตั้งค่าฟิลด์ University
+		EducationName:  med_employee.EducationName,  // ตั้งค่าฟิลด์ EducationName
+		EducationMajor: med_employee.EducationMajor, // ตั้งค่าฟิลด์ EducationMajor
+		Password:       med_employee.Password,       // ตั้งค่าฟิลด์ password
 
 	}
 

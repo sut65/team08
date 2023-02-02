@@ -30,46 +30,61 @@ function MedEmployee() {
       {
         field: "Prefix",
         headerName: "คำนำหน้า",
-        width: 300,
+        width: 90,
         valueFormatter: (params) => params.value.Description,
       },
       {
         field: "Name",
         headerName: "ชื่อ-สกุล",
-        width: 300,
+        width: 200,
       },
       {
         field: "Age",
         headerName: "อายุ",
-        width: 300,
+        width: 100,
       },
       {
         field: "Gender",
         headerName: "เพศ",
-        width: 300,
+        width: 80,
         valueFormatter: (params) => params.value.Description,
       },
       {
         field: "Phone",
         headerName: "เบอร์โทร",
-        width: 300,
+        width: 100,
       },
       {
         field: "Education",
         headerName: "ระดับการศึกษา",
-        width: 300,
+        width: 120,
         valueFormatter: (params) => params.value.Description,
+      },
+      {
+        field: "EducationName",
+        headerName: "การศึกษา",
+        width: 150,
+      },
+      {
+        field: "EducationMajor",
+        headerName: "สาขา",
+        width: 150,
+      },
+      {
+        field: "University",
+        headerName: "มหาวิทยาลัย",
+        width: 130,
       },
       {
         field: "Email",
         headerName: "อีเมล",
-        width: 300,
+        width: 200,
 
       },
       {
         field: "Password",
         headerName: "รหัสผ่าน",
-        width: 300,
+        width: 200,
       },
 
     ];

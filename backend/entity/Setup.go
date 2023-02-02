@@ -74,7 +74,20 @@ func SetupDatabase() {
 
 	db = database
 
-	//Gg
+	password, err := bcrypt.GenerateFromPassword([]byte("1234"), 14)
+
+	db.Model(&Med_Employee{}).Create(&Med_Employee{
+		Name:     "Khunjira",
+		Age:	21,
+		Phone: "0855555555",
+		Email:    "gg@gmail.com",
+		Password: string(password),
+	})
+	// var Khunjira Med_Employee
+	// db.Raw("SELECT * FROM users WHERE email = ?", "gg@gmail.com").Scan(&Khunjira)
+	
+
+	
 	//สถานที่ --------------------
 	L1 := Location{
 		Name: "อาคารอุบัติเหตุและเวชศาสตร์ฉุกเฉิน",

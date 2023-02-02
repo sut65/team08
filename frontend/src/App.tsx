@@ -57,6 +57,8 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import HotelIcon from '@mui/icons-material/Hotel';
+import SignIn from "./Components/Signin";
+import  Home  from "./Components/Home";
 // import SignIn from "./components/SignIn";
 
 const drawerWidth = 240;
@@ -151,9 +153,9 @@ function App() {
     }
   }, []);
 
-  // if (!token) {
-  //   return <SignIn />;
-  // }
+  if (!token) {
+    return <SignIn />;
+  }
 
   const signout = () => {
     localStorage.clear();
@@ -263,6 +265,7 @@ function App() {
 
                 <Route path="/requests" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />
+                <Route path="/" element={<Home />} />
                 
               </Routes>
             </Container>

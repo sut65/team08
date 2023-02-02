@@ -42,7 +42,7 @@ function Operating_RoomCreate() {
     State:{Name:"-----"}
   });
   const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
-    Patient:{FirstNameTH:"-----"}
+    Patient:{Patient_Name:"-----"}
   });
  
   // const [Date_checkin, setDate_checkin] = useState<string>("");
@@ -261,7 +261,7 @@ return (
             inputProps={{
               name: "Explain",
             }}
-            value={TreatOne?.Patient?.FirstNameTH + "" || "aa"}
+            value={TreatOne?.Patient?.Patient_Name + "" || "aa"}
             // onChange={handleInputChange_Text}
           />
         </FormControl>

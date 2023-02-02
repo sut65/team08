@@ -348,6 +348,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
                 <DateTimePicker
                   label="กรุณาเลือกวันและเวลา *"
                   value={appoint.Date_appoint}
+                  minDateTime = {appoint.Date_now}
                   onChange={(newValue) => {
                     setAppoint({
                       ...appoint,

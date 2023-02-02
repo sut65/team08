@@ -47,9 +47,9 @@ func CreateDispense(c *gin.Context) {
 	// }
 	// 14: สร้าง Dispense
 	cr := entity.Dispense{
-		Drug:     drug,     // โยงความสัมพันธ์กับ Entity Drug
-		Practice: practice, // โยงความสัมพันธ์กับ Entity Practice
-		//Treatment:  treatment,       // โยงความสัมพันธ์กับ Entity Treatment
+		Drug:      drug,      // โยงความสัมพันธ์กับ Entity Drug
+		Practice:  practice,  // โยงความสัมพันธ์กับ Entity Practice
+		Treatment: treatment, // โยงความสัมพันธ์กับ Entity Treatment
 		//Doctor:      doctor,           // โยงความสัมพันธ์กับ Entity Doctor
 		Date:   dispense.Date,   // ตั้งค่าฟิลด์ Date
 		Number: dispense.Number, // ตั้งค่าฟิลด์ Number
@@ -113,4 +113,3 @@ func UpdateDispense(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": dispense})
 }
-

@@ -6,14 +6,25 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { AppointInterface } from "../Models/IAppoint";
-import { GetAppoint } from "../Services/HttpClientService";
+import { GetAppoint ,GetTreatment} from "../Services/HttpClientService";
+import { TreatmentsInterface } from "../Models/ITreatment";
 
 function AppointList() {
   const [Appoints, setAppoints] = useState<AppointInterface[]>([]);
+  const [treatment, setTreatment] = useState<TreatmentsInterface[]>([]);
 
   useEffect(() => {
     getAppoints();
+    getTreatment();
   }, []);
+
+  const getTreatment = async () => {
+    let res = await GetTreatment();
+    if (res) {
+      setTreatment(res);
+      console.log(res);
+    }
+  };
 
   const getAppoints = async () => {
     let res = await GetAppoint();
@@ -28,10 +39,23 @@ function AppointList() {
       field: "Treatment",
       headerName: "ผู้ป่วย",
       width: 200,
+      valueFormatter: (params) => params.value.TREATMENT_ID,
+    },
+
+    {
+      field: "Levelcure",
+      headerName: "สิทธิในการรักษา",
+      width: 200,
       valueFormatter: (params) => params.value.Name,
     },
 
-    { field: "ID", headerName: "ลำดับ", width: 50 },
+    {
+      field: "Department",
+      headerName: "แผนกที่นัด",
+      width: 200,
+      valueFormatter: (params) => params.value.Name,
+    },
+
     {
       field: "Date_now",
       headerName: "วันที่ออกใบนัด",
@@ -43,12 +67,12 @@ function AppointList() {
       width: 200,
     },
 
-    {
-      field: "Officer",
-      headerName: "เจ้าหน้าที่ผู้ออกใบนัด",
-      width: 150,
-      valueFormatter: (params) => params.value.Name,
-    },
+    // {
+    //   field: "Officer",
+    //   headerName: "เจ้าหน้าที่ผู้ออกใบนัด",
+    //   width: 150,
+    //   valueFormatter: (params) => params.value.Name,
+    // },
   ];
 
   return (

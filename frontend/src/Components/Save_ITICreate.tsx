@@ -41,7 +41,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
     const [Room, setRoom] = useState<RoomInterface[]>([]);
     const [State, setState] = useState<StateInterface[]>([]);
     const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
-      Patient:{FirstNameTH:"-----"}
+      Patient:{Patient_Name:"-----"}
     });
 
     // const [Date_checkin, setDate_checkin] = useState<string>("");
@@ -261,7 +261,7 @@ const handleChange = (event: SelectChangeEvent) => {
                 name: "Patiend",
               }}
               // แก้ไขตัวแปร ******************
-              value={TreatOne?.Patient?.FirstNameTH + "" || "aa"}
+              value={TreatOne?.Patient?.Patient_Name + "" || "aa"}
               // onChange={handleInputChange_Text}
             />
           </FormControl>
@@ -362,6 +362,7 @@ const handleChange = (event: SelectChangeEvent) => {
               <DateTimePicker
                 label="กรุณาเลือกวันเวลาที่ออก *"
                 value={Save_ITIs.Date_checkout}
+                minDateTime = {Save_ITIs.Date_checkin}
                 onChange={(newValue) => {
                   setSave_ITIs({
                     ...Save_ITIs,

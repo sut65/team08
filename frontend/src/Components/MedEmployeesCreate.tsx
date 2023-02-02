@@ -37,6 +37,9 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
     const [Phone, setPhones] = useState<string>("");
     const [Email, setEmails] = useState<string>("");
     const [Password, setPasswords] = useState<string>("");
+    const [University, setUniversitys] = useState<string>("");
+    const [EducationName, setEducationNames] = useState<string>("");
+    const [EducationMajor, setEducationMajos] = useState<string>("");
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -103,6 +106,9 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
       GenderID: convertType(MedEmployees.GenderID),
       EducationID: convertType(MedEmployees.EducationID),
       Name: (Name),
+      EducationMajor: (EducationMajor),
+      EducationName:(EducationName),
+      University:(University),
       Age: (convertType(Age)),
       Phone: (Phone),
       Email: (Email),
@@ -160,7 +166,7 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>
               <Select
@@ -183,19 +189,19 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
             </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={8}>
                 <p>ชื่อ</p>
                 <TextField fullWidth id="Name" type="string" variant="outlined"  
                 onChange={(event) => setNames(event.target.value)} />
               </Grid>
           
-          <Grid item xs={6}>
+          <Grid item xs={2}>
                 <p>อายุ</p>
                 <TextField fullWidth id="Age" type="number" variant="outlined"  
                 onChange={(event) => setAges(event.target.value)} />
               </Grid> 
 
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>
               <Select
@@ -249,6 +255,24 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
           </Grid>
 
           <Grid item xs={6}>
+                <p>การศึกษา</p>
+                <TextField fullWidth id="EducationName" type="string" variant="outlined"  
+                onChange={(event) => setEducationNames(event.target.value)} />
+          </Grid>
+
+          <Grid item xs={6}>
+                <p>สาขา</p>
+                <TextField fullWidth id="EducationMajor" type="string" variant="outlined"  
+                onChange={(event) => setEducationMajos(event.target.value)} />
+          </Grid>
+
+          <Grid item xs={6}>
+                <p>มหาวิทยาลัย</p>
+                <TextField fullWidth id="University" type="string" variant="outlined"  
+                onChange={(event) => setUniversitys(event.target.value)} />
+          </Grid>
+
+          <Grid item xs={6}>
                 <p>อีเมล</p>
                 <TextField fullWidth id="Email" type="string" variant="outlined"  
                 onChange={(event) => setEmails(event.target.value)} />
@@ -263,7 +287,7 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
           <Grid item xs={12}>
             <Button
               component={RouterLink}
-              to="/MedEmployeeCreate"
+              to="/medemployees"
               variant="contained"
               color="inherit"
             >

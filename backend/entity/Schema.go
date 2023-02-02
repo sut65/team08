@@ -415,6 +415,9 @@ type Med_Employee struct {
 	Phone    string
 	Email    string
 	Password string
+	University string
+	EducationName  string
+	EducationMajor string
 
 	GenderID      *uint
 	PrefixID      *uint

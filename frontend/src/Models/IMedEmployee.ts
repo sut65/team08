@@ -7,6 +7,9 @@ export interface MedEmployeeInterface {
   Name?: string;
   Age?: number;
   Phone?: string;
+  University?: string;
+	EducationName?:  string;
+	EducationMajor?: string;
   Email?: string;
   Password?: string;
 

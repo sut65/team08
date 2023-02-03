@@ -10,6 +10,7 @@ import (
 
 // POST /Screening_officer
 func CreateScreening_officer(c *gin.Context) {
+	var officer entity.Officer
 
 	var screening_officer entity.Screening_officer
 	var Prefix entity.Prefix
@@ -58,6 +59,12 @@ func CreateScreening_officer(c *gin.Context) {
 		return
 	}
 
+	//  ค้น OfficerID
+	if tx := entity.DB().Where("id = ?", screening_officer.OfficerID).First(&officer); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "officer not found"})
+		return
+	}
+
 	// 16: สร้าง Screening_officer
 	sc := entity.Screening_officer{
 		Prefix:          Prefix,
@@ -77,6 +84,8 @@ func CreateScreening_officer(c *gin.Context) {
 		EducationName:  screening_officer.EducationName,
 		EducationMajor: screening_officer.EducationMajor,
 		University:     screening_officer.University,
+
+		Officer:  officer,
 	}
 
 	// 13: บันทึก

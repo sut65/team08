@@ -3,7 +3,6 @@ package controller
 import (
 	"net/http"
 
-	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team08/entity"
 	"github.com/sut65/team08/service"
@@ -33,20 +32,20 @@ type LoginResponse struct {
 // POST /login
 func Login(c *gin.Context) {
 	var payload LoginPayload
-	var med_Employee entity.Med_Employee
+	var officer entity.Officer
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// ค้นหา med_Employee ด้วย email ที่ผู้ใช้กรอกเข้ามา
-	if err := entity.DB().Raw("SELECT * FROM med_Employees WHERE email = ?", payload.Email).Scan(&med_Employee).Error; err != nil {
+	// ค้นหา officer ด้วย email ที่ผู้ใช้กรอกเข้ามา
+	if err := entity.DB().Raw("SELECT * FROM officers WHERE email = ?", payload.Email).Scan(&officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	// ตรวจสอบรหัสผ่าน
-	err := bcrypt.CompareHashAndPassword([]byte(med_Employee.Password), []byte(payload.Password))
+	err := bcrypt.CompareHashAndPassword([]byte(officer.Password), []byte(payload.Password))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "password is incerrect"})
 		return
@@ -63,7 +62,7 @@ func Login(c *gin.Context) {
 		ExpirationHours: 24,
 	}
 
-	signedToken, err := jwtWrapper.GenerateToken(med_Employee.Email)
+	signedToken, err := jwtWrapper.GenerateToken(officer.Email)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error signing token"})
 		return
@@ -71,24 +70,19 @@ func Login(c *gin.Context) {
 
 	tokenResponse := LoginResponse{
 		Token: signedToken,
-		ID:    med_Employee.ID,
-		//Role:  "med_Employee",
+		ID:    officer.ID,
+		Role:  "officer",
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
 }
 
 // POST /create
-func CreateMed_Employee(c *gin.Context) {
+func CreateOfficer(c *gin.Context) {
 	var payload SignUpPayload
-	var med_Employee entity.Med_Employee
+	var officer entity.Officer
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	if _, err := govalidator.ValidateStruct(payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -100,14 +94,14 @@ func CreateMed_Employee(c *gin.Context) {
 		return
 	}
 
-	med_Employee.Name = payload.Name
-	med_Employee.Email = payload.Email
-	med_Employee.Password = string(hashPassword)
+	officer.Name = payload.Name
+	officer.Email = payload.Email
+	officer.Password = string(hashPassword)
 
-	if err := entity.DB().Create(&med_Employee).Error; err != nil {
+	if err := entity.DB().Create(&officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"data": med_Employee})
+	c.JSON(http.StatusCreated, gin.H{"data": officer})
 }

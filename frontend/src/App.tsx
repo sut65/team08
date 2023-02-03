@@ -57,8 +57,10 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import HotelIcon from '@mui/icons-material/Hotel';
-import SignIn from "./Components/Signin";
+import SignIn from "./Components/SigninOfficer";
 import  Home  from "./Components/Home";
+import SelectLogin from "./Components/SelectLogin";
+
 // import SignIn from "./components/SignIn";
 
 const drawerWidth = 240;
@@ -154,7 +156,7 @@ function App() {
   }, []);
 
   if (!token) {
-    return <SignIn />;
+    return <SelectLogin />;
   }
 
   const signout = () => {

@@ -8,9 +8,9 @@ import (
 	"net/http"
 )
 
-// POST /med_employee
+// // POST /med_employee
 func CreateMedEmployee(c *gin.Context) {
-
+	var officer entity.Officer
 	var med_employee entity.Med_Employee
 	var Prefix entity.Prefix
 	var gender entity.Gender
@@ -39,17 +39,27 @@ func CreateMedEmployee(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
 		return
 	}
+	//  ค้น OfficerID
+	if tx := entity.DB().Where("id = ?", med_employee.OfficerID).First(&officer); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "officer not found"})
+		return
+	}
 
 	// 12: สร้าง med_employee
 	sc := entity.Med_Employee{
-		Prefix:    Prefix,                // โยงความสัมพันธ์กับ Entity Prefix
-		Gender:    gender,                // โยงความสัมพันธ์กับ Entity Gender
-		Education: education,             // โยงความสัมพันธ์กับ Entity Education
-		Name:      med_employee.Name,     // ตั้งค่าฟิลด์ name
-		Age:       med_employee.Age,      // ตั้งค่าฟิลด์ age
-		Phone:     med_employee.Phone,    // ตั้งค่าฟิลด์ phone
-		Email:     med_employee.Email,    // ตั้งค่าฟิลด์ email
-		Password:  med_employee.Password, // ตั้งค่าฟิลด์ password
+		Prefix:         Prefix,                      // โยงความสัมพันธ์กับ Entity Prefix
+		Gender:         gender,                      // โยงความสัมพันธ์กับ Entity Gender
+		Education:      education,                   // โยงความสัมพันธ์กับ Entity Education
+		Name:           med_employee.Name,           // ตั้งค่าฟิลด์ name
+		Age:            med_employee.Age,            // ตั้งค่าฟิลด์ age
+		Phone:          med_employee.Phone,          // ตั้งค่าฟิลด์ phone
+		Email:          med_employee.Email,          // ตั้งค่าฟิลด์ email
+		University:     med_employee.University,     // ตั้งค่าฟิลด์ University
+		EducationName:  med_employee.EducationName,  // ตั้งค่าฟิลด์ EducationName
+		EducationMajor: med_employee.EducationMajor, // ตั้งค่าฟิลด์ EducationMajor
+		Password:       med_employee.Password,       // ตั้งค่าฟิลด์ password
+
+		Officer:  officer,
 
 	}
 
@@ -65,7 +75,7 @@ func CreateMedEmployee(c *gin.Context) {
 func GetMedEmployee(c *gin.Context) {
 	var med_employee entity.Med_Employee
 	id := c.Param("id")
-	if err := entity.DB().Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM med_employees WHERE id = ?", id).Find(&med_employee).Error; err != nil {
+	if err := entity.DB().Preload("Officer").Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM med_employees WHERE id = ?", id).Find(&med_employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,7 +85,7 @@ func GetMedEmployee(c *gin.Context) {
 // GET /med_employee
 func ListMedEmployees(c *gin.Context) {
 	var med_employee []entity.Med_Employee
-	if err := entity.DB().Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM med_employees").Find(&med_employee).Error; err != nil {
+	if err := entity.DB().Preload("Officer").Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM med_employees").Find(&med_employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -4,6 +4,7 @@ import { EducationsInterface } from "./IEducation";
 import { BloodInterface } from "./IBlood";
 import { ReligionInterface } from "./IReligion";
 import { NationalityInterface } from "./INationality";
+import { OfficersInterface } from "./IOfficer";
 
 
 export interface Screening_officersInterface {
@@ -32,4 +33,7 @@ export interface Screening_officersInterface {
     PrefixID?: number;     // foreignkey.ID
     Education?: EducationsInterface;
     EducationID?: number;
+
+    OfficerID ?:    number;
+	Officer ?: OfficersInterface;
    }

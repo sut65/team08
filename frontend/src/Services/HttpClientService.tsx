@@ -11,10 +11,35 @@ import { MedEmployeeInterface } from "../Models/IMedEmployee";
 import { MedicalEquimentInterface } from "../Models/IMedEquipment";
 import { RequestInterface } from "../Models/IRequest";
 import { SigninInterface } from "../Models/ISignin";
+import { OfficersInterface } from "../Models/IOfficer";
+import { SigninMedInterface } from "../Models/ISigninMed";
 
 const apiUrl = "http://localhost:8080";
 
-async function Login(data: SigninInterface) {
+/////////////////////////////////////////////////////////////GET BY UID
+async function GetOfficerByUID() {
+  let uid = localStorage.getItem("uid");
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/officer/${uid}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function LoginByOfficer(data: SigninInterface) {
   const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -36,6 +61,97 @@ async function Login(data: SigninInterface) {
 
   return res;
 }
+async function GetOfficers() {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/officers`, requestOptions) 
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+/////////////////////////////////////////////////////// CREATE 
+async function CreateOfficer(data: OfficersInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/officers/create`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function LoginByMed(data: SigninMedInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/login_med`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log("if (res.data)");
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("uid", res.data.id);
+              localStorage.setItem("role", res.data.role);
+              return res.data;
+          } else {
+              console.log("else ");
+              return false;
+          }
+      });
+
+  return res;
+}
+
+// async function Login(data: SigninInterface) {
+//   const requestOptions = {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(data),
+//   };
+
+//   let res = await fetch(`${apiUrl}/login`, requestOptions)
+//       .then((response) => response.json())
+//       .then((res) => {
+//           if (res.data) {
+//               localStorage.setItem("token", res.data.token);
+//               localStorage.setItem("uid", res.data.id);
+//               localStorage.setItem("role", res.data.role);
+//               return res.data;
+//           } else {
+//               return false;
+//           }
+//       });
+
+//   return res;
+// }
 
 
 async function GetGender() {
@@ -1211,7 +1327,13 @@ async function GetRequest() {
 
 
 export {
-  Login,
+  LoginByOfficer,
+  GetOfficers,
+  CreateOfficer,
+  GetOfficerByUID,
+  LoginByMed,
+
+  //Login,
   GetEducation,
   GetGender,
   GetPrefix,

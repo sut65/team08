@@ -1,5 +1,6 @@
 import { EducationsInterface } from "./IEducation";
 import { GendersInterface } from "./IGender";
+import { OfficersInterface } from "./IOfficer";
 import { PrefixsInterface } from "./IPrefix";
 
 export interface MedEmployeeInterface {
@@ -19,4 +20,7 @@ export interface MedEmployeeInterface {
   PrefixID?: number;     // foreignkey.ID
   Education?: EducationsInterface;
   EducationID?: number;
+
+  OfficerID ?:    number;
+	Officer ?: OfficersInterface;
   }

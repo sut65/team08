@@ -30,6 +30,8 @@ func SetupDatabase() {
 	// Migrate the schema
 
 	database.AutoMigrate(
+		&Officer{},
+
 		&Prefix{},
 		&Gender{},
 		&Education{},
@@ -75,17 +77,23 @@ func SetupDatabase() {
 	db = database
 
 	password, err := bcrypt.GenerateFromPassword([]byte("1234"), 14)
+	password2, err := bcrypt.GenerateFromPassword([]byte("1234"), 14)
 
-	db.Model(&Med_Employee{}).Create(&Med_Employee{
-		Name:     "Khunjira",
-		Age:	21,
-		Phone: "0855555555",
-		Email:    "gg@gmail.com",
+	db.Model(&Officer{}).Create(&Officer{
+		Name:     "Sabaithip",
+		Email:    "aa@gmail.com",
 		Password: string(password),
 	})
-	// var Khunjira Med_Employee
-	// db.Raw("SELECT * FROM users WHERE email = ?", "gg@gmail.com").Scan(&Khunjira)
-	
+	db.Model(&Officer{}).Create(&Officer{
+		Name:     "Khunjira",
+		Email:    "ss@gmail.com",
+		Password: string(password2),
+	})
+
+	var Sabaithip Officer
+	var Khunjira Officer
+	db.Raw("SELECT * FROM officers WHERE email = ?", "aa@gmail.com").Scan(&Sabaithip)
+	db.Raw("SELECT * FROM officers WHERE email = ?", "ss@gmail.com").Scan(&Khunjira)
 
 	
 	//สถานที่ --------------------

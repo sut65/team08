@@ -20,8 +20,9 @@ import { BloodInterface } from "../Models/IBlood";
 import { ReligionInterface } from "../Models/IReligion";
 import { NationalityInterface } from "../Models/INationality";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
+import { OfficersInterface } from "../Models/IOfficer";/////
 
-import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetReligion,GetNationality} from "../Services/HttpClientService";
+import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetReligion,GetNationality} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -47,6 +48,7 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetRel
     const [EducationName, setEducationNames] = useState<string>("");
     const [EducationMajor, setEducationMajors] = useState<string>("");
     const [University, setUniversitys] = useState<string>("");
+    const [officers, setOfficers] = useState<OfficersInterface[]>([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -71,6 +73,15 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetRel
       });
       console.log(`${name}: ${value}`);
   };
+
+  const getOfficersID = async () => {
+    let res = await GetOfficerByUID();
+    Screening_officers.OfficerID = res.ID;
+    console.log(Screening_officers.OfficerID);
+    if (res) {
+        setOfficers(res);
+    }
+};
   
   const getGender = async () => {
     let res = await GetGender();
@@ -117,7 +128,7 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetRel
 
 
   useEffect(() => {
-    getGender(); getPrefix(); getEducation(); getBlood(); getReligion(); getNationality(); }, []);
+    getGender(); getPrefix(); getEducation(); getBlood(); getReligion(); getNationality();getOfficersID(); }, []);
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
@@ -143,6 +154,7 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetRel
       EducationName: (EducationName),
       EducationMajor: (EducationMajor),
       University: (University),
+      OfficerID: convertType(Screening_officers.OfficerID),
 
     };
     

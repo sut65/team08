@@ -22,6 +22,13 @@ func main() {
 	{
 		router.Use(middlewares.Authorizes())
 		{
+			// User Routes   //ของเอา Officer officer
+			router.GET("/officers", controller.ListOfficers)
+			router.GET("/officer/:id", controller.GetOfficer)
+			router.PATCH("/officers", controller.UpdateOfficer)
+			router.DELETE("/officers/:id", controller.DeleteOfficer)
+
+
 			// J
 			//Building
 			r.GET("/Buildings", controller.ListBuildings)
@@ -229,6 +236,7 @@ func main() {
 			// Medical Equipment Employee Routes
 			r.GET("/medemployees", controller.ListMedEmployees)
 			r.GET("/medemployees/:id", controller.GetMedEmployee)
+			r.POST("/medemployees/create", controller.CreateloginMed_Employee) ///create pass token----
 			r.POST("/medemployees", controller.CreateMedEmployee)
 			r.PATCH("/medemployees", controller.UpdateMedEmployee)
 			r.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
@@ -270,11 +278,12 @@ func main() {
 		}
 
 	}
-	// Signup User Route
-	r.POST("/signup", controller.CreatePrefix)
+	// Signup Officer Route
+	r.POST("/signup", controller.CreateOfficer)
 	// login User Route
 	r.POST("/login", controller.Login)
-
+	// // student login
+	r.POST("/login_med", controller.LoginMed_Employee)
 	// Run the server go run main.go
 	r.Run()
 

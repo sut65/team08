@@ -13,8 +13,8 @@ import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { SigninInterface } from "../Models/ISignin";
-import { Login } from "../Services/HttpClientService";
+import { SigninMedInterface } from "../Models/ISigninMed";
+import { LoginByMed } from "../Services/HttpClientService";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -26,7 +26,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 const theme = createTheme();
 
 function SignIn() {
-    const [signin, setSignin] = useState<Partial<SigninInterface>>({});
+    const [signin, setSignin] = useState<Partial<SigninMedInterface>>({});
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
@@ -50,13 +50,19 @@ function SignIn() {
     };
 
     const submit = async () => {
-        let res = await Login(signin);
+        console.log(signin);
+        console.log(signin);
+        let res = await LoginByMed(signin);
         if (res) {
             setSuccess(true);
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
         } else {
+            console.log(signin);
+            console.log(signin);
+            console.log(signin);
+            console.log("let res = await LoginByMed(signin);")
             setError(true);
         }
     };
@@ -81,7 +87,7 @@ function SignIn() {
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 >
                     <Alert onClose={handleClose} severity="error">
-                        อีเมลหรือรหัสผ่านไม่ถูกต้อง
+                        Emailหรือรหัสผ่านไม่ถูกต้อง
                     </Alert>
                 </Snackbar>
 
@@ -117,7 +123,7 @@ function SignIn() {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            Med Sign in
                         </Typography>
                         <Box sx={{ mt: 1 }}>
                             <TextField
@@ -125,7 +131,7 @@ function SignIn() {
                                 required
                                 fullWidth
                                 id="Email"
-                                label="Email Address"
+                                label="User Name"
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
@@ -137,7 +143,7 @@ function SignIn() {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="password"
                                 type="password"
                                 id="Password"
                                 autoComplete="current-password"
@@ -155,7 +161,7 @@ function SignIn() {
                                 sx={{ mt: 3, mb: 2 }}
                                 onClick={submit}
                             >
-                                Sign In
+                                Stuudent Sign In
                             </Button>
                         </Box>
                     </Box>

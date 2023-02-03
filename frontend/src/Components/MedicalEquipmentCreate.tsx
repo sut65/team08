@@ -44,7 +44,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 function MedicalEquipmentCreate() {
   const [Brand, setBrands] = useState<BrandsInterface[]>([]);
   const [medstatuses, setMedStatuses] = useState<MedStatusInterface[]>([]);
-  //const [medemployees, setMedEmployees] = useState<MedEmployeeInterface[]>([]);
+  const [medemployees, setMedEmployees] = useState<MedEmployeeInterface[]>([]);
   const [MedicalEquipment, setMedicalEquipment] = useState<MedicalEquimentInterface>({});
 
   const [Equipment, setEquipments] = useState<string>("");
@@ -100,16 +100,16 @@ function MedicalEquipmentCreate() {
     }
   };
 
-  // const getMedEmployee = async () => {
-  //   let res = await GetMedEmployee();
-  //   if (res) {
-  //     setMedEmployees(res);
-  //   }
-  // };
+  const getMedEmployee = async () => {
+    let res = await GetMedEmployee();
+    if (res) {
+      setMedEmployees(res);
+    }
+  };
 
   useEffect(() => {
     getBrand();
-    //getMedEmployee();
+    getMedEmployee();
     getMedStatus();
   }, []);
 
@@ -126,7 +126,7 @@ function MedicalEquipmentCreate() {
         Quantity: (convertType(Quantity)),
         BrandID: convertType(MedicalEquipment.BrandID),
         Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
-        //MedEmployeeID: convertType(MedicalEquipment.Med_EmployeeID),
+        MedEmployeeID: convertType(MedicalEquipment.Med_EmployeeID),
     };
   
     console.log(data)

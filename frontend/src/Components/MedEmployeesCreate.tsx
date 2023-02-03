@@ -17,8 +17,9 @@ import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
 import { EducationsInterface } from "../Models/IEducation";
 import { MedEmployeeInterface } from "../Models/IMedEmployee";
+import { OfficersInterface } from "../Models/IOfficer";/////
 
-import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/HttpClientService";
+import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -44,6 +45,8 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
+    const [officers, setOfficers] = useState<OfficersInterface[]>([]);
+
     const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
@@ -64,7 +67,15 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
       });
       console.log(`${name}: ${value}`);
   };
-  
+  /////////
+  const getOfficersID = async () => {
+    let res = await GetOfficerByUID();
+    MedEmployees.OfficerID = res.ID;
+    console.log(MedEmployees.OfficerID);
+    if (res) {
+        setOfficers(res);
+    }
+};
   const getGender = async () => {
     let res = await GetGender();
     if (res) {
@@ -92,6 +103,7 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
     getGender();
     getPrefix();
     getEducation();
+    getOfficersID();
 
   }, []);
 
@@ -113,6 +125,8 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
       Phone: (Phone),
       Email: (Email),
       Password: (Password),
+
+      OfficerID: convertType(MedEmployees.OfficerID),
     };
     
     console.log(data)

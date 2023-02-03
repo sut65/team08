@@ -10,7 +10,7 @@ import (
 
 // POST Request มีทุกอันยกเว้น officer ไม่รู้ทำไม
 func CreateRequest(c *gin.Context) {
-	//var medemployees entity.Med_Employee
+	var medemployees entity.Med_Employee
 	var request entity.Request
 	var med_equipment entity.Med_Equipment
 	var location entity.Location
@@ -34,16 +34,16 @@ func CreateRequest(c *gin.Context) {
 	}
 
 	// // 11: ค้นหา resolution ด้วย id			//ของเราเป็น ค้นหา Location ด้วย id
-	// if tx := entity.DB().Where("id = ?", request.Med_EmployeeID).First(&medemployees); tx.RowsAffected == 0 {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "resolution not found"})
-	// 	return
-	// }
+	if tx := entity.DB().Where("id = ?", request.Med_EmployeeID).First(&medemployees); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "resolution not found"})
+		return
+	}
 
 	// 12: สร้าง
 	wv := entity.Request{
 		Med_Equipment: med_equipment, // โยงความสัมพันธ์กับ Entity
 		Location:      location,      // โยงความสัมพันธ์กับ Entity
-		//Med_Employee:  medemployees,
+		Med_Employee:  medemployees,
 		R_ID:          request.R_ID,
 		R_NAME:        request.R_NAME,
 		QUANTITY:      request.QUANTITY,

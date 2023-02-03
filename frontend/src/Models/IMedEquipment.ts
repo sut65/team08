@@ -15,7 +15,7 @@ export interface MedicalEquimentInterface {
     BrandID?: number;
     Brand?: BrandsInterface;
 
-    // Med_EmployeeID?: number;
-    // Med_Employee?: MedEmployeeInterface;
+    Med_EmployeeID?: number;
+    Med_Employee?: MedEmployeeInterface;
 
   }

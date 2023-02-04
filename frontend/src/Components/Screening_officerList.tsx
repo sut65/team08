@@ -96,7 +96,7 @@ function Screening_officerList() {
     },
     
       {field: "Prefix",headerName: "คำนำหน้า",width: 100, valueFormatter: (params) => params.value.Description,},
-      {field: "FirstNameTH",headerName: "ชื่อ-สกุล",width: 300,},
+      {field: "Screening_officer_Name",headerName: "ชื่อ-สกุล",width: 300,},
       {field: "Gender",headerName: "เพศ",width: 100,valueFormatter: (params) => params.value.Description,},
       {field: "Blood",headerName: "กรุ๊ปเลือด",width: 100,valueFormatter: (params) => params.value.Phenotype,},
       {field: "Religion",headerName: "ศาสนา",width: 150,valueFormatter: (params) => params.value.ReligionType,},

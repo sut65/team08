@@ -52,8 +52,7 @@ type Screening_officer struct {
 
 	//หน้าต่างข้อมูลส่วนตัวเจ้่าหน้าที่ฝ่ายคัดกรอง
 	PrefixID    *uint
-	FirstNameTH string
-	LastNameTH  string
+	Screening_officer_Name string
 
 	GenderID   *uint
 	BloodID    *uint

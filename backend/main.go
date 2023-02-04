@@ -6,8 +6,6 @@ import (
 
 	"github.com/sut65/team08/entity"
 
-	//"github.com/B6332907/SE-G08/middlewares"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -235,8 +233,7 @@ func main() {
 			//LEO
 			// Medical Equipment Employee Routes
 			r.GET("/medemployees", controller.ListMedEmployees)
-			r.GET("/medemployees/:id", controller.GetMedEmployee)
-			r.POST("/medemployees/create", controller.CreateloginMed_Employee) ///create pass token----
+			r.GET("/medemployees/:id", controller.GetMedEmployee) ///create pass token----
 			r.POST("/medemployees", controller.CreateMedEmployee)
 			r.PATCH("/medemployees", controller.UpdateMedEmployee)
 			r.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
@@ -283,8 +280,10 @@ func main() {
 	// login User Route
 	r.POST("/login", controller.Login)
 	// // student login
-	r.POST("/login_med", controller.LoginMed_Employee)
+	r.POST("/medemployees/login", controller.LoginMed_Employee)
 	// Run the server go run main.go
+	r.POST("/screenings/login", controller.LoginScreening_officer)
+	
 	r.Run()
 
 }
@@ -299,7 +298,7 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT , DELETE")
 
 		if c.Request.Method == "OPTIONS" {
 

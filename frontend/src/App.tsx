@@ -57,7 +57,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import HotelIcon from '@mui/icons-material/Hotel';
-import SignIn from "./Components/SigninOfficer";
+//import SignIn from "./Components/SigninOfficer";
 import  Home  from "./Components/Home";
 import SelectLogin from "./Components/SelectLogin";
 
@@ -125,33 +125,36 @@ const mdTheme = createTheme({
 });
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "ข้อมูลฝ่ายคัดกรอง", icon: <AccountCircleIcon />, path: "/Screening_officerList" },
-  { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" },
-  { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" },
-  { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" }, 
-  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" }, 
-  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room"},
-  { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" },
-  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <CalendarMonthIcon />, path: "/AppointList" },
-  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" },
-  { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" },
-  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" },
+  { name: "หน้าแรก", icon: <HomeIcon />, path: "/",role: 'officer' },
+  { name: "ข้อมูลฝ่ายคัดกรอง", icon: <AccountCircleIcon />, path: "/Screening_officerList" ,role: 'officer'},
+  { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" ,role: 'screening_officer'},
+  { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" ,role: 'officer'},
+  { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'officer'}, 
+  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'officer'}, 
+  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room" ,role: 'screening_officer'},
+  { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" ,role: 'officer'},
+  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <CalendarMonthIcon />, path: "/AppointList" ,role: 'screening_officer'},
+  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" ,role: 'officer'},
+  { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" ,role: 'med_employee'},
+  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" ,role: 'med_employee'},
 
 ];
 
 
 function App() {
   const [token, setToken] = useState<String>("");
+  const [role, setRole] = useState<String | null>("");
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   useEffect(() => {
+    const role = localStorage.getItem("role");
     const token = localStorage.getItem("token");
     if (token) {
       setToken(token);
+      setRole(role);
     }
   }, []);
 
@@ -216,7 +219,7 @@ function App() {
             </Toolbar>
             <Divider />
             <List>
-              {menu.map((item, index) => (
+              {menu.map((item, index) => role === item.role && (
                 <Link
                   to={item.path}
                   key={item.name}

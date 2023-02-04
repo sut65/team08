@@ -39,8 +39,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer
     const [Educations, setEducations] = useState<EducationsInterface[]>([]);
     const [Nationalitys, setNationalitys] = useState<NationalityInterface[]>([]);
 
-    const [FirstNameTH, setFirstNameTHs] = useState<string>("");
-    const [LastNameTH, setLastNameTHs] = useState<string>("");
+    const [Screening_officer_Names, setScreening_officer_Names] = useState<string>("");
     const [Birthday, setBirthdays] = useState<string>("");
     const [ScreeningIDCard, setScreeningIDCards] = useState<string>("");
     const [Phone, setPhones] = useState<string>("");
@@ -145,8 +144,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer
       NationalityID: convertType(Screening_officers.NationalityID),
       CountryID: convertType(Screening_officers.CountryID),
 
-      FirstNameTH: (FirstNameTH),
-      LastNameTH: (LastNameTH),
+      Screening_officer_Name: (Screening_officer_Names),
       Birthday: (Birthday),
       ScreeningIDCard: (ScreeningIDCard),
       Phone: (Phone),
@@ -210,7 +208,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
         <Grid item xs={12}><h3>ข้อมูลส่วนตัว</h3>  </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>
               <Select
@@ -233,18 +231,12 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer
             </FormControl>
           </Grid>
 
-          <Grid item xs={4.5}>
+          <Grid item xs={8}>
                 <p>ชื่อ</p>
                 <TextField fullWidth id="FirstNameTH" type="string" variant="outlined"  
-                onChange={(event) => setFirstNameTHs(event.target.value)} />
+                onChange={(event) => setScreening_officer_Names(event.target.value)} />
               </Grid>
-
-          <Grid item xs={4.5}>
-                <p>นามสกุล</p>
-                <TextField fullWidth id="LastNameTH" type="string" variant="outlined"  
-                onChange={(event) => setLastNameTHs(event.target.value)} />
-              </Grid>
-          
+      
           <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>

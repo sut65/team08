@@ -20,7 +20,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import BookIcon from '@mui/icons-material/Book';
 import SigninOfficer from "./SigninOfficer";
-import SigninMed from "./SigninMed";
+import SigninMed_employee from "./SigninMed_employee";
+import SigninScreening from "./SigninScreening";
 
 const drawerWidth = 240;
 
@@ -75,8 +76,9 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 const menu = [
-    { name: "Student Login page", icon: <HomeIcon />, path: "/" },
-    { name: "Officer Login page", icon: <BookIcon />, path: "/signin_officer" },
+    { name: "ฝ่ายผู้ดูแลระบบ", icon: <BookIcon />, path: "/signin_officer" },
+    { name: "ฝ่ายเทคนิคการแพทย์", icon: <HomeIcon />, path: "/signinMed_employee" },
+    { name: "ฝ่ายคัดกรอง", icon: <HomeIcon />, path: "/signinScreening_officer" },
 ];
 
 function SelectLogin() {
@@ -164,7 +166,9 @@ function SelectLogin() {
                         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                             <Routes>
                                 <Route path="/signin_officer" element={<SigninOfficer />} />
-                                <Route path="/" element={<SigninMed />} />
+                                <Route path="/signinMed_employee" element={<SigninMed_employee />} />
+                                <Route path="/signinScreening_officer" element={<SigninScreening />} />
+
                             </Routes>
                         </Container>
                     </Box>

@@ -13,6 +13,7 @@ import { RequestInterface } from "../Models/IRequest";
 import { SigninInterface } from "../Models/ISignin";
 import { OfficersInterface } from "../Models/IOfficer";
 import { SigninMedInterface } from "../Models/ISigninMed";
+import { SigninScreeningInterface } from "../Models/ISigninScreening";
 
 const apiUrl = "http://localhost:8080";
 
@@ -105,21 +106,23 @@ async function CreateOfficer(data: OfficersInterface) {
 
   return res;
 }
-async function LoginByMed(data: SigninMedInterface) {
+
+
+async function LoginMed_empolyee(data: SigninMedInterface) {
   const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/login_med`, requestOptions)
+  let res = await fetch(`${apiUrl}/medemployees/login`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
               console.log("if (res.data)");
               localStorage.setItem("token", res.data.token);
               localStorage.setItem("uid", res.data.id);
-              localStorage.setItem("role", res.data.role);
+              localStorage.setItem("role", "med_employee");
               return res.data;
           } else {
               console.log("else ");
@@ -130,28 +133,33 @@ async function LoginByMed(data: SigninMedInterface) {
   return res;
 }
 
-// async function Login(data: SigninInterface) {
-//   const requestOptions = {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(data),
-//   };
 
-//   let res = await fetch(`${apiUrl}/login`, requestOptions)
-//       .then((response) => response.json())
-//       .then((res) => {
-//           if (res.data) {
-//               localStorage.setItem("token", res.data.token);
-//               localStorage.setItem("uid", res.data.id);
-//               localStorage.setItem("role", res.data.role);
-//               return res.data;
-//           } else {
-//               return false;
-//           }
-//       });
+async function LoginScreening_officer(data: SigninScreeningInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+  };
 
-//   return res;
-// }
+  let res = await fetch(`${apiUrl}/screenings/login`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log("if (res.data)");
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("uid", res.data.id);
+              localStorage.setItem("role", "screening_officer");
+              return res.data;
+          } else {
+              console.log("else ");
+              return false;
+          }
+      });
+
+  return res;
+}
+
+
 
 
 async function GetGender() {
@@ -1327,11 +1335,12 @@ async function GetRequest() {
 
 
 export {
+  LoginScreening_officer,
+  LoginMed_empolyee,
   LoginByOfficer,
   GetOfficers,
   CreateOfficer,
   GetOfficerByUID,
-  LoginByMed,
 
   //Login,
   GetEducation,

@@ -4,7 +4,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
+import { Dialog, DialogTitle } from "@mui/material";
 
 import { Operating_RoomsInterface } from "../Models/IOperating_Room";
 import { GetOperating_Room } from "../Services/HttpClientService";
@@ -12,20 +13,88 @@ import { GetOperating_Room } from "../Services/HttpClientService";
 
 function Operating_RoomList() {
     const [Operating_Rooms, setOperating_Rooms] = useState<Operating_RoomsInterface[]>([]);
-  
+
+     const [Operating_RoomID, setOperating_RoomID] = React.useState(0);
+    const [openDelete, setOpendelete] = React.useState(false);
+    const [openUpdate, setOpenupdate] = React.useState(false);
+
     useEffect(() => {
       getOperating_Rooms();
     }, []);
+
+    const handleRowClick: GridEventListener<"rowClick"> = (params) => {
+      setOperating_RoomID(Number(params.row.ID));
+      localStorage.setItem("Operating_RoomID", params.row.ID);
+    };
+    const handleClose = () => {
+      setOpendelete(false);
+      setOpenupdate(false);
+    };
+  
+    const Delete_Operating_Room = async () => {
+      const apiUrl = `http://localhost:8080/Operating_Room/${Operating_RoomID}`;
+      const requestOptions = {
+          method: "DELETE",
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+          },
+          
+      };
+      
+  
+      await fetch(apiUrl, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.data) {
+             //console.log("delete ID: " + DispenseID)
+          } else {
+            console.log("NO DATA")
+          }
+      });
+      
+      handleClose();
+      getOperating_Rooms();
+  };
   
     const getOperating_Rooms = async () => {
       let res = await GetOperating_Room();
       if (res) {
         setOperating_Rooms(res);
+        console.log(res);
       } 
     };
   
     const columns: GridColDef[] = [
       { field: "ID", headerName: "ลำดับ", width: 50 },
+      {
+        field: "UPDATE", headerName: "แก้ไข", width: 100,
+        renderCell: () => {
+            return (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setOpenupdate(true)}
+                >
+                    Edit
+                </Button>
+            );
+        },
+    },
+    {
+        field: "DELETE", headerName: "ลบ", width: 100,
+        renderCell: () => {
+            return (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setOpendelete(true)}
+                >
+                    Delete
+                </Button>
+            );
+        },
+    },
       {
         field: "Save_ITI",
         headerName: "คนไข้ภายในที่ได้รับการผ่าตัด",
@@ -49,6 +118,35 @@ function Operating_RoomList() {
   
     return (
       <div>
+        {/* ยืนยันการลบ */}
+      <Dialog open={openDelete} onClose={handleClose} >
+                <DialogTitle><div className="good-font">ยืนยันการลบรายการ</div></DialogTitle>
+                <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={Delete_Operating_Room}
+                    >
+                        <div className="good-font">
+                            ยืนยัน
+                        </div>
+                    </Button>
+            </Dialog>
+          
+        {/* ยืนยันการแก้ไข */}
+        <Dialog open={openUpdate} onClose={handleClose} >
+                <DialogTitle><div className="good-font">ยืนยันการแก้ไขรายการ</div></DialogTitle>
+                <Button
+                        variant="contained"
+                        color="primary"
+                        //กด "ยืนยัน" ไปที่หน้าแก้ไข
+                        component={RouterLink}
+                        to="/EmployeeattemdanceINUpdate"
+                    >
+                        <div className="good-font">
+                            ยืนยัน
+                        </div>
+                    </Button>
+            </Dialog>
         <Container maxWidth="md">
           <Box
             display="flex"
@@ -84,6 +182,7 @@ function Operating_RoomList() {
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
+              onRowClick={handleRowClick}
             />
           </div>
         </Container>

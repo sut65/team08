@@ -4,7 +4,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
+import { Dialog, DialogTitle } from "@mui/material";
 
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 import { ListSave_ITIs } from "../Services/HttpClientService";
@@ -12,20 +13,88 @@ import { ListSave_ITIs } from "../Services/HttpClientService";
 
 function Save_ITIList() {
     const [Save_ITIs, setSave_ITIs] = useState<Save_ITIsInterface[]>([]);
+
+    const [Save_ITIID, setSave_ITIID] = React.useState(0);
+    const [openDelete, setOpendelete] = React.useState(false);
+    const [openUpdate, setOpenupdate] = React.useState(false);
   
     useEffect(() => {
       getSave_ITIs();
     }, []);
+
+    const handleRowClick: GridEventListener<"rowClick"> = (params) => {
+      setSave_ITIID(Number(params.row.ID));
+      localStorage.setItem("Save_ITIID", params.row.ID);
+    };
+    const handleClose = () => {
+      setOpendelete(false);
+      setOpenupdate(false);
+    };
+  
+    const Delete_Save_ITI = async () => {
+      const apiUrl = `http://localhost:8080/Save_ITI/${Save_ITIID}`;
+      const requestOptions = {
+          method: "DELETE",
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+          },
+          
+      };
+      
+  
+      await fetch(apiUrl, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.data) {
+             //console.log("delete ID: " + DispenseID)
+          } else {
+            console.log("NO DATA")
+          }
+      });
+      
+      handleClose();
+      getSave_ITIs();
+  };
   
     const getSave_ITIs = async () => {
       let res = await ListSave_ITIs();
       if (res) {
         setSave_ITIs(res);
+        console.log(res);
       } 
     };
   
     const columns: GridColDef[] = [
       { field: "ID", headerName: "ลำดับ", width: 50 },
+      {
+        field: "UPDATE", headerName: "แก้ไข", width: 100,
+        renderCell: () => {
+            return (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setOpenupdate(true)}
+                >
+                    Edit
+                </Button>
+            );
+        },
+    },
+    {
+        field: "DELETE", headerName: "ลบ", width: 100,
+        renderCell: () => {
+            return (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setOpendelete(true)}
+                >
+                    Delete
+                </Button>
+            );
+        },
+    },
       {
         field: "TreatmentID",
         headerName: "การรักษา",
@@ -57,6 +126,35 @@ function Save_ITIList() {
   
     return (
       <div>
+        {/* ยืนยันการลบ */}
+      <Dialog open={openDelete} onClose={handleClose} >
+                <DialogTitle><div className="good-font">ยืนยันการลบรายการ</div></DialogTitle>
+                <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={Delete_Save_ITI}
+                    >
+                        <div className="good-font">
+                            ยืนยัน
+                        </div>
+                    </Button>
+            </Dialog>
+          
+        {/* ยืนยันการแก้ไข */}
+        <Dialog open={openUpdate} onClose={handleClose} >
+                <DialogTitle><div className="good-font">ยืนยันการแก้ไขรายการ</div></DialogTitle>
+                <Button
+                        variant="contained"
+                        color="primary"
+                        //กด "ยืนยัน" ไปที่หน้าแก้ไข
+                        component={RouterLink}
+                        to="/EmployeeattemdanceINUpdate"
+                    >
+                        <div className="good-font">
+                            ยืนยัน
+                        </div>
+                    </Button>
+            </Dialog>
         <Container maxWidth="md">
           <Box
             display="flex"
@@ -92,6 +190,7 @@ function Save_ITIList() {
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
+              onRowClick={handleRowClick}
             />
           </div>
         </Container>

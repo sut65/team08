@@ -26,7 +26,6 @@ func main() {
 			router.PATCH("/officers", controller.UpdateOfficer)
 			router.DELETE("/officers/:id", controller.DeleteOfficer)
 
-
 			// J
 			//Building
 			r.GET("/Buildings", controller.ListBuildings)
@@ -283,7 +282,7 @@ func main() {
 	r.POST("/medemployees/login", controller.LoginMed_Employee)
 	// Run the server go run main.go
 	r.POST("/screenings/login", controller.LoginScreening_officer)
-	
+
 	r.Run()
 
 }

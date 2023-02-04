@@ -9,8 +9,7 @@ import { OfficersInterface } from "./IOfficer";
 
 export interface Screening_officersInterface {
     ID?: number;//
-    FirstNameTH?: string;
-    LastNameTH?: string;
+    Screening_officer_Name?: string;
     Birthday?: string;
     ScreeningIDCard?: string;
     Phone?: string;

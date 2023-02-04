@@ -94,7 +94,7 @@ func LoginScreening_officer(c *gin.Context) {
 		return
 	}
 
-	Screening_officer.FirstNameTH = payload.Name
+	Screening_officer.Screening_officer_Name = payload.Name
 	Screening_officer.Email = payload.Email
 	Screening_officer.ScreeningIDCard = string(hashScreeningIDCard)
 

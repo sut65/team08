@@ -67,25 +67,24 @@ func CreateScreening_officer(c *gin.Context) {
 
 	// 16: สร้าง Screening_officer
 	sc := entity.Screening_officer{
-		Prefix:          Prefix,
-		FirstNameTH:     screening_officer.FirstNameTH,
-		LastNameTH:      screening_officer.LastNameTH,
-		Gender:          gender,
-		Blood:           blood,
-		Religion:        religion,
-		Birthday:        screening_officer.Birthday,
-		Nationality:     nationality,
-		Country:         nationality,
-		ScreeningIDCard: screening_officer.ScreeningIDCard,
-		Phone:           screening_officer.Phone,
-		Email:           screening_officer.Email,
+		Prefix:                 Prefix,
+		Screening_officer_Name: screening_officer.Screening_officer_Name,
+		Gender:                 gender,
+		Blood:                  blood,
+		Religion:               religion,
+		Birthday:               screening_officer.Birthday,
+		Nationality:            nationality,
+		Country:                nationality,
+		ScreeningIDCard:        screening_officer.ScreeningIDCard,
+		Phone:                  screening_officer.Phone,
+		Email:                  screening_officer.Email,
 
 		Education:      education,
 		EducationName:  screening_officer.EducationName,
 		EducationMajor: screening_officer.EducationMajor,
 		University:     screening_officer.University,
 
-		Officer:  officer,
+		Officer: officer,
 	}
 
 	// 13: บันทึก

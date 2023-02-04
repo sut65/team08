@@ -6,7 +6,7 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.6",
     "@mui/x-data-grid": "^5.17.20",
-    "@mui/x-date-pickers": "^5.0.15",
+    "@mui/x-date-pickers": "^5.0.17",
     "date-fns": "^2.29.3",
     "moment": "^2.29.4",
     "react-router-dom": "^6.7.0"

@@ -177,6 +177,7 @@ func main() {
 
 			// ตารางหลัก ข้อมูลการรักษา ************************************************************
 			r.GET("/treatments", controller.ListTreatment)
+			r.GET("/treatmentstatus", controller.ListTreatment)
 			r.GET("/treatments/:id", controller.GetTreatment)
 			r.POST("/treatments", controller.CreateTreatment)
 			r.PATCH("/treatments", controller.UpdateTreatment)

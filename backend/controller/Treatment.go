@@ -95,6 +95,15 @@ func ListTreatment(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": treatment})
 }
+func ListTreatmentStatus(c *gin.Context) {
+	var treatment []entity.Treatment
+	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE status_id = 2 ").Find(&treatment).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": treatment})
+}
 
 // DELETE /
 func DeleteTreatment(c *gin.Context) {

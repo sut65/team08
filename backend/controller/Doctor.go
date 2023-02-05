@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"golang.org/x/crypto/bcrypt"
+
+	"github.com/asaskevich/govalidator"
 	"github.com/sut65/team08/entity"
 
 	"github.com/gin-gonic/gin"
@@ -34,66 +37,67 @@ func CreateDoctor(c *gin.Context) {
 		return
 	}
 
+	if _, err := govalidator.ValidateStruct(Doctor); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if tx := entity.DB().Where("id = ?", Doctor.DocPrefixID).First(&DocPrefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "DocPrefixID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.GenderID).First(&Gender); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "GenderID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.BloodID).First(&Blood); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "BloodID) not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.MaritalID).First(&Marital); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "MaritalID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.ReligionID).First(&Religion); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ReligionID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.NationalityID).First(&Nationality); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "NationalityID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.CountryID).First(&Country); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "CountryID not found"})
 		return
 	}
-
-	// if tx := entity.DB().Where("id = ?", Doctor.AddressID).First(&AddressThailand); tx.RowsAffected == 0 {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
-	// 	return
-	// }
-
 	if tx := entity.DB().Where("id = ?", Doctor.EducationID).First(&Education); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Education not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "EducationID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.AddressID).First(&Address); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "AddressID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.DocPrefixID).First(&DocPrefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "DocPrefixID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.DocFaPrefixID).First(&DocFaPrefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "DocFaPrefixID not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Doctor.DocMoPrefixID).First(&DocMoPrefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "DocMoPrefixID not found"})
 		return
 	}
 	if *Doctor.DocWiPrefixID != 99 {
 		if tx := entity.DB().Where("id = ?", Doctor.DocWiPrefixID).First(&DocWiPrefix); tx.RowsAffected == 0 {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "prefix not found"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "DocWiPrefixID not found"})
 			return
 		}
 	}
+
+	password, _ := bcrypt.GenerateFromPassword([]byte(Doctor.DocterIDCard), 14)
 
 	createDoctor := entity.Doctor{
 		Address:    Address,
@@ -106,7 +110,7 @@ func CreateDoctor(c *gin.Context) {
 		DocFaPrefix: DocFaPrefix,
 		DocMoPrefix: DocMoPrefix,
 
-		DocPassword:   Doctor.DocPassword,
+		DocPassword:   string(password),
 		DocPrefix:   DocPrefix,
 		DocWiPrefix: DocWiPrefix,
 		DocterCode:    Doctor.DocterCode,
@@ -176,7 +180,7 @@ func GetDoctor(c *gin.Context) {
 // GET /Doctor
 func ListDoctor(c *gin.Context) {
 	var Doctor []entity.Doctor
-	if err := entity.DB().Raw("SELECT * FROM Doctors").Scan(&Doctor).Error; err != nil {
+	if err := entity.DB().Preload("Address").Preload("Blood").Preload("Country").Preload("DocFaPrefix").Preload("DocMoPrefix").Preload("DocPrefix").Preload("DocWiPrefix").Preload("Education").Preload("Gender").Preload("Marital").Preload("Nationality").Preload("Religion").Raw("SELECT * FROM Doctors").Scan(&Doctor).Find((&Doctor)).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -52875,7 +52875,7 @@ func SetupDatabase() {
 	passwordTwo, _ := bcrypt.GenerateFromPassword([]byte(idCardTwo), 14)
 
 	db.Model(&Doctor{}).Create(&Doctor{
-		DocterCode:   "D6300114",
+		DocterCode:   "D66001",
 		DocterIDCard: idCardOne,
 		FirstNameTH:  "บุญญฤทธิ์",
 		LastNameTH:   "มงคลการ",
@@ -52929,7 +52929,7 @@ func SetupDatabase() {
 	})
 
 	db.Model(&Doctor{}).Create(&Doctor{
-		DocterCode:   "D6300237",
+		DocterCode:   "D66002",
 		DocterIDCard: idCardTwo,
 		FirstNameTH:  "มงคล",
 		LastNameTH:   "สุทน",
@@ -52989,6 +52989,7 @@ func SetupDatabase() {
 
 	//Gg
 	// Disease Data
+
 	D1 := Disease{
 		Name: "โรคความดันโลหิตสูง",
 	}

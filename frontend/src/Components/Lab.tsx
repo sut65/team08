@@ -35,8 +35,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
-import { PolicingsInterface } from "../Models/IPolicing";
-import { PatiendsInterface } from "../Models/IPatiend";
+// import { PolicingsInterface } from "../Models/IPolicing";
+import { PatientsInterface } from "../Models/IPatient";
 
 import { DocPrefixInterface } from "../Models/IDocPrefix";
 import { BloodInterface } from "../Models/IBlood";
@@ -49,15 +49,15 @@ import { DoctorInterface } from "../Models/IDoctor";
 import { TreatmentsInterface } from "../Models/ITreatment";
 
 import {
-  GetPolicing,
+  // GetPolicing,
   GetGender,
   GetPrefix,
   GetDocPrefix,
-  CreatePatiend,
+  CreatePatient,
   GetEducation,
   GetScreening_officer,
   CreateScreening_officer,
-  GetPatiend,
+  GetPatient,
   GetBlood,
   GetMarital,
   GetReligion,
@@ -81,10 +81,10 @@ function Doctor() {
     headers: { "Content-Type": "application/json" },
   };
 
-  const [Patiends, setPatiends] = useState<PatiendsInterface>({});
+  const [Patiends, setPatiends] = useState<PatientsInterface>({});
   const [Genders, setGenders] = useState<GendersInterface[]>([]);
   const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
-  const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
+  // const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
 
   const [DocPrefix, setDocPrefix] = useState<DocPrefixInterface[]>([]);
   const [Blood, setBlood] = useState<BloodInterface[]>([]);
@@ -248,13 +248,13 @@ function Doctor() {
       // console.log(res);
     }
   };
-  const getPolicing = async () => {
-    let res = await GetPolicing();
-    if (res) {
-      setPolicings(res);
-      // console.log(res);
-    }
-  };
+  // const getPolicing = async () => {
+  //   let res = await GetPolicing();
+  //   if (res) {
+  //     setPolicings(res);
+  //     // console.log(res);
+  //   }
+  // };
   const getBlood = async () => {
     let res = await GetBlood();
     if (res) {
@@ -336,7 +336,7 @@ function Doctor() {
     getAddressThailand();
     getGender();
     getPrefix();
-    getPolicing();
+    // getPolicing();
     getDocPrefix();
     getEducations();
     setIsDisabled(!isDisabled);

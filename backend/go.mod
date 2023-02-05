@@ -9,19 +9,15 @@ require (
 )
 
 require (
-<<<<<<< HEAD
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/onsi/gomega v1.26.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 )
 
 require (
-=======
-	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
->>>>>>> ef4adee1109db85dba7171417099863813b0237a
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

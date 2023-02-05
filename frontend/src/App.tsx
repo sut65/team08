@@ -126,7 +126,6 @@ const mdTheme = createTheme({
 });
 
 const menu = [
-<<<<<<< HEAD
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
   { name: "สร้างข้อมูลฝ่ายคัดกรอง", icon: <PeopleIcon />, path: "/Screening_officerCreate" },
   { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
@@ -147,20 +146,6 @@ const menu = [
   { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
   { name: "MedicalEmployee", icon: <BookIcon />, path: "/medemployees" },
   { name: "MedicalEquipment", icon: <BookIcon />, path: "/medicalequipment" },
-=======
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/",role: 'officer' },
-  { name: "ข้อมูลฝ่ายคัดกรอง", icon: <AccountCircleIcon />, path: "/Screening_officerList" ,role: 'officer'},
-  { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" ,role: 'screening_officer'},
-  { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" ,role: 'officer'},
-  { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'officer'}, 
-  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'officer'}, 
-  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room" ,role: 'screening_officer'},
-  { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" ,role: 'officer'},
-  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <CalendarMonthIcon />, path: "/AppointList" ,role: 'screening_officer'},
-  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" ,role: 'officer'},
-  { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" ,role: 'med_employee'},
-  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" ,role: 'med_employee'},
->>>>>>> ef4adee1109db85dba7171417099863813b0237a
 
 ];
 

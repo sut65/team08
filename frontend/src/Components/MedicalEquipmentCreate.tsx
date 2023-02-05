@@ -44,7 +44,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 function MedicalEquipmentCreate() {
   const [Brand, setBrands] = useState<BrandsInterface[]>([]);
   const [medstatuses, setMedStatuses] = useState<MedStatusInterface[]>([]);
-  //const [medemployees, setMedEmployees] = useState<MedEmployeeInterface[]>([]);
+  const [medemployees, setMedEmployees] = useState<MedEmployeeInterface[]>([]);
   const [MedicalEquipment, setMedicalEquipment] = useState<MedicalEquimentInterface>({});
 
   const [Equipment, setEquipments] = useState<string>("");
@@ -100,16 +100,16 @@ function MedicalEquipmentCreate() {
     }
   };
 
-  // const getMedEmployee = async () => {
-  //   let res = await GetMedEmployee();
-  //   if (res) {
-  //     setMedEmployees(res);
-  //   }
-  // };
+  const getMedEmployee = async () => {
+    let res = await GetMedEmployee();
+    if (res) {
+      setMedEmployees(res);
+    }
+  };
 
   useEffect(() => {
     getBrand();
-    //getMedEmployee();
+    getMedEmployee();
     getMedStatus();
   }, []);
 
@@ -126,7 +126,7 @@ function MedicalEquipmentCreate() {
         Quantity: (convertType(Quantity)),
         BrandID: convertType(MedicalEquipment.BrandID),
         Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
-        //MedEmployeeID: convertType(MedicalEquipment.Med_EmployeeID),
+        MedEmployeeID: convertType(MedicalEquipment.Med_EmployeeID),
     };
   
     console.log(data)
@@ -181,7 +181,7 @@ function MedicalEquipmentCreate() {
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
           <Grid item xs={6}>
-          <p>Status</p>
+          <p>สถานะ</p>
           <FormControl fullWidth variant="outlined">
             <InputLabel id="demo-simple-select-label">Status</InputLabel>      
                 <Select
@@ -206,7 +206,7 @@ function MedicalEquipmentCreate() {
             </FormControl>            
           </Grid>
           <Grid item xs={6}>
-            <p>Quantity</p>
+            <p>จำนวน</p>
             <FormControl fullWidth variant="outlined">
               <TextField
                 id="setQuantity"
@@ -221,13 +221,13 @@ function MedicalEquipmentCreate() {
           </Grid>
 
           <Grid item xs={6}>
-                <p>name</p>
+                <p>เครื่องมือ</p>
                 <TextField fullWidth id="Name" type="string" variant="outlined"  
                 onChange={(event) => setEquipments(event.target.value)} />
               </Grid>
 
           <Grid item xs={6}>
-                 <p>brand</p>
+                 <p>ยี่ห้อ</p>
           <FormControl fullWidth variant="outlined">
             <InputLabel id="demo-simple-select-label">Brand</InputLabel>      
                 <Select
@@ -285,7 +285,7 @@ function MedicalEquipmentCreate() {
               variant="contained"
               color="inherit"
             >
-              BACK
+              กลับ
             </Button>
             <Button
               style={{ float: "right" }}
@@ -293,7 +293,7 @@ function MedicalEquipmentCreate() {
               variant="contained"
               color="primary"
             >
-              SAVE
+              บันทึก
             </Button>
           </Grid>
         </Grid>

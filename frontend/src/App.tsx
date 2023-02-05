@@ -26,8 +26,8 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 // import Home from "./components/Home";
  import Screening_officerList from "./Components/Screening_officerList";
  import Screening_officerCreate from "./Components/Screening_officerCreate";
- import PatiendCreate from "./Components/PatiendCreate";
- import PatiendList from "./Components/PatiendList";
+ import PatientCreate from "./Components/PatientCreate";
+ import PatientList from "./Components/PatientList";
  import Doctor from "./Components/Doctor";
  import Lab from "./Components/Lab";
  import Treatment from "./Components/Treatment";
@@ -46,6 +46,21 @@ import MedicalEquipmentCreate from "./Components/MedicalEquipmentCreate";
 import MedicalEquipments from "./Components/MedicalEquipment";
 import RequestCreate from "./Components/RequestCreate";
 import Request from "./Components/Request";
+
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import NoteIcon from '@mui/icons-material/Note';
+import SickIcon from '@mui/icons-material/Sick';
+import MedicationIcon from '@mui/icons-material/Medication';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import HotelIcon from '@mui/icons-material/Hotel';
+//import SignIn from "./Components/SigninOfficer";
+import  Home  from "./Components/Home";
+import SelectLogin from "./Components/SelectLogin";
 
 // import SignIn from "./components/SignIn";
 
@@ -99,9 +114,19 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const mdTheme = createTheme();
+const mdTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#009688',
+    },
+    secondary: {
+      main: '#BB8F5B',
+    },
+  },
+});
 
 const menu = [
+<<<<<<< HEAD
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
   { name: "สร้างข้อมูลฝ่ายคัดกรอง", icon: <PeopleIcon />, path: "/Screening_officerCreate" },
   { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
@@ -122,29 +147,44 @@ const menu = [
   { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
   { name: "MedicalEmployee", icon: <BookIcon />, path: "/medemployees" },
   { name: "MedicalEquipment", icon: <BookIcon />, path: "/medicalequipment" },
+=======
+  { name: "หน้าแรก", icon: <HomeIcon />, path: "/",role: 'officer' },
+  { name: "ข้อมูลฝ่ายคัดกรอง", icon: <AccountCircleIcon />, path: "/Screening_officerList" ,role: 'officer'},
+  { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" ,role: 'screening_officer'},
+  { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" ,role: 'officer'},
+  { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'officer'}, 
+  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'officer'}, 
+  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room" ,role: 'screening_officer'},
+  { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" ,role: 'officer'},
+  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <CalendarMonthIcon />, path: "/AppointList" ,role: 'screening_officer'},
+  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" ,role: 'officer'},
+  { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" ,role: 'med_employee'},
+  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" ,role: 'med_employee'},
+>>>>>>> ef4adee1109db85dba7171417099863813b0237a
 
-  //Gg
-  { name: "บันทึกการเบิกอุปกรณ์แลป", icon: <PeopleIcon />, path: "request/create" },
-  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <BookIcon />, path: "requests" },
 ];
+
 
 function App() {
   const [token, setToken] = useState<String>("");
+  const [role, setRole] = useState<String | null>("");
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   useEffect(() => {
+    const role = localStorage.getItem("role");
     const token = localStorage.getItem("token");
     if (token) {
       setToken(token);
+      setRole(role);
     }
   }, []);
 
-  // if (!token) {
-  //   return <SignIn />;
-  // }
+  if (!token) {
+    return <SelectLogin />;
+  }
 
   const signout = () => {
     localStorage.clear();
@@ -203,7 +243,7 @@ function App() {
             </Toolbar>
             <Divider />
             <List>
-              {menu.map((item, index) => (
+              {menu.map((item, index) => role === item.role && (
                 <Link
                   to={item.path}
                   key={item.name}
@@ -234,8 +274,8 @@ function App() {
               <Routes>
                 <Route path="/Screening_officerCreate" element={<Screening_officerCreate />} />
                 <Route path="/Screening_officerList" element={<Screening_officerList />} /> 
-                <Route path="/PatiendCreate" element={<PatiendCreate />} /> 
-                <Route path="/PatiendList" element={<PatiendList />} />
+                <Route path="/PatientCreate" element={<PatientCreate />} /> 
+                <Route path="/PatientList" element={<PatientList />} />
                 <Route path="/Doctor" element={<Doctor />} />
                 <Route path="/Lab" element={<Lab />} />
                 <Route path="/Treatments" element={<Treatment />} />
@@ -255,6 +295,7 @@ function App() {
 
                 <Route path="/requests" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />
+                <Route path="/" element={<Home />} />
                 
               </Routes>
             </Container>

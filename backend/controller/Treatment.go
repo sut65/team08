@@ -13,7 +13,7 @@ func CreateTreatment(c *gin.Context) {
 
 	var treatment entity.Treatment
 	var disease entity.Disease
-	var patiend entity.Patiend
+	var patient entity.Patient
 	var status entity.Status
 	var track entity.Track
 	//var doctor entity.Doctor
@@ -30,9 +30,9 @@ func CreateTreatment(c *gin.Context) {
 		return
 	}
 
-	// 10: ค้นหา Patiend ด้วย id
-	if tx := entity.DB().Where("id = ?", treatment.PatiendID).First(&patiend); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Patiend not found"})
+	// 10: ค้นหา Patient ด้วย id
+	if tx := entity.DB().Where("id = ?", treatment.PatientID).First(&patient); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Patient not found"})
 		return
 	}
 
@@ -54,7 +54,7 @@ func CreateTreatment(c *gin.Context) {
 	// 12: สร้าง WatchVideo
 	wv := entity.Treatment{
 		Disease: disease, // โยงความสัมพันธ์กับ Entity
-		Patiend: patiend, // โยงความสัมพันธ์กับ Entity
+		Patient: patient, // โยงความสัมพันธ์กับ Entity
 		Status:  status,  // โยงความสัมพันธ์กับ Entity
 		Track:   track,   // โยงความสัมพันธ์กับ Entity
 		//Doctor:       doctor,  // โยงความสัมพันธ์กับ Entity
@@ -78,7 +78,7 @@ func CreateTreatment(c *gin.Context) {
 func GetTreatment(c *gin.Context) {
 	var treatment entity.Treatment
 	id := c.Param("id")
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -88,7 +88,7 @@ func GetTreatment(c *gin.Context) {
 // GET /
 func ListTreatment(c *gin.Context) {
 	var treatment []entity.Treatment
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments").Find(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments").Find(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -139,7 +139,7 @@ func UpdateTreatment(c *gin.Context) {
 
 func ListReady_Treat(c *gin.Context) {
 	var save_itis []entity.Treatment
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.status_id = 3").Find(&save_itis).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.status_id = 3").Find(&save_itis).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -148,7 +148,7 @@ func ListReady_Treat(c *gin.Context) {
 
 func ListReady_Dispense(c *gin.Context) {
 	var ListDispense []entity.Treatment
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.track_id = 2 OR sa.track_id = 3").Find(&ListDispense).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.track_id = 2 OR sa.track_id = 3").Find(&ListDispense).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -157,7 +157,7 @@ func ListReady_Dispense(c *gin.Context) {
 
 func ListReady_Appoint(c *gin.Context) {
 	var ListDispense []entity.Treatment
-	if err := entity.DB().Preload("Disease").Preload("Patiend").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.track_id = 1 OR sa.track_id = 3").Find(&ListDispense).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.track_id = 1 OR sa.track_id = 3").Find(&ListDispense).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -17,8 +17,9 @@ import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
 import { EducationsInterface } from "../Models/IEducation";
 import { MedEmployeeInterface } from "../Models/IMedEmployee";
+import { OfficersInterface } from "../Models/IOfficer";/////
 
-import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/HttpClientService";
+import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -37,9 +38,14 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
     const [Phone, setPhones] = useState<string>("");
     const [Email, setEmails] = useState<string>("");
     const [Password, setPasswords] = useState<string>("");
+    const [University, setUniversitys] = useState<string>("");
+    const [EducationName, setEducationNames] = useState<string>("");
+    const [EducationMajor, setEducationMajos] = useState<string>("");
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+
+    const [officers, setOfficers] = useState<OfficersInterface[]>([]);
 
     const handleClose = (
       event?: React.SyntheticEvent | Event,
@@ -61,7 +67,15 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
       });
       console.log(`${name}: ${value}`);
   };
-  
+  /////////
+  const getOfficersID = async () => {
+    let res = await GetOfficerByUID();
+    MedEmployees.OfficerID = res.ID;
+    console.log(MedEmployees.OfficerID);
+    if (res) {
+        setOfficers(res);
+    }
+};
   const getGender = async () => {
     let res = await GetGender();
     if (res) {
@@ -89,6 +103,7 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
     getGender();
     getPrefix();
     getEducation();
+    getOfficersID();
 
   }, []);
 
@@ -103,10 +118,15 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
       GenderID: convertType(MedEmployees.GenderID),
       EducationID: convertType(MedEmployees.EducationID),
       Name: (Name),
+      EducationMajor: (EducationMajor),
+      EducationName:(EducationName),
+      University:(University),
       Age: (convertType(Age)),
       Phone: (Phone),
       Email: (Email),
       Password: (Password),
+
+      OfficerID: convertType(MedEmployees.OfficerID),
     };
     
     console.log(data)
@@ -154,13 +174,13 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
               color="primary"
               gutterBottom
             >
-              ประเมินผู้สอน
+              ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์
             </Typography>
           </Box>
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>
               <Select
@@ -183,19 +203,19 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
             </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={8}>
                 <p>ชื่อ</p>
                 <TextField fullWidth id="Name" type="string" variant="outlined"  
                 onChange={(event) => setNames(event.target.value)} />
               </Grid>
           
-          <Grid item xs={6}>
+          <Grid item xs={2}>
                 <p>อายุ</p>
                 <TextField fullWidth id="Age" type="number" variant="outlined"  
                 onChange={(event) => setAges(event.target.value)} />
               </Grid> 
 
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>
               <Select
@@ -249,6 +269,24 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
           </Grid>
 
           <Grid item xs={6}>
+                <p>การศึกษา</p>
+                <TextField fullWidth id="EducationName" type="string" variant="outlined"  
+                onChange={(event) => setEducationNames(event.target.value)} />
+          </Grid>
+
+          <Grid item xs={6}>
+                <p>สาขา</p>
+                <TextField fullWidth id="EducationMajor" type="string" variant="outlined"  
+                onChange={(event) => setEducationMajos(event.target.value)} />
+          </Grid>
+
+          <Grid item xs={6}>
+                <p>มหาวิทยาลัย</p>
+                <TextField fullWidth id="University" type="string" variant="outlined"  
+                onChange={(event) => setUniversitys(event.target.value)} />
+          </Grid>
+
+          <Grid item xs={6}>
                 <p>อีเมล</p>
                 <TextField fullWidth id="Email" type="string" variant="outlined"  
                 onChange={(event) => setEmails(event.target.value)} />
@@ -263,7 +301,7 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,} from "../Services/H
           <Grid item xs={12}>
             <Button
               component={RouterLink}
-              to="/MedEmployeeCreate"
+              to="/medemployees"
               variant="contained"
               color="inherit"
             >

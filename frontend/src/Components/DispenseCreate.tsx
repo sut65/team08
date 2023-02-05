@@ -29,6 +29,7 @@ import {
   GetPractice,
   CreateDispense,
   ListReady_Dispense,
+  Treatment_Disease_Text,
 } from "../Services/HttpClientService";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -50,11 +51,14 @@ function DispenseCreate() {
   const [Number, setNumber] = useState<string>();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  //เพิ่ม
+  const [treatment_Dis, setTreatment_Dis] = useState<TreatmentsInterface>({});
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
   };
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -114,6 +118,34 @@ function DispenseCreate() {
     getPractice();
   }, []);
 
+  
+// รวมดึงการรักษา
+  
+const Final_OnChangetreat = async (e: SelectChangeEvent) =>{
+  const id = e.target.value
+  const name = e.target.name as keyof typeof dispense;
+  const value = e.target.value;
+  let res = await Treatment_Disease_Text(id);
+  if (res) {
+    setDispense({
+      ...dispense,
+      [name]: value,
+    });
+  }
+  setTreatment_Dis(res);
+    console.log(treatment_Dis);
+    console.log(`[${name}]: ${value}`);
+}
+
+const onChangetreat = async (e: SelectChangeEvent) =>{
+  const id = e.target.value
+  let res = await Treatment_Disease_Text(id);
+  if (res) {
+    setTreatment_Dis(res);
+    console.log(res);
+  }
+}
+///
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof dispense;
     const value = event.target.value;
@@ -197,7 +229,7 @@ function DispenseCreate() {
               <Select
                 native
                 value={dispense.TreatmentID + ""}
-                onChange={handleChange}
+                onChange={Final_OnChangetreat}
                 inputProps={{
                   name: "TreatmentID",
                 }}
@@ -207,7 +239,7 @@ function DispenseCreate() {
                 </option>
                 {treatment.map((item: TreatmentsInterface) => (
                   <option value={item.ID} key={item.ID}>
-                    {item.Patiend?.Name}
+                    {item.Patient?.Patient_Name}
                   </option>
                 ))}
               </Select>
@@ -216,11 +248,11 @@ function DispenseCreate() {
           <Grid item xs={12}>
             <p>รายละเอียดการรักษา</p>
             <FormControl fullWidth variant="outlined">
-              <TextField
-                value={doctor.ID || ""}
-                InputProps={{
-                  readOnly: true,
-                }}
+            <TextField
+            value={treatment_Dis?.CONCLUSION || ""}
+            InputProps={{
+              readOnly: true,
+            }}
               />
             </FormControl>
           </Grid>

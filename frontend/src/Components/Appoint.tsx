@@ -30,6 +30,7 @@ import {
   GetScreening_officer,
   CreateAppoint,
   ListReady_Appoint,
+  Treatment_Disease_Text,
 } from "../Services/HttpClientService";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 
@@ -52,6 +53,8 @@ function Appoints() {
   const [Text_appoint, setText_appoint] = useState<string>("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  //เพิ่ม
+  const [treatment_Dis, setTreatment_Dis] = useState<TreatmentsInterface>({});
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
@@ -112,6 +115,31 @@ function Appoints() {
     getLevelcure();
   }, []);
 
+// รวมดึงการรักษา
+const Final_OnChangetreat = async (e: SelectChangeEvent) =>{
+  const id = e.target.value
+  const name = e.target.name as keyof typeof appoint;
+  const value = e.target.value;
+  let res = await Treatment_Disease_Text(id);
+  if (res) {
+    setAppoint({
+      ...appoint,
+      [name]: value,
+    });
+  }
+  setTreatment_Dis(res);
+    console.log(treatment_Dis);
+    console.log(`[${name}]: ${value}`);
+}
+
+const onChangetreat = async (e: SelectChangeEvent) =>{
+  const id = e.target.value
+  let res = await Treatment_Disease_Text(id);
+  if (res) {
+    setTreatment_Dis(res);
+    console.log(res);
+  }
+}
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof appoint;
     const value = event.target.value;
@@ -195,7 +223,7 @@ function Appoints() {
               <Select
                 native
                 value={appoint.TreatmentID + ""}
-                onChange={handleChange}
+                onChange={Final_OnChangetreat}
                 inputProps={{
                   name: "TreatmentID",
                 }}
@@ -205,7 +233,7 @@ function Appoints() {
                 </option>
                 {treatment.map((item: TreatmentsInterface) => (
                   <option value={item.ID} key={item.ID}>
-                    {item.Patiend?.Name}
+                    {item.Patient?.Patient_Name}
                   </option>
                 ))}
               </Select>
@@ -214,11 +242,11 @@ function Appoints() {
           <Grid item xs={12}>
             <p>รายละเอียดการรักษา</p>
             <FormControl fullWidth variant="outlined">
-              <TextField
-                value={appoint.TreatmentID || ""}
-                InputProps={{
-                  readOnly: true,
-                }}
+            <TextField
+            value={treatment_Dis?.CONCLUSION || ""}
+            InputProps={{
+              readOnly: true,
+            }}
               />
             </FormControl>
           </Grid>
@@ -273,7 +301,7 @@ function Appoints() {
             <p>จำนวนวันที่แพทย์ต้องการนัด</p>
             <FormControl fullWidth variant="outlined">
               <TextField
-                value={appoint.TreatmentID || ""}
+                value={treatment_Dis?.APPOINTMENT || ""}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -320,6 +348,7 @@ function Appoints() {
                 <DateTimePicker
                   label="กรุณาเลือกวันและเวลา *"
                   value={appoint.Date_appoint}
+                  minDateTime = {appoint.Date_now}
                   onChange={(newValue) => {
                     setAppoint({
                       ...appoint,

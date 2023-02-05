@@ -124,7 +124,7 @@ function RequestCreate() {
       
       Med_EquipmentID: convertType(request.MedEquipmentID),
       LocationID: convertType(request.LocationID),
-      
+      Med_EmployeeID: convertType(request.MedEmployeeID),
       R_ID: (R_ID),
       QUANTITY: (QUANTITY),
       TIME: request.TIME,
@@ -269,7 +269,7 @@ function RequestCreate() {
                   </option>
                   {Med_Equipment.map((item: MedicalEquimentInterface) => (
                     <option value={item.ID} key={item.ID}>
-                      {item.ID}
+                      {item.Equipment}
                     </option>
                   ))}
                 </Select>

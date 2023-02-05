@@ -4,16 +4,72 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { AppointInterface } from "../Models/IAppoint";
-import { GetAppoint } from "../Services/HttpClientService";
+import { GetAppoint, GetTreatment } from "../Services/HttpClientService";
+import { TreatmentsInterface } from "../Models/ITreatment";
+//++
+import { Dialog, DialogTitle } from "@mui/material";
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
+///
 
 function AppointList() {
   const [Appoints, setAppoints] = useState<AppointInterface[]>([]);
+  const [treatment, setTreatment] = useState<TreatmentsInterface[]>([]);
+
+  //+++
+  const [AppointID, setAppointID] = React.useState(0);
+  const [openDelete, setOpendelete] = React.useState(false);
+  const [openUpdate, setOpenupdate] = React.useState(false);
+  ////
 
   useEffect(() => {
     getAppoints();
+    getTreatment();
   }, []);
+
+  //+++
+  const handleRowClick: GridEventListener<"rowClick"> = (params) => {
+    setAppointID(Number(params.row.ID));
+    localStorage.setItem("AppointID", params.row.ID);
+  };
+  const handleClose = () => {
+    setOpendelete(false);
+    setOpenupdate(false);
+  };
+
+  const Delete_Appoint = async () => {
+    const apiUrl = `http://localhost:8080/appoint/${AppointID}`;
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    await fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          //console.log("delete ID: " + DispenseID)
+        } else {
+          console.log("NO DATA");
+        }
+      });
+
+    handleClose();
+    getAppoints();
+  };
+
+  ///
+
+  const getTreatment = async () => {
+    let res = await GetTreatment();
+    if (res) {
+      setTreatment(res);
+      console.log(res);
+    }
+  };
 
   const getAppoints = async () => {
     let res = await GetAppoint();
@@ -25,13 +81,58 @@ function AppointList() {
   const columns: GridColDef[] = [
     { field: "ID", headerName: "ลำดับ", width: 50 },
     {
+      field: "UPDATE",
+      headerName: "แก้ไข",
+      width: 100,
+      renderCell: () => {
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setOpenupdate(true)}
+          >
+            Edit
+          </Button>
+        );
+      },
+    },
+    {
+      field: "DELETE",
+      headerName: "ลบ",
+      width: 100,
+      renderCell: () => {
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setOpendelete(true)}
+          >
+            Delete
+          </Button>
+        );
+      },
+    },
+    {
       field: "Treatment",
       headerName: "ผู้ป่วย",
+      width: 200,
+      valueFormatter: (params) => params.value.TREATMENT_ID,
+    },
+
+    {
+      field: "Levelcure",
+      headerName: "สิทธิในการรักษา",
       width: 200,
       valueFormatter: (params) => params.value.Name,
     },
 
-    { field: "ID", headerName: "ลำดับ", width: 50 },
+    {
+      field: "Department",
+      headerName: "แผนกที่นัด",
+      width: 200,
+      valueFormatter: (params) => params.value.Name,
+    },
+
     {
       field: "Date_now",
       headerName: "วันที่ออกใบนัด",
@@ -43,16 +144,41 @@ function AppointList() {
       width: 200,
     },
 
-    {
-      field: "Officer",
-      headerName: "เจ้าหน้าที่ผู้ออกใบนัด",
-      width: 150,
-      valueFormatter: (params) => params.value.Name,
-    },
+    // {
+    //   field: "Officer",
+    //   headerName: "เจ้าหน้าที่ผู้ออกใบนัด",
+    //   width: 150,
+    //   valueFormatter: (params) => params.value.Name,
+    // },
   ];
 
   return (
     <div>
+      {/* ยืนยันการลบ */}
+      <Dialog open={openDelete} onClose={handleClose}>
+        <DialogTitle>
+          <div className="good-font">ยืนยันการลบรายการ</div>
+        </DialogTitle>
+        <Button variant="contained" color="primary" onClick={Delete_Appoint}>
+          <div className="good-font">ยืนยัน</div>
+        </Button>
+      </Dialog>
+
+      {/* ยืนยันการแก้ไข */}
+      <Dialog open={openUpdate} onClose={handleClose}>
+        <DialogTitle>
+          <div className="good-font">ยืนยันการแก้ไขรายการ</div>
+        </DialogTitle>
+        <Button
+          variant="contained"
+          color="primary"
+          //กด "ยืนยัน" ไปที่หน้าแก้ไข
+          component={RouterLink}
+          to="/EmployeeattemdanceINUpdate"
+        >
+          <div className="good-font">ยืนยัน</div>
+        </Button>
+      </Dialog>
       <Container maxWidth="md">
         <Box
           display="flex"
@@ -88,6 +214,7 @@ function AppointList() {
             columns={columns}
             pageSize={5}
             rowsPerPageOptions={[5]}
+            onRowClick={handleRowClick}
           />
         </div>
       </Container>

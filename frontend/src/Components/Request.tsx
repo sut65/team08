@@ -28,7 +28,7 @@ function Request() {
         {field: "R_ID", headerName: "เลขกำกับการเบิก", width: 150 },
         {field: "R_NAME", headerName: "เคส", width: 150 },
         {field: "QUANTITY", headerName: "จำนวน", width: 120 },
-        {field: "Med_Equipment", headerName: "อุปกรณ์", width: 150 ,valueFormatter: (params) => params.value.ID,},
+        {field: "Med_Equipment", headerName: "อุปกรณ์", width: 150 ,valueFormatter: (params) => params.value.Equipment,},
         {field: "TIME", headerName: "วันที่ เวลา", width: 100 },
         {field: "Location", headerName: "สถานที่", width: 120 ,valueFormatter: (params) => params.value.Name,},
         

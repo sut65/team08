@@ -16,9 +16,13 @@ import TextField from "@mui/material/TextField";
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
 import { EducationsInterface } from "../Models/IEducation";
+import { BloodInterface } from "../Models/IBlood";
+import { ReligionInterface } from "../Models/IReligion";
+import { NationalityInterface } from "../Models/INationality";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
+import { OfficersInterface } from "../Models/IOfficer";/////
 
-import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Services/HttpClientService";
+import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetReligion,GetNationality} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -30,13 +34,20 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
     const [Screening_officers, setScreening_officers] = useState<Screening_officersInterface>({});
     const [Genders, setGenders] = useState<GendersInterface[]>([]);
     const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
+    const [Bloods, setBloods] = useState<BloodInterface[]>([]);
+    const [Religions, setReligions] = useState<ReligionInterface[]>([]);
     const [Educations, setEducations] = useState<EducationsInterface[]>([]);
+    const [Nationalitys, setNationalitys] = useState<NationalityInterface[]>([]);
 
-    const [Name, setNames] = useState<string>("");
-    const [Age, setAges] = useState<string>("");
+    const [Screening_officer_Names, setScreening_officer_Names] = useState<string>("");
+    const [Birthday, setBirthdays] = useState<string>("");
+    const [ScreeningIDCard, setScreeningIDCards] = useState<string>("");
     const [Phone, setPhones] = useState<string>("");
     const [Email, setEmails] = useState<string>("");
-    const [Password, setPasswords] = useState<string>("");
+    const [EducationName, setEducationNames] = useState<string>("");
+    const [EducationMajor, setEducationMajors] = useState<string>("");
+    const [University, setUniversitys] = useState<string>("");
+    const [officers, setOfficers] = useState<OfficersInterface[]>([]);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -61,6 +72,15 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
       });
       console.log(`${name}: ${value}`);
   };
+
+  const getOfficersID = async () => {
+    let res = await GetOfficerByUID();
+    Screening_officers.OfficerID = res.ID;
+    console.log(Screening_officers.OfficerID);
+    if (res) {
+        setOfficers(res);
+    }
+};
   
   const getGender = async () => {
     let res = await GetGender();
@@ -83,14 +103,31 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
       console.log(res);
   }
 };
+  const getReligion = async () => {
+    let res = await GetReligion();
+    if (res) {
+      setReligions(res);
+      console.log(res);
+  }
+};
+  const getBlood = async () => {
+    let res = await GetBlood();
+    if (res) {
+      setBloods(res);
+      console.log(res);
+  }
+};
+  const getNationality = async () => {
+    let res = await GetNationality();
+    if (res) {
+      setNationalitys(res);
+      console.log(res);
+  }
+};
 
 
   useEffect(() => {
-    getGender();
-    getPrefix();
-    getEducation();
-
-  }, []);
+    getGender(); getPrefix(); getEducation(); getBlood(); getReligion(); getNationality();getOfficersID(); }, []);
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
@@ -102,11 +139,21 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
       PrefixID: convertType(Screening_officers.PrefixID),
       GenderID: convertType(Screening_officers.GenderID),
       EducationID: convertType(Screening_officers.EducationID),
-      Name: (Name),
-      Age: (convertType(Age)),
+      ReligionID: convertType(Screening_officers.ReligionID),
+      BloodID: convertType(Screening_officers.BloodID),
+      NationalityID: convertType(Screening_officers.NationalityID),
+      CountryID: convertType(Screening_officers.CountryID),
+
+      Screening_officer_Name: (Screening_officer_Names),
+      Birthday: (Birthday),
+      ScreeningIDCard: (ScreeningIDCard),
       Phone: (Phone),
       Email: (Email),
-      Password: (Password),
+      EducationName: (EducationName),
+      EducationMajor: (EducationMajor),
+      University: (University),
+      OfficerID: convertType(Screening_officers.OfficerID),
+
     };
     
     console.log(data)
@@ -154,13 +201,14 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
               color="primary"
               gutterBottom
             >
-              ประเมินผู้สอน
+              ข้อมูลเจ้าหน้าที่ฝ่ายคัดกรอง
             </Typography>
           </Box>
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={6}>
+        <Grid item xs={12}><h3>ข้อมูลส่วนตัว</h3>  </Grid>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>
               <Select
@@ -183,19 +231,13 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
             </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={8}>
                 <p>ชื่อ</p>
-                <TextField fullWidth id="Name" type="string" variant="outlined"  
-                onChange={(event) => setNames(event.target.value)} />
+                <TextField fullWidth id="FirstNameTH" type="string" variant="outlined"  
+                onChange={(event) => setScreening_officer_Names(event.target.value)} />
               </Grid>
-          
-          <Grid item xs={6}>
-                <p>อายุ</p>
-                <TextField fullWidth id="Age" type="number" variant="outlined"  
-                onChange={(event) => setAges(event.target.value)} />
-              </Grid> 
-
-          <Grid item xs={6}>
+      
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>
               <Select
@@ -218,16 +260,116 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
             </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
-                <p>เบอร์โทร</p>
-                <TextField fullWidth id="Phone" type="string" variant="outlined" 
-                onChange={(event) => setPhones(event.target.value)} />
-                
-              </Grid> 
-
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
-              <p>ระดับการศึกษา</p>
+              <p>กรุ๊ปเลือด</p>
+              <Select
+                native
+                value={Screening_officers.BloodID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "BloodID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกกรุ๊ปเลือด
+                </option>
+                {Bloods.map((item: BloodInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.Phenotype}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={4}>
+            <FormControl fullWidth variant="outlined">
+              <p>ศาสนา</p>
+              <Select
+                native
+                value={Screening_officers.ReligionID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "ReligionID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกศาสนา
+                </option>
+                {Religions.map((item: ReligionInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.ReligionType}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={4}>
+                <p>วันเดือนปีเกิด</p>
+                <TextField fullWidth id="Birthday" type="string" variant="outlined"  
+                onChange={(event) => setBirthdays(event.target.value)} />
+              </Grid>
+
+          <Grid item xs={4}>
+            <FormControl fullWidth variant="outlined">
+              <p>สัญชาติ</p>
+              <Select
+                native
+                value={Screening_officers.NationalityID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "NationalityID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกสัญชาติ
+                </option>
+                {Nationalitys.map((item: NationalityInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.NationalityType}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={4}>
+            <FormControl fullWidth variant="outlined">
+              <p>เชื้อชาติ</p>
+              <Select
+                native
+                value={Screening_officers.NationalityID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "NationalityID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกเชื้อชาติ
+                </option>
+                {Nationalitys.map((item: NationalityInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.Country}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={5.5}>
+                <p>รหัสบัตรประชาชน</p>
+                <TextField fullWidth id="ScreeningIDCard" type="string" variant="outlined"  
+                onChange={(event) => setScreeningIDCards(event.target.value)} />
+              </Grid>
+
+          <Grid item xs={12}><h3>ข้อมูลการศึกษา</h3>  </Grid>
+
+
+          <Grid item xs={5.5}>
+            <FormControl fullWidth variant="outlined">
+              <p>ระดับปริญญา</p>
               <Select
                 native
                 value={Screening_officers.EducationID + ""}
@@ -237,7 +379,7 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
                 }}
               >
                 <option aria-label="None" value="">
-                  กรุณาเลือกระดับการศึกษา
+                  กรุณาเลือกระดับปริญญา
                 </option>
                 {Educations.map((item: EducationsInterface) => (
                   <option value={item.ID} key={item.ID}>
@@ -248,17 +390,38 @@ import {GetEducation,GetGender,GetPrefix,CreateScreening_officer,} from "../Serv
             </FormControl>
           </Grid>
 
+          <Grid item xs={6.5}>
+                <p>ชื่อปริญญา</p>
+                <TextField fullWidth id="EducationName" type="string" variant="outlined"  
+                onChange={(event) => setEducationNames(event.target.value)} />
+          </Grid>
+
+              <Grid item xs={5.5}>
+                <p>ชื่อสาขาวิชาเอก</p>
+                <TextField fullWidth id="EducationMajor" type="string" variant="outlined"  
+                onChange={(event) => setEducationMajors(event.target.value)} />
+              </Grid>
+
+          <Grid item xs={6.5}>
+                <p>ชื่อมหาวิทยาลัย</p>
+                <TextField fullWidth id="University" type="string" variant="outlined"  
+                onChange={(event) => setUniversitys(event.target.value)} />
+              </Grid>
+
+              <Grid item xs={12}><h3>ข้อมูลการติดต่อ</h3>  </Grid>   
+
+          <Grid item xs={6}>
+                <p>เบอร์โทรศัพท์</p>
+                <TextField fullWidth id="Phone" type="string" variant="outlined"  
+                onChange={(event) => setPhones(event.target.value)} />
+              </Grid>
+
           <Grid item xs={6}>
                 <p>อีเมล</p>
                 <TextField fullWidth id="Email" type="string" variant="outlined"  
                 onChange={(event) => setEmails(event.target.value)} />
-              </Grid> 
-            
-          <Grid item xs={6}>
-                <p>รหัสผ่าน</p>
-                <TextField fullWidth id="Password" type="string" variant="outlined"
-                onChange={(event) => setPasswords(event.target.value)} />
-              </Grid> 
+              </Grid>
+
 
           <Grid item xs={12}>
             <Button

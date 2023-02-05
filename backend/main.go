@@ -2,10 +2,9 @@ package main
 
 import (
 	"github.com/sut65/team08/controller"
+	"github.com/sut65/team08/middlewares"
 
 	"github.com/sut65/team08/entity"
-
-	//"github.com/B6332907/SE-G08/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,11 +15,17 @@ func main() {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
-	//router := r.Group("/")
+	router := r.Group("/")
 
 	{
-		//router.Use(middlewares.Authorizes())
+		router.Use(middlewares.Authorizes())
 		{
+			// User Routes   //ของเอา Officer officer
+			router.GET("/officers", controller.ListOfficers)
+			router.GET("/officer/:id", controller.GetOfficer)
+			router.PATCH("/officers", controller.UpdateOfficer)
+			router.DELETE("/officers/:id", controller.DeleteOfficer)
+
 			// J
 			//Building
 			r.GET("/Buildings", controller.ListBuildings)
@@ -87,19 +92,13 @@ func main() {
 			r.PATCH("/Educations", controller.UpdateEducation)
 			r.DELETE("/Education/:id", controller.DeleteEducation)
 
-			//Patiend
-			r.GET("/Patiends", controller.ListPatiend)
-			r.GET("/Patiend/:id", controller.GetPatiend)
-			r.POST("/Patiend", controller.CreatePatiend)
-			r.PATCH("/Patiend", controller.UpdatePatiend)
-			r.DELETE("/Patiend/:id", controller.DeletePatiend)
+			//Patient
+			r.GET("/Patients", controller.ListPatient)
+			r.GET("/Patient/:id", controller.GetPatient)
+			r.POST("/Patients", controller.CreatePatient)
+			r.PATCH("/Patients", controller.UpdatePatient)
+			r.DELETE("/Patient/:id", controller.DeletePatient)
 
-			//Policing
-			r.GET("/Policings", controller.ListPolicing)
-			r.GET("/Policing/:id", controller.GetPolicing)
-			r.POST("/Policing", controller.CreatePolicing)
-			r.PATCH("/Policing", controller.UpdatePolicing)
-			r.DELETE("/Policing/:id", controller.DeletePolicing)
 			// Run the server
 
 			//idea Nationality
@@ -234,7 +233,7 @@ func main() {
 			//LEO
 			// Medical Equipment Employee Routes
 			r.GET("/medemployees", controller.ListMedEmployees)
-			r.GET("/medemployees/:id", controller.GetMedEmployee)
+			r.GET("/medemployees/:id", controller.GetMedEmployee) ///create pass token----
 			r.POST("/medemployees", controller.CreateMedEmployee)
 			r.PATCH("/medemployees", controller.UpdateMedEmployee)
 			r.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
@@ -276,12 +275,15 @@ func main() {
 		}
 
 	}
-	// Signup User Route
-	//r.POST("/signup", controller.CreatePrefix)
+	// Signup Officer Route
+	r.POST("/signup", controller.CreateOfficer)
 	// login User Route
-	//r.POST("/login", controller.Login)
-
+	r.POST("/login", controller.Login)
+	// // student login
+	r.POST("/medemployees/login", controller.LoginMed_Employee)
 	// Run the server go run main.go
+	r.POST("/screenings/login", controller.LoginScreening_officer)
+
 	r.Run()
 
 }
@@ -296,7 +298,7 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT , DELETE")
 
 		if c.Request.Method == "OPTIONS" {
 

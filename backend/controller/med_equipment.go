@@ -13,7 +13,7 @@ func CreateMedEquipment(c *gin.Context) {
 	var med_equipment entity.Med_Equipment
 	var brand entity.Brand
 	var med_status entity.Med_Status
-	//var med_employee entity.Med_Employee
+	// var med_employee entity.Med_Employee
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 9 จะถูก bind เข้าตัวแปร med_equipment
 	if err := c.ShouldBindJSON(&med_equipment); err != nil {
@@ -43,7 +43,7 @@ func CreateMedEquipment(c *gin.Context) {
 	wv := entity.Med_Equipment{
 		Brand:      brand,      // โยงความสัมพันธ์กับ Entity Brand
 		Med_Status: med_status, // โยงความสัมพันธ์กับ Entity Status
-		//Med_Employee: med_employee, // โยงความสัมพันธ์กับ Entity Employee
+		// Med_Employee: med_employee, // โยงความสัมพันธ์กับ Entity Employee
 		Quantity: med_equipment.Quantity,
 		Equipment:   med_equipment.Equipment,  
 	}

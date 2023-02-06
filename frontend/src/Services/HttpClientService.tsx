@@ -83,54 +83,6 @@ async function GetOfficers() {
 
   return res;
 }
-async function Med_Employee(data: MedEmployeeInterface) {
-  const requestOptions = {
-      method: "POST",
-      headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-  };
-
-  let res = await fetch(`${apiUrl}/medemployees/create`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-          if (res.data) {
-              return res.data;
-          } else {
-              return false;
-          }
-      });
-
-  return res;
-}
-
-
-async function GetMedByUID() {
-  const uid = localStorage.getItem("uid");
-  const requestOptions = {
-      method: "GET",
-      headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json"
-      },
-  };
-
-  let res = await fetch(`${apiUrl}/medemployees/${uid}`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-          if (res.data) {
-              console.log(res.data);
-              return res.data;
-          } else {
-              return false;
-          }
-      });
-
-  return res;
-}
-/// Med
 /////////////////////////////////////////////////////// CREATE 
 async function CreateOfficer(data: OfficersInterface) {
   const requestOptions = {
@@ -163,7 +115,7 @@ async function LoginMed_empolyee(data: SigninMedInterface) {
       body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/login_s`, requestOptions)
+  let res = await fetch(`${apiUrl}/medemployees/login`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
@@ -1192,11 +1144,11 @@ async function Treatment_Disease_Text(id:any) {
 }
 
 //LEO
-async function GetMedEmployees() {
+async function GetMedEmployee() {
   const requestOptions = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //Authorization: Bearer ${localStorage.getItem("token")},
       "Content-Type": "application/json",
     },
   };
@@ -1243,7 +1195,7 @@ async function GetMedEmployees() {
     const requestOptions = {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //Authorization: Bearer ${localStorage.getItem("token")},
         "Content-Type": "application/json",
       },
     };
@@ -1267,7 +1219,7 @@ async function GetMedEmployees() {
       const requestOptions = {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          //Authorization: Bearer ${localStorage.getItem("token")},
           "Content-Type": "application/json",
         },
       };
@@ -1315,7 +1267,7 @@ async function GetMedEmployees() {
     const requestOptions = {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //Authorization: Bearer ${localStorage.getItem("token")},
         "Content-Type": "application/json",
       },
     };
@@ -1405,14 +1357,11 @@ async function GetRequest() {
 
 export {
   LoginScreening_officer,
-  LoginMed_empolyee, //////
+  LoginMed_empolyee,
   LoginByOfficer,
   GetOfficers,
   CreateOfficer,
   GetOfficerByUID,
-
-  GetMedByUID,
-  
 
   //Login,
   GetEducation,
@@ -1467,7 +1416,7 @@ export {
   Treatment_Disease_Text,
 
   //LEO
-  GetMedEmployees, //////
+  GetMedEmployee,
   CreateMedEmployee,
   GetMedicalEquipments,
   GetBrand,
@@ -1479,5 +1428,4 @@ export {
   GetLocation,
   GetRequest,
 
-  Med_Employee, ///
 };

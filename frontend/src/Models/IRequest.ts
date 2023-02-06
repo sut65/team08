@@ -10,8 +10,8 @@ export interface RequestInterface {
     QUANTITY?: string;
     TIME?: Date | null;
 	
-    Med_Employee?: MedEmployeeInterface;
-    Med_EmployeeID?: number;     // foreignkey.ID?
+    MedEmployee?: MedEmployeeInterface;
+    MedEmployeeID?: number;     // foreignkey.ID?
 
     Location?: LocationInterface; 
     LocationID?: number;     // foreignkey.ID?

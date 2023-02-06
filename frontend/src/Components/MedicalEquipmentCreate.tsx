@@ -28,7 +28,7 @@ import { MedicalEquimentInterface } from "../Models/IMedEquipment";
 
 
 import {
-  GetMedByUID,
+  GetMedEmployee,
   GetBrand,
   GetMedStatus,
   MedicalEquipments,
@@ -44,7 +44,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 function MedicalEquipmentCreate() {
   const [Brand, setBrands] = useState<BrandsInterface[]>([]);
   const [medstatuses, setMedStatuses] = useState<MedStatusInterface[]>([]);
-  const [medemployees, setMed_Employee] = useState<MedEmployeeInterface[]>([]);
+  const [medemployees, setMedEmployees] = useState<MedEmployeeInterface[]>([]);
   const [MedicalEquipment, setMedicalEquipment] = useState<MedicalEquimentInterface>({});
 
   const [Equipment, setEquipments] = useState<string>("");
@@ -53,7 +53,13 @@ function MedicalEquipmentCreate() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  
+  const handleInputChange = (
+    event: React.ChangeEvent<{ id?: string; value: any }>
+  ) => {
+    const id = event.target.id as keyof typeof MedicalEquipmentCreate;
+    const { value } = event.target;
+    setMedicalEquipment({ ...MedicalEquipment, [id]: value });
+  };
 
   
   
@@ -77,17 +83,6 @@ function MedicalEquipmentCreate() {
     });
   };
 
-  
-
-  const getMedByUID = async () => {
-    let res = await GetMedByUID();
-    MedicalEquipment.Med_EmployeeID = res.ID;
-    if (res) {
-
-      setMedStatuses(res);
-      console.log(res);
-    }
-  };
   const getMedStatus = async () => {
     let res = await GetMedStatus();
     if (res) {
@@ -105,12 +100,17 @@ function MedicalEquipmentCreate() {
     }
   };
 
- 
+  const getMedEmployee = async () => {
+    let res = await GetMedEmployee();
+    if (res) {
+      setMedEmployees(res);
+    }
+  };
+
   useEffect(() => {
-    getMedByUID();
     getBrand();
+    getMedEmployee();
     getMedStatus();
-   
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -126,7 +126,7 @@ function MedicalEquipmentCreate() {
         Quantity: (convertType(Quantity)),
         BrandID: convertType(MedicalEquipment.BrandID),
         Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
-        Med_EmployeeID: convertType(MedicalEquipment.Med_EmployeeID),
+        MedEmployeeID: convertType(MedicalEquipment.Med_EmployeeID),
     };
   
     console.log(data)

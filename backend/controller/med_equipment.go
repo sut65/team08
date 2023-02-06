@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/sut65/team08/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /med_equipments
@@ -13,7 +13,7 @@ func CreateMedEquipment(c *gin.Context) {
 	var med_equipment entity.Med_Equipment
 	var brand entity.Brand
 	var med_status entity.Med_Status
-	var med_employee entity.Med_Employee
+	// var med_employee entity.Med_Employee
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 9 จะถูก bind เข้าตัวแปร med_equipment
 	if err := c.ShouldBindJSON(&med_equipment); err != nil {
@@ -33,19 +33,19 @@ func CreateMedEquipment(c *gin.Context) {
 		return
 	}
 
-	//12: ค้นหา employee ด้วย id
-	if tx := entity.DB().Where("id = ?", med_equipment.Med_EmployeeID).First(&med_employee); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "employee not found"})
-		return
-	}
+	// 12: ค้นหา employee ด้วย id
+	// if tx := entity.DB().Where("id = ?", med_equipment.Med_EmployeeID).First(&med_employee); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "employee not found"})
+	// 	return
+	// }
 
 	// 13: สร้าง Med_equipment
 	wv := entity.Med_Equipment{
-		Brand:        brand,        // โยงความสัมพันธ์กับ Entity Brand
-		Med_Status:   med_status,   // โยงความสัมพันธ์กับ Entity Status
-		Med_Employee: med_employee, // โยงความสัมพันธ์กับ Entity Employee
-		Quantity:     med_equipment.Quantity,
-		Equipment:    med_equipment.Equipment,
+		Brand:      brand,      // โยงความสัมพันธ์กับ Entity Brand
+		Med_Status: med_status, // โยงความสัมพันธ์กับ Entity Status
+		// Med_Employee: med_employee, // โยงความสัมพันธ์กับ Entity Employee
+		Quantity: med_equipment.Quantity,
+		Equipment:   med_equipment.Equipment,  
 	}
 
 	// 14: บันทึก
@@ -70,7 +70,7 @@ func GetMedEquipment(c *gin.Context) {
 // GET /med_equipments
 func ListMedEquipments(c *gin.Context) {
 	var med_equipments []entity.Med_Equipment
-	if err := entity.DB().Preload("Med_Employee").Preload("Brand").Preload("Med_Status").Raw("SELECT * FROM med_equipments").Find(&med_equipments).Error; err != nil {
+	if err := entity.DB().Preload("Brand").Preload("Med_Status").Raw("SELECT * FROM med_equipments").Find(&med_equipments).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -108,27 +108,4 @@ func UpdateMedEquipment(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": med_equipment})
-}
-
-func CreateloginMedEquipment(c *gin.Context) {
-
-	var MedEquipment entity.Med_Equipment
-	if err := c.ShouldBindJSON(&MedEquipment); err != nil {
-
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		return
-
-	}
-
-	if err := entity.DB().Create(&MedEquipment).Error; err != nil {
-
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		return
-
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": MedEquipment})
-
 }

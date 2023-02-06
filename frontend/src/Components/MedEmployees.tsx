@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { MedEmployeeInterface } from "../Models/IMedEmployee";
-import { GetMedEmployees } from "../Services/HttpClientService";
+import { GetMedEmployee } from "../Services/HttpClientService";
 
 function MedEmployee() {
     const [MedEmployees, setMedEmployees] = useState<MedEmployeeInterface[]>([]);
@@ -19,7 +19,7 @@ function MedEmployee() {
     }, []);
   
     const getMedEmployee = async () => {
-      let res = await GetMedEmployees();
+      let res = await GetMedEmployee();
       if (res) {
         setMedEmployees(res);
       } 

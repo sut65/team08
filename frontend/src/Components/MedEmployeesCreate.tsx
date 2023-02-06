@@ -19,7 +19,7 @@ import { EducationsInterface } from "../Models/IEducation";
 import { MedEmployeeInterface } from "../Models/IMedEmployee";
 import { OfficersInterface } from "../Models/IOfficer";/////
 
-import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_Employee,} from "../Services/HttpClientService";
+import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -130,7 +130,7 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
     };
     
     console.log(data)
-    let res = await Med_Employee(data);//////พึ่งแก้ไป 
+    let res = await CreateMedEmployee(data);
     if (res) {
       setSuccess(true);
     } else {

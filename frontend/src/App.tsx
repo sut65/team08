@@ -131,6 +131,7 @@ const menu = [
   { name: "ข้อมูลฝ่ายคัดกรอง", icon: <AccountCircleIcon />, path: "/Screening_officerList" ,role: 'officer'},
   { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" ,role: 'screening_officer'},
   { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" ,role: 'officer'},
+
   { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'officer'}, 
   { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'officer'}, 
   { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room" ,role: 'screening_officer'},
@@ -139,6 +140,7 @@ const menu = [
   { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" ,role: 'officer'},
   { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" ,role: 'med_employee'},
   { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" ,role: 'med_employee'},
+  { name: "ข้อมูลผลแลป", icon: <AssignmentIndIcon />, path: "/Lab" ,role: 'med_employee'},
 
 ];
 

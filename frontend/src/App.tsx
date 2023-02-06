@@ -228,7 +228,7 @@ function App() {
             </Toolbar>
             <Divider />
             <List>
-              {menu.map((item, index) => role === role && (
+              {menu.map((item, index) => role === <item className="path"></item> && (
                 <Link
                   to={item.path}
                   key={item.name}

@@ -126,26 +126,19 @@ const mdTheme = createTheme({
 });
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "สร้างข้อมูลฝ่ายคัดกรอง", icon: <PeopleIcon />, path: "/Screening_officerCreate" },
-  { name: "ดูข้อมูลฝ่ายคัดกรอง", icon: <BookIcon />, path: "/Screening_officerList" },
-  { name: "บันทึกข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendCreate" },
-  { name: "ข้อมูลผู้ป่วย", icon: <BookIcon />, path: "/PatiendList" },
-  { name: "ข้อมูลแพทย์", icon: <LocalHospitalIcon />, path: "/Doctor" },
-  { name: "ผลแลป", icon: <LocalHospitalIcon />, path: "/Lab" },
-  { name: "บันทึกข้อการรักษา", icon: <PeopleIcon />, path: "/Treatment/create" }, //Gg
-  { name: "ข้อมูลการรักษา", icon: <BookIcon />, path: "Treatments" }, //Gg
-  //J
-  { name: "จัดการข้อมูลคนไข้ภายใน", icon: <PeopleIcon />, path: "/Save_ITICreate" },
-  { name: "ข้อมูลคนไข้ภายใน", icon: <BookIcon />, path: "/Save_ITI" },
-  { name: "จองห้องผ่าตัด", icon: <PeopleIcon />, path: "/Operating_RoomCreate" },
-  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <BookIcon />, path: "/Operating_Room"},
-  { name: "บันทึกข้อมูลการจ่ายยา", icon: <BookIcon />, path: "DispenseCreate" },
-  { name: "ข้อมูลการจ่ายยา", icon: <BookIcon />, path: "/DispenseList" },
-  { name: "บันทึกข้อมูลการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "AppointCreate" },
-  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <BookIcon />, path: "/AppointList" },
-  { name: "MedicalEmployee", icon: <BookIcon />, path: "/medemployees" },
-  { name: "MedicalEquipment", icon: <BookIcon />, path: "/medicalequipment" },
+  
+  { name: "หน้าแรก", icon: <HomeIcon />, path: "/",role: 'officer' },
+  { name: "ข้อมูลฝ่ายคัดกรอง", icon: <AccountCircleIcon />, path: "/Screening_officerList" ,role: 'officer'},
+  { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" ,role: 'screening_officer'},
+  { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" ,role: 'officer'},
+  { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'officer'}, 
+  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'officer'}, 
+  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room" ,role: 'screening_officer'},
+  { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" ,role: 'officer'},
+  { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <CalendarMonthIcon />, path: "/AppointList" ,role: 'screening_officer'},
+  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" ,role: 'officer'},
+  { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" ,role: 'med_employee'},
+  { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" ,role: 'med_employee'},
 
 ];
 
@@ -228,7 +221,8 @@ function App() {
             </Toolbar>
             <Divider />
             <List>
-              {menu.map((item, index) => role === <item className="path"></item> && (
+              {menu.map((item, index) => role === item.role &&
+ (
                 <Link
                   to={item.path}
                   key={item.name}

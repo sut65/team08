@@ -26,7 +26,6 @@ func main() {
 			router.PATCH("/officers", controller.UpdateOfficer)
 			router.DELETE("/officers/:id", controller.DeleteOfficer)
 
-
 			// J
 			//Building
 			r.GET("/Buildings", controller.ListBuildings)
@@ -177,6 +176,7 @@ func main() {
 
 			// ตารางหลัก ข้อมูลการรักษา ************************************************************
 			r.GET("/treatments", controller.ListTreatment)
+			r.GET("/treatmentstatus", controller.ListTreatment)
 			r.GET("/treatments/:id", controller.GetTreatment)
 			r.POST("/treatments", controller.CreateTreatment)
 			r.PATCH("/treatments", controller.UpdateTreatment)
@@ -184,6 +184,14 @@ func main() {
 			r.GET("/treatments/ready", controller.ListReady_Treat)
 			r.GET("/treatments/readyyy", controller.ListReady_Dispense)
 			r.GET("/treatments/readyapp", controller.ListReady_Appoint)
+			router.GET("/treatments", controller.ListTreatment)
+			router.GET("/treatments/:id", controller.GetTreatment)
+			router.POST("/treatments", controller.CreateTreatment)
+			router.PATCH("/treatments", controller.UpdateTreatment)
+			router.DELETE("/treatment/:id", controller.DeleteTreatment)
+			router.GET("/treatments/ready", controller.ListReady_Treat)
+			router.GET("/treatments/readyyy", controller.ListReady_Dispense)
+			router.GET("/treatments/readyapp", controller.ListReady_Appoint)
 
 			//Aern
 
@@ -283,7 +291,7 @@ func main() {
 	r.POST("/medemployees/login", controller.LoginMed_Employee)
 	// Run the server go run main.go
 	r.POST("/screenings/login", controller.LoginScreening_officer)
-	
+
 	r.Run()
 
 }

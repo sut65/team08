@@ -30,6 +30,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs, { Dayjs } from "dayjs";
+// import { dateFormatter } from "date"
+import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -81,6 +83,7 @@ function Doctor() {
   const [Genders, setGenders] = useState<GendersInterface[]>([]);
   const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
   const [DocPrefix, setDocPrefix] = useState<DocPrefixInterface[]>([]);
+
   const [Blood, setBlood] = useState<BloodInterface[]>([]);
   const [Marital, setMarital] = useState<MaritalInterface[]>([]);
   const [Religion, setReligion] = useState<ReligionInterface[]>([]);
@@ -88,10 +91,18 @@ function Doctor() {
   const [AddressThailand, setAddressThailand] = useState<
     AddressThailandInterface[]
   >([]);
+  const [FindAddress, setFindAddress] = useState<
+    Partial<AddressThailandInterface>
+  >({});
+  const [Address, setAddress] = useState<AddressThailandInterface[]>([]);
+
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isAddress, setIsAddress] = useState(true);
   const [isDisabledPrefix, setIsDisabledPrefix] = useState(false);
   const [Educations, setEducations] = useState<EducationsInterface[]>([]);
+
   const [Doctor, setDoctor] = useState<Partial<DoctorInterface>>({});
+
   const [DoctorA, setDoctorA] = useState<DoctorInterface[]>([]);
 
   const [DocterCode, setDocterCode] = useState<string>("");
@@ -110,6 +121,8 @@ function Doctor() {
   const [Subdistrict, setSubdistrict] = useState<string>("");
   const [District, setDistrict] = useState<string>("");
   const [Province, setProvince] = useState<string>("");
+  const [Zip, setZip] = useState<string>("");
+
   const [FaIDCard, setFaIDCard] = useState<string>("");
 
   const [FaFirstName, setFaFirstName] = useState<string>("");
@@ -136,9 +149,13 @@ function Doctor() {
   const [error, setError] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [openD, setOpenD] = React.useState(false);
-  const [valueDate, setValueDate] = React.useState<Dayjs | null>(
-    dayjs("2000-01-01T21:11:54")
-  );
+  // const [valueDate, setValueDate] = React.useState<Dayjs | Date | null>(
+  //   dayjs("2000-01-01T21:11:54")
+  // );
+
+  const [startEDU, setStartEDU] = useState(new Date());
+  const [endEDU, setEndEDU] = useState(new Date());
+  const [message, setAlertMessage] = React.useState("");
 
   const handleClickAnyRegion = () => {
     console.log(Doctor.ReligionID);
@@ -152,8 +169,9 @@ function Doctor() {
     fetch(`${apiUrl}/Doctors`, requestOptionsGet)
       .then((response) => response.json())
       .then((res) => {
-        // console.log(res.data.length);
-        let num: number = +(result[7] + result[8]) * 1000 + res.data.length + 1;
+        // console.log(result[6]);
+        // console.log(result[7]);
+        let num: number = +(result[6] + result[7]) * 1000 + res.data.length + 1;
         let docid: string = "D" + num.toString();
         // console.log("The date is: " + docid);
         setDocterCode(docid);
@@ -191,7 +209,30 @@ function Doctor() {
     // console.log(`${name}: ${value}`);
   };
 
+  const handleInputChange = (
+    event: React.ChangeEvent<{ id?: string; value: any }>
+  ) => {
+    const id = event.target.id as keyof typeof FindAddress;
+    const { value } = event.target;
+
+    setFindAddress({
+      ...FindAddress,
+      [id]: value,
+    });
+    // console.log(FindAddress);
+    // console.log(id,"=", value); //แสดงค่าที่ป้อนเข้ามาในช่อง
+  };
+
   const handleChangeDoctor = (event: SelectChangeEvent) => {
+    const name = event.target.name as keyof typeof Doctor;
+    const value = event.target.value;
+    setDoctor({
+      ...Doctor,
+      [name]: value,
+    });
+  };
+
+  const handleChangeSubdistrict = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof Doctor;
     const value = event.target.value;
     setDoctor({
@@ -235,9 +276,9 @@ function Doctor() {
     }
   };
 
-  const handleChangeDate = (newValue: Dayjs | null) => {
-    setValueDate(newValue);
-  };
+  // const handleChangeDate = (newValue: Dayjs | null) => {
+  //   setValueDate(newValue);
+  // };
 
   const getGender = async () => {
     let res = await GetGender();
@@ -336,7 +377,6 @@ function Doctor() {
     getEducations();
     setIsDisabled(!isDisabled);
     getDocCode();
-    getDocCode();
     setIsDisabledPrefix(true);
   }, []);
 
@@ -357,45 +397,287 @@ function Doctor() {
   };
 
   const columns: GridColDef[] = [
-    { field: "ID", headerName: "รหัสการจอง", width: 100 },
+    { field: "ID", headerName: "ลำดับ", width: 50 },
     {
-      field: "Member",
-      headerName: "ชื่อสมาชิก",
-      width: 180,
-      valueFormatter: (params) => params.value.Member_Name,
+      field: "DocterCode",
+      headerName: "รหัสประจำตัว",
+      width: 100,
     },
     {
-      field: "Location",
-      headerName: "สถานที่",
-      width: 180,
-      valueFormatter: (params) => params.value.Location_Name,
+      field: "DocterIDCard",
+      headerName: "หมายเลขบัตรประชาชน",
+      width: 130,
     },
     {
-      field: "Sport_Type",
-      headerName: "ประเภทกีฬา",
+      field: "DocPrefix",
+      headerName: "คำนำหน้า",
+      width: 80,
+      valueFormatter: (params) => params.value.PreInitialTH,
+    },
+    {
+      field: "FirstNameTH",
+      headerName: "ชื่อจริง",
+      width: 100,
+    },
+    {
+      field: "LastNameTH",
+      headerName: "นามสกุล",
+      width: 100,
+    },
+    {
+      field: "FirstNameEN",
+      headerName: "FirstName",
       width: 150,
-      valueFormatter: (params) => params.value.Sport_Type_Name,
     },
-    { field: "Time_In", headerName: "เวลาเข้า", width: 200 },
-    { field: "Time_Out", headerName: "เวลาออก", width: 200 },
+    {
+      field: "LastNameEN",
+      headerName: "LastName",
+      width: 150,
+    },
+    {
+      field: "Gender",
+      headerName: "เพศ",
+      width: 150,
+      valueFormatter: (params) => params.value.Description,
+    },
+    {
+      field: "Blood",
+      headerName: "หมู่โลหิต",
+      width: 150,
+      valueFormatter: (params) => params.value.Phenotype,
+    },
+    {
+      field: "Marital",
+      headerName: "สถานภาพ",
+      width: 150,
+      valueFormatter: (params) => params.value.MaritalStatus,
+    },
+    {
+      field: "Birthday",
+      headerName: "วันเดือนปีเกิด",
+      type: 'date',
+      width: 150,
+      valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY'),
+    },
+    {
+      field: "Religion",
+      headerName: "ศาสนา",
+      width: 150,
+      valueFormatter: (params) => params.value.ReligionType,
+    },
+    {
+      field: "ReOther",
+      headerName: "อื่นๆ",
+      width: 150,
+    },
+    {
+      field: "Nationality",
+      headerName: "สัญชาติ",
+      width: 150,
+      valueFormatter: (params) => params.value.NationalityType,
+    },
+    {
+      field: "Country",
+      headerName: "เชื้อชาติ",
+      width: 150,
+      valueFormatter: (params) => params.value.NationalityType,
+    },
+    {
+      field: "TelPhone",
+      headerName: "โทรศัพท์",
+      width: 150,
+    },
+    {
+      field: "TelOffice",
+      headerName: "โทรสาร",
+      width: 150,
+    },
+    {
+      field: "Email",
+      headerName: "อีเมล์",
+      width: 150,
+    },
+    {
+      field: "AllAddress",
+      headerName: "ที่อยู่",
+      width: 150,
+    },
+    {
+      field: "Subdistrict",
+      headerName: "ตำบล",
+      width: 150,
+    },
+    {
+      field: "District",
+      headerName: "อำเภอ",
+      width: 150,
+    },
+    {
+      field: "Province",
+      headerName: "จังหวัด",
+      width: 150,
+    },
+    {
+      field: "Address",
+      headerName: "รหัสไปรษณีย์",
+      width: 150,
+      valueFormatter: (params) => params.value.Zipcode,
+    },
+    {
+      field: "FaIDCard",
+      headerName: "หมายเลขบัตรประชาชน",
+      width: 150,
+    },
+    {
+      field: "DocFaPrefix",
+      headerName: "คำนำหน้าชื่อ",
+      width: 150,
+      valueFormatter: (params) => params.value.PreInitialTH,
+    },
+    {
+      field: "FaFirstName",
+      headerName: "ชื่อจริง",
+      width: 150,
+    },
+    {
+      field: "FaLastName",
+      headerName: "นามสกุล",
+      width: 150,
+    },
+    {
+      field: "FaOccupation",
+      headerName: "อาชีพ",
+      width: 150,
+    },
+    {
+      field: "MoIDCard",
+      headerName: "หมายเลขบัตรประชาชน",
+      width: 150,
+    },
+    {
+      field: "DocMoPrefix",
+      headerName: "คำนำหน้าชื่อ",
+      width: 150,
+      valueFormatter: (params) => params.value.PreInitialTH,
+    },
+    {
+      field: "MoFirstName",
+      headerName: "ชื่อจริง",
+      width: 150,
+    },
+    {
+      field: "MoLastName",
+      headerName: "นามสกุล",
+      width: 150,
+    },
+    {
+      field: "MoOccupation",
+      headerName: "อาชีพ",
+      width: 150,
+    },
+    {
+      field: "WiIDCard",
+      headerName: "หมายเลขบัตรประชาชน",
+      width: 150,
+    },
+    {
+      field: "DocWiPrefix",
+      headerName: "คำนำหน้าชื่อ",
+      width: 150,
+      valueFormatter: (params) => params.value.PreInitialTH,
+    },
+    {
+      field: "WiFirstName",
+      headerName: "ชื่อจริง",
+      width: 150,
+    },
+    {
+      field: "WiLastName",
+      headerName: "นามสกุล",
+      width: 150,
+    },
+    {
+      field: "WiOccupation",
+      headerName: "อาชีพ",
+      width: 150,
+    },
+    {
+      field: "WiPhone",
+      headerName: "โทรศัพท์",
+      width: 150,
+    },
+    {
+      field: "Education",
+      headerName: "ระดับการศึกษา",
+      width: 150,
+      valueFormatter: (params) => params.value.Description,
+    },
+    {
+      field: "EducationName",
+      headerName: "ชื่อปริญญา",
+      width: 150,
+    },
+    {
+      field: "EducationMajor",
+      headerName: "สาขาวิชาเอก",
+      width: 150,
+    },
+    {
+      field: "University",
+      headerName: "สถานศึกษา",
+      width: 150,
+    },
+    {
+      field: "StartEducation",
+      headerName: "ปีที่เข้าการศึกษา",
+      width: 150,
+      valueFormatter: (params) => dayjs(params.value).format('YYYY'),
+    },
+    {
+      field: "EndEducation",
+      headerName: "ปีที่จบการศึกษา",
+      width: 150,
+      valueFormatter: (params) => dayjs(params.value).format('YYYY'),
+    },
   ];
 
+  async function shearch() {
+    let check: string = "" + FindAddress.ID;
+    let idcheck = +check;
+
+    fetch(`${apiUrl}/ZipAddressThailand/${FindAddress.ID}`, requestOptionsGet)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          setAddress(res.data);
+          setDistrict(res.data[0].District);
+          setSubdistrict(res.data[0].Subdistrict);
+          setProvince(res.data[0].Province);
+          setIsAddress(false);
+        } else {
+        }
+      });
+  }
+
   async function submit() {
+    // console.log(Zip);
+
     let data = {
       DocterCode: DocterCode,
       DocterIDCard: DocterIDCar,
       DocPrefixID: convertType(Doctor.DocPrefixID),
       FirstNameTH: FirstNameTH,
+
       LastNameTH: LastNameTH,
       FirstNameEN: FirstNameEN,
-
       LastNameEN: LastNameEN,
       GenderID: convertType(Doctor.GenderID),
+
       BloodID: convertType(Doctor.BloodID),
       MaritalID: convertType(Doctor.MaritalID),
-
       ReligionID: convertType(Doctor.ReligionID),
       ReOther: ReOther,
+
       NationalityID: convertType(Doctor.NationalityID),
       CountryID: convertType(Doctor.CountryID),
       TelPhone: TelPhone,
@@ -405,51 +687,61 @@ function Doctor() {
       AllAddress: AllAddress,
       Subdistrict: Subdistrict,
       District: District,
-      Province: Province,
-      AddressID: convertType("98"),
 
+      Province: Province,
+      AddressID: convertType(Zip),
       FaIDCard: FaIDCard,
       DocFaPrefixID: convertType(Doctor.DocFaPrefixID),
+
       FaFirstName: FaFirstName,
       FaLastName: FaLastName,
       FaOccupation: FaOccupation,
       MoIDCard: MoIDCard,
-      DocMoPrefixID: convertType(Doctor.DocMoPrefixID),
 
+      DocMoPrefixID: convertType(Doctor.DocMoPrefixID),
       MoFirstName: MoFirstName,
       MoLastName: MoLastName,
       MoOccupation: MoOccupation,
+
       WiIDCard: WiIDCard,
       DocWiPrefixID: convertTypePrefix(Doctor.DocWiPrefixID),
       WiFirstName: WiFirstName,
-
       WiLastName: WiLastName,
+
       WiOccupation: WiOccupation,
       WiPhone: WiPhone,
       EducationID: convertType(Doctor.EducationID),
       EducationName: EducationName,
-      EducationMajor: EducationMajor,
 
+      EducationMajor: EducationMajor,
       University: University,
-      DocPassword: DocPassword,
+      Birthday: Doctor.Birthday,
+      StartEducation: Doctor.StartEducation,
+	    EndEducation:   Doctor.EndEducation,
     };
-    console.log("กดดดดดดดด");
+    console.log("เมื่อกด submit ก็จะขึ้น data ดังนี้");
     console.log(data);
+
     let res = await CreateDoctor(data);
     // console.log(res);
-    if (res) {
+    // console.log(res.error);
+    // console.log(res.data);
+
+    if (res.error) {
+      setError(true);
+      setAlertMessage(res.error);
+      console.log("เข้าเงื่อนไข res.error");
+    } else {
       setSuccess(true);
       getDocCode();
-      // console.log("เข้า");
-    } else {
-      setError(true);
-      // console.log("ไม่เข้า");
+      console.log("ไม่มี res.error");
     }
   }
 
   return (
     <Container maxWidth="md">
       <Snackbar
+        id="success"
         open={success}
         autoHideDuration={3000}
         onClose={handleClose}
@@ -460,13 +752,15 @@ function Doctor() {
         </Alert>
       </Snackbar>
       <Snackbar
+        id="error"
         open={error}
         autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+          {/* {message} */}
+          {message}
         </Alert>
       </Snackbar>
       <Paper>
@@ -489,7 +783,7 @@ function Doctor() {
         </Box>
         <Divider />
         <Grid container spacing={1} sx={{ padding: 2 }}>
-          <Grid item xs={5}>
+          <Grid item xs={12} md={5} sm={12}>
             <FormControl fullWidth variant="outlined">
               <TextField
                 id="LocationReservationID"
@@ -497,6 +791,8 @@ function Doctor() {
                 label="ป้อนรหัสประจำตัวของแพทย์ หรือเลขบัตรประชาชน"
                 variant="outlined"
                 size="small"
+                // value={FindAddress.ID}
+                // onChange={handleInputChange}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -507,7 +803,7 @@ function Doctor() {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={1.3}>
+          <Grid item xs={12} md={1.3} sm={6}>
             <Button
               fullWidth
               variant="outlined"
@@ -517,8 +813,9 @@ function Doctor() {
               Find
             </Button>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3} sm={6}>
             <Button
+              fullWidth
               variant="outlined"
               onClick={handleClickOpen}
               startIcon={<AddIcon />}
@@ -609,8 +906,13 @@ function Doctor() {
                       <DesktopDatePicker
                         label="เลือกวันเกิด"
                         inputFormat="MM/DD/YYYY"
-                        value={valueDate}
-                        onChange={handleChangeDate}
+                        value={Doctor.Birthday}
+                        onChange={(e) => {
+                          setDoctor({
+                            ...Doctor,
+                            Birthday: e,
+                          });
+                        }}
                         renderInput={(params) => (
                           <TextField size="small" {...params} />
                         )}
@@ -791,19 +1093,22 @@ function Doctor() {
                   {/* <ค้นหารหัสไปรษณีย์/> */}
                   <Grid item xs={4}>
                     <TextField
+                      // value={Doctor.GenderID + ""}
                       fullWidth
-                      id="LocationReservationID"
+                      id="ID"
                       type="search"
                       label="ป้อนรหัสไปรษณีย์"
                       variant="outlined"
                       size="small"
+                      value={FindAddress.ID}
+                      onChange={handleInputChange}
                     />
                   </Grid>
                   <Grid item xs={1.3}>
                     <Button
                       fullWidth
                       variant="outlined"
-                      // onClick={handleClickOpen}
+                      onClick={shearch}
                       // onClick={handleClickAnyRegion}
                       startIcon={<SearchIcon />}
                     >
@@ -825,6 +1130,7 @@ function Doctor() {
                   {/* <ที่อยู่ ตำบล อำเภอ/> */}
                   <Grid item xs={6}>
                     <TextField
+                      disabled={isAddress}
                       label="ที่อยู่"
                       fullWidth
                       id="AllAddress"
@@ -834,25 +1140,42 @@ function Doctor() {
                       onChange={(event) => setAllAddress(event.target.value)}
                     />
                   </Grid>
+
                   <Grid item xs={3}>
-                    <TextField
-                      label="ตำบล"
-                      fullWidth
-                      id="Subdistrict"
-                      type="string"
-                      variant="outlined"
-                      size="small"
-                      onChange={(event) => setSubdistrict(event.target.value)}
-                    />
+                    <FormControl fullWidth variant="outlined" size="small">
+                      <Select
+                        native
+                        value={Doctor.Subdistrict + ""}
+                        // onChange={handleChangeSubdistrict}
+                        onChange={(e: SelectChangeEvent) => {
+                          handleChangeSubdistrict(e);
+                          setZip(e.target.value);
+                        }}
+                        inputProps={{
+                          name: "Subdistrict",
+                        }}
+                      >
+                        <option aria-label="None" value="">
+                          ตำบล
+                        </option>
+                        {Address.map((item: AddressThailandInterface) => (
+                          <option value={item.ID} key={item.ID}>
+                            {item.Subdistrict}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
+                      disabled
                       label="อำเภอ"
                       fullWidth
                       id="District"
                       type="string"
                       variant="outlined"
                       size="small"
+                      value={District}
                       onChange={(event) => setDistrict(event.target.value)}
                     />
                   </Grid>
@@ -860,12 +1183,14 @@ function Doctor() {
                   {/* <จังหวัด เบอร์ โทรสาร/> */}
                   <Grid item xs={5}>
                     <TextField
+                      disabled
                       label="จังหวัด"
                       fullWidth
                       id="Province"
                       type="string"
                       variant="outlined"
                       size="small"
+                      value={Province}
                       onChange={(event) => setProvince(event.target.value)}
                     />
                   </Grid>
@@ -1180,26 +1505,40 @@ function Doctor() {
                     />
                   </Grid>
                   <Grid item xs={3}>
-                    <TextField
-                      label="ปีที่เข้ารับการศึกษา"
-                      fullWidth
-                      id="StartEducation	"
-                      type="string"
-                      variant="outlined"
-                      size="small"
-                      // onChange={(event) => setNames(event.target.value)}
-                    />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        views={["year"]}
+                        label="ปีที่เข้ารับการศึกษา"
+                        value={Doctor.StartEducation}
+                        onChange={(e) => {
+                          setDoctor({
+                            ...Doctor,
+                            StartEducation: e,
+                          });
+                        }}
+                        renderInput={(params) => (
+                          <TextField size="small" {...params} />
+                        )}
+                      />
+                    </LocalizationProvider>
                   </Grid>
                   <Grid item xs={3}>
-                    <TextField
-                      label="ปีที่จบการศึกษา"
-                      fullWidth
-                      id="EndEducation"
-                      type="string"
-                      variant="outlined"
-                      size="small"
-                      // onChange={(event) => setNames(event.target.value)}
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        views={["year"]}
+                        label="ปีที่จบการศึกษา"
+                        value={Doctor.EndEducation}
+                        onChange={(e) => {
+                          setDoctor({
+                            ...Doctor,
+                            EndEducation: e,
+                          });
+                        }}
+                        renderInput={(params) => (
+                          <TextField size="small" {...params} />
+                        )}
+                      />
+                    </LocalizationProvider>
                   </Grid>
                 </Grid>
               </DialogContent>
@@ -1209,12 +1548,18 @@ function Doctor() {
               </DialogActions>
             </Dialog>
           </Grid>
+          <Grid item xs={12} md={2.7} sm={12}>
+          </Grid>
         </Grid>
-        <Grid container spacing={1} sx={{ marginX: 0.5, marginY: 0, padding: 2 }}>
+        <Grid
+          container
+          spacing={1}
+          sx={{ marginX: 0.5, marginY: 0, padding: 2 }}
+        >
           <div style={{ height: 300, width: "98.5%" }}>
-          <p>โชว์ข้อมูลแพทย์ทั้งหมด</p>
+            <p>โชว์ข้อมูลแพทย์ทั้งหมด</p>
             <DataGrid
-              rows={Prefixs}
+              rows={DoctorA}
               getRowId={(row) => row.ID}
               columns={columns}
               pageSize={5}
@@ -1222,27 +1567,7 @@ function Doctor() {
             />
           </div>
         </Grid>
-        <Grid container spacing={1} sx={{ marginY: 4,padding: 2 }}>
-          <Grid item xs={12}>
-            <Button
-              component={RouterLink}
-              to="/"
-              variant="contained"
-              color="inherit"
-            >
-              กลับสู่หน้าหลัก
-            </Button>
-            <Button
-              style={{ float: "right" }}
-              // onClick={submit}
-              // to="/"
-              variant="contained"
-              color="primary"
-            >
-              บันทึกหลอกๆ
-            </Button>
-          </Grid>
-        </Grid>
+        <Grid container spacing={1} sx={{ marginY: 4, padding: 2 }}></Grid>
       </Paper>
     </Container>
   );

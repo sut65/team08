@@ -423,6 +423,28 @@ async function GetDoctor() {
 
   return res;
 }
+async function GetShow() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/treatmentstatus`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        // console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 
 async function CreateScreening_officer(data: Screening_officersInterface) {
   const requestOptions = {
@@ -483,8 +505,8 @@ async function CreateDoctor(data: DoctorInterface) {
     },
     body: JSON.stringify(data),
   };
-  console.log("แสดง requestOptions")
-  console.log(requestOptions);
+  // console.log("แสดง requestOptions")
+  // console.log(requestOptions);
 
   let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
     .then((response) => response.json())
@@ -493,11 +515,10 @@ async function CreateDoctor(data: DoctorInterface) {
       if (res.data) {
         console.log("เข้า fetch(`${apiUrl}/Doctor` แล้ววววววววว")
         console.log(res.data);
-        return res.data;
+        return res;
       } else {
-        console.log("ไม่เข้า fetchhhhhhhhhhhhh")
-        // console.log(res.data);
-        return false;
+        console.log("ไม่เข้า fetch จาก function CreateDoctor")
+        return res;
       }
     });
 
@@ -1357,6 +1378,7 @@ export {
   GetNationality,
   GetAddressThailand,
   GetDoctor,
+  GetShow,
   CreateDoctor,
 
   //Gg

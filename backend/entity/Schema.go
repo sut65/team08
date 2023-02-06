@@ -180,7 +180,7 @@ type Doctor struct {
 	DocterCode   string
 	DocterIDCard string
 	DocPrefixID  *uint
-	FirstNameTH  string
+	FirstNameTH  string `valid:"required~Name cannot be blank"`
 	LastNameTH   string
 	FirstNameEN  string
 

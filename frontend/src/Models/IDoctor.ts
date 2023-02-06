@@ -7,6 +7,9 @@ import { NationalityInterface } from "./INationality";
 import { AddressThailandInterface } from "./IAddressThailand";
 import { EducationsInterface } from "./IEducation";
 
+// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+// import dayjs, { Dayjs } from "dayjs";
+
 export interface DoctorInterface {
 	ID?: number;
     DocterCode?:   string,
@@ -60,9 +63,9 @@ export interface DoctorInterface {
 	University?:     string,
 	DocPassword?:	   string,
 
-	// StartEducation?: Date | null,
-	// EndEducation?:   Date | null,
-	// Birthday?:   Date | null,
+	StartEducation?: Date | null,
+	EndEducation?:   Date | null,
+	Birthday?:   Date | null,
 
 	DocFaPrefix?: DocPrefixInterface,
 	DocMoPrefix?: DocPrefixInterface,

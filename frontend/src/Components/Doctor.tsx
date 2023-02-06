@@ -1672,6 +1672,7 @@ function Doctor() {
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
+                onRowClick={handleRowClick}
               />
             </div>
           </Grid>

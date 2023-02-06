@@ -10,20 +10,31 @@ import (
 )
 
 // LoginPayload login body
-type LoginPayload_Med_employee struct {
-	Email    string `json:"Email"`
-	Password string `json:"Password"`
+type LoginPayload_s struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 // SignUpPayload signup body
-type SignUpPayload_Med_employee struct {
+type SignUpPayload_s struct {
 	Name     string `json:"name"`
-	Email    string `json:"Email"`
-	Password string `json:"Password"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+
+	Age            uint   `json:"Age"`
+	Phone          string `json:"Phone"`
+	University     string `json:"University"`
+	EducationName  string `json:"EducationName"`
+	EducationMajor string `json:"EducationMajor"`
+
+	OfficerID   *uint `json:"OfficerID"`
+	GenderID    *uint `json:"GenderID"`
+	PrefixID    *uint `json:"PrefixID"`
+	EducationID *uint `json:"EducationID"`
 }
 
 // LoginResponse token response
-type LoginResponse_Med_employee struct {
+type LoginResponse_s struct {
 	Token string `json:"token"`
 	ID    uint   `json:"id"`
 	Role  string `json:"role"`
@@ -31,7 +42,7 @@ type LoginResponse_Med_employee struct {
 
 // POST /login
 func Login_Med_employee(c *gin.Context) {
-	var payload LoginPayload
+	var payload LoginPayload_s
 	var Med_Employee entity.Med_Employee
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
@@ -39,7 +50,7 @@ func Login_Med_employee(c *gin.Context) {
 		return
 	}
 	// ค้นหา Med_Employee ด้วย Email ที่ผู้ใช้กรอกเข้ามา
-	if err := entity.DB().Raw("SELECT * FROM Med_Employees WHERE Email = ?", payload.Email).Scan(&Med_Employee).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Med_Employees WHERE email = ?", payload.Email).Scan(&Med_Employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -77,9 +88,9 @@ func Login_Med_employee(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
 }
 
-
-func LoginMed_Employee(c *gin.Context) {
-	var payload SignUpPayload
+// // POST /create
+func CreateMed_Employee(c *gin.Context) {
+	var payload SignUpPayload_s
 	var Med_Employee entity.Med_Employee
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
@@ -97,6 +108,16 @@ func LoginMed_Employee(c *gin.Context) {
 	Med_Employee.Name = payload.Name
 	Med_Employee.Email = payload.Email
 	Med_Employee.Password = string(hashPassword)
+	Med_Employee.Age = payload.Age
+	Med_Employee.Phone = payload.Phone
+	Med_Employee.University = payload.University
+	Med_Employee.EducationName = payload.EducationName
+	Med_Employee.EducationMajor = payload.EducationMajor
+
+	Med_Employee.OfficerID = payload.OfficerID
+	Med_Employee.GenderID = payload.GenderID
+	Med_Employee.PrefixID = payload.PrefixID
+	Med_Employee.EducationID = payload.EducationID
 
 	if err := entity.DB().Create(&Med_Employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -105,3 +126,6 @@ func LoginMed_Employee(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"data": Med_Employee})
 }
+
+//รับรหัสจากไครอัน ว่าเอามาเทียบกับถานข้อมูล
+ 

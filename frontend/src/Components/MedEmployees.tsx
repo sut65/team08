@@ -17,7 +17,7 @@ function MedEmployee() {
     useEffect(() => {
         getMedEmployee();
     }, []);
-  
+   
     const getMedEmployee = async () => {
       let res = await GetMedEmployees();
       if (res) {

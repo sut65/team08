@@ -56,7 +56,7 @@ import {
   CreatePatient,
   GetEducation,
   GetScreening_officer,
-  CreateScreening_officer,
+  //CreateScreening_officer,
   GetPatient,
   GetBlood,
   GetMarital,

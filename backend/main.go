@@ -67,10 +67,10 @@ func main() {
 			// Screening_officer
 			router.GET("/Screening_officers", controller.ListScreening_officer)
 			router.GET("/Screening_officer/:id", controller.GetScreening_officer)
-			router.POST("/Screening_officers", controller.CreateScreening_officer)
+			//router.POST("/Screening_officers", controller.CreateScreening_officer)
 			router.PATCH("/Screening_officers", controller.UpdateScreening_officer)
 			router.DELETE("/Screening_officers/:id", controller.DeleteScreening_officer)
-
+			router.POST("/Screening_officer/create", controller.CreateScreening_officer)//////////***New
 			//Prefix
 			router.GET("/Prefixs", controller.ListPrefix)
 			router.GET("/Prefix/:id", controller.GetPrefix)
@@ -194,7 +194,6 @@ func main() {
 			router.GET("/treatments/readyapp", controller.ListReady_Appoint)
 			router.GET("/treatmentstatus", controller.ListTreatment)
 
-
 			//Aern
 
 			// Drug Routes
@@ -293,7 +292,7 @@ func main() {
 	// // student login
 	r.POST("/login_s", controller.Login_Med_employee)
 	// Run the server go run main.go
-	r.POST("/screenings/login", controller.LoginScreening_officer)
+	r.POST("/login_screen", controller.Login_Screening_officer)
 
 	r.Run()
 

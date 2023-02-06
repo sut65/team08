@@ -21,8 +21,8 @@ import { ReligionInterface } from "../Models/IReligion";
 import { NationalityInterface } from "../Models/INationality";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { OfficersInterface } from "../Models/IOfficer";/////
-
-import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer,GetBlood,GetReligion,GetNationality} from "../Services/HttpClientService";
+//CreateScreening_officer
+import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,GetNationality,Screening_officer} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -157,7 +157,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer
     };
     
     console.log(data)
-    let res = await CreateScreening_officer(data);
+    let res = await Screening_officer(data);
     if (res) {
       setSuccess(true);
     } else {
@@ -317,10 +317,10 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer
               <p>สัญชาติ</p>
               <Select
                 native
-                value={Screening_officers.NationalityID + ""}
+                value={Screening_officers.CountryID + ""}
                 onChange={handleChange}
                 inputProps={{
-                  name: "NationalityID",
+                  name: "CountryID",
                 }}
               >
                 <option aria-label="None" value="">
@@ -426,7 +426,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,CreateScreening_officer
           <Grid item xs={12}>
             <Button
               component={RouterLink}
-              to="/Screening_officerCreate"
+              to="/Screening_officerCreate/create"
               variant="contained"
               color="inherit"
             >

@@ -77,7 +77,9 @@ function Doctor() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json", },
   };
 
   const [Patients, setPatients] = useState<PatientsInterface>({});
@@ -189,7 +191,7 @@ function Doctor() {
         }
       });
 
-    handleClose();
+    handleCloseRow();
     getDoctor();
   };
 
@@ -802,19 +804,48 @@ function Doctor() {
       setSuccess(true);
       getDocCode();
       console.log("ไม่มี res.error");
+      getDoctor();
+      setOpenD(false);
     }
   }
 
   return (
     <div>
       {/* ยืนยันการลบ */}
-      <Dialog open={openDelete} onClose={handleCloseRow}>
+      <Dialog
+        open={openDelete}
+        onClose={handleCloseRow}
+        fullWidth
+        maxWidth="xs"
+      >
         <DialogTitle>
           <div className="good-font">ยืนยันการลบรายการ</div>
         </DialogTitle>
-        <Button variant="contained" color="primary" onClick={Delete_Doctor}>
-          <div className="good-font">ยืนยัน</div>
-        </Button>
+        <DialogContent>
+          <Grid container sx={{ padding: 2 }}>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={2}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={Delete_Doctor}
+              >
+                <div className="good-font">ยืนยัน</div>
+              </Button>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleCloseRow}
+              >
+                <div className="good-font">ยกเลิก</div>
+              </Button>
+            </Grid>
+            <Grid item xs={3}></Grid>
+          </Grid>
+        </DialogContent>
       </Dialog>
 
       {/* ยืนยันการแก้ไข */}
@@ -924,7 +955,7 @@ function Doctor() {
                 <DialogTitle>เพิ่มข้อมูลของแพทย์</DialogTitle>
                 <DialogContent>
                   {/* <ส่วนที่1 ข้อมูลส่วนตัว/> */}
-                  <DialogTitle>1. ข้อมูลส่วนตัว</DialogTitle>
+                  <DialogTitle>ข้อมูลส่วนตัว</DialogTitle>
                   <Grid container spacing={2} sx={{ padding: 4 }}>
                     {/* <คำนำหน้า ชื่อจริงสกุล/> */}
                     <Grid item xs={2}>
@@ -1181,7 +1212,7 @@ function Doctor() {
                   </Grid>
 
                   {/* <ส่วนที่2 ข้อมูลการติดต่อ/> */}
-                  <DialogTitle>2. ข้อมูลการติดต่อ</DialogTitle>
+                  <DialogTitle>ข้อมูลการติดต่อ</DialogTitle>
                   <Grid container spacing={2} sx={{ padding: 4 }}>
                     {/* <ค้นหารหัสไปรษณีย์/> */}
                     <Grid item xs={4}>
@@ -1312,7 +1343,7 @@ function Doctor() {
                   </Grid>
 
                   {/* <ส่วนที่2 ข้อมูลบิดา/> */}
-                  <DialogTitle>3. ข้อมูลบิดา</DialogTitle>
+                  <DialogTitle>ข้อมูลบิดา</DialogTitle>
                   <Grid container spacing={2} sx={{ padding: 4 }}>
                     <Grid item xs={2}>
                       <FormControl fullWidth variant="outlined" size="small">
@@ -1384,7 +1415,7 @@ function Doctor() {
                   </Grid>
 
                   {/* <ส่วนที่4 ข้อมูลมารดาดา/> */}
-                  <DialogTitle>4. ข้อมูลมารดา</DialogTitle>
+                  <DialogTitle>ข้อมูลมารดา</DialogTitle>
                   <Grid container spacing={2} sx={{ padding: 4 }}>
                     <Grid item xs={2}>
                       <FormControl fullWidth variant="outlined" size="small">
@@ -1456,7 +1487,7 @@ function Doctor() {
                   </Grid>
 
                   {/* <ส่วนที่5 ข้อมูลคู่สมรส/> */}
-                  <DialogTitle>5. ข้อมูลคู่สมรส</DialogTitle>
+                  <DialogTitle>ข้อมูลคู่สมรส</DialogTitle>
                   <Grid container spacing={2} sx={{ padding: 4 }}>
                     <Grid item xs={2}>
                       <FormControl fullWidth variant="outlined" size="small">
@@ -1545,7 +1576,7 @@ function Doctor() {
                   </Grid>
 
                   {/* <ส่วนที่6 ประวัติการศึกษา/> */}
-                  <DialogTitle>6. ประวัติการศึกษา</DialogTitle>
+                  <DialogTitle>ประวัติการศึกษา</DialogTitle>
                   <Grid container spacing={2} sx={{ padding: 4 }}>
                     <Grid item xs={4}>
                       <FormControl fullWidth variant="outlined" size="small">

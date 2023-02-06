@@ -241,7 +241,6 @@ function Doctor() {
     }
     setOpenD(false);
   };
-
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof Patients;
     const value = event.target.value;
@@ -251,7 +250,6 @@ function Doctor() {
     });
     // console.log(`${name}: ${value}`);
   };
-
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
   ) => {
@@ -265,7 +263,6 @@ function Doctor() {
     // console.log(FindAddress);
     // console.log(id,"=", value); //แสดงค่าที่ป้อนเข้ามาในช่อง
   };
-
   const handleChangeDoctor = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof Doctor;
     const value = event.target.value;
@@ -274,7 +271,6 @@ function Doctor() {
       [name]: value,
     });
   };
-
   const handleChangeSubdistrict = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof Doctor;
     const value = event.target.value;
@@ -283,7 +279,6 @@ function Doctor() {
       [name]: value,
     });
   };
-
   const handleChangeReligion = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof Doctor;
     const value = event.target.value;
@@ -318,11 +313,9 @@ function Doctor() {
       setIsDisabledPrefix(false);
     }
   };
-
   // const handleChangeDate = (newValue: Dayjs | null) => {
   //   setValueDate(newValue);
   // };
-
   const getGender = async () => {
     let res = await GetGender();
     if (res) {
@@ -344,7 +337,6 @@ function Doctor() {
       // console.log(res);
     }
   };
-
   const getBlood = async () => {
     let res = await GetBlood();
     if (res) {

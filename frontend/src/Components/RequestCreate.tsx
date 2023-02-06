@@ -31,7 +31,7 @@ import {
   GetMedicalEquipments,
   //GetDoctorByUID,
   GetLocation,
-  GetMedEmployee,
+  GetMedByUID,
   Request,
 } from "../Services/HttpClientService";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
@@ -58,7 +58,7 @@ function RequestCreate() {
   const [Med_Equipment, setMed_Equipment] = useState<MedicalEquimentInterface[]>([]);
   const [Location, setLocation] = useState<LocationInterface[]>([]);
 
-  const [Med_Employee, setMed_Employee] = useState<MedEmployeeInterface[]>([]);
+  const [Med_Employee, setMedByUID] = useState<MedEmployeeInterface[]>([]);
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -85,14 +85,17 @@ function RequestCreate() {
     });
   };
   ////
-  const getMed_Employee = async () => {
-    let res = await GetMedEmployee();
-    request.MedEmployeeID = res.ID;
-    console.log(request.MedEmployeeID);
+
+  const getMedByUID = async () => {
+    let res = await GetMedByUID();
+    request.Med_EmployeeID = res.ID;
     if (res) {
-      setMed_Employee(res);
+
+      setMedByUID(res);
+      console.log(res);
     }
   };
+  
 
   const getMed_Equipment = async () => {
     let res = await GetMedicalEquipments();
@@ -111,7 +114,7 @@ function RequestCreate() {
   useEffect(() => {
     getMed_Equipment();
     getLocation();
-    getMed_Employee();
+    getMedByUID();
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -124,7 +127,7 @@ function RequestCreate() {
       
       Med_EquipmentID: convertType(request.MedEquipmentID),
       LocationID: convertType(request.LocationID),
-      Med_EmployeeID: convertType(request.MedEmployeeID),
+      Med_EmployeeID: convertType(request.Med_EmployeeID),
       R_ID: (R_ID),
       QUANTITY: (QUANTITY),
       TIME: request.TIME,

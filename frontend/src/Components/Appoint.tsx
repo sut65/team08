@@ -26,8 +26,8 @@ import { DepartmentInterface } from "../Models/IDepartment";
 import {
   GetTreatment,
   GetLevelcure,
-  GetDepartment,
-  GetScreening_officer,
+  GetDepartment, 
+  GetScrenByUID, ///++
   CreateAppoint,
   ListReady_Appoint,
   Treatment_Disease_Text,
@@ -47,7 +47,7 @@ function Appoints() {
     Date_appoint: new Date(),
   });
   const [treatment, setTreatment] = useState<TreatmentsInterface[]>([]);
-  const [screening_officer, setScreening_officer] = useState<Screening_officersInterface>({});
+  const [screening_officer, setScrenByUID] = useState<Screening_officersInterface>({});
   const [levelcure, setLevelcure] = useState<LevelcureInterface[]>([]);
   const [department, setDepartment] = useState<DepartmentInterface[]>([]);
   const [Text_appoint, setText_appoint] = useState<string>("");
@@ -70,16 +70,26 @@ function Appoints() {
     setSuccess(false);
     setError(false);
   };
-
-  const getScreening_officer = async () => {
-    let res = await GetScreening_officer();
+  ///+++gg
+  const getScrenByUID = async () => {
+    let res = await GetScrenByUID();
+    appoint.Screening_officerID = res.ID;
     if (res) {
-      setScreening_officer(res);
-      console.log("Load Officer Complete");
-    } else {
-      console.log("Load Officer InComplete!!!!");
+
+      setScrenByUID(res);
+      console.log(res);
     }
   };
+
+  // const getScreening_officer = async () => {
+  //   let res = await GetScreening_officer();
+  //   if (res) {
+  //     setScreening_officer(res);
+  //     console.log("Load Officer Complete");
+  //   } else {
+  //     console.log("Load Officer InComplete!!!!");
+  //   }
+  // };
   const getDepartment = async () => {
     let res = await GetDepartment();
     if (res) {
@@ -109,7 +119,7 @@ function Appoints() {
   };
 
   useEffect(() => {
-    getScreening_officer();
+    getScrenByUID();//++
     getDepartment();
     getTreatment();
     getLevelcure();

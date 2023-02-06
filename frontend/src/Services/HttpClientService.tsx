@@ -17,6 +17,52 @@ import { SigninScreeningInterface } from "../Models/ISigninScreening";
 
 const apiUrl = "http://localhost:8080";
 
+/////Screening_officer
+async function Screening_officer(data: Screening_officersInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/Screening_officer/create`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function GetScrenByUID() {
+  const uid = localStorage.getItem("uid");
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/Screening_officer/${uid}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log(res.data);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
 /////////////////////////////////////////////////////////////GET BY UID
 async function GetOfficerByUID() {
   let uid = localStorage.getItem("uid");
@@ -83,6 +129,7 @@ async function GetOfficers() {
 
   return res;
 }
+////////////////Med
 async function Med_Employee(data: MedEmployeeInterface) {
   const requestOptions = {
       method: "POST",
@@ -189,7 +236,7 @@ async function LoginScreening_officer(data: SigninScreeningInterface) {
       body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/screenings/login`, requestOptions)
+  let res = await fetch(`${apiUrl}/login_screen`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
@@ -494,7 +541,7 @@ async function GetShow() {
   return res;
 }
 
-async function CreateScreening_officer(data: Screening_officersInterface) {
+async function Create_Screening_officer(data: Screening_officersInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -504,7 +551,7 @@ async function CreateScreening_officer(data: Screening_officersInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Screening_officers`, requestOptions)
+  let res = await fetch(`${apiUrl}/Screening_officer`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1419,7 +1466,7 @@ export {
   GetGender,
   GetPrefix,
   GetScreening_officer,
-  CreateScreening_officer,
+  //CreateScreening_officer,
   GetPatient,
   CreatePatient,
   GetDocPrefix,
@@ -1480,4 +1527,8 @@ export {
   GetRequest,
 
   Med_Employee, ///
+
+  GetScrenByUID,
+  Screening_officer,
+  Create_Screening_officer, //////?
 };

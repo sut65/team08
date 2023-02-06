@@ -10,7 +10,7 @@ import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { GetScreening_officer } from "../Services/HttpClientService";
 
-
+ 
 function Screening_officerList() {
     const [Screening_officers, setScreening_officers] = useState<Screening_officersInterface[]>([]);
     const [Screening_officerID, setScreening_officerID] = React.useState(0);  

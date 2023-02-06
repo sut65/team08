@@ -1,5 +1,5 @@
 package controller
-
+ 
 import (
 	"net/http"
 
@@ -96,8 +96,8 @@ func Login_Screening_officer(c *gin.Context) {
 }
 
 // POST /create A AA
-func LoginScreening_officer(c *gin.Context) {
-	var payload SignUpPayload
+func CreateScreening_officer(c *gin.Context) {
+	var payload SignUpPayload_Screening_officer
 	var Screening_officer entity.Screening_officer
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
@@ -106,15 +106,32 @@ func LoginScreening_officer(c *gin.Context) {
 	}
 
 	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	hashScreeningIDCard, err := bcrypt.GenerateFromPassword([]byte(payload.Password), 14)
+	hashScreeningIDCard, err := bcrypt.GenerateFromPassword([]byte(payload.ScreeningIDCard), 14)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing ScreeningIDCard"})
 		return
 	}
 
-	Screening_officer.Screening_officer_Name = payload.Name
+	Screening_officer.Screening_officer_Name = payload.Screening_officer_Name
 	Screening_officer.Email = payload.Email
 	Screening_officer.ScreeningIDCard = string(hashScreeningIDCard)
+
+	Screening_officer.Birthday = payload.Birthday
+	Screening_officer.Phone = payload.Phone
+	Screening_officer.EducationName = payload.EducationName
+	Screening_officer.EducationMajor= payload.EducationMajor
+	Screening_officer.University = payload.University
+
+	Screening_officer.OfficerID   = payload.OfficerID
+	Screening_officer.PrefixID = payload.PrefixID
+	Screening_officer.GenderID = payload.GenderID
+	Screening_officer.BloodID = payload.BloodID
+	Screening_officer.ReligionID = payload.ReligionID
+	Screening_officer.CountryID = payload.CountryID
+	Screening_officer.EducationID = payload.EducationID
+	Screening_officer.NationalityID = payload.NationalityID
+
+
 
 	if err := entity.DB().Create(&Screening_officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

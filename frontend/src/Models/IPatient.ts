@@ -4,6 +4,7 @@ import { BloodInterface } from "./IBlood";
 import { ReligionInterface } from "./IReligion";
 import { NationalityInterface } from "./INationality";
 import { AddressThailandInterface } from "./IAddressThailand";
+import { Screening_officersInterface } from "./IScreening_officer";
 
 export interface PatientsInterface {
     ID?: number;
@@ -26,5 +27,7 @@ export interface PatientsInterface {
     GenderID?: number;     // foreignkey.ID?
     Prefix?: PrefixsInterface;
     PrefixID?: number;     // foreignkey.ID?
+    Screening_officer?: Screening_officersInterface;
+    Screening_officerID?: number;
 
    }

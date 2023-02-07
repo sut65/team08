@@ -21,8 +21,10 @@ import { AddressThailandInterface } from "../Models/IAddressThailand";
 import { BloodInterface } from "../Models/IBlood";
 import { NationalityInterface } from "../Models/INationality";
 import { ReligionInterface } from "../Models/IReligion";
+import { Screening_officersInterface } from "../Models/IScreening_officer";
 
-import {GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBlood,GetNationality,GetReligion} from "../Services/HttpClientService";
+
+import {GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBlood,GetNationality,GetReligion,GetScrenByUID} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -31,6 +33,7 @@ import {GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBlood,GetNationa
   });
   
   function PatientCreate() {
+    const [screening_officers, setScrenByUID] = useState<Screening_officersInterface>({});
     const [Patients, setPatients] = useState<PatientsInterface>({});
     const [Genders, setGenders] = useState<GendersInterface[]>([]);
     const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
@@ -71,6 +74,16 @@ import {GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBlood,GetNationa
           [name]: value,
       });
       console.log(`${name}: ${value}`);
+  };
+
+  const getScrenByUID = async () => {
+    let res = await GetScrenByUID();
+    Patients.Screening_officerID = res.ID;
+    if (res) {
+
+      setScrenByUID(res);
+      console.log(res);
+    }
   };
   
   const getGender = async () => {
@@ -121,6 +134,7 @@ const getAddress = async () => {
 
 
   useEffect(() => {
+    getScrenByUID();
     getGender();
     getPrefix();
     getReligion();
@@ -137,13 +151,13 @@ const getAddress = async () => {
 
   async function submit() {
     let data = {
+      Screening_officerID: convertType(Patients.Screening_officerID),
       PrefixID: convertType(Patients.PrefixID),
       GenderID: convertType(Patients.GenderID),
       AddressID: convertType(Patients.AddressID),
       NationalityID: convertType(Patients.NationalityID),
       ReligionID: convertType(Patients.ReligionID),
       BloodID: convertType(Patients.BloodID),
-
       Patient_Name: (Patient_Name),
       Birthday: (Birthday),
       IDCard: (IDCard),
@@ -419,7 +433,7 @@ const getAddress = async () => {
                 }}
               >
                 <option aria-label="None" value="">
-                  กรุณาเลือกสัญชาติ
+                  กรุณาเลือกอำเภอ
                 </option>
                 {Address.map((item: AddressThailandInterface) => (
                   <option value={item.ID} key={item.ID}>

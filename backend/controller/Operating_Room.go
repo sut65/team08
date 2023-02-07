@@ -14,6 +14,7 @@ func CreateOperating_Room(c *gin.Context) {
 	var Save_ITI entity.Save_ITI
 	var Building entity.Building
 	var Room entity.Room
+	var screening_officer entity.Screening_officer
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 9 จะถูก bind เข้าตัวแปร Operating_Room
 	if err := c.ShouldBindJSON(&Operating_Room); err != nil {
@@ -38,11 +39,16 @@ func CreateOperating_Room(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "not found JobType"})
 		return
 	}
+	
+	if tx := entity.DB().Where("id = ?", Operating_Room.Screening_officerID).First(&screening_officer); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
+		return
+	}
 
 	// 14: สร้าง Operating_Room
 	save := entity.Operating_Room{
+		Screening_officer: screening_officer,
 		Datetime: Operating_Room.Datetime,
-
 		Save_ITI: 	Save_ITI,
 		Building:  	Building,
 		Room:		Room,

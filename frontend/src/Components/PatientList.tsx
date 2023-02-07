@@ -33,7 +33,7 @@ function PatientList() {
         valueFormatter: (params) => params.value.Description,
       },
       {
-        field: "Name",
+        field: "Patient_Name",
         headerName: "ชื่อ-สกุล",
         width: 300,
       },

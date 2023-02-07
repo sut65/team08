@@ -1,5 +1,5 @@
 package controller
- 
+
 import (
 	"net/http"
 
@@ -11,31 +11,30 @@ import (
 
 // LoginPayload login body
 type LoginPayload_Screening_officer struct {
-	Email    string `json:"email"`
+	Email           string `json:"email"`
 	ScreeningIDCard string `json:"ScreeningIDCard"`
 }
 
 // SignUpPayload signup body
 type SignUpPayload_Screening_officer struct {
-	Screening_officer_Name     string `json:"Screening_officer_Name"`
-	Email    string `json:"email"`
-	ScreeningIDCard string `json:"ScreeningIDCard"`
-	Birthday string `json:"Birthday"`
+	Screening_officer_Name string `json:"Screening_officer_Name"`
+	Email                  string `json:"email"`
+	ScreeningIDCard        string `json:"ScreeningIDCard"`
+	Birthday               string `json:"Birthday"`
 
-	OfficerID   *uint `json:"OfficerID"`
-	PrefixID *uint `json:"PrefixID"`
-	GenderID *uint `json:"GenderID"`
-	BloodID *uint `json:"BloodID"`
-	ReligionID *uint `json:"ReligionID"`
-	CountryID *uint `json:"CountryID"`
-	EducationID *uint `json:"EducationID"`
+	OfficerID     *uint `json:"OfficerID"`
+	PrefixID      *uint `json:"PrefixID"`
+	GenderID      *uint `json:"GenderID"`
+	BloodID       *uint `json:"BloodID"`
+	ReligionID    *uint `json:"ReligionID"`
+	CountryID     *uint `json:"CountryID"`
+	EducationID   *uint `json:"EducationID"`
 	NationalityID *uint `json:"NationalityID"`
 
-	Phone string `json:"Phone"`
-	EducationName string `json:"EducationName"`
+	Phone          string `json:"Phone"`
+	EducationName  string `json:"EducationName"`
 	EducationMajor string `json:"EducationMajor"`
-	University string `json:"University"`
-
+	University     string `json:"University"`
 }
 
 // LoginResponse token response
@@ -43,8 +42,6 @@ type LoginResponse_Screening_officer struct {
 	Token string `json:"token"`
 	ID    uint   `json:"id"`
 	Role  string `json:"role"`
-
-
 }
 
 // POST /login
@@ -119,19 +116,16 @@ func CreateScreening_officer(c *gin.Context) {
 	Screening_officer.Birthday = payload.Birthday
 	Screening_officer.Phone = payload.Phone
 	Screening_officer.EducationName = payload.EducationName
-	Screening_officer.EducationMajor= payload.EducationMajor
+	Screening_officer.EducationMajor = payload.EducationMajor
 	Screening_officer.University = payload.University
 
-	Screening_officer.OfficerID   = payload.OfficerID
+	Screening_officer.OfficerID = payload.OfficerID
 	Screening_officer.PrefixID = payload.PrefixID
 	Screening_officer.GenderID = payload.GenderID
 	Screening_officer.BloodID = payload.BloodID
 	Screening_officer.ReligionID = payload.ReligionID
-	Screening_officer.CountryID = payload.CountryID
 	Screening_officer.EducationID = payload.EducationID
 	Screening_officer.NationalityID = payload.NationalityID
-
-
 
 	if err := entity.DB().Create(&Screening_officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

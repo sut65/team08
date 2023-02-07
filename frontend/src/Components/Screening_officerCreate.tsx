@@ -21,7 +21,7 @@ import { ReligionInterface } from "../Models/IReligion";
 import { NationalityInterface } from "../Models/INationality";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { OfficersInterface } from "../Models/IOfficer";/////
-//CreateScreening_officer
+
 import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,GetNationality,Screening_officer} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -142,7 +142,6 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
       ReligionID: convertType(Screening_officers.ReligionID),
       BloodID: convertType(Screening_officers.BloodID),
       NationalityID: convertType(Screening_officers.NationalityID),
-      CountryID: convertType(Screening_officers.CountryID),
 
       Screening_officer_Name: (Screening_officer_Names),
       Birthday: (Birthday),
@@ -317,10 +316,10 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
               <p>สัญชาติ</p>
               <Select
                 native
-                value={Screening_officers.CountryID + ""}
+                value={Screening_officers.NationalityID + ""}
                 onChange={handleChange}
                 inputProps={{
-                  name: "CountryID",
+                  name: "NationalityID",
                 }}
               >
                 <option aria-label="None" value="">

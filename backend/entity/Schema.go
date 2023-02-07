@@ -5,6 +5,7 @@ import (
 
 	"gorm.io/gorm"
 )
+
 // Officer บนสุด
 type Officer struct {
 	gorm.Model
@@ -12,7 +13,7 @@ type Officer struct {
 	Email    string `gorm:"uniqueIndex"` //มีความเฉพาะ ห้ามซ้ำ
 	Password string `json:"-"`
 	//ผู้ดูแลระบบ 1 คน สามารถบันทึกข้อมูลDoctorได้หลายคน
-	Doctors []Doctor  `gorm:"foreignKey:OfficerID"`
+	Doctors []Doctor `gorm:"foreignKey:OfficerID"`
 	//ผู้ดูแลระบบ 1 คน สามารถบันทึกข้อมูลMed_Employeeได้หลายคน
 	Med_Employees []Med_Employee `gorm:"foreignKey:OfficerID"` //ในตาราง Med_Employee มีการเชื่อมตาราง Officer ไปเป็นFK  ใช้ OfficerID
 	//ผู้ดูแลระบบ 1 คน สามารถบันทึกข้อมูลScreening_officerได้หลายคน
@@ -51,7 +52,7 @@ type Screening_officer struct {
 	gorm.Model
 
 	//หน้าต่างข้อมูลส่วนตัวเจ้่าหน้าที่ฝ่ายคัดกรอง
-	PrefixID    *uint
+	PrefixID               *uint
 	Screening_officer_Name string
 
 	GenderID   *uint
@@ -81,26 +82,27 @@ type Screening_officer struct {
 	Education   Education   `gorm:"references:id"`
 	Blood       Blood       `gorm:"references:id"`
 
-	Appoint []Appoint `gorm:"foreignkey:Screening_officerID"`
+	Operating_Room []Operating_Room `gorm:"foreignkey:Screening_officerID"`
+	Appoint        []Appoint        `gorm:"foreignkey:Screening_officerID"`
+	Patient        []Patient        `gorm:"foreignkey:Screening_officerID"`
 
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
 }
 
-
 type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
-	PrefixID      *uint
-	Patient_Name  string
-	Age           uint
-	GenderID      *uint
-	BloodID       *uint
-	ReligionID    *uint
-	Birthday      string
-	NationalityID *uint
-	IDCard        string `gorm:"uniqueIndex"`
-
+	PrefixID            *uint
+	Patient_Name        string
+	Age                 uint
+	GenderID            *uint
+	BloodID             *uint
+	ReligionID          *uint
+	Birthday            string
+	NationalityID       *uint
+	Screening_officerID *uint
+	IDCard              string `gorm:"uniqueIndex"`
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
 	Phone     string
@@ -108,12 +110,13 @@ type Patient struct {
 	AddressID *uint
 
 	//foreignKey
-	Address     AddressThailand `gorm:"references:id"`
-	Nationality Nationality     `gorm:"references:id"`
-	Religion    Religion        `gorm:"references:id"`
-	Blood       Blood           `gorm:"references:id"`
-	Gender      Gender          `gorm:"references:id"`
-	Prefix      Prefix          `gorm:"references:id"`
+	Nationality       Nationality       `gorm:"references:id"`
+	Address           AddressThailand   `gorm:"references:id"`
+	Screening_officer Screening_officer `gorm:"references:id"`
+	Religion          Religion          `gorm:"references:id"`
+	Blood             Blood             `gorm:"references:id"`
+	Gender            Gender            `gorm:"references:id"`
+	Prefix            Prefix            `gorm:"references:id"`
 
 	Treatment []Treatment `gorm:"foreignKey:PatientID"`
 }
@@ -218,7 +221,7 @@ type Doctor struct {
 	DocWiPrefixID *uint
 	WiFirstName   string
 
-	WiLastName     string 
+	WiLastName     string
 	WiOccupation   string
 	WiPhone        string
 	EducationID    *uint
@@ -355,12 +358,14 @@ type Operating_Room struct {
 	gorm.Model
 	Datetime time.Time
 
-	Save_ITI   Save_ITI `gorm:"references:id"`
-	Save_ITIID *uint
-	Building   Building `gorm:"references:id"`
-	BuildingID *uint
-	Room       Room `gorm:"references:id"`
-	RoomID     *uint
+	Save_ITI            Save_ITI `gorm:"references:id"`
+	Save_ITIID          *uint
+	Building            Building `gorm:"references:id"`
+	BuildingID          *uint
+	Room                Room `gorm:"references:id"`
+	RoomID              *uint
+	Screening_officerID *uint
+	Screening_officer   Screening_officer `gorm:"references:id"`
 }
 
 // Aern
@@ -429,12 +434,12 @@ type Appoint struct {
 // ADD
 type Med_Employee struct {
 	gorm.Model
-	Name     string
-	Age      uint
-	Phone    string
-	Email    string
-	Password string
-	University string
+	Name           string
+	Age            uint
+	Phone          string
+	Email          string
+	Password       string
+	University     string
 	EducationName  string
 	EducationMajor string
 
@@ -445,7 +450,7 @@ type Med_Employee struct {
 	Prefix        Prefix          `gorm:"references:id"`
 	Education     Education       `gorm:"references:id"`
 	Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_EmployeeID"`
-	Request []Request `gorm:"foreignKey:Med_EmployeeID"`
+	Request       []Request       `gorm:"foreignKey:Med_EmployeeID"`
 
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK

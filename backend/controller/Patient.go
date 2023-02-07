@@ -17,6 +17,7 @@ func CreatePatient(c *gin.Context) {
 	var blood entity.Blood
 	var religion entity.Religion
 	var nationality entity.Nationality
+	var screening_officer entity.Screening_officer
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Patient
 	if err := c.ShouldBindJSON(&patient); err != nil {
@@ -49,19 +50,25 @@ func CreatePatient(c *gin.Context) {
 		return
 	}
 
+	if tx := entity.DB().Where("id = ?", patient.Screening_officerID).First(&screening_officer); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
+		return
+	}
+
 	// สร้าง Patient
 	sc := entity.Patient{
-		Prefix:      Prefix,
+		Screening_officer: screening_officer,
+		Prefix:       Prefix,
 		Patient_Name: patient.Patient_Name,
-		Age:         patient.Age,
-		Gender:      gender,
-		Blood:       blood,
-		Religion:    religion,
-		Birthday:    patient.Birthday,
-		Nationality: nationality,
-		IDCard:      patient.IDCard,
-		Phone:       patient.Phone,
-		House_ID:    patient.House_ID,
+		Age:          patient.Age,
+		Gender:       gender,
+		Blood:        blood,
+		Religion:     religion,
+		Birthday:     patient.Birthday,
+		Nationality:  nationality,
+		IDCard:       patient.IDCard,
+		Phone:        patient.Phone,
+		House_ID:     patient.House_ID,
 
 	}
 

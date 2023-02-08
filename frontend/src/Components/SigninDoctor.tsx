@@ -50,6 +50,9 @@ function SigninDoctor() {
   };
 
   const submit = async () => {
+    console.log("เมื่อกด submit ก็จะขึ้น data ดังนี้");
+    console.log(signin);
+
     let res = await LoginDoctor(signin);
     if (res) {
       setSuccess(true);
@@ -136,12 +139,12 @@ function SigninDoctor() {
                 margin="normal"
                 required
                 fullWidth
-                name="DocterIDCard"
+                name="DocPassword"
                 label="Password"
-                type="DocterIDCard"
-                id="DocterIDCard"
-                autoComplete="current-DocterIDCard"
-                value={signin.DocterIDCard || ""}
+                type="password"
+                id="DocPassword"
+                autoComplete="current-DocPassword"
+                value={signin.DocPassword || ""}
                 onChange={handleInputChange}
               />
               <FormControlLabel

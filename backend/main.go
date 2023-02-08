@@ -148,7 +148,7 @@ func main() {
 			//Doctor
 			router.GET("/Doctors", controller.ListDoctor)
 			router.GET("/Doctor/:id", controller.GetDoctor)
-			router.POST("/Doctor/create", controller.Create_Doctor) ///////
+			router.POST("/Doctor", controller.CreateDoctor) ///////
 			router.PATCH("/Doctor", controller.UpdateDoctor)
 			router.DELETE("/Doctor/:id", controller.DeleteDoctor)
 

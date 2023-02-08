@@ -37,7 +37,7 @@ async function LoginDoctor(data: SigninDoctorInterface) {
               localStorage.setItem("role", "doctor");
               return res.data;
           } else {
-              console.log("else ");
+              console.log("else จาก POST -> function LoginDoctor");
               return false;
           }
       });
@@ -77,7 +77,7 @@ async function Doctor (data: DoctorInterface) {
       body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Doctor/create`, requestOptions)
+  let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
@@ -718,15 +718,13 @@ async function CreateDoctor(data: DoctorInterface) {
     },
     body: JSON.stringify(data),
   };
-  // console.log("แสดง requestOptions")
-  // console.log(requestOptions);
 
-  let res = await fetch(`${apiUrl}/Doctor/create`, requestOptions)
+  let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       // console.log(res.data);
       if (res.data) {
-        console.log("เข้า fetch(`${apiUrl}/Doctor/create` แล้ววววววววว")
+        console.log("เข้า fetch(`${apiUrl}/Doctor` แล้ววววววววว")
         console.log(res.data);
         return res;
       } else {

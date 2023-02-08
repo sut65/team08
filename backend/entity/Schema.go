@@ -82,8 +82,8 @@ type Screening_officer struct {
 	Education   Education   `gorm:"references:id" valid:"-"`
 	Blood       Blood       `gorm:"references:id" valid:"-"`
 
-	Appoint        []Appoint        `gorm:"foreignkey:Screening_officerID"`
-	Patient        []Patient        `gorm:"foreignkey:Screening_officerID"`
+	Appoint []Appoint `gorm:"foreignkey:Screening_officerID"`
+	Patient []Patient `gorm:"foreignkey:Screening_officerID"`
 
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
@@ -179,89 +179,89 @@ type DocPrefix struct {
 
 type Doctor struct {
 	gorm.Model
-	DocterCode   string
-	DocterIDCard string
-	DocPrefixID  *uint
+	DocterCode   string `valid:"-"`
+	DocterIDCard string `valid:"-"`
+	DocPrefixID  *uint  `valid:"-"`
 	FirstNameTH  string `valid:"required~Name cannot be blank"`
-	LastNameTH   string
-	FirstNameEN  string
+	LastNameTH   string `valid:"-"`
+	FirstNameEN  string `valid:"-"`
 
-	LastNameEN    string
-	GenderID      *uint
-	BloodID       *uint
-	MaritalID     *uint
-	Birthday      time.Time
-	ReligionID    *uint
-	ReOther       string
-	NationalityID *uint
-	CountryID     *uint
-	TelPhone      string
-	TelOffice     string
+	LastNameEN    string    `valid:"-"`
+	GenderID      *uint     `valid:"-"`
+	BloodID       *uint     `valid:"-"`
+	MaritalID     *uint     `valid:"-"`
+	Birthday      time.Time `valid:"-"`
+	ReligionID    *uint     `valid:"-"`
+	ReOther       string    `valid:"-"`
+	NationalityID *uint     `valid:"-"`
+	CountryID     *uint     `valid:"-"`
+	TelPhone      string    `valid:"-"`
+	TelOffice     string    `valid:"-"`
 
-	Email       string
-	AllAddress  string
-	Subdistrict string
-	District    string
-	Province    string
-	AddressID   *uint
+	Email       string `valid:"-"`
+	AllAddress  string `valid:"-"`
+	Subdistrict string `valid:"-"`
+	District    string `valid:"-"`
+	Province    string `valid:"-"`
+	AddressID   *uint  `valid:"-"`
 
-	FaIDCard      string
-	DocFaPrefixID *uint
-	FaFirstName   string
-	FaLastName    string
-	FaOccupation  string
-	MoIDCard      string
-	DocMoPrefixID *uint
+	FaIDCard      string `valid:"-"`
+	DocFaPrefixID *uint  `valid:"-"`
+	FaFirstName   string `valid:"-"`
+	FaLastName    string `valid:"-"`
+	FaOccupation  string `valid:"-"`
+	MoIDCard      string `valid:"-"`
+	DocMoPrefixID *uint  `valid:"-"`
 
-	MoFirstName   string
-	MoLastName    string
-	MoOccupation  string
-	WiIDCard      string
-	DocWiPrefixID *uint
-	WiFirstName   string
+	MoFirstName   string `valid:"-"`
+	MoLastName    string `valid:"-"`
+	MoOccupation  string `valid:"-"`
+	WiIDCard      string `valid:"-"`
+	DocWiPrefixID *uint  `valid:"-"`
+	WiFirstName   string `valid:"-"`
 
-	WiLastName     string
-	WiOccupation   string
-	WiPhone        string
-	EducationID    *uint
-	EducationName  string
-	EducationMajor string
+	WiLastName     string `valid:"-"`
+	WiOccupation   string `valid:"-"`
+	WiPhone        string `valid:"-"`
+	EducationID    *uint  `valid:"-"`
+	EducationName  string `valid:"-"`
+	EducationMajor string `valid:"-"`
 
-	University  string
-	DocPassword string
+	University  string `valid:"-"`
+	DocPassword string `valid:"-"`
 
 	StartEducation time.Time
 	EndEducation   time.Time
 
-	DocPrefix DocPrefix       `gorm:"references:id"`
-	Gender    Gender          `gorm:"references:id"`
-	Blood     Blood           `gorm:"references:id"`
-	Marital   Marital         `gorm:"references:id"`
-	Religion  Religion        `gorm:"references:id"`
-	Address   AddressThailand `gorm:"references:id"`
-	Education Education       `gorm:"references:id"`
+	DocPrefix DocPrefix       `gorm:"references:id" valid:"-"`
+	Gender    Gender          `gorm:"references:id" valid:"-"`
+	Blood     Blood           `gorm:"references:id" valid:"-"`
+	Marital   Marital         `gorm:"references:id" valid:"-"`
+	Religion  Religion        `gorm:"references:id" valid:"-"`
+	Address   AddressThailand `gorm:"references:id" valid:"-"`
+	Education Education       `gorm:"references:id" valid:"-"`
 
-	Nationality Nationality `gorm:"references:id"`
-	Country     Nationality `gorm:"references:id"`
+	Nationality Nationality `gorm:"references:id" valid:"-"`
+	Country     Nationality `gorm:"references:id" valid:"-"`
 
-	DocFaPrefix DocPrefix `gorm:"references:id"`
-	DocMoPrefix DocPrefix `gorm:"references:id"`
-	DocWiPrefix DocPrefix `gorm:"references:id"`
+	DocFaPrefix DocPrefix `gorm:"references:id" valid:"-"`
+	DocMoPrefix DocPrefix `gorm:"references:id" valid:"-"`
+	DocWiPrefix DocPrefix `gorm:"references:id" valid:"-"`
 	//Gg
-	Treatments []Treatment `gorm:"foreignKey:DoctorID"`
+	Treatments []Treatment `gorm:"foreignKey:DoctorID" valid:"-"`
 
 	//Aern
-	Dispense []Dispense `gorm:"foreignkey:DoctorID"`
+	Dispense []Dispense `gorm:"foreignkey:DoctorID" valid:"-"`
 
 	//J
-	Save_ITI       []Save_ITI       `gorm:"foreignkey:DoctorID"`
-	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID"`
+	Save_ITI       []Save_ITI       `gorm:"foreignkey:DoctorID" valid:"-"`
+	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID" valid:"-"`
 
 	//
-	OfficerID *uint
-	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
+	OfficerID *uint `valid:"-"`
+	Officer   Officer `gorm:"references:id" valid:"-"` //อ้างอิงไอดีที่ใช้เชื่อม FK
 
-	Lab []Lab `gorm:"foreignKey:DoctorID"`
+	Lab []Lab `gorm:"foreignKey:DoctorID" valid:"-"`
 }
 
 type Lab_Name struct {
@@ -398,9 +398,6 @@ type Operating_Room struct {
 	RoomID     *uint
 	Doctor     Doctor `gorm:"references:id"`
 	DoctorID   *uint
-
-
-
 }
 
 // Aern

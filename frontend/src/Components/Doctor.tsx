@@ -167,7 +167,6 @@ function Doctor() {
   const [startEDU, setStartEDU] = useState(new Date());
   const [endEDU, setEndEDU] = useState(new Date());
   const [message, setAlertMessage] = React.useState("");
-  const [officers, setOfficers] = useState<OfficersInterface[]>([]);
 
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
     setDoctorID(Number(params.row.ID));
@@ -359,14 +358,6 @@ function Doctor() {
       // console.log(res);
     }
   };
-  const getOfficersID = async () => {
-    let res = await GetOfficerByUID();
-    Doctor.OfficerID = res.ID;
-    console.log(Doctor.OfficerID);
-    if (res) {
-        setOfficers(res);
-    }
-  };
 
   const getMarital = async () => {
     let res = await GetMarital();
@@ -427,7 +418,6 @@ function Doctor() {
     setIsDisabled(!isDisabled);
     getDocCode();
     setIsDisabledPrefix(true);
-    getOfficersID();
 
   }, []);
 
@@ -817,6 +807,8 @@ function Doctor() {
     if (res.error) {
       setError(true);
       setAlertMessage(res.error);
+      console.log(res);
+      console.log(res.error);
       console.log("เข้าเงื่อนไข res.error");
     } else {
       setSuccess(true);

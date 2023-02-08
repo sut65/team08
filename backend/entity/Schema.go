@@ -82,7 +82,6 @@ type Screening_officer struct {
 	Education   Education   `gorm:"references:id"`
 	Blood       Blood       `gorm:"references:id"`
 
-	Operating_Room []Operating_Room `gorm:"foreignkey:Screening_officerID"`
 	Appoint        []Appoint        `gorm:"foreignkey:Screening_officerID"`
 	Patient        []Patient        `gorm:"foreignkey:Screening_officerID"`
 
@@ -254,9 +253,38 @@ type Doctor struct {
 	//Aern
 	Dispense []Dispense `gorm:"foreignkey:DoctorID"`
 
+	//J
+	Save_ITI []Save_ITI `gorm:"foreignkey:DoctorID"`
+	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID"`
+
 	//
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
+
+	Lab []Lab `gorm:"foreignKey:DoctorID"`
+}
+
+type Lab_Name struct {
+	gorm.Model
+	Discription string
+
+	Lab []Lab `gorm:"foreignKey:LabNameID"`
+}
+
+type Lab struct {
+	gorm.Model
+	Lab_test string
+	Value    string
+
+	LabNameID      *uint
+	TreatmentID    *uint
+	Med_EmployeeID *uint
+	DoctorID       *uint
+
+	Lab_Name      Lab_Name      `gorm:"references:id"`
+	Treatment    Treatment    `gorm:"references:id"`
+	Med_Employee Med_Employee `gorm:"references:id"`
+	Doctor       Doctor       `gorm:"references:id"`
 }
 
 // ระบบข้อมูลการรักษา ของกริม
@@ -314,6 +342,8 @@ type Treatment struct {
 	//Aern
 	Dispense []Dispense `gorm:"foreignkey:TreatmentID"`
 	Appoint  []Appoint  `gorm:"foreignkey:TreatmentID"`
+
+	Lab []Lab `gorm:"foreignKey:TreatmentID"`
 }
 
 // J
@@ -350,6 +380,8 @@ type Save_ITI struct {
 	RoomID      *uint
 	State       State `gorm:"references:id"`
 	StateID     *uint
+	Doctor		Doctor `gorm:"references:id"`
+	DoctorID	*uint
 
 	Operating_Room *Operating_Room `gorm:"foreignkey:Save_ITIID"`
 }
@@ -364,8 +396,8 @@ type Operating_Room struct {
 	BuildingID          *uint
 	Room                Room `gorm:"references:id"`
 	RoomID              *uint
-	Screening_officerID *uint
-	Screening_officer   Screening_officer `gorm:"references:id"`
+	Doctor		Doctor `gorm:"references:id"`
+	DoctorID	*uint
 }
 
 // Aern
@@ -387,7 +419,7 @@ type Dispense struct {
 	gorm.Model
 	Date time.Time
 
-	Number      string
+	Number     uint
 	Text        string
 	DoctorID    *uint
 	TreatmentID *uint
@@ -454,6 +486,8 @@ type Med_Employee struct {
 
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
+
+	Lab []Lab `gorm:"foreignKey:Med_EmployeeID"`
 }
 type Brand struct {
 	gorm.Model

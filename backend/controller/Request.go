@@ -38,7 +38,7 @@ func CreateRequest(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "resolution not found"})
 		return
 	}
-
+ 
 	// 12: สร้าง
 	wv := entity.Request{
 		Med_Equipment: med_equipment, // โยงความสัมพันธ์กับ Entity

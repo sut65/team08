@@ -27,7 +27,7 @@ function Treatment() {
         {field: "ID", headerName: "ลำดับ", width: 50  },
         {field: "TREATMENT_ID", headerName: "เลขกำกับการรักษา", width: 100 },
         {field: "TREATMENT", headerName: "ทำการรักษา", width: 150 },
-        {field: "Patient", headerName: "ผู้ป่วย", width: 150 ,valueFormatter: (params) => params.value.FirstNameTH, },
+        {field: "Patient", headerName: "ผู้ป่วย", width: 150 ,valueFormatter: (params) => params.value.Patient_Name, },
         {field: "Disease", headerName: "โรค", width: 150 ,valueFormatter: (params) => params.value.Name,},
         {field: "DATE", headerName: "วันที่ เวลา", width: 100 },
         {field: "Track", headerName: "สถานะติดตามผล", width: 120 ,valueFormatter: (params) => params.value.Name,},
@@ -35,7 +35,7 @@ function Treatment() {
         {field: "Status", headerName: "สถานะการรักษา", width: 120 ,valueFormatter: (params) => params.value.Name,},
         {field: "CONCLUSION", headerName: "ผลการรักษา", width: 150 },
         {field: "GUIDANCE", headerName: "คำแนะนำ", width: 150 },
-        {field: "Doctor", headerName: "แพทย์", width: 100 ,valueFormatter: (params) => params.value.Name, },
+        {field: "Doctor", headerName: "แพทย์", width: 100 ,valueFormatter: (params) => params.value.DocterCode, },
     ];
     return (
         <div>

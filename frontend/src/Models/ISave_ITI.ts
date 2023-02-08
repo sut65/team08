@@ -2,9 +2,12 @@ import { TreatmentsInterface } from "./ITreatment";
 import { BuildingInterface } from "./IBuilding";
 import { RoomInterface } from "./IRoom";
 import { StateInterface } from "./IState";
+import { DoctorInterface } from "./IDoctor";
 
 export interface Save_ITIsInterface {
     ID?: number;
+    DoctorID?: number;
+    Doctor?: DoctorInterface;
 
     TreatmentID?: number;
     TREATMENT?: TreatmentsInterface;

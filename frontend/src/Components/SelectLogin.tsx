@@ -22,6 +22,8 @@ import BookIcon from '@mui/icons-material/Book';
 import SigninOfficer from "./SigninOfficer";
 import SigninMed_employee from "./SigninMed_employee";
 import SigninScreening from "./SigninScreening";
+import SigninDoctor from "./SigninDoctor";
+import SigninScreening_officer from "./SigninScreening";
 
 const drawerWidth = 240;
 
@@ -79,6 +81,7 @@ const menu = [
     { name: "ฝ่ายผู้ดูแลระบบ", icon: <BookIcon />, path: "/signin_officer" },
     { name: "ฝ่ายเทคนิคการแพทย์", icon: <HomeIcon />, path: "/signinMed_employee" },
     { name: "ฝ่ายคัดกรอง", icon: <HomeIcon />, path: "/signinScreening_officer" },
+    { name: "ฝ่ายแพทย์", icon: <HomeIcon />, path: "/signinDoctor" },
 ];
 
 function SelectLogin() {
@@ -167,7 +170,8 @@ function SelectLogin() {
                             <Routes>
                                 <Route path="/signin_officer" element={<SigninOfficer />} />
                                 <Route path="/signinMed_employee" element={<SigninMed_employee />} />
-                                <Route path="/signinScreening_officer" element={<SigninScreening />} />
+                                <Route path="/signinScreening_officer" element={<SigninScreening_officer />} />
+                                <Route path="/signinDoctor" element={<SigninDoctor />} />
 
                             </Routes>
                         </Container>

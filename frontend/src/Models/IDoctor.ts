@@ -6,6 +6,7 @@ import { ReligionInterface } from "./IReligion";
 import { NationalityInterface } from "./INationality";
 import { AddressThailandInterface } from "./IAddressThailand";
 import { EducationsInterface } from "./IEducation";
+import { OfficersInterface } from "./IOfficer";
 
 // import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 // import dayjs, { Dayjs } from "dayjs";
@@ -82,4 +83,7 @@ export interface DoctorInterface {
     Address?: AddressThailandInterface,
     DocPrefix?: DocPrefixInterface,
     Education?: EducationsInterface,
+
+	OfficerID ?:    number;
+	Officer ?: OfficersInterface;
 }

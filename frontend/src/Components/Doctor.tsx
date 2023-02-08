@@ -65,7 +65,9 @@ import {
   GetAddressThailand,
   GetDoctor,
   CreateDoctor,
+  GetOfficerByUID,
 } from "../Services/HttpClientService";
+import { OfficersInterface } from "../Models/IOfficer";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -163,6 +165,7 @@ function Doctor() {
   const [startEDU, setStartEDU] = useState(new Date());
   const [endEDU, setEndEDU] = useState(new Date());
   const [message, setAlertMessage] = React.useState("");
+  const [officers, setOfficers] = useState<OfficersInterface[]>([]);
 
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
     setDoctorID(Number(params.row.ID));
@@ -196,7 +199,6 @@ function Doctor() {
   };
 
   ///
-
   const handleClickAnyRegion = () => {
     console.log(Doctor.ReligionID);
     setIsDisabled(false);
@@ -355,6 +357,14 @@ function Doctor() {
       // console.log(res);
     }
   };
+  const getOfficersID = async () => {
+    let res = await GetOfficerByUID();
+    Doctor.OfficerID = res.ID;
+    console.log(Doctor.OfficerID);
+    if (res) {
+        setOfficers(res);
+    }
+  };
 
   const getMarital = async () => {
     let res = await GetMarital();
@@ -415,6 +425,8 @@ function Doctor() {
     setIsDisabled(!isDisabled);
     getDocCode();
     setIsDisabledPrefix(true);
+    getOfficersID();
+
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -787,6 +799,8 @@ function Doctor() {
       Birthday: Doctor.Birthday,
       StartEducation: Doctor.StartEducation,
       EndEducation: Doctor.EndEducation,
+
+      OfficerID: convertType(Doctor.OfficerID),
     };
     console.log("เมื่อกด submit ก็จะขึ้น data ดังนี้");
     console.log(data);

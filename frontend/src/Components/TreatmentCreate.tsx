@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-//import logo from './logo.svg';
-//import './App.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -11,23 +9,19 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import FormControl from '@mui/material/FormControl/FormControl';
-
-//New
 import { Link as RouterLink } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-
 import { DiseasesInterface } from "../Models/IDisease";
 import { DoctorInterface } from "../Models/IDoctor";
 import { TreatmentsInterface } from "../Models/ITreatment";
 import { PatientsInterface } from "../Models/IPatient";
 import { StatusInterface } from "../Models/IStatus";
 import { TrackInterface } from "../Models/ITrack";
-//box
 import {
   GetDisease,
   GetStatus,
-  GetDoctor,
+  GetDoctorByUID,
   GetPatient,
   GetTrack,
   Treatment,
@@ -57,6 +51,7 @@ function TreatmentCreate() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [APPOINTMENT, setAPPOINTMENT] = useState<string>("");
+  const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface[]>([]);
 
 
   // handleClose ประมาณว่าแสดงสเน็บบลาเร็จ ก็ปิดไป
@@ -79,12 +74,13 @@ function TreatmentCreate() {
     });
   };
   //
-  const getDoctor = async () => {
-    let res = await GetDoctor();
+  const getDoctorByUID = async () => {
+    let res = await GetDoctorByUID();
     treatment.DoctorID = res.ID;
-    console.log(treatment.DoctorID);
     if (res) {
-      setDoctors(res);
+
+      setDoctorByUID(res);
+      console.log(res);
     }
   };
 
@@ -121,7 +117,7 @@ function TreatmentCreate() {
     getStatus();
     getTrack();
     getPatient();
-    getDoctor();
+    getDoctorByUID();
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -143,6 +139,7 @@ function TreatmentCreate() {
       CONCLUSION: (CONCLUSION),
       GUIDANCE: (GUIDANCE),
       APPOINTMENT: (APPOINTMENT),
+
     };
 
     let res = await Treatment(data);

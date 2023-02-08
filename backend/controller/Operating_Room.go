@@ -14,7 +14,7 @@ func CreateOperating_Room(c *gin.Context) {
 	var Save_ITI entity.Save_ITI
 	var Building entity.Building
 	var Room entity.Room
-	var screening_officer entity.Screening_officer
+	var Doctor entity.Doctor
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 9 จะถูก bind เข้าตัวแปร Operating_Room
 	if err := c.ShouldBindJSON(&Operating_Room); err != nil {
@@ -40,14 +40,15 @@ func CreateOperating_Room(c *gin.Context) {
 		return
 	}
 	
-	if tx := entity.DB().Where("id = ?", Operating_Room.Screening_officerID).First(&screening_officer); tx.RowsAffected == 0 {
+	// 13 ค้นหา Doctor ด้วย id
+	if tx := entity.DB().Where("id = ?", Operating_Room.DoctorID).First(&Doctor); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
 		return
 	}
 
 	// 14: สร้าง Operating_Room
 	save := entity.Operating_Room{
-		Screening_officer: screening_officer,
+		Doctor: Doctor,
 		Datetime: Operating_Room.Datetime,
 		Save_ITI: 	Save_ITI,
 		Building:  	Building,
@@ -66,7 +67,7 @@ func CreateOperating_Room(c *gin.Context) {
 func GetOperating_Room(c *gin.Context) {
 	var operating_room entity.Operating_Room
 	id := c.Param("id")
-	if err := entity.DB().Preload("Save_ITI").Preload("Building").Preload("Room").Raw("SELECT * FROM operating_rooms WHERE id = ?", id).Find(&operating_room).Error; err != nil {
+	if err := entity.DB().Preload("Save_ITI").Preload("Building").Preload("Room").Preload("Doctor").Raw("SELECT * FROM operating_rooms WHERE id = ?", id).Find(&operating_room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -76,7 +77,7 @@ func GetOperating_Room(c *gin.Context) {
 // GET /operating_room
 func ListOperating_Rooms(c *gin.Context) {
 	var operating_rooms []entity.Operating_Room
-	if err := entity.DB().Preload("Save_ITI").Preload("Building").Preload("Room").Raw("SELECT * FROM operating_rooms").Find(&operating_rooms).Error; err != nil {
+	if err := entity.DB().Preload("Save_ITI").Preload("Building").Preload("Room").Preload("Doctor").Raw("SELECT * FROM operating_rooms").Find(&operating_rooms).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

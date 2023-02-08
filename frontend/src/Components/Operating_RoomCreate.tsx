@@ -19,10 +19,11 @@ import { BuildingInterface } from "../Models/IBuilding";
 import { RoomInterface } from "../Models/IRoom";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 
-import {GetBuilding,GetRoom,ListReady_Save,CreateOperating_Room,GetReady_Save_ITI,GetReady_Treat} from "../Services/HttpClientService";
+import {GetBuilding,GetRoom,ListReady_Save,CreateOperating_Room,GetReady_Save_ITI,GetReady_Treat,GetDoctorByUID} from "../Services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Operating_RoomsInterface } from "../Models/IOperating_Room";
 import { TreatmentsInterface } from "../Models/ITreatment";
+import { DoctorInterface } from "../Models/IDoctor";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -44,6 +45,7 @@ function Operating_RoomCreate() {
   const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
     Patient:{Patient_Name:"-----"}
   });
+  const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
  
   // const [Date_checkin, setDate_checkin] = useState<string>("");
   // const [Time_checkin, setTime_checkin] = useState<string>("");
@@ -62,6 +64,16 @@ function Operating_RoomCreate() {
     }
     setSuccess(false);
     setError(false);
+  };
+
+  const getDoctorByUID = async () => {
+    let res = await GetDoctorByUID();
+    Operating_Rooms.DoctorID = res.ID;
+    if (res) {
+
+      setDoctorByUID(res);
+      console.log(res);
+    }
   };
 
   function clear() {
@@ -138,6 +150,7 @@ const getRoom = async () => {
 }
 };
 useEffect(() => {
+  getDoctorByUID();
   getSave_ITI();
   getBuilding();
   getRoom();
@@ -150,6 +163,7 @@ const convertType = (data: string | number | undefined) => {
 
 async function submit() {
   let data = {
+    DoctorID: convertType(Operating_Rooms.DoctorID),
     Save_ITIID: convertType(Operating_Rooms.Save_ITIID),
     BuildingID: convertType(Save_ITIOne.ID),
     RoomID: convertType(Operating_Rooms.RoomID),
@@ -244,7 +258,7 @@ return (
             inputProps={{
               name: "Explain",
             }}
-            // value={request.Explain + ""}
+            value={DoctorByUID?.FirstNameEN + ""}
             // onChange={handleInputChange_Text}
           />
         </FormControl>

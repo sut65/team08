@@ -148,9 +148,23 @@ func main() {
 			//Doctor
 			router.GET("/Doctors", controller.ListDoctor)
 			router.GET("/Doctor/:id", controller.GetDoctor)
-			router.POST("/Doctor", controller.CreateDoctor)
+			router.POST("/Doctor/create", controller.Create_Doctor) ///////
 			router.PATCH("/Doctor", controller.UpdateDoctor)
 			router.DELETE("/Doctor/:id", controller.DeleteDoctor)
+
+			//Labname
+			router.GET("/LabNames", controller.ListLabName)
+			router.GET("/LabName/:id", controller.GetLabName)
+			router.POST("/LabName", controller.CreateLabName)
+			router.PATCH("/LabName", controller.UpdateLabName)
+			router.DELETE("/LabName/:id", controller.DeleteLabName)
+
+			//Lab
+			router.GET("/Labs", controller.ListLab)
+			router.GET("/Lab/:id", controller.GetLab)
+			router.POST("/Lab", controller.CreateLab)
+			router.PATCH("/Lab", controller.UpdateLab)
+			router.DELETE("/Lab/:id", controller.DeleteLab)
 
 			//Gg
 			// โรค
@@ -292,7 +306,9 @@ func main() {
 	// // student login
 	r.POST("/login_s", controller.Login_Med_employee)
 	// Run the server go run main.go
-	r.POST("/login_screen", controller.Login_Screening_officer)
+	r.POST("/login_screen", controller.Login_Screening_officer) 
+	
+	r.POST("/login_Doctor", controller.Login_Doctor)
 
 	r.Run()
 

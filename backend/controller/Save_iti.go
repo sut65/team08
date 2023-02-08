@@ -25,6 +25,7 @@ func CreateSave_ITI(c *gin.Context) {
 	var Building entity.Building
 	var Room entity.Room
 	var State entity.State
+	var Doctor entity.Doctor
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 9 จะถูก bind เข้าตัวแปร Save_ITI
 	if err := c.ShouldBindJSON(&Save_ITI); err != nil {
@@ -56,18 +57,25 @@ func CreateSave_ITI(c *gin.Context) {
 		return
 	}
 
-	// 14: สร้าง Save_ITI
+	// 14 ค้นหา Doctor ด้วย id
+	if tx := entity.DB().Where("id = ?", Save_ITI.DoctorID).First(&Doctor); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
+		return
+	}
+
+	// 15: สร้าง Save_ITI
 	save := entity.Save_ITI{
 		Date_checkin: Save_ITI.Date_checkin,
 		Date_checkout: Save_ITI.Date_checkout,
 
+		Doctor: Doctor,
 		Treatment: 	Treatment,
 		Building:  	Building,
 		Room:		Room,
 		State:		State,
 	}
 
-	// 15: บันทึก
+	// 16: บันทึก
 	if err := entity.DB().Create(&save).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -79,7 +87,7 @@ func CreateSave_ITI(c *gin.Context) {
 func GetSave_ITI(c *gin.Context) {
 	var save_iti entity.Save_ITI
 	id := c.Param("id")
-	if err := entity.DB().Preload("Treatment").Preload("Building").Preload("Room").Preload("State").Raw("SELECT * FROM save_itis WHERE id = ?", id).Find(&save_iti).Error; err != nil {
+	if err := entity.DB().Preload("Treatment").Preload("Building").Preload("Room").Preload("Doctor").Preload("State").Raw("SELECT * FROM save_itis WHERE id = ?", id).Find(&save_iti).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -89,7 +97,7 @@ func GetSave_ITI(c *gin.Context) {
 // GET /save_iti
 func ListSave_ITIs(c *gin.Context) {
 	var save_itis []entity.Save_ITI
-	if err := entity.DB().Preload("Treatment").Preload("Building").Preload("Room").Preload("State").Raw("SELECT * FROM save_itis").Find(&save_itis).Error; err != nil {
+	if err := entity.DB().Preload("Treatment").Preload("Building").Preload("Room").Preload("State").Preload("Doctor").Raw("SELECT * FROM save_itis").Find(&save_itis).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -22,8 +22,9 @@ import { DrugInterface } from "../Models/IDrug";
 import { PracticeInterface } from "../Models/IPractice";
 import { TreatmentsInterface } from "../Models/ITreatment";
 
+
 import {
-  GetDoctor,
+  GetDoctorByUID,
   GetTreatment,
   GetDrug,
   GetPractice,
@@ -48,11 +49,13 @@ function DispenseCreate() {
   const [practice, setPractice] = useState<PracticeInterface[]>([]);
   const [drug, setDrug] = useState<DrugInterface[]>([]);
   const [Text, setText] = useState<string>("");
-  const [Number, setNumber] = useState<string>();
+  const [Number, setNumber] = useState<string>("");
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   //เพิ่ม
   const [treatment_Dis, setTreatment_Dis] = useState<TreatmentsInterface>({});
+  const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
@@ -70,13 +73,13 @@ function DispenseCreate() {
     setError(false);
   };
 
-  const getDoctor = async () => {
-    let res = await GetDoctor();
+  const getDoctorByUID = async () => {
+    let res = await GetDoctorByUID();
+    dispense.DoctorID = res.ID;
     if (res) {
-      setDoctor(res);
-      console.log("Load Doctor Complete");
-    } else {
-      console.log("Load Doctor InComplete!!!!");
+
+      setDoctorByUID(res);
+      console.log(res);
     }
   };
 
@@ -112,7 +115,7 @@ function DispenseCreate() {
   };
 
   useEffect(() => {
-    getDoctor();
+    getDoctorByUID();
     getDrug();
     getTreatment();
     getPractice();
@@ -162,7 +165,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       TreatmentID: convertType(dispense.TreatmentID),
       DrugID: convertType(dispense.DrugID),
       PracticeID: convertType(dispense.PracticeID),
-      Number: Number,
+      Number: convertType(Number),
       Text: Text,
       Date: dispense.Date,
     };
@@ -216,7 +219,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             <p>แพทย์ผู้รักษา</p>
             <FormControl fullWidth variant="outlined">
               <TextField
-                value={doctor.ID || ""}
+                value={DoctorByUID.FirstNameTH || ""}
                 InputProps={{
                   readOnly: true,
                 }}

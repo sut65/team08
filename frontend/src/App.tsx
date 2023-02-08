@@ -19,9 +19,6 @@ import Button from "@mui/material/Button";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
-import PeopleIcon from "@mui/icons-material/People";
-import BookIcon from '@mui/icons-material/Book';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 // import Home from "./components/Home";
  import Screening_officerList from "./Components/Screening_officerList";
@@ -48,7 +45,6 @@ import RequestCreate from "./Components/RequestCreate";
 import Request from "./Components/Request";
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import NoteIcon from '@mui/icons-material/Note';
 import SickIcon from '@mui/icons-material/Sick';
 import MedicationIcon from '@mui/icons-material/Medication';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
@@ -132,15 +128,16 @@ const menu = [
   { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" ,role: 'screening_officer'},
   { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" ,role: 'officer'},
 
-  { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'officer'}, 
-  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'officer'}, 
-  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room" ,role: 'screening_officer'},
-  { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" ,role: 'officer'},
   { name: "ข้อมูลการการนัดคนไข้ของแพทย์", icon: <CalendarMonthIcon />, path: "/AppointList" ,role: 'screening_officer'},
   { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" ,role: 'officer'},
   { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" ,role: 'med_employee'},
   { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" ,role: 'med_employee'},
   { name: "ข้อมูลผลแลป", icon: <AssignmentIndIcon />, path: "/Lab" ,role: 'med_employee'},
+
+  { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'doctor'}, 
+  { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" ,role: 'doctor'},
+  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'doctor'}, 
+  { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room" ,role: 'doctor'},
 
 ];
 

@@ -17,7 +17,7 @@ import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
 import { EducationsInterface } from "../Models/IEducation";
 import { MedEmployeeInterface } from "../Models/IMedEmployee";
-import { OfficersInterface } from "../Models/IOfficer";/////
+import { OfficersInterface } from "../Models/IOfficer";////
 
 import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_Employee,} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(

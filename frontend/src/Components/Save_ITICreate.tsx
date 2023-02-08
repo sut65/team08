@@ -21,8 +21,9 @@ import { RoomInterface } from "../Models/IRoom";
 import { StateInterface } from "../Models/IState";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 
-import {GetBuilding,GetRoom,GetState,CreateSave_ITI,GetReady_Treat,ListReady_Treat} from "../Services/HttpClientService";
+import {GetBuilding,GetRoom,GetState,CreateSave_ITI,GetReady_Treat,ListReady_Treat,GetDoctorByUID} from "../Services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DoctorInterface } from "../Models/IDoctor";
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -43,6 +44,8 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
     const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
       Patient:{Patient_Name:"-----"}
     });
+    const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
+  
 
     // const [Date_checkin, setDate_checkin] = useState<string>("");
     // const [Time_checkin, setTime_checkin] = useState<string>("");
@@ -61,6 +64,16 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
       }
       setSuccess(false);
       setError(false);
+    };
+
+    const getDoctorByUID = async () => {
+      let res = await GetDoctorByUID();
+      Save_ITIs.DoctorID = res.ID;
+      if (res) {
+  
+        setDoctorByUID(res);
+        console.log(res);
+      }
     };
 
     function clear() {
@@ -133,6 +146,7 @@ const handleChange = (event: SelectChangeEvent) => {
   }
 };
   useEffect(() => {
+    getDoctorByUID();
     getTreatment();
     getBuilding();
     getRoom();
@@ -147,6 +161,7 @@ const handleChange = (event: SelectChangeEvent) => {
 
   async function submit() {
     let data = {
+      DoctorID: convertType(Save_ITIs.DoctorID),
       TreatmentID: convertType(Save_ITIs.TreatmentID),
       BuildingID: convertType(Save_ITIs.BuildingID),
       RoomID: convertType(Save_ITIs.RoomID),
@@ -243,7 +258,7 @@ const handleChange = (event: SelectChangeEvent) => {
               inputProps={{
                 name: "Explain",
               }}
-              // value={request.Explain + ""}
+              value={DoctorByUID?.FirstNameEN + ""}
               // onChange={handleInputChange_Text}
             />
           </FormControl>

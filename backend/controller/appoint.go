@@ -10,7 +10,7 @@ import (
 // POST /appoints
 func CreateAppoint(c *gin.Context) {
 	var appoint entity.Appoint
-	//var screening_officer entity.Screening_officer
+	var screening_officer entity.Screening_officer
 	var treatment entity.Treatment
 	var levelcure entity.Levelcure
 	var department entity.Department
@@ -40,17 +40,17 @@ func CreateAppoint(c *gin.Context) {
 		return
 	}
 	//13.ค้นหาไอดีของเจ้าหน้าที่ฝ่ายคัดกรอง ด้วย id
-	// if tx := entity.DB().Where("id = ?", appoint.Screening_officerID).First(&screening_officer); tx.RowsAffected == 0 {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Screening_officer not found"})
-	// 	return
-	// }
+	if tx := entity.DB().Where("id = ?", appoint.Screening_officerID).First(&screening_officer); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Screening_officer not found"})
+		return
+	}
 
 	// 14: สร้าง Appoint
 	cr := entity.Appoint{
 		Levelcure:         levelcure,            // โยงความสัมพันธ์กับ Entity Levelcure
 		Department:        department,           // โยงความสัมพันธ์กับ Entity Department
 		Treatment:         treatment,            // โยงความสัมพันธ์กับ Entity Treatment
-		//Screening_officer: screening_officer,    // โยงความสัมพันธ์กับ Entity Officer
+		Screening_officer: screening_officer,    // โยงความสัมพันธ์กับ Entity Officer
 		Date_now:          appoint.Date_now,     // ตั้งค่าฟิลด์ Date
 		Date_appoint:      appoint.Date_appoint, // ตั้งค่าฟิลด์ Date
 		Text_appoint:      appoint.Text_appoint, // ตั้งค่าฟิลด์ Text
@@ -78,7 +78,7 @@ func GetAppoint(c *gin.Context) {
 // GET /Appoints
 func ListAppoints(c *gin.Context) {
 	var appoints []entity.Appoint
-	if err := entity.DB().Preload("Levelcure").Preload("Treatment").Preload("Department").Raw("SELECT * FROM appoints").Find(&appoints).Error; err != nil {
+	if err := entity.DB().Preload("Screening_officer").Preload("Levelcure").Preload("Treatment").Preload("Department").Raw("SELECT * FROM appoints").Find(&appoints).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

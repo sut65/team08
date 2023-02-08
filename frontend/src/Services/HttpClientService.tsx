@@ -14,9 +14,104 @@ import { SigninInterface } from "../Models/ISignin";
 import { OfficersInterface } from "../Models/IOfficer";
 import { SigninMedInterface } from "../Models/ISigninMed";
 import { SigninScreeningInterface } from "../Models/ISigninScreening";
+import { SigninDoctorInterface } from "../Models/ISigninDoctor";
 
 const apiUrl = "http://localhost:8080";
 
+
+///////Doc
+async function LoginDoctor(data: SigninDoctorInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/login_Doctor`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log("if (res.data)");
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("uid", res.data.id);
+              localStorage.setItem("role", "doctor");
+              return res.data;
+          } else {
+              console.log("else ");
+              return false;
+          }
+      });
+
+  return res;
+}
+async function GetDoctorByUID() {
+  const uid = localStorage.getItem("uid");
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/Doctor/${uid}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log(res.data);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function Doctor (data: DoctorInterface) {
+  const requestOptions = {
+      method: "POST",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/Doctor/create`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+async function Create_Doctor(data: DoctorInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        // console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 /////Screening_officer
 async function Screening_officer(data: Screening_officersInterface) {
   const requestOptions = {
@@ -253,6 +348,10 @@ async function LoginScreening_officer(data: SigninScreeningInterface) {
 
   return res;
 }
+
+
+
+
 
 async function GetGender() {
   const requestOptions = {
@@ -647,12 +746,12 @@ async function CreateDoctor(data: DoctorInterface) {
   // console.log("แสดง requestOptions")
   // console.log(requestOptions);
 
-  let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
+  let res = await fetch(`${apiUrl}/Doctor/create`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       // console.log(res.data);
       if (res.data) {
-        console.log("เข้า fetch(`${apiUrl}/Doctor` แล้ววววววววว")
+        console.log("เข้า fetch(`${apiUrl}/Doctor/create` แล้ววววววววว")
         console.log(res.data);
         return res;
       } else {
@@ -1495,6 +1594,9 @@ async function GetRequest() {
 
 
 export {
+
+  LoginDoctor,
+
   LoginScreening_officer,
   LoginMed_empolyee, //////
   LoginByOfficer,
@@ -1577,4 +1679,9 @@ export {
   GetScrenByUID,
   Screening_officer,
   Create_Screening_officer, //////?
+
+  GetDoctorByUID,
+  Doctor,
+  Create_Doctor,
+
 };

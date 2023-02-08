@@ -29,7 +29,6 @@ import { LocationInterface } from "../Models/ILocation";
 //box 
 import {
   GetMedicalEquipments,
-  //GetDoctorByUID,
   GetLocation,
   GetMedByUID,
   Request,

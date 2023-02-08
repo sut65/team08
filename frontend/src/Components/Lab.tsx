@@ -121,21 +121,6 @@ function Doctor() {
     setIsDisabled(false);
   };
 
-  const getDocCode = async () => {
-    let new_Date: Date = new Date();
-    let result: string = new_Date.toLocaleString();
-
-    fetch(`${apiUrl}/Doctors`, requestOptionsGet)
-      .then((response) => response.json())
-      .then((res) => {
-        // console.log(res.data.length);
-        let num: number = +(result[7] + result[8]) * 1000 + res.data.length + 1;
-        let docid: string = "D" + num.toString();
-        // console.log("The date is: " + docid);
-        setDocterCode(docid);
-      });
-  };
-
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -268,7 +253,7 @@ function Doctor() {
       setDoctor(res);
       setDoctorA(res);
       // console.log("set Doctor & DoctorA");
-      console.log(res);
+      // console.log(res);
     }
   };
   const getShow = async () => {
@@ -277,7 +262,7 @@ function Doctor() {
       // setDoctor(res);
       setShow(res);
       // console.log("set Doctor & DoctorA");
-      console.log(res);
+      // console.log(res);
     }
   };
 
@@ -340,8 +325,6 @@ function Doctor() {
     getDocPrefix();
     getEducations();
     setIsDisabled(!isDisabled);
-    getDocCode();
-    getDocCode();
     setIsDisabledPrefix(true);
   }, []);
 
@@ -362,16 +345,16 @@ function Doctor() {
   };
 
   const columns: GridColDef[] = [
-    { field: "ID", headerName: "ลำดับ", width: 80 },
+    { field: "ID", headerName: "ลำดับ", width: 50 },
     {
       field: "TREATMENT_ID",
       headerName: "เลขกำกับการรักษา",
-      width: 150,
+      width: 100,
     },
     {
       field: "PatiendID",
       headerName: "หมายเลขผู้ป่วย",
-      width: 150,
+      width: 120,
     },
     {
       field: "Doctor",
@@ -382,13 +365,14 @@ function Doctor() {
     {
       field: "Status",
       headerName: "สถานะการรักษา",
-      width: 150,
+      width: 120,
       valueFormatter: (params) => params.value.Name,
     },
     {
       field: "DATE",
       headerName: "วันที่และเวลา",
-      width: 150,
+      width: 200,
+      valueFormatter: (params) => dayjs(params.value).format("เมื่อ H:mm วันที่ DD/MM/YY"),
     },
   ];
 
@@ -422,7 +406,6 @@ function Doctor() {
     // console.log(res);
     if (res) {
       setSuccess(true);
-      getDocCode();
       // console.log("เข้า");
     } else {
       setError(true);
@@ -479,7 +462,7 @@ function Doctor() {
           
           <div style={{ height: 300, width: "98.5%" }}>
             <p>ข้อมูลการรักษาที่ยังรอผลตรวจแลป</p>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={5} sm={12}>
             <Button
               variant="outlined"
               onClick={handleClickOpen}

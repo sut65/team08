@@ -93,6 +93,7 @@ type Screening_officer struct {
 type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
+<<<<<<< HEAD
 	PrefixID            *uint
 	Patient_Name        string
 	Age                 uint
@@ -103,6 +104,17 @@ type Patient struct {
 	NationalityID       *uint
 	Screening_officerID *uint
 	IDCard              string `gorm:"uniqueIndex"`
+=======
+	PrefixID      *uint
+	Patient_Name  string
+	Age           uint
+	GenderID      *uint
+	BloodID       *uint
+	ReligionID    *uint
+	Birthday      string
+	NationalityID *uint
+	IDCard        string `gorm:"uniqueIndex"`
+>>>>>>> issue-49
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
 	Phone     string
@@ -257,6 +269,31 @@ type Doctor struct {
 	//
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
+
+	Lab []Lab `gorm:"foreignKey:DoctorID"`
+}
+
+type Lab_Name struct {
+	gorm.Model
+	Discription string
+
+	Lab []Lab `gorm:"foreignKey:LabNameID"`
+}
+
+type Lab struct {
+	gorm.Model
+	Lab_test string
+	Value    string
+
+	LabNameID      *uint
+	TreatmentID    *uint
+	Med_EmployeeID *uint
+	DoctorID       *uint
+
+	Lab_Name      Lab_Name      `gorm:"references:id"`
+	Treatment    Treatment    `gorm:"references:id"`
+	Med_Employee Med_Employee `gorm:"references:id"`
+	Doctor       Doctor       `gorm:"references:id"`
 }
 
 // ระบบข้อมูลการรักษา ของกริม
@@ -314,6 +351,8 @@ type Treatment struct {
 	//Aern
 	Dispense []Dispense `gorm:"foreignkey:TreatmentID"`
 	Appoint  []Appoint  `gorm:"foreignkey:TreatmentID"`
+
+	Lab []Lab `gorm:"foreignKey:TreatmentID"`
 }
 
 // J
@@ -454,6 +493,8 @@ type Med_Employee struct {
 
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
+
+	Lab []Lab `gorm:"foreignKey:Med_EmployeeID"`
 }
 type Brand struct {
 	gorm.Model

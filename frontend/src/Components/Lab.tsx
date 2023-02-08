@@ -48,16 +48,14 @@ import { EducationsInterface } from "../Models/IEducation";
 import { DoctorInterface } from "../Models/IDoctor";
 import { TreatmentsInterface } from "../Models/ITreatment";
 
+import { LabNameInterface } from "../Models/ILabName";
+import { LabInterface } from "../Models/ILab";
+
 import {
-  // GetPolicing,
   GetGender,
   GetPrefix,
   GetDocPrefix,
-  CreatePatient,
   GetEducation,
-  GetScreening_officer,
-  //CreateScreening_officer,
-  GetPatient,
   GetBlood,
   GetMarital,
   GetReligion,
@@ -66,6 +64,9 @@ import {
   GetDoctor,
   GetShow,
   CreateDoctor,
+  ListLabName,
+  ListLab,
+
 } from "../Services/HttpClientService";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -99,7 +100,9 @@ function Doctor() {
   const [Educations, setEducations] = useState<EducationsInterface[]>([]);
   const [Doctor, setDoctor] = useState<Partial<DoctorInterface>>({});
   const [DoctorA, setDoctorA] = useState<DoctorInterface[]>([]);
+
   const [Show, setShow] = useState<TreatmentsInterface[]>([]);
+  const [ShowLab, setShowLab] = useState<TreatmentsInterface[]>([]);
 
   const [DocterCode, setDocterCode] = useState<string>("");
   const [DocterIDCar, setDocterIDCar] = useState<string>("");
@@ -152,17 +155,17 @@ function Doctor() {
     // console.log(`${name}: ${value}`);
   };
 
-//   const handleInputChange = (
-//     event: React.ChangeEvent<{ id?: string; value: any }>
-// ) => {
-//     const id = event.target.id as keyof typeof CreateCheckInOut;
-//     const { value } = event.target;
+  //   const handleInputChange = (
+  //     event: React.ChangeEvent<{ id?: string; value: any }>
+  // ) => {
+  //     const id = event.target.id as keyof typeof CreateCheckInOut;
+  //     const { value } = event.target;
 
-//     setCreateCheckInOut({
-//         ...CreateCheckInOut,
-//         [id]: value })
-//         console.log(id,"=", value); //แสดงค่าที่ป้อนเข้ามาในช่อง LocationReservation
-// };
+  //     setCreateCheckInOut({
+  //         ...CreateCheckInOut,
+  //         [id]: value })
+  //         console.log(id,"=", value); //แสดงค่าที่ป้อนเข้ามาในช่อง LocationReservation
+  // };
 
   const handleChangeDoctor = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof Doctor;
@@ -233,13 +236,7 @@ function Doctor() {
       // console.log(res);
     }
   };
-  // const getPolicing = async () => {
-  //   let res = await GetPolicing();
-  //   if (res) {
-  //     setPolicings(res);
-  //     // console.log(res);
-  //   }
-  // };
+
   const getBlood = async () => {
     let res = await GetBlood();
     if (res) {
@@ -262,6 +259,16 @@ function Doctor() {
       // setDoctor(res);
       setShow(res);
       // console.log("set Doctor & DoctorA");
+      // console.log(res);
+    }
+  };
+
+  const getShowLab = async () => {
+    let res = await ListLab();
+    if (res) {
+      // setDoctor(res);
+      setShowLab(res);
+      console.log(res," -> set await ListLab()");
       // console.log(res);
     }
   };
@@ -326,6 +333,8 @@ function Doctor() {
     getEducations();
     setIsDisabled(!isDisabled);
     setIsDisabledPrefix(true);
+
+    getShowLab();
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -369,10 +378,56 @@ function Doctor() {
       valueFormatter: (params) => params.value.Name,
     },
     {
-      field: "DATE",
+      field: "CreatedAt",
       headerName: "วันที่และเวลา",
       width: 200,
-      valueFormatter: (params) => dayjs(params.value).format("เมื่อ H:mm วันที่ DD/MM/YY"),
+      valueFormatter: (params) =>
+        dayjs(params.value).format("H:mm | DD/MM/YY"),
+    },
+  ];
+
+  const columnsLab: GridColDef[] = [
+    { field: "ID", headerName: "ลำดับ", width: 50 },
+    {
+      field: "CreatedAt",
+      headerName: "วันที่และเวลา",
+      width: 150,
+      valueFormatter: (params) =>
+        dayjs(params.value).format("H:mm | DD/MM/YY"),
+    },
+    {
+      field: "Lab_Name",
+      headerName: "ใบแลป",
+      width: 120,
+      valueFormatter: (params) => params.value.Discription,
+    },
+    {
+      field: "Lab_test",
+      headerName: "ค่าที่รายงาน",
+      width: 120,
+    },
+    {
+      field: "Value",
+      headerName: "หน่วย",
+      width: 80,
+    },
+    {
+      field: "Treatment",
+      headerName: "เลขกำกับการรักษา",
+      width: 150,
+      valueFormatter: (params) => params.value.TREATMENT_ID,
+    },
+    {
+      field: "Doctor",
+      headerName: "แพทย์ผู้สั่งแลป",
+      width: 120,
+      valueFormatter: (params) => params.value.FirstNameTH,
+    },
+    {
+      field: "Med_Employee",
+      headerName: "ผู้รายงานผลแลป",
+      width: 120,
+      valueFormatter: (params) => params.value.ID,
     },
   ];
 
@@ -459,126 +514,127 @@ function Doctor() {
           spacing={1}
           sx={{ marginX: 0.5, marginY: 0, padding: 2 }}
         >
-          
           <div style={{ height: 300, width: "98.5%" }}>
             <p>ข้อมูลการรักษาที่ยังรอผลตรวจแลป</p>
             <Grid item xs={12} md={5} sm={12}>
-            <Button
-              variant="outlined"
-              onClick={handleClickOpen}
-              startIcon={<AddIcon />}
-            >
-              ส่งข้อมูลผลแลป
-            </Button>
-            <Dialog
-              open={openD}
-              // onClose={touchPage(false)}
-              fullWidth
-              maxWidth="md"
-            >
-              <DialogContent>
-                <DialogTitle>สร้างข้อมูลผลแลปใหม่</DialogTitle>
-                <Grid container spacing={2} sx={{ padding: 4 }}>
-                  <Grid item xs={3}>
-                    <FormControl fullWidth variant="outlined" size="small">
-                      <Select
-                        native
-                        value={Doctor.DocPrefixID + ""}
-                        onChange={handleChangeDoctor}
-                        inputProps={{
-                          name: "DocPrefixID",
-                        }}
-                      >
-                        <option aria-label="None" value="">
-                          รหัสข้อมูลการรักษา
+              <Button
+                variant="outlined"
+                onClick={handleClickOpen}
+                startIcon={<AddIcon />}
+              >
+                ส่งข้อมูลผลแลป
+              </Button>
+              <Dialog
+                open={openD}
+                // onClose={touchPage(false)}
+                fullWidth
+                maxWidth="md"
+              >
+                <DialogContent>
+                  <DialogTitle>สร้างข้อมูลผลแลปใหม่</DialogTitle>
+                  <Grid container spacing={2} sx={{ padding: 4 }}>
+                    <Grid item xs={3}>
+                      <FormControl fullWidth variant="outlined" size="small">
+                        <Select
+                          native
+                          value={Doctor.DocPrefixID + ""}
+                          onChange={handleChangeDoctor}
+                          inputProps={{
+                            name: "DocPrefixID",
+                          }}
+                        >
+                          <option aria-label="None" value="">
+                            รหัสข้อมูลการรักษา
                           </option>
-                        {Show.map((item: TreatmentsInterface) => (
-                          <option value={item.ID} key={item.ID}>
-                            {item.TREATMENT_ID}
+                          {Show.map((item: TreatmentsInterface) => (
+                            <option value={item.ID} key={item.ID}>
+                              {item.TREATMENT_ID}
+                            </option>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <FormControl fullWidth variant="outlined" size="small">
+                        <Select
+                          native
+                          value={Doctor.DocPrefixID + ""}
+                          onChange={handleChangeDoctor}
+                          inputProps={{
+                            name: "DocPrefixID",
+                          }}
+                        >
+                          <option aria-label="None" value="">
+                            ประเภทแลป
                           </option>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <FormControl fullWidth variant="outlined" size="small">
-                      <Select
-                        native
-                        value={Doctor.DocPrefixID + ""}
-                        onChange={handleChangeDoctor}
-                        inputProps={{
-                          name: "DocPrefixID",
-                        }}
-                      >
-                        <option aria-label="None" value="">
-                          ประเภทแลป
-                        </option>
-                        {Show.map((item: TreatmentsInterface) => (
-                          <option value={item.ID} key={item.ID}>
-                            {item.TREATMENT_ID}
+                          {Show.map((item: TreatmentsInterface) => (
+                            <option value={item.ID} key={item.ID}>
+                              {item.TREATMENT_ID}
+                            </option>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6}></Grid>
+                    <Grid item xs={3}>
+                      <FormControl fullWidth variant="outlined" size="small">
+                        <Select
+                          native
+                          value={Doctor.DocPrefixID + ""}
+                          onChange={handleChangeDoctor}
+                          inputProps={{
+                            name: "DocPrefixID",
+                          }}
+                        >
+                          <option aria-label="None" value="">
+                            ผลแลปที่ได้
                           </option>
-                        ))}
-                      </Select>
-                    </FormControl>
+                          {Show.map((item: TreatmentsInterface) => (
+                            <option value={item.ID} key={item.ID}>
+                              {item.TREATMENT_ID}
+                            </option>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={5}>
+                      <TextField
+                        label="ค่าที่รายงาน"
+                        fullWidth
+                        id="LastNameTH"
+                        type="string"
+                        variant="outlined"
+                        size="small"
+                        onChange={(event) => setLastNameTH(event.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={4}></Grid>
                   </Grid>
-                  <Grid item xs={6}>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <FormControl fullWidth variant="outlined" size="small">
-                      <Select
-                        native
-                        value={Doctor.DocPrefixID + ""}
-                        onChange={handleChangeDoctor}
-                        inputProps={{
-                          name: "DocPrefixID",
-                        }}
-                      >
-                        <option aria-label="None" value="">
-                          ผลแลปที่ได้
-                          </option>
-                        {Show.map((item: TreatmentsInterface) => (
-                          <option value={item.ID} key={item.ID}>
-                            {item.TREATMENT_ID}
-                          </option>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={5}>
-                    <TextField
-                      label="ค่าที่รายงาน"
-                      fullWidth
-                      id="LastNameTH"
-                      type="string"
-                      variant="outlined"
-                      size="small"
-                      onChange={(event) => setLastNameTH(event.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                  </Grid>
-                </Grid>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleCloseD}>ยกเลิก</Button>
-                <Button onClick={submit}>บันทึกข้อมูลผลแลป</Button>
-              </DialogActions>
-            </Dialog>
-            <p></p>
-          </Grid>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseD}>ยกเลิก</Button>
+                  <Button onClick={submit}>บันทึกข้อมูลผลแลป</Button>
+                </DialogActions>
+              </Dialog>
+              <p></p>
+            </Grid>
             <DataGrid
               rows={Show}
               getRowId={(row) => row.ID}
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
+            /><br></br><p>ผลแลปที่ทำการบันทึกแล้ว</p>
+            <DataGrid
+              rows={ShowLab}
+              getRowId={(row) => row.ID}
+              columns={columnsLab}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
             />
           </div>
         </Grid>
-        <Grid container spacing={1} sx={{ marginY: 4, padding: 2 }}>
-        </Grid>
-        <Grid container spacing={1} sx={{ marginY: 4, padding: 2 }}>
-        </Grid>
+        <Grid container spacing={1} sx={{ marginY: 58, padding: 2 }}></Grid>
       </Paper>
     </Container>
   );

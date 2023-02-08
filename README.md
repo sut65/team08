@@ -13,15 +13,7 @@
 🌷    https://github.com/sut65/team08/labels/B6336967     ``นันทวัฒน์ จันทาทิพย์``    <Br/>
 
 <Br/>
-[Go to Facebook Fanpage] (https://www.facebook.com/profile.php?id=100088235080744)
 
-Rendered
------------------
-[Go to Google](www.google.com)
+[Go to Facebook Fanpage](https://www.facebook.com/profile.php?id=100088235080744)
 
 
-Code
------------------
-```
-[Google](www.google.com)
-```

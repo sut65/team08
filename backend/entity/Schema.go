@@ -52,35 +52,35 @@ type Screening_officer struct {
 	gorm.Model
 
 	//หน้าต่างข้อมูลส่วนตัวเจ้่าหน้าที่ฝ่ายคัดกรอง
-	PrefixID               *uint
-	Screening_officer_Name string
+	PrefixID               *uint  `valid:"-"`
+	Screening_officer_Name string `valid:"required~Name officer cannot be blank"`
 
-	GenderID   *uint
-	BloodID    *uint
-	ReligionID *uint
-	Birthday   string
+	GenderID   *uint  `valid:"-"`
+	BloodID    *uint  `valid:"-"`
+	ReligionID *uint  `valid:"-"`
+	Birthday   string `valid:"required~Birthday officer cannot be blank"`
 
-	NationalityID   *uint
-	CountryID       *uint
-	ScreeningIDCard string `gorm:"uniqueIndex"`
+	NationalityID   *uint  `valid:"-"`
+	CountryID       *uint  `valid:"-"`
+	ScreeningIDCard string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$),required~IDCard officer cannot be blank"`
 
-	Phone string
-	Email string
+	Phone string `valid:"matches(^[0]\\d{9}$),required~Phone officer cannot be blank"`
+	Email string `valid:"email"`
 	//หน้าต่างข้อมูลการศึกษา
-	EducationID    *uint
-	EducationName  string
-	EducationMajor string
-	University     string
+	EducationID    *uint  `valid:"-"`
+	EducationName  string `valid:"required~EducationName officer cannot be blank"`
+	EducationMajor string `valid:"required~EducationMajor officer cannot be blank"`
+	University     string `valid:"required~University officer cannot be blank"`
 
 	//foreignKey
 
-	Country     Nationality `gorm:"references:id"`
-	Nationality Nationality `gorm:"references:id"`
-	Religion    Religion    `gorm:"references:id"`
-	Gender      Gender      `gorm:"references:id"`
-	Prefix      Prefix      `gorm:"references:id"`
-	Education   Education   `gorm:"references:id"`
-	Blood       Blood       `gorm:"references:id"`
+	Country     Nationality `gorm:"references:id" valid:"-"`
+	Nationality Nationality `gorm:"references:id" valid:"-"`
+	Religion    Religion    `gorm:"references:id" valid:"-"`
+	Gender      Gender      `gorm:"references:id" valid:"-"`
+	Prefix      Prefix      `gorm:"references:id" valid:"-"`
+	Education   Education   `gorm:"references:id" valid:"-"`
+	Blood       Blood       `gorm:"references:id" valid:"-"`
 
 	Appoint        []Appoint        `gorm:"foreignkey:Screening_officerID"`
 	Patient        []Patient        `gorm:"foreignkey:Screening_officerID"`
@@ -92,30 +92,30 @@ type Screening_officer struct {
 type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
-	PrefixID            *uint
-	Patient_Name        string
-	Age                 uint
-	GenderID            *uint
-	BloodID             *uint
-	ReligionID          *uint
-	Birthday            string
-	NationalityID       *uint
-	Screening_officerID *uint
-	IDCard              string `gorm:"uniqueIndex"`
+	PrefixID            *uint  `valid:"-"`
+	Patient_Name        string `valid:"required~Patient Name cannot be blank"`
+	Age                 uint   `valid:"range(0|120)"`
+	GenderID            *uint  `valid:"-"`
+	BloodID             *uint  `valid:"-"`
+	ReligionID          *uint  `valid:"-"`
+	Birthday            string `valid:"required~Birthday cannot be blank"`
+	NationalityID       *uint  `valid:"-"`
+	Screening_officerID *uint  `valid:"-"`
+	IDCard              string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$), required~IDCard cannot be blank"`
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
-	Phone     string
-	House_ID  string
-	AddressID *uint
+	Phone     string `valid:"matches(^[0]\\d{9}$),required~Phone cannot be blank"`
+	House_ID  string `valid:"required~House_ID cannot be blank"`
+	AddressID *uint  `valid:"-"`
 
 	//foreignKey
-	Nationality       Nationality       `gorm:"references:id"`
-	Address           AddressThailand   `gorm:"references:id"`
-	Screening_officer Screening_officer `gorm:"references:id"`
-	Religion          Religion          `gorm:"references:id"`
-	Blood             Blood             `gorm:"references:id"`
-	Gender            Gender            `gorm:"references:id"`
-	Prefix            Prefix            `gorm:"references:id"`
+	Nationality       Nationality       `gorm:"references:id" valid:"-"`
+	Address           AddressThailand   `gorm:"references:id" valid:"-"`
+	Screening_officer Screening_officer `gorm:"references:id" valid:"-"`
+	Religion          Religion          `gorm:"references:id" valid:"-"`
+	Blood             Blood             `gorm:"references:id" valid:"-"`
+	Gender            Gender            `gorm:"references:id" valid:"-"`
+	Prefix            Prefix            `gorm:"references:id" valid:"-"`
 
 	Treatment []Treatment `gorm:"foreignKey:PatientID"`
 }
@@ -254,7 +254,7 @@ type Doctor struct {
 	Dispense []Dispense `gorm:"foreignkey:DoctorID"`
 
 	//J
-	Save_ITI []Save_ITI `gorm:"foreignkey:DoctorID"`
+	Save_ITI       []Save_ITI       `gorm:"foreignkey:DoctorID"`
 	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID"`
 
 	//
@@ -281,7 +281,7 @@ type Lab struct {
 	Med_EmployeeID *uint
 	DoctorID       *uint
 
-	Lab_Name      Lab_Name      `gorm:"references:id"`
+	Lab_Name     Lab_Name     `gorm:"references:id"`
 	Treatment    Treatment    `gorm:"references:id"`
 	Med_Employee Med_Employee `gorm:"references:id"`
 	Doctor       Doctor       `gorm:"references:id"`
@@ -380,8 +380,8 @@ type Save_ITI struct {
 	RoomID      *uint
 	State       State `gorm:"references:id"`
 	StateID     *uint
-	Doctor		Doctor `gorm:"references:id"`
-	DoctorID	*uint
+	Doctor      Doctor `gorm:"references:id"`
+	DoctorID    *uint
 
 	Operating_Room *Operating_Room `gorm:"foreignkey:Save_ITIID"`
 }
@@ -390,14 +390,17 @@ type Operating_Room struct {
 	gorm.Model
 	Datetime time.Time
 
-	Save_ITI            Save_ITI `gorm:"references:id"`
-	Save_ITIID          *uint
-	Building            Building `gorm:"references:id"`
-	BuildingID          *uint
-	Room                Room `gorm:"references:id"`
-	RoomID              *uint
-	Doctor		Doctor `gorm:"references:id"`
-	DoctorID	*uint
+	Save_ITI   Save_ITI `gorm:"references:id"`
+	Save_ITIID *uint
+	Building   Building `gorm:"references:id"`
+	BuildingID *uint
+	Room       Room `gorm:"references:id"`
+	RoomID     *uint
+	Doctor     Doctor `gorm:"references:id"`
+	DoctorID   *uint
+
+
+
 }
 
 // Aern
@@ -419,7 +422,7 @@ type Dispense struct {
 	gorm.Model
 	Date time.Time
 
-	Number     uint
+	Number      uint
 	Text        string
 	DoctorID    *uint
 	TreatmentID *uint

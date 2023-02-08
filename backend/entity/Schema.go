@@ -274,7 +274,7 @@ type Lab_Name struct {
 type Lab struct {
 	gorm.Model
 	Lab_test string
-	Value    string
+	Value    int
 
 	LabNameID      *uint
 	TreatmentID    *uint

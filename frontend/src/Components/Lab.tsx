@@ -71,6 +71,7 @@ import {
   CreateDoctor,
   ListLabName,
   ListLab,
+  CreateLab,
 } from "../Services/HttpClientService";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -261,7 +262,7 @@ function Doctor() {
     if (res) {
       // setDoctor(res);
       setShowLab(res);
-      console.log(res, " -> set await ListLab()");
+      // console.log(res, " -> set await ListLab()");
       // console.log(res);
     }
   };
@@ -424,38 +425,31 @@ function Doctor() {
 
   async function submit() {
     let data = {
-      DocterCode: DocterCode,
-      DocterIDCard: DocterIDCar,
-      DocPrefixID: convertType(Doctor.DocPrefixID),
-      FirstNameTH: FirstNameTH,
-      LastNameTH: LastNameTH,
-      FirstNameEN: FirstNameEN,
-
-      LastNameEN: LastNameEN,
-      GenderID: convertType(Doctor.GenderID),
-      BloodID: convertType(Doctor.BloodID),
-      MaritalID: convertType(Doctor.MaritalID),
-
-      ReligionID: convertType(Doctor.ReligionID),
-      NationalityID: convertType(Doctor.NationalityID),
-      CountryID: convertType(Doctor.CountryID),
-      AddressID: convertType("98"),
-
-      DocFaPrefixID: convertType(Doctor.DocFaPrefixID),
-      DocMoPrefixID: convertType(Doctor.DocMoPrefixID),
-      DocWiPrefixID: convertTypePrefix(Doctor.DocWiPrefixID),
-      EducationID: convertType(Doctor.EducationID),
+      Lab_test: "Negative",
+      Value: 20,
+      LabNameID: convertType(1),
+      TreatmentID: convertType(1),
+      Med_EmployeeID: convertType(1),
+      DoctorID: convertType(2),
     };
-    console.log("กดดดดดดดด");
+
+    console.log("เมื่อกดดดดดดด submit");
     console.log(data);
-    let res = await CreateDoctor(data);
+
+    let res = await CreateLab(data);
     // console.log(res);
-    if (res) {
-      setSuccess(true);
-      // console.log("เข้า");
-    } else {
+    if (res.error) {
       setError(true);
-      // console.log("ไม่เข้า");
+      // setAlertMessage(res.error);
+      console.log(res);
+      console.log(res.error);
+      console.log("เข้าเงื่อนไข res.error");
+    } else {
+      setSuccess(true);
+      // getDocCode();
+      console.log("ไม่มี res.error");
+      // getDoctor();
+      setOpenD(false);
     }
   }
 

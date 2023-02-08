@@ -53224,7 +53224,7 @@ func SetupDatabase() {
 
 	lab1 := Lab{
 		Lab_test: "negative",
-		Value:    "2.34",
+		Value:    2,
 
 		Lab_Name:      lab_1,
 		Treatment:    treatment_1,
@@ -53235,7 +53235,7 @@ func SetupDatabase() {
 
 	lab2 := Lab{
 		Lab_test: "positive",
-		Value:    "5.21",
+		Value:    5,
 
 		Lab_Name:      lab_2,
 		Treatment:    treatment_1,

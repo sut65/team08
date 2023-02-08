@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team08/entity"
 	"github.com/sut65/team08/service"
@@ -17,24 +16,24 @@ type LoginPayload_Screening_officer struct {
 
 // SignUpPayload signup body
 type SignUpPayload_Screening_officer struct {
-	Screening_officer_Name string `json:"Screening_officer_Name"`
-	Email                  string `json:"email"`
-	ScreeningIDCard        string `json:"ScreeningIDCard"`
-	Birthday               string `json:"Birthday"`
+	Screening_officer_Name string `json:"Screening_officer_Name" valid:"required~Name officer cannot be blank"`
+	Email                  string `json:"email" `
+	ScreeningIDCard        string `json:"ScreeningIDCard" valid:"matches(^[1-9]\\d{12}$),required~IDCard officer cannot be blank"`
+	Birthday               string `json:"Birthday" valid:"required~Birthday officer cannot be blank"`
 
-	OfficerID     *uint `json:"OfficerID"`
-	PrefixID      *uint `json:"PrefixID"`
-	GenderID      *uint `json:"GenderID"`
-	BloodID       *uint `json:"BloodID"`
-	ReligionID    *uint `json:"ReligionID"`
-	CountryID     *uint `json:"CountryID"`
-	EducationID   *uint `json:"EducationID"`
-	NationalityID *uint `json:"NationalityID"`
+	OfficerID     *uint `json:"OfficerID" valid:"-"`
+	PrefixID      *uint `json:"PrefixID" valid:"-"`
+	GenderID      *uint `json:"GenderID" valid:"-"`
+	BloodID       *uint `json:"BloodID" valid:"-"`
+	ReligionID    *uint `json:"ReligionID" valid:"-"`
+	CountryID     *uint `json:"CountryID" valid:"-"`
+	EducationID   *uint `json:"EducationID" valid:"-"`
+	NationalityID *uint `json:"NationalityID" valid:"-"`
 
-	Phone          string `json:"Phone"`
-	EducationName  string `json:"EducationName"`
-	EducationMajor string `json:"EducationMajor"`
-	University     string `json:"University"`
+	Phone          string `json:"Phone" valid:"matches(^[0]\\d{9}$),required~Phone officer cannot be blank"`
+	EducationName  string `json:"EducationName" valid:"required~EducationName officer cannot be blank"`
+	EducationMajor string `json:"EducationMajor" valid:"required~EducationMajor officer cannot be blank"`
+	University     string `json:"University" valid:"required~University officer cannot be blank"`
 }
 
 // LoginResponse token response
@@ -86,51 +85,10 @@ func Login_Screening_officer(c *gin.Context) {
 	tokenResponse := LoginResponse{
 		Token: signedToken,
 		ID:    Screening_officer.ID,
-		Role:  "screening_officer",
+		Role:  "Screening_officer",
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
 }
 
-// POST /create A AA
-func CreateScreening_officer(c *gin.Context) {
-	var payload SignUpPayload_Screening_officer
-	var Screening_officer entity.Screening_officer
 
-	if err := c.ShouldBindJSON(&payload); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	hashScreeningIDCard, err := bcrypt.GenerateFromPassword([]byte(payload.ScreeningIDCard), 14)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing ScreeningIDCard"})
-		return
-	}
-
-	Screening_officer.Screening_officer_Name = payload.Screening_officer_Name
-	Screening_officer.Email = payload.Email
-	Screening_officer.ScreeningIDCard = string(hashScreeningIDCard)
-
-	Screening_officer.Birthday = payload.Birthday
-	Screening_officer.Phone = payload.Phone
-	Screening_officer.EducationName = payload.EducationName
-	Screening_officer.EducationMajor = payload.EducationMajor
-	Screening_officer.University = payload.University
-
-	Screening_officer.OfficerID = payload.OfficerID
-	Screening_officer.PrefixID = payload.PrefixID
-	Screening_officer.GenderID = payload.GenderID
-	Screening_officer.BloodID = payload.BloodID
-	Screening_officer.ReligionID = payload.ReligionID
-	Screening_officer.EducationID = payload.EducationID
-	Screening_officer.NationalityID = payload.NationalityID
-
-	if err := entity.DB().Create(&Screening_officer).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusCreated, gin.H{"data": Screening_officer})
-}

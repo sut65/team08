@@ -154,10 +154,17 @@ func main() {
 
 			//Labname
 			router.GET("/LabNames", controller.ListLabName)
-			router.GET("/LabnNme/:id", controller.GetLabName)
+			router.GET("/LabName/:id", controller.GetLabName)
 			router.POST("/LabName", controller.CreateLabName)
 			router.PATCH("/LabName", controller.UpdateLabName)
 			router.DELETE("/LabName/:id", controller.DeleteLabName)
+
+			//Lab
+			router.GET("/Labs", controller.ListLab)
+			router.GET("/Lab/:id", controller.GetLab)
+			router.POST("/Lab", controller.CreateLab)
+			router.PATCH("/Lab", controller.UpdateLab)
+			router.DELETE("/Lab/:id", controller.DeleteLab)
 
 			//Gg
 			// โรค

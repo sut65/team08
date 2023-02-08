@@ -48,7 +48,7 @@ func ListLabName(c *gin.Context) {
 func DeleteLabName(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM lab_names WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "LabName not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -62,7 +62,7 @@ func UpdateLabName(c *gin.Context) {
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Lab_Name.ID).First(&Lab_Name); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "LabName not found"})
 		return
 	}
 	if err := entity.DB().Save(&Lab_Name).Error; err != nil {

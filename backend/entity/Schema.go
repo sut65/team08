@@ -5,6 +5,7 @@ import (
 
 	"gorm.io/gorm"
 )
+
 // Officer บนสุด
 type Officer struct {
 	gorm.Model
@@ -12,7 +13,7 @@ type Officer struct {
 	Email    string `gorm:"uniqueIndex"` //มีความเฉพาะ ห้ามซ้ำ
 	Password string `json:"-"`
 	//ผู้ดูแลระบบ 1 คน สามารถบันทึกข้อมูลDoctorได้หลายคน
-	Doctors []Doctor  `gorm:"foreignKey:OfficerID"`
+	Doctors []Doctor `gorm:"foreignKey:OfficerID"`
 	//ผู้ดูแลระบบ 1 คน สามารถบันทึกข้อมูลMed_Employeeได้หลายคน
 	Med_Employees []Med_Employee `gorm:"foreignKey:OfficerID"` //ในตาราง Med_Employee มีการเชื่อมตาราง Officer ไปเป็นFK  ใช้ OfficerID
 	//ผู้ดูแลระบบ 1 คน สามารถบันทึกข้อมูลScreening_officerได้หลายคน
@@ -51,7 +52,7 @@ type Screening_officer struct {
 	gorm.Model
 
 	//หน้าต่างข้อมูลส่วนตัวเจ้่าหน้าที่ฝ่ายคัดกรอง
-	PrefixID    *uint
+	PrefixID               *uint
 	Screening_officer_Name string
 
 	GenderID   *uint
@@ -87,7 +88,6 @@ type Screening_officer struct {
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
 }
 
-
 type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
@@ -100,7 +100,6 @@ type Patient struct {
 	Birthday      string
 	NationalityID *uint
 	IDCard        string `gorm:"uniqueIndex"`
-
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
 	Phone     string
@@ -218,7 +217,7 @@ type Doctor struct {
 	DocWiPrefixID *uint
 	WiFirstName   string
 
-	WiLastName     string 
+	WiLastName     string
 	WiOccupation   string
 	WiPhone        string
 	EducationID    *uint
@@ -254,6 +253,31 @@ type Doctor struct {
 	//
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
+
+	Lab []Lab `gorm:"foreignKey:DoctorID"`
+}
+
+type Lab_Name struct {
+	gorm.Model
+	Discription string
+
+	Lab []Lab `gorm:"foreignKey:LabNameID"`
+}
+
+type Lab struct {
+	gorm.Model
+	Lab_test string
+	Value    string
+
+	LabNameID      *uint
+	TreatmentID    *uint
+	Med_EmployeeID *uint
+	DoctorID       *uint
+
+	Lab_Name      Lab_Name      `gorm:"references:id"`
+	Treatment    Treatment    `gorm:"references:id"`
+	Med_Employee Med_Employee `gorm:"references:id"`
+	Doctor       Doctor       `gorm:"references:id"`
 }
 
 // ระบบข้อมูลการรักษา ของกริม
@@ -311,6 +335,8 @@ type Treatment struct {
 	//Aern
 	Dispense []Dispense `gorm:"foreignkey:TreatmentID"`
 	Appoint  []Appoint  `gorm:"foreignkey:TreatmentID"`
+
+	Lab []Lab `gorm:"foreignKey:TreatmentID"`
 }
 
 // J
@@ -429,12 +455,12 @@ type Appoint struct {
 // ADD
 type Med_Employee struct {
 	gorm.Model
-	Name     string
-	Age      uint
-	Phone    string
-	Email    string
-	Password string
-	University string
+	Name           string
+	Age            uint
+	Phone          string
+	Email          string
+	Password       string
+	University     string
 	EducationName  string
 	EducationMajor string
 
@@ -445,10 +471,12 @@ type Med_Employee struct {
 	Prefix        Prefix          `gorm:"references:id"`
 	Education     Education       `gorm:"references:id"`
 	Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_EmployeeID"`
-	Request []Request `gorm:"foreignKey:Med_EmployeeID"`
+	Request       []Request       `gorm:"foreignKey:Med_EmployeeID"`
 
 	OfficerID *uint
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
+
+	Lab []Lab `gorm:"foreignKey:Med_EmployeeID"`
 }
 type Brand struct {
 	gorm.Model

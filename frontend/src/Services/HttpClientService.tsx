@@ -293,7 +293,7 @@ async function GetPrefix() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-         console.log(res.data);
+          // console.log(res.data);
         return res.data;
       } else {
         return false;
@@ -522,7 +522,7 @@ async function GetShow() {
   const requestOptions = {
     method: "GET",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -534,6 +534,7 @@ async function GetShow() {
         // console.log(res.data);
         return res.data;
       } else {
+        console.log("else");
         return false;
       }
     });

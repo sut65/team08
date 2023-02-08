@@ -46,6 +46,8 @@ func SetupDatabase() {
 		&Religion{},
 		&DocPrefix{},
 		&Doctor{},
+		&Lab{},
+		&Lab_Name{},
 
 		//Gg
 		&Disease{},
@@ -52862,7 +52864,7 @@ func SetupDatabase() {
 	idCardTwo := "0987654321000"
 	passwordTwo, _ := bcrypt.GenerateFromPassword([]byte(idCardTwo), 14)
 
-	db.Model(&Doctor{}).Create(&Doctor{
+	doc1 := Doctor{
 		DocterCode:   "D66001",
 		DocterIDCard: idCardOne,
 		FirstNameTH:  "บุญญฤทธิ์",
@@ -52914,9 +52916,10 @@ func SetupDatabase() {
 		DocMoPrefix: DocPrefix_3,
 
 		DocPassword: string(passwordOne),
-	})
+	}
+	db.Model(&Doctor{}).Create(&doc1)
 
-	db.Model(&Doctor{}).Create(&Doctor{
+	doc2 := Doctor{
 		DocterCode:   "D66002",
 		DocterIDCard: idCardTwo,
 		FirstNameTH:  "มงคล",
@@ -52973,7 +52976,8 @@ func SetupDatabase() {
 		DocWiPrefix: DocPrefix_4,
 
 		DocPassword: string(passwordTwo),
-	})
+	}
+	db.Model(&Doctor{}).Create(&doc2)
 
 	//Gg
 	// Disease Data
@@ -53167,4 +53171,76 @@ func SetupDatabase() {
 		Status_name: "ไม่พร้อมใช้งาน",
 	}
 	db.Model(&Med_Status{}).Create(&status_B)
+
+	treatment_1 := Treatment{
+		TREATMENT_ID: "201_TREATMENT_ID",
+    	TREATMENT:    "TREATMENT",
+		DATE:         t1,
+		APPOINTMENT:  "APPOINTMENT",
+		CONCLUSION:   "CONCLUSION",
+		GUIDANCE:     "GUIDANCE",
+		Status: S2,
+	}
+	db.Model(&Treatment{}).Create(&treatment_1)
+
+	treatment_2 := Treatment{
+		TREATMENT_ID: "treatment_2",
+    	TREATMENT:    "TREATMENT",
+		DATE:         t1,
+		APPOINTMENT:  "APPOINTMENT",
+		CONCLUSION:   "CONCLUSION",
+		GUIDANCE:     "GUIDANCE",
+		Status: S2,
+	}
+	db.Model(&Treatment{}).Create(&treatment_2)
+
+	med_employee1 := Med_Employee{
+		Name:           "Name",
+		Age:           	21,
+		Phone:          "Phone",
+		Email:          "med@gmail.com",
+		Password:       "$2a$14$N/C5JUA2EGFGtFfTWcWC2.Gy0T1h5sgdJubHKX4yGMf85Ic7NjAga",
+		University:     "University",
+		EducationName:  "EducationName",
+		EducationMajor: "EducationMajor",
+
+	}
+	db.Model(&Med_Employee{}).Create(&med_employee1)
+
+	lab_1 := Lab_Name{
+		Discription: "Biochemistry",
+	}
+	db.Model(&Lab_Name{}).Create(&lab_1)
+
+	lab_2 := Lab_Name{
+		Discription: "Microscopy",
+	}
+	db.Model(&Lab_Name{}).Create(&lab_2)
+
+	lab_3 := Lab_Name{
+		Discription: "Hematology",
+	}
+	db.Model(&Lab_Name{}).Create(&lab_3)
+
+	lab1 := Lab{
+		Lab_test: "negative",
+		Value:    "2.34",
+
+		Lab_Name:      lab_1,
+		Treatment:    treatment_1,
+		Med_Employee: med_employee1,
+		Doctor:       doc1,
+	}
+	db.Model(&Lab{}).Create(&lab1)
+
+	lab2 := Lab{
+		Lab_test: "positive",
+		Value:    "5.21",
+
+		Lab_Name:      lab_2,
+		Treatment:    treatment_1,
+		Med_Employee: med_employee1,
+		Doctor:       doc2,
+	}
+	db.Model(&Lab{}).Create(&lab2)
 }

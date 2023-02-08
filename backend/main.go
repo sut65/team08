@@ -152,6 +152,13 @@ func main() {
 			router.PATCH("/Doctor", controller.UpdateDoctor)
 			router.DELETE("/Doctor/:id", controller.DeleteDoctor)
 
+			//Labname
+			router.GET("/LabNames", controller.ListLabName)
+			router.GET("/LabnNme/:id", controller.GetLabName)
+			router.POST("/LabName", controller.CreateLabName)
+			router.PATCH("/LabName", controller.UpdateLabName)
+			router.DELETE("/LabName/:id", controller.DeleteLabName)
+
 			//Gg
 			// โรค
 			router.GET("/diseases", controller.ListDiseases)

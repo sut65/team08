@@ -61,3 +61,5 @@ func TestUserNameNotBlank(t *testing.T) {
 
 	g.Expect(err.Error()).To(gomega.Equal("Name cannot be blank"))
 }
+
+

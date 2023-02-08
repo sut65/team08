@@ -27,7 +27,7 @@ func CreateLab(c *gin.Context) {
 func GetLab(c *gin.Context) {
 	var Lab entity.Lab
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM Labs WHERE id = ?", id).Scan(&Lab).Error; err != nil {
+	if err := entity.DB().Preload("Lab_Name").Preload("Treatment").Preload("Med_Employee").Preload("Doctor").Raw("SELECT * FROM Labs WHERE id = ?", id).Scan(&Lab).Find(&Lab).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -37,7 +37,7 @@ func GetLab(c *gin.Context) {
 // GET /Lab
 func ListLab(c *gin.Context) {
 	var Lab []entity.Lab
-	if err := entity.DB().Raw("SELECT * FROM Labs").Scan(&Lab).Error; err != nil {
+	if err := entity.DB().Preload("Lab_Name").Preload("Treatment").Preload("Med_Employee").Preload("Doctor").Raw("SELECT * FROM Labs").Scan(&Lab).Find(&Lab).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

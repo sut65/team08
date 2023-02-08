@@ -254,9 +254,6 @@ async function LoginScreening_officer(data: SigninScreeningInterface) {
   return res;
 }
 
-
-
-
 async function GetGender() {
   const requestOptions = {
     method: "GET",
@@ -535,6 +532,52 @@ async function GetShow() {
         return res.data;
       } else {
         console.log("else");
+        return false;
+      }
+    });
+
+  return res;
+}
+async function ListLabName() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/LabNames`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data," -> true function GetLabName()");
+        return res.data;
+      } else {
+        console.log("else function GetLabName()");
+        return false;
+      }
+    });
+
+  return res;
+}
+async function ListLab() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/Labs`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data," -> true function GetLabName()");
+        return res.data;
+      } else {
+        console.log("else function GetLabName()");
         return false;
       }
     });
@@ -1479,6 +1522,8 @@ export {
   GetDoctor,
   GetShow,
   CreateDoctor,
+  ListLabName,
+  ListLab,
 
   //Gg
   GetTreatment,

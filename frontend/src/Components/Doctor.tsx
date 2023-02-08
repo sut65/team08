@@ -25,6 +25,7 @@ import {
   GridRowParams,
   GridEventListener,
 } from "@mui/x-data-grid";
+import Fab from "@mui/material/Fab";
 
 import AddIcon from "@mui/icons-material/Add";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -77,9 +78,10 @@ function Doctor() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { 
+    headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json", },
+      "Content-Type": "application/json",
+    },
   };
 
   const [Patients, setPatients] = useState<PatientsInterface>({});
@@ -444,6 +446,7 @@ function Doctor() {
           <Button
             variant="contained"
             color="primary"
+            size="small"
             onClick={() => setOpenupdate(true)}
           >
             Edit
@@ -460,6 +463,7 @@ function Doctor() {
           <Button
             variant="contained"
             color="primary"
+            size="small"
             onClick={() => setOpendelete(true)}
           >
             Delete

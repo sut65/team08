@@ -12,6 +12,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -26,6 +27,10 @@ import {
 } from "@mui/x-data-grid";
 
 import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+import Checkbox from "@mui/material/Checkbox";
+import { pink, green } from "@mui/material/colors";
+
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -66,7 +71,6 @@ import {
   CreateDoctor,
   ListLabName,
   ListLab,
-
 } from "../Services/HttpClientService";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -118,6 +122,7 @@ function Doctor() {
   const [valueDate, setValueDate] = React.useState<Dayjs | null>(
     dayjs("2000-01-01T21:11:54")
   );
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   const handleClickAnyRegion = () => {
     console.log(Doctor.ReligionID);
@@ -154,18 +159,6 @@ function Doctor() {
     });
     // console.log(`${name}: ${value}`);
   };
-
-  //   const handleInputChange = (
-  //     event: React.ChangeEvent<{ id?: string; value: any }>
-  // ) => {
-  //     const id = event.target.id as keyof typeof CreateCheckInOut;
-  //     const { value } = event.target;
-
-  //     setCreateCheckInOut({
-  //         ...CreateCheckInOut,
-  //         [id]: value })
-  //         console.log(id,"=", value); //แสดงค่าที่ป้อนเข้ามาในช่อง LocationReservation
-  // };
 
   const handleChangeDoctor = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof Doctor;
@@ -268,7 +261,7 @@ function Doctor() {
     if (res) {
       // setDoctor(res);
       setShowLab(res);
-      console.log(res," -> set await ListLab()");
+      console.log(res, " -> set await ListLab()");
       // console.log(res);
     }
   };
@@ -381,8 +374,7 @@ function Doctor() {
       field: "CreatedAt",
       headerName: "วันที่และเวลา",
       width: 200,
-      valueFormatter: (params) =>
-        dayjs(params.value).format("H:mm | DD/MM/YY"),
+      valueFormatter: (params) => dayjs(params.value).format("H:mm | DD/MM/YY"),
     },
   ];
 
@@ -392,8 +384,7 @@ function Doctor() {
       field: "CreatedAt",
       headerName: "วันที่และเวลา",
       width: 150,
-      valueFormatter: (params) =>
-        dayjs(params.value).format("H:mm | DD/MM/YY"),
+      valueFormatter: (params) => dayjs(params.value).format("H:mm | DD/MM/YY"),
     },
     {
       field: "Lab_Name",
@@ -575,26 +566,42 @@ function Doctor() {
                         </Select>
                       </FormControl>
                     </Grid>
+                    <br/>
+                    <br/>
+                    <br/>
                     <Grid item xs={6}></Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={12}>
                       <FormControl fullWidth variant="outlined" size="small">
-                        <Select
-                          native
-                          value={Doctor.DocPrefixID + ""}
-                          onChange={handleChangeDoctor}
-                          inputProps={{
-                            name: "DocPrefixID",
-                          }}
-                        >
-                          <option aria-label="None" value="">
-                            ผลแลปที่ได้
-                          </option>
-                          {Show.map((item: TreatmentsInterface) => (
-                            <option value={item.ID} key={item.ID}>
-                              {item.TREATMENT_ID}
-                            </option>
-                          ))}
-                        </Select>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              onChange={handleChange}
+                              // name="gilad"
+                              sx={{
+                                color: green[600],
+                                "&.Mui-checked": {
+                                  color: green[400],
+                                },
+                              }}
+                            />
+                          }
+                          label="Positive"
+                        />
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              onChange={handleChange}
+                              // name="gilad"
+                              sx={{
+                                color: pink[500],
+                                "&.Mui-checked": {
+                                  color: pink[300],
+                                },
+                              }}
+                            />
+                          }
+                          label="Negetive"
+                        />
                       </FormControl>
                     </Grid>
                     <Grid item xs={5}>
@@ -624,7 +631,9 @@ function Doctor() {
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
-            /><br></br><p>ผลแลปที่ทำการบันทึกแล้ว</p>
+            />
+            <br></br>
+            <p>ผลแลปที่ทำการบันทึกแล้ว</p>
             <DataGrid
               rows={ShowLab}
               getRowId={(row) => row.ID}

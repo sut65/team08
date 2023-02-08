@@ -14,3 +14,14 @@
 
 <Br/>
 [Go to Facebook Fanpage] (https://www.facebook.com/profile.php?id=100088235080744)
+
+Rendered
+-----------------
+[Go to Google](www.google.com)
+
+
+Code
+-----------------
+```
+[Google](www.google.com)
+```

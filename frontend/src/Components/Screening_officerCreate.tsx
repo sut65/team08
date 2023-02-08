@@ -22,7 +22,7 @@ import { NationalityInterface } from "../Models/INationality";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { OfficersInterface } from "../Models/IOfficer";/////
 
-import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,GetNationality,Screening_officer} from "../Services/HttpClientService";
+import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,GetNationality,Screening_officer,} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -51,7 +51,8 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
-
+    //
+    const [message, setAlertMessage] = React.useState("");
     const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
@@ -157,9 +158,11 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     
     console.log(data)
     let res = await Screening_officer(data);
-    if (res) {
+    if (res.status) {
+      setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
+      setAlertMessage(res.message);
       setError(true);
     }
   }
@@ -167,13 +170,14 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
   return (
     <Container maxWidth="md">
       <Snackbar
+        id="success"
         open={success}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
-          บันทึกข้อมูลสำเร็จ
+          {message}
         </Alert>
       </Snackbar>
       <Snackbar
@@ -183,7 +187,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+          {message}
         </Alert>
       </Snackbar>
       <Paper>

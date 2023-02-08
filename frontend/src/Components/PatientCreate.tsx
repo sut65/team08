@@ -51,9 +51,9 @@ import {GetGender,GetPrefix,CreatePatient,GetAddressThailand,GetBlood,GetNationa
     const [House_ID, setHouse_IDs] = useState<string>("");
 
 
-    
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [message, setAlertMessage] = React.useState("");
 
     const handleClose = (
       event?: React.SyntheticEvent | Event,
@@ -153,38 +153,43 @@ const getAddress = async () => {
     let data = {
       Screening_officerID: convertType(Patients.Screening_officerID),
       PrefixID: convertType(Patients.PrefixID),
-      GenderID: convertType(Patients.GenderID),
-      AddressID: convertType(Patients.AddressID),
-      NationalityID: convertType(Patients.NationalityID),
-      ReligionID: convertType(Patients.ReligionID),
-      BloodID: convertType(Patients.BloodID),
       Patient_Name: (Patient_Name),
-      Birthday: (Birthday),
-      IDCard: (IDCard),
       Age: (convertType(Age)),
+      GenderID: convertType(Patients.GenderID),
+      BloodID: convertType(Patients.BloodID),
+      ReligionID: convertType(Patients.ReligionID),
+      Birthday: (Birthday),
+      NationalityID: convertType(Patients.NationalityID),
+      IDCard: (IDCard),
       Phone: (Phone),
       House_ID: (House_ID),
-     
+      AddressID: convertType(Patients.AddressID),
+          
     };
     console.log(data)
     let res = await CreatePatient(data);
-    if (res) {
+
+    if (res.status) {
+      setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
+      setAlertMessage(res.message);
       setError(true);
     }
+    
   }
 
   return (
     <Container maxWidth="md">
       <Snackbar
+        id="success"
         open={success}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
-          บันทึกข้อมูลสำเร็จ
+          {message}
         </Alert>
       </Snackbar>
       <Snackbar
@@ -194,7 +199,7 @@ const getAddress = async () => {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+          {message}
         </Alert>
       </Snackbar>
       <Paper>

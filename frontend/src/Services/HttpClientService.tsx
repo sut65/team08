@@ -126,11 +126,11 @@ async function Screening_officer(data: Screening_officersInterface) {
   let res = await fetch(`${apiUrl}/Screening_officer/create`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-          if (res.data) {
-              return res.data;
-          } else {
-              return false;
-          }
+        if (res.data) {
+          return { status: true, message: res.data };
+        } else {
+          return { status: false, message: res.error };
+        }
       });
 
   return res;
@@ -684,30 +684,6 @@ async function ListLab() {
   return res;
 }
 
-async function Create_Screening_officer(data: Screening_officersInterface) {
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-
-  let res = await fetch(`${apiUrl}/Screening_officer`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        // console.log(res.data);
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
 async function CreatePatient(data: PatientsInterface) {
   const requestOptions = {
     method: "POST",
@@ -724,10 +700,9 @@ async function CreatePatient(data: PatientsInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        // console.log(res.data);
-        return res.data;
+        return { status: true, message: res.data };
       } else {
-        return false;
+        return { status: false, message: res.error };
       }
     });
 
@@ -1678,7 +1653,6 @@ export {
 
   GetScrenByUID,
   Screening_officer,
-  Create_Screening_officer, //////?
 
   GetDoctorByUID,
   Doctor,

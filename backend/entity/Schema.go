@@ -93,7 +93,6 @@ type Screening_officer struct {
 type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
-<<<<<<< HEAD
 	PrefixID            *uint
 	Patient_Name        string
 	Age                 uint
@@ -104,17 +103,6 @@ type Patient struct {
 	NationalityID       *uint
 	Screening_officerID *uint
 	IDCard              string `gorm:"uniqueIndex"`
-=======
-	PrefixID      *uint
-	Patient_Name  string
-	Age           uint
-	GenderID      *uint
-	BloodID       *uint
-	ReligionID    *uint
-	Birthday      string
-	NationalityID *uint
-	IDCard        string `gorm:"uniqueIndex"`
->>>>>>> issue-49
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
 	Phone     string

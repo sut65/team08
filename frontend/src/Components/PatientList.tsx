@@ -30,45 +30,51 @@ function PatientList() {
       {
         field: "Prefix",
         headerName: "คำนำหน้า",
-        width: 300,
+        width: 100,
         valueFormatter: (params) => params.value.Description,
       },
       {
         field: "Patient_Name",
         headerName: "ชื่อ-สกุล",
-        width: 300,
+        width: 180,
       },
       {
         field: "Age",
         headerName: "อายุ",
-        width: 300,
+        width: 100,
       },
       {
         field: "Gender",
         headerName: "เพศ",
-        width: 300,
+        width: 100,
         valueFormatter: (params) => params.value.Description,
       },
       {
-        field: "Date_of_birth",
+        field: "Birthday",
         headerName: "วันเดือนปีเกิด",
-        width: 300,
+        width: 100,
       },
       {
-        field: "ID_card",
+        field: "IDCard",
         headerName: "รหัสบัตรประชาชน",
-        width: 300,
+        width: 150,
       },
       {
         field: "Phone",
         headerName: "เบอร์โทร",
-        width: 300,
+        width: 150,
       },
 
       {
-        field: "Address",
+        field: "House_ID",
         headerName: "ที่อยู่",
-        width: 500,
+        width: 100,
+
+      },
+      {
+        field: "Subdistrict",
+        headerName: "ตำบล",
+        width: 100,
 
       },
     ];

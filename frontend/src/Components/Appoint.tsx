@@ -189,7 +189,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
         open={success}
         autoHideDuration={6000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
 
 <Alert onClose={handleClose} severity="success">
@@ -197,7 +197,8 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
         </Alert>
       </Snackbar>
 
-      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }} >
       <Alert onClose={handleClose} severity="error">
         {message}
         </Alert>

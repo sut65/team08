@@ -19,7 +19,20 @@ func Test_DispenseText(t *testing.T) {
 	ok, err := govalidator.ValidateStruct(dispen)
 	g.Expect(ok).NotTo(gomega.BeTrue())
 	g.Expect(err).ToNot(gomega.BeNil())
-	g.Expect(err.Error()).To(gomega.Equal("Please enter details"))
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดของยาไม่เกิน  50 ตัวอักษร"))
+}
+func Test_DispenseTextNotNull(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	dispen := Dispense{
+		Date:   time.Now(),
+		Number: 20,
+		Text:   "",
+	}
+	ok, err := govalidator.ValidateStruct(dispen)
+	g.Expect(ok).NotTo(gomega.BeTrue())
+	g.Expect(err).ToNot(gomega.BeNil())
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดของยา"))
 }
 
 func Test_DispenseTime(t *testing.T) {
@@ -33,7 +46,7 @@ func Test_DispenseTime(t *testing.T) {
 	ok, err := govalidator.ValidateStruct(dispen)
 	g.Expect(ok).NotTo(gomega.BeTrue())
 	g.Expect(err).ToNot(gomega.BeNil())
-	g.Expect(err.Error()).To(gomega.Equal("Please enter the current time"))
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุวันที่และเวลาเป็นปัจจุบัน"))
 }
 
 func Test_DispenseNumber(t *testing.T) {

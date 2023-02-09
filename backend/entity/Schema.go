@@ -1,7 +1,6 @@
 package entity
 
 import (
-
 	"github.com/asaskevich/govalidator"
 
 	"gorm.io/gorm"
@@ -58,8 +57,8 @@ type Screening_officer struct {
 	Screening_officer_Name string `valid:"required~กรุณาใส่ชื่อ..นามสกุล"`
 
 	GenderID   *uint  `valid:"-"`
-	BloodID    *uint `valid:"-"`
-	ReligionID *uint `valid:"-"`
+	BloodID    *uint  `valid:"-"`
+	ReligionID *uint  `valid:"-"`
 	Birthday   string `valid:"required~กรุณาใส่วันเดือนปีเกิด"`
 
 	NationalityID   *uint  `valid:"-"`
@@ -86,7 +85,7 @@ type Screening_officer struct {
 	Appoint []Appoint `gorm:"foreignkey:Screening_officerID"`
 	Patient []Patient `gorm:"foreignkey:Screening_officerID"`
 
-	OfficerID *uint `valid:"-"`
+	OfficerID *uint   `valid:"-"`
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
 }
 
@@ -255,7 +254,7 @@ type Doctor struct {
 	Dispense []Dispense `gorm:"foreignkey:DoctorID" valid:"-"`
 
 	//J
-	Save_ITI []Save_ITI `gorm:"foreignkey:DoctorID"`
+	Save_ITI       []Save_ITI       `gorm:"foreignkey:DoctorID"`
 	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID"`
 
 	//
@@ -418,10 +417,10 @@ type Practice struct {
 
 type Dispense struct {
 	gorm.Model
-	Date time.Time `valid:"required,IsnotPast~Please enter the current time"`
+	Date time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 
 	Number      uint   `valid:"range(0|100)"`
-	Text        string `valid:"maxstringlength(100)~Please enter details"`
+	Text        string `valid:"maxstringlength(50)~โปรดระบุรายละเอียดของยาไม่เกิน  50 ตัวอักษร,required~โปรดระบุรายละเอียดของยา"`
 	DoctorID    *uint  `valid:"-"`
 	TreatmentID *uint  `valid:"-"`
 	DrugID      *uint  `valid:"-"`
@@ -448,9 +447,9 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time `valid:"required,IsnotPast~Please enter the current time"`
-	Date_appoint time.Time `valid:"required,IsFuture~Please enter the current time"`
-	Text_appoint string    `valid:"maxstringlength(100)~Please record the appointment details."`
+	Date_now     time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_appoint time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
+	Text_appoint string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
 
 	Screening_officerID *uint `valid:"-"`
 	TreatmentID         *uint `valid:"-"`
@@ -467,18 +466,18 @@ type Appoint struct {
 // ADD
 type Med_Employee struct {
 	gorm.Model
-	Name           string   `valid:"required~กรุณากรอกชื่อ"`
-	Age            uint		`valid:"range(0|100)"`
-	Phone          string 	`valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
-	Email          string	`valid:"email"`
-	Password       string	`valid:"required~กรุณากรอกรหัสผ่าน"`
-	University     string	`valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
-	EducationName  string	`valid:"required~กรุณากรอกการศึกษา"`
-	EducationMajor string	`valid:"required~กรุณากรอกสาขาวิชา"`
+	Name           string `valid:"required~กรุณากรอกชื่อ"`
+	Age            uint   `valid:"range(0|100)"`
+	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
+	Email          string `valid:"email"`
+	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
+	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
+	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
+	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชา"`
 
-	GenderID      *uint				`valid:"-"`
-	PrefixID      *uint				`valid:"-"`
-	EducationID   *uint				`valid:"-"`
+	GenderID      *uint           `valid:"-"`
+	PrefixID      *uint           `valid:"-"`
+	EducationID   *uint           `valid:"-"`
 	Gender        Gender          `gorm:"references:id" valid:"-"`
 	Prefix        Prefix          `gorm:"references:id" valid:"-"`
 	Education     Education       `gorm:"references:id" valid:"-"`

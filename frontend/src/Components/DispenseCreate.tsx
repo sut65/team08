@@ -175,7 +175,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
 
     console.log(data);
     let res = await CreateDispense(data);
-    if (res) {
+    if (res.status) {
       setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
@@ -189,7 +189,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       <Snackbar
       id="success"
         open={success}
-        autoHideDuration={8000}
+        autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
@@ -198,7 +198,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
         </Alert>
       </Snackbar>
 
-      <Snackbar open={error} autoHideDuration={8000} onClose={handleClose}>
+      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
         {message}
         </Alert>

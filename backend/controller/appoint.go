@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team08/entity"
 )
@@ -47,13 +48,18 @@ func CreateAppoint(c *gin.Context) {
 
 	// 14: สร้าง Appoint
 	cr := entity.Appoint{
-		Levelcure:         levelcure,            // โยงความสัมพันธ์กับ Entity Levelcure
-		Department:        department,           // โยงความสัมพันธ์กับ Entity Department
-		Treatment:         treatment,            // โยงความสัมพันธ์กับ Entity Treatment
-		Screening_officer: screening_officer,    // โยงความสัมพันธ์กับ Entity Officer
-		Date_now:          appoint.Date_now,     // ตั้งค่าฟิลด์ Date
-		Date_appoint:      appoint.Date_appoint, // ตั้งค่าฟิลด์ Date
-		Text_appoint:      appoint.Text_appoint, // ตั้งค่าฟิลด์ Text
+		LevelcureID:         appoint.LevelcureID,         // โยงความสัมพันธ์กับ Entity Levelcure
+		DepartmentID:        appoint.DepartmentID,        // โยงความสัมพันธ์กับ Entity Department
+		TreatmentID:         appoint.TreatmentID,         // โยงความสัมพันธ์กับ Entity Treatment
+		Screening_officerID: appoint.Screening_officerID, // โยงความสัมพันธ์กับ Entity Officer
+		Date_now:            appoint.Date_now,            // ตั้งค่าฟิลด์ Date
+		Date_appoint:        appoint.Date_appoint,        // ตั้งค่าฟิลด์ Date
+		Text_appoint:        appoint.Text_appoint,        // ตั้งค่าฟิลด์ Text
+	}
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(cr); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 15: บันทึก

@@ -55,6 +55,7 @@ function Appoints() {
   const [error, setError] = useState(false);
   //เพิ่ม
   const [treatment_Dis, setTreatment_Dis] = useState<TreatmentsInterface>({});
+  const [message, setAlertMessage] = React.useState("");
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
@@ -173,9 +174,11 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
 
     console.log(data);
     let res = await CreateAppoint(data);
-    if (res) {
+    if (res.status) {
+      setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
+      setAlertMessage(res.message);
       setError(true);
     }
   }
@@ -188,14 +191,15 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
         onClose={handleClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert onClose={handleClose} severity="success">
-          บันทึกข้อมูลสำเร็จ
+
+<Alert onClose={handleClose} severity="success">
+        {message}
         </Alert>
       </Snackbar>
 
       <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+      <Alert onClose={handleClose} severity="error">
+        {message}
         </Alert>
       </Snackbar>
 

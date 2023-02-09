@@ -86,7 +86,7 @@ func TestRequest_DATE(t *testing.T) {
 	Request := Request{
 		R_ID:     "R123456",
 		R_NAME:   "ตรวจเม็ดเลือดขาว",
-		QUANTITY: 1500,
+		QUANTITY: 500,
 		TIME:     time.Date(2021, 1, 1, 12, 00, 00, 00, time.UTC),
 	}
 

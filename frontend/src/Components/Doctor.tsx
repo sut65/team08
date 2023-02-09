@@ -190,7 +190,7 @@ function Doctor() {
 
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
     // setDoctorID(Number(params.row.ID));
-    // console.log(params.row);
+    console.log(params.row);
     localStorage.setItem("DoctorID", params.row.ID);
 
     localStorage.setItem("DocterCode", params.row.DocterCode);
@@ -198,58 +198,58 @@ function Doctor() {
     localStorage.setItem("DocPrefixID", params.row.DocPrefixID);
     localStorage.setItem("FirstNameTH", params.row.FirstNameTH);
 
-    localStorage.setItem("LastNameTH", params.row.LastNameTH);
-    localStorage.setItem("FirstNameEN", params.row.FirstNameEN);
-    localStorage.setItem("LastNameEN", params.row.LastNameEN);
-    localStorage.setItem("GenderID", params.row.GenderID);
+    // localStorage.setItem("LastNameTH", params.row.LastNameTH);
+    // localStorage.setItem("FirstNameEN", params.row.FirstNameEN);
+    // localStorage.setItem("LastNameEN", params.row.LastNameEN);
+    // localStorage.setItem("GenderID", params.row.GenderID);
 
-    localStorage.setItem("BloodID", params.row.BloodID);
-    localStorage.setItem("MaritalID", params.row.MaritalID);
-    localStorage.setItem("ReligionID", params.row.ReligionID);
-    localStorage.setItem("ReOther", params.row.ReOther);
+    // localStorage.setItem("BloodID", params.row.BloodID);
+    // localStorage.setItem("MaritalID", params.row.MaritalID);
+    // localStorage.setItem("ReligionID", params.row.ReligionID);
+    // localStorage.setItem("ReOther", params.row.ReOther);
 
-    localStorage.setItem("NationalityID", params.row.NationalityID);
-    localStorage.setItem("CountryID", params.row.CountryID);
-    localStorage.setItem("TelPhone", params.row.TelPhone);
-    localStorage.setItem("TelOffice", params.row.TelOffice);
+    // localStorage.setItem("NationalityID", params.row.NationalityID);
+    // localStorage.setItem("CountryID", params.row.CountryID);
+    // localStorage.setItem("TelPhone", params.row.TelPhone);
+    // localStorage.setItem("TelOffice", params.row.TelOffice);
 
-    localStorage.setItem("Email", params.row.Email);
-    localStorage.setItem("AllAddress", params.row.AllAddress);
-    localStorage.setItem("Subdistrict", params.row.Subdistrict);
-    localStorage.setItem("District", params.row.District);
+    // localStorage.setItem("Email", params.row.Email);
+    // localStorage.setItem("AllAddress", params.row.AllAddress);
+    // localStorage.setItem("Subdistrict", params.row.Subdistrict);
+    // localStorage.setItem("District", params.row.District);
 
-    localStorage.setItem("Province", params.row.Province);
-    localStorage.setItem("AddressID", params.row.Zip);
-    localStorage.setItem("FaIDCard", params.row.FaIDCard);
-    localStorage.setItem("DocFaPrefixID", params.row.DocFaPrefixID);
+    // localStorage.setItem("Province", params.row.Province);
+    // localStorage.setItem("AddressID", params.row.Zip);
+    // localStorage.setItem("FaIDCard", params.row.FaIDCard);
+    // localStorage.setItem("DocFaPrefixID", params.row.DocFaPrefixID);
 
-    localStorage.setItem("FaFirstName", params.row.FaFirstName);
-    localStorage.setItem("FaLastName", params.row.FaLastName);
-    localStorage.setItem("FaOccupation", params.row.FaOccupation);
-    localStorage.setItem("MoIDCard", params.row.MoIDCard);
+    // localStorage.setItem("FaFirstName", params.row.FaFirstName);
+    // localStorage.setItem("FaLastName", params.row.FaLastName);
+    // localStorage.setItem("FaOccupation", params.row.FaOccupation);
+    // localStorage.setItem("MoIDCard", params.row.MoIDCard);
 
-    localStorage.setItem("DocMoPrefixID", params.row.DocMoPrefixID);
-    localStorage.setItem("MoFirstName", params.row.MoFirstName);
-    localStorage.setItem("MoLastName", params.row.MoLastName);
-    localStorage.setItem("MoOccupation", params.row.MoOccupation);
+    // localStorage.setItem("DocMoPrefixID", params.row.DocMoPrefixID);
+    // localStorage.setItem("MoFirstName", params.row.MoFirstName);
+    // localStorage.setItem("MoLastName", params.row.MoLastName);
+    // localStorage.setItem("MoOccupation", params.row.MoOccupation);
 
-    localStorage.setItem("WiIDCard", params.row.WiIDCard);
-    localStorage.setItem("DocWiPrefixID", params.row.DocWiPrefixID);
-    localStorage.setItem("WiFirstName", params.row.WiFirstName);
-    localStorage.setItem("WiLastName", params.row.WiLastName);
+    // localStorage.setItem("WiIDCard", params.row.WiIDCard);
+    // localStorage.setItem("DocWiPrefixID", params.row.DocWiPrefixID);
+    // localStorage.setItem("WiFirstName", params.row.WiFirstName);
+    // localStorage.setItem("WiLastName", params.row.WiLastName);
 
-    localStorage.setItem("WiOccupation", params.row.WiOccupation);
-    localStorage.setItem("WiPhone", params.row.WiPhone);
-    localStorage.setItem("EducationID", params.row.EducationID);
-    localStorage.setItem("EducationName", params.row.EducationName);
+    // localStorage.setItem("WiOccupation", params.row.WiOccupation);
+    // localStorage.setItem("WiPhone", params.row.WiPhone);
+    // localStorage.setItem("EducationID", params.row.EducationID);
+    // localStorage.setItem("EducationName", params.row.EducationName);
 
-    localStorage.setItem("EducationMajor", params.row.EducationMajor);
-    localStorage.setItem("University", params.row.University);
-    localStorage.setItem("Birthday", params.row.Birthday);
-    localStorage.setItem("StartEducation", params.row.StartEducation);
-    localStorage.setItem("EndEducation", params.row.EndEducation);
+    // localStorage.setItem("EducationMajor", params.row.EducationMajor);
+    // localStorage.setItem("University", params.row.University);
+    // localStorage.setItem("Birthday", params.row.Birthday);
+    // localStorage.setItem("StartEducation", params.row.StartEducation);
+    // localStorage.setItem("EndEducation", params.row.EndEducation);
 
-    localStorage.setItem("OfficerID", params.row.OfficerID);
+    // localStorage.setItem("OfficerID", params.row.OfficerID);
   };
 
   const Delete_Doctor = async () => {

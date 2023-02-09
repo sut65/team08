@@ -5,9 +5,10 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-
 import { PatientsInterface } from "../Models/IPatient";
 import { GetPatient } from "../Services/HttpClientService";
+
+
 
 
 function PatientList() {
@@ -25,7 +26,7 @@ function PatientList() {
     };
   
     const columns: GridColDef[] = [
-      { field: "ID", headerName: "ลำดับ", width: 50 },
+      {  field: "ID", headerName: "ลำดับ", width: 50 },
       {
         field: "Prefix",
         headerName: "คำนำหน้า",
@@ -64,12 +65,6 @@ function PatientList() {
         width: 300,
       },
 
-      {
-        field: "Policing",
-        headerName: "สิทธิการรักษา",
-        width: 300,
-        valueFormatter: (params) => params.value.Description,
-      },
       {
         field: "Address",
         headerName: "ที่อยู่",

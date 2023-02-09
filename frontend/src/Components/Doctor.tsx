@@ -25,6 +25,7 @@ import {
   GridRowParams,
   GridEventListener,
 } from "@mui/x-data-grid";
+import Fab from "@mui/material/Fab";
 
 import AddIcon from "@mui/icons-material/Add";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -79,9 +80,10 @@ function Doctor() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { 
+    headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json", },
+      "Content-Type": "application/json",
+    },
   };
 
   const [Patients, setPatients] = useState<PatientsInterface>({});
@@ -165,7 +167,6 @@ function Doctor() {
   const [startEDU, setStartEDU] = useState(new Date());
   const [endEDU, setEndEDU] = useState(new Date());
   const [message, setAlertMessage] = React.useState("");
-  const [officers, setOfficers] = useState<OfficersInterface[]>([]);
 
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
     setDoctorID(Number(params.row.ID));
@@ -357,14 +358,6 @@ function Doctor() {
       // console.log(res);
     }
   };
-  const getOfficersID = async () => {
-    let res = await GetOfficerByUID();
-    Doctor.OfficerID = res.ID;
-    console.log(Doctor.OfficerID);
-    if (res) {
-        setOfficers(res);
-    }
-  };
 
   const getMarital = async () => {
     let res = await GetMarital();
@@ -425,7 +418,6 @@ function Doctor() {
     setIsDisabled(!isDisabled);
     getDocCode();
     setIsDisabledPrefix(true);
-    getOfficersID();
 
   }, []);
 
@@ -446,7 +438,7 @@ function Doctor() {
   };
 
   const columns: GridColDef[] = [
-    { field: "ID", headerName: "ลำดับ", width: 50 },
+    { field: "ID", headerName: "ไอดี", width: 50 },
     {
       field: "UPDATE",
       headerName: "แก้ไข",
@@ -456,6 +448,7 @@ function Doctor() {
           <Button
             variant="contained"
             color="primary"
+            size="small"
             onClick={() => setOpenupdate(true)}
           >
             Edit
@@ -472,6 +465,7 @@ function Doctor() {
           <Button
             variant="contained"
             color="primary"
+            size="small"
             onClick={() => setOpendelete(true)}
           >
             Delete
@@ -813,6 +807,8 @@ function Doctor() {
     if (res.error) {
       setError(true);
       setAlertMessage(res.error);
+      console.log(res);
+      console.log(res.error);
       console.log("เข้าเงื่อนไข res.error");
     } else {
       setSuccess(true);

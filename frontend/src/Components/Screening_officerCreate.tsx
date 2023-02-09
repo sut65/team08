@@ -22,7 +22,7 @@ import { NationalityInterface } from "../Models/INationality";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { OfficersInterface } from "../Models/IOfficer";/////
 
-import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,GetNationality,Screening_officer} from "../Services/HttpClientService";
+import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,GetNationality,Screening_officer,} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -48,10 +48,12 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     const [EducationMajor, setEducationMajors] = useState<string>("");
     const [University, setUniversitys] = useState<string>("");
     const [officers, setOfficers] = useState<OfficersInterface[]>([]);
+    const [ScPassword, setScPassword] = useState<string>("");
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
-
+    //
+    const [message, setAlertMessage] = React.useState("");
     const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
@@ -157,9 +159,11 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     
     console.log(data)
     let res = await Screening_officer(data);
-    if (res) {
+    if (res.status) {
+      setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
+      setAlertMessage(res.message);
       setError(true);
     }
   }
@@ -167,13 +171,14 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
   return (
     <Container maxWidth="md">
       <Snackbar
+        id="success"
         open={success}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
-          บันทึกข้อมูลสำเร็จ
+          {message}
         </Alert>
       </Snackbar>
       <Snackbar
@@ -183,7 +188,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+          {message}
         </Alert>
       </Snackbar>
       <Paper>
@@ -194,19 +199,18 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           }}
         >
           <Box sx={{ paddingX: 2, paddingY: 1 }}>
-            <Typography
-              component="h2"
-              variant="h6"
-              color="primary"
-              gutterBottom
-            >
-              ข้อมูลเจ้าหน้าที่ฝ่ายคัดกรอง
-            </Typography>
+          <Typography variant="h5" color="primary">
+            <p>ระบบบันทึกข้อมูลฝ่ายคัดกรอง</p>
+          </Typography>
           </Box>
         </Box>
         <Divider />
+        <Box sx={{ paddingX: 2, paddingY: 0.1 }}>
+          <Typography variant="h6" color="primary">
+            <p>ข้อมูลส่วนตัว</p>
+          </Typography>
+        </Box>
         <Grid container spacing={3} sx={{ padding: 2 }}>
-        <Grid item xs={12}><h3>ข้อมูลส่วนตัว</h3>  </Grid>
           <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>

@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team08/entity"
 	"github.com/sut65/team08/service"
@@ -18,14 +17,14 @@ type LoginPayload_Screening_officer struct {
 // SignUpPayload signup body
 type SignUpPayload_Screening_officer struct {
 	Screening_officer_Name string `json:"Screening_officer_Name"`
-	Email                  string `json:"email"`
+	Email                  string `json:"email" `
 	ScreeningIDCard        string `json:"ScreeningIDCard"`
 	Birthday               string `json:"Birthday"`
 
 	OfficerID     *uint `json:"OfficerID"`
 	PrefixID      *uint `json:"PrefixID"`
 	GenderID      *uint `json:"GenderID"`
-	BloodID       *uint `json:"BloodID"`
+	BloodID       *uint `json:"BloodID" `
 	ReligionID    *uint `json:"ReligionID"`
 	CountryID     *uint `json:"CountryID"`
 	EducationID   *uint `json:"EducationID"`
@@ -60,16 +59,12 @@ func Login_Screening_officer(c *gin.Context) {
 	}
 
 	// ตรวจสอบรหัสผ่าน
-	err := bcrypt.CompareHashAndPassword([]byte(Screening_officer.ScreeningIDCard), []byte(payload.ScreeningIDCard))
+	err := bcrypt.CompareHashAndPassword([]byte(Screening_officer.ScPassword), []byte(payload.ScreeningIDCard))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ScreeningIDCard is incerrect"})
 		return
 	}
 
-	// กำหนดค่า SecretKey, Issuer และระยะเวลาหมดอายุของ Token สามารถกำหนดเองได้
-	// SecretKey ใช้สำหรับการ sign ข้อความเพื่อบอกว่าข้อความมาจากตัวเราแน่นอน
-	// Issuer เป็น unique id ที่เอาไว้ระบุตัว client
-	// ExpirationHours เป็นเวลาหมดอายุของ token
 
 	jwtWrapper := service.JwtWrapper{
 		SecretKey:       "SvNQpBN8y3qlVrsGAYYWoJJk56LtzFHx",
@@ -86,51 +81,10 @@ func Login_Screening_officer(c *gin.Context) {
 	tokenResponse := LoginResponse{
 		Token: signedToken,
 		ID:    Screening_officer.ID,
-		Role:  "screening_officer",
+		Role:  "Screening_officer",
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
 }
 
-// POST /create A AA
-func CreateScreening_officer(c *gin.Context) {
-	var payload SignUpPayload_Screening_officer
-	var Screening_officer entity.Screening_officer
 
-	if err := c.ShouldBindJSON(&payload); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	hashScreeningIDCard, err := bcrypt.GenerateFromPassword([]byte(payload.ScreeningIDCard), 14)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing ScreeningIDCard"})
-		return
-	}
-
-	Screening_officer.Screening_officer_Name = payload.Screening_officer_Name
-	Screening_officer.Email = payload.Email
-	Screening_officer.ScreeningIDCard = string(hashScreeningIDCard)
-
-	Screening_officer.Birthday = payload.Birthday
-	Screening_officer.Phone = payload.Phone
-	Screening_officer.EducationName = payload.EducationName
-	Screening_officer.EducationMajor = payload.EducationMajor
-	Screening_officer.University = payload.University
-
-	Screening_officer.OfficerID = payload.OfficerID
-	Screening_officer.PrefixID = payload.PrefixID
-	Screening_officer.GenderID = payload.GenderID
-	Screening_officer.BloodID = payload.BloodID
-	Screening_officer.ReligionID = payload.ReligionID
-	Screening_officer.EducationID = payload.EducationID
-	Screening_officer.NationalityID = payload.NationalityID
-
-	if err := entity.DB().Create(&Screening_officer).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusCreated, gin.H{"data": Screening_officer})
-}

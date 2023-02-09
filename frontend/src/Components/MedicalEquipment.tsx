@@ -48,6 +48,12 @@ function MedicalEquipments() {
       width: 150,
       valueFormatter: (params) => params.value.Quantity ,
     },
+    {
+      field: "Shop",
+      headerName: "ร้านค้า",
+      width: 150,
+      valueFormatter: (params) => params.value.Shop ,
+    },
     // {
     //   field: "Med_Employee",
     //   headerName: "Med_Employee",

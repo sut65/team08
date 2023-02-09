@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team08/entity"
 )
@@ -14,6 +15,7 @@ func CreateMedEquipment(c *gin.Context) {
 	var brand entity.Brand
 	var med_status entity.Med_Status
 	var med_employee entity.Med_Employee
+	
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 9 จะถูก bind เข้าตัวแปร med_equipment
 	if err := c.ShouldBindJSON(&med_equipment); err != nil {
@@ -46,6 +48,12 @@ func CreateMedEquipment(c *gin.Context) {
 		Med_Employee: med_employee, // โยงความสัมพันธ์กับ Entity Employee
 		Quantity:     med_equipment.Quantity,
 		Equipment:    med_equipment.Equipment,
+		Shop:		  med_equipment.Shop,
+	}
+	// validation
+	if _, err := govalidator.ValidateStruct(med_equipment); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 14: บันทึก

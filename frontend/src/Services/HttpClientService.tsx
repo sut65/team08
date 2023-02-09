@@ -2,6 +2,7 @@
 import { PatientsInterface } from "../Models/IPatient";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { DoctorInterface } from "../Models/IDoctor";
+import { LabInterface } from "../Models/ILab";
 import { TreatmentsInterface } from "../Models/ITreatment";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 import { Operating_RoomsInterface } from "../Models/IOperating_Room";
@@ -37,7 +38,7 @@ async function LoginDoctor(data: SigninDoctorInterface) {
               localStorage.setItem("role", "doctor");
               return res.data;
           } else {
-              console.log("else ");
+              console.log("else จาก POST -> function LoginDoctor");
               return false;
           }
       });
@@ -58,7 +59,7 @@ async function GetDoctorByUID() {
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
-              console.log(res.data);
+              // console.log(res.data);
               return res.data;
           } else {
               return false;
@@ -77,7 +78,7 @@ async function Doctor (data: DoctorInterface) {
       body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Doctor/create`, requestOptions)
+  let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
@@ -126,11 +127,11 @@ async function Screening_officer(data: Screening_officersInterface) {
   let res = await fetch(`${apiUrl}/Screening_officer/create`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-          if (res.data) {
-              return res.data;
-          } else {
-              return false;
-          }
+        if (res.data) {
+          return { status: true, message: res.data };
+        } else {
+          return { status: false, message: res.error };
+        }
       });
 
   return res;
@@ -287,11 +288,11 @@ async function CreateOfficer(data: OfficersInterface) {
   let res = await fetch(`${apiUrl}/officers/create`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-          if (res.data) {
-              return res.data;
-          } else {
-              return false;
-          }
+        if (res.data) {
+          return { status: true, message: res.data };
+        } else {
+          return { status: false, message: res.error };
+        }
       });
 
   return res;
@@ -650,7 +651,7 @@ async function ListLabName() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data," -> true function GetLabName()");
+        // console.log(res.data," -> true function GetLabName()");
         return res.data;
       } else {
         console.log("else function GetLabName()");
@@ -673,34 +674,10 @@ async function ListLab() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data," -> true function GetLabName()");
+        // console.log(res.data," -> true function GetLabName()");
         return res.data;
       } else {
-        console.log("else function GetLabName()");
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function Create_Screening_officer(data: Screening_officersInterface) {
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-
-  let res = await fetch(`${apiUrl}/Screening_officer`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        // console.log(res.data);
-        return res.data;
-      } else {
+        // console.log("else function GetLabName()");
         return false;
       }
     });
@@ -724,10 +701,9 @@ async function CreatePatient(data: PatientsInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        // console.log(res.data);
-        return res.data;
+        return { status: true, message: res.data };
       } else {
-        return false;
+        return { status: false, message: res.error };
       }
     });
 
@@ -743,19 +719,45 @@ async function CreateDoctor(data: DoctorInterface) {
     },
     body: JSON.stringify(data),
   };
-  // console.log("แสดง requestOptions")
-  // console.log(requestOptions);
 
-  let res = await fetch(`${apiUrl}/Doctor/create`, requestOptions)
+  let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       // console.log(res.data);
       if (res.data) {
-        console.log("เข้า fetch(`${apiUrl}/Doctor/create` แล้ววววววววว")
+        console.log("เข้า fetch(`${apiUrl}/Doctor` แล้ววววววววว")
         console.log(res.data);
         return res;
       } else {
         console.log("ไม่เข้า fetch จาก function CreateDoctor")
+        return res;
+      }
+    });
+
+  return res;
+}
+
+
+async function CreateLab(data: LabInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/Lab`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res.data);
+      if (res.data) {
+        console.log("เข้า fetch(`${apiUrl}/Lab` น้าาาา")
+        console.log(res.data);
+        return res;
+      } else {
+        console.log("ไม่เข้า fetch จาก function CreateLab")
         return res;
       }
     });
@@ -867,9 +869,9 @@ async function Treatment(data: TreatmentsInterface) {
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
-              return res.data;
+            return { status: true, message: res.data };
           } else {
-              return false;
+            return { status: false, message: res.error };
           }
       });
 
@@ -1216,9 +1218,9 @@ async function CreateDispense(data: DispenseInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
+        return { status: true, message: res.data };
       } else {
-        return false;
+        return { status: false, message: res.error };
       }
     });
 
@@ -1282,9 +1284,9 @@ async function CreateAppoint(data: AppointInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
+        return { status: true, message: res.data };
       } else {
-        return false;
+        return { status: false, message: res.error };
       }
     });
 
@@ -1626,6 +1628,7 @@ export {
   CreateDoctor,
   ListLabName,
   ListLab,
+  CreateLab,
 
   //Gg
   GetTreatment,
@@ -1678,7 +1681,6 @@ export {
 
   GetScrenByUID,
   Screening_officer,
-  Create_Screening_officer, //////?
 
   GetDoctorByUID,
   Doctor,

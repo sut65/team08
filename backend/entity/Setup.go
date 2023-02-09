@@ -92,12 +92,17 @@ func SetupDatabase() {
 		Password: string(password2),
 	})
 
+	db.Model(&Screening_officer{}).Create(&Screening_officer{
+		
+		Email:    "pp@gmail.com",
+		ScreeningIDCard: string(password2),
+	})
+
 	var Sabaithip Officer
 	var Khunjira Officer
 	db.Raw("SELECT * FROM officers WHERE email = ?", "aa@gmail.com").Scan(&Sabaithip)
 	db.Raw("SELECT * FROM officers WHERE email = ?", "ss@gmail.com").Scan(&Khunjira)
 
-	
 	//สถานที่ --------------------
 	L1 := Location{
 		Name: "อาคารอุบัติเหตุและเวชศาสตร์ฉุกเฉิน",
@@ -53174,36 +53179,35 @@ func SetupDatabase() {
 
 	treatment_1 := Treatment{
 		TREATMENT_ID: "201_TREATMENT_ID",
-    	TREATMENT:    "TREATMENT",
+		TREATMENT:    "TREATMENT",
 		DATE:         t1,
-		APPOINTMENT:  "APPOINTMENT",
+		APPOINTMENT:  21,
 		CONCLUSION:   "CONCLUSION",
 		GUIDANCE:     "GUIDANCE",
-		Status: S2,
+		Status:       S2,
 	}
 	db.Model(&Treatment{}).Create(&treatment_1)
 
 	treatment_2 := Treatment{
 		TREATMENT_ID: "treatment_2",
-    	TREATMENT:    "TREATMENT",
+		TREATMENT:    "TREATMENT",
 		DATE:         t1,
-		APPOINTMENT:  "APPOINTMENT",
+		APPOINTMENT:  20,
 		CONCLUSION:   "CONCLUSION",
 		GUIDANCE:     "GUIDANCE",
-		Status: S2,
+		Status:       S2,
 	}
 	db.Model(&Treatment{}).Create(&treatment_2)
 
 	med_employee1 := Med_Employee{
 		Name:           "Name",
-		Age:           	21,
+		Age:            21,
 		Phone:          "Phone",
 		Email:          "med@gmail.com",
 		Password:       "$2a$14$N/C5JUA2EGFGtFfTWcWC2.Gy0T1h5sgdJubHKX4yGMf85Ic7NjAga",
 		University:     "University",
 		EducationName:  "EducationName",
 		EducationMajor: "EducationMajor",
-
 	}
 	db.Model(&Med_Employee{}).Create(&med_employee1)
 
@@ -53224,9 +53228,9 @@ func SetupDatabase() {
 
 	lab1 := Lab{
 		Lab_test: "negative",
-		Value:    "2.34",
+		Value:    2,
 
-		Lab_Name:      lab_1,
+		Lab_Name:     lab_1,
 		Treatment:    treatment_1,
 		Med_Employee: med_employee1,
 		Doctor:       doc1,
@@ -53235,9 +53239,9 @@ func SetupDatabase() {
 
 	lab2 := Lab{
 		Lab_test: "positive",
-		Value:    "5.21",
+		Value:    5,
 
-		Lab_Name:      lab_2,
+		Lab_Name:     lab_2,
 		Treatment:    treatment_1,
 		Med_Employee: med_employee1,
 		Doctor:       doc2,

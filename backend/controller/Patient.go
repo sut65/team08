@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/asaskevich/govalidator"
 	"github.com/sut65/team08/entity"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,8 @@ func CreatePatient(c *gin.Context) {
 	var religion entity.Religion
 	var nationality entity.Nationality
 	var screening_officer entity.Screening_officer
+	var address entity.AddressThailand
+
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Patient
 	if err := c.ShouldBindJSON(&patient); err != nil {
@@ -54,25 +57,35 @@ func CreatePatient(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
 		return
 	}
+	if tx := entity.DB().Where("id = ?", patient.AddressID).First(&address); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "nationality not found"})
+		return
+	}
 
 	// สร้าง Patient
 	sc := entity.Patient{
-		Screening_officer: screening_officer,
-		Prefix:       Prefix,
-		Patient_Name: patient.Patient_Name,
-		Age:          patient.Age,
-		Gender:       gender,
-		Blood:        blood,
-		Religion:     religion,
-		Birthday:     patient.Birthday,
-		Nationality:  nationality,
-		IDCard:       patient.IDCard,
-		Phone:        patient.Phone,
-		House_ID:     patient.House_ID,
-
+		Screening_officerID: patient.Screening_officerID,
+		PrefixID:            patient.PrefixID,
+		Patient_Name:        patient.Patient_Name,
+		Age:                 patient.Age,
+		GenderID:            patient.GenderID,
+		BloodID:             patient.BloodID,
+		ReligionID:          patient.ReligionID,
+		Birthday:            patient.Birthday,
+		NationalityID:       patient.NationalityID,
+		IDCard:              patient.IDCard,
+		Phone:               patient.Phone,
+		House_ID:            patient.House_ID,
+		AddressID:           patient.AddressID,
 	}
 
 	// 13: บันทึก
+	if _, err := govalidator.ValidateStruct(sc); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// 13: บันทึก
+
 	if err := entity.DB().Create(&sc).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

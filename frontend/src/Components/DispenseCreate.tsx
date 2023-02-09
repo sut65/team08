@@ -57,6 +57,9 @@ function DispenseCreate() {
   const [treatment_Dis, setTreatment_Dis] = useState<TreatmentsInterface>({});
   const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
 
+  ///
+  const [message, setAlertMessage] = React.useState("");
+
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
@@ -172,9 +175,11 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
 
     console.log(data);
     let res = await CreateDispense(data);
-    if (res) {
+    if (res.status) {
+      setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
+      setAlertMessage(res.message);
       setError(true);
     }
   }
@@ -182,19 +187,20 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
   return (
     <Container maxWidth="md">
       <Snackbar
+      id="success"
         open={success}
         autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
-          บันทึกข้อมูลสำเร็จ
+        {message}
         </Alert>
       </Snackbar>
 
       <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+        {message}
         </Alert>
       </Snackbar>
 

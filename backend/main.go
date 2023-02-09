@@ -148,7 +148,7 @@ func main() {
 			//Doctor
 			router.GET("/Doctors", controller.ListDoctor)
 			router.GET("/Doctor/:id", controller.GetDoctor)
-			router.POST("/Doctor/create", controller.Create_Doctor) ///////
+			router.POST("/Doctor", controller.CreateDoctor) ///////
 			router.PATCH("/Doctor", controller.UpdateDoctor)
 			router.DELETE("/Doctor/:id", controller.DeleteDoctor)
 
@@ -277,9 +277,9 @@ func main() {
 
 			// med equipment Routes
 			router.GET("/medicalequipments", controller.ListMedEquipments)
-			router.POST("/medicalequipments", controller.CreateloginMedEquipment)
+			//router.POST("/medicalequipments", controller.CreateloginMedEquipment)
 			router.GET("/medicalequipment/:id", controller.GetMedEquipment)
-			//router.POST("/medicalequipments", controller.CreateMedEquipment)
+			router.POST("/medicalequipments", controller.CreateMedEquipment)
 			router.PATCH("/medicalequipments", controller.UpdateMedEquipment)
 			router.DELETE("/medicalequipments/:id", controller.DeleteMedEquipment)
 

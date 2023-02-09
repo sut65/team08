@@ -7,7 +7,7 @@ export interface RequestInterface {
     ID?: number;
     R_ID?: string;
     R_NAME?: string;
-    QUANTITY?: string;
+    QUANTITY?: number;
     TIME?: Date | null;
 	
     Med_Employee?: MedEmployeeInterface;

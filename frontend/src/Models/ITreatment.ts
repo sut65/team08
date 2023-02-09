@@ -16,7 +16,7 @@ export interface TreatmentsInterface {
     Doctor?: DoctorInterface;
     DoctorID?: number;     // foreignkey.ID?
 
-    Status?: StatusInterface; 
+    Status?: StatusInterface;
     StatusID?: number;     // foreignkey.ID?
 
     Track?: TrackInterface;

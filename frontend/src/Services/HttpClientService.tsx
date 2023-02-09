@@ -59,7 +59,7 @@ async function GetDoctorByUID() {
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
-              console.log(res.data);
+              // console.log(res.data);
               return res.data;
           } else {
               return false;
@@ -651,7 +651,7 @@ async function ListLabName() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data," -> true function GetLabName()");
+        // console.log(res.data," -> true function GetLabName()");
         return res.data;
       } else {
         console.log("else function GetLabName()");

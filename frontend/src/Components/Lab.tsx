@@ -24,6 +24,7 @@ import {
   GridRowsProp,
   GridColDef,
   GridRowParams,
+  GridEventListener,
 } from "@mui/x-data-grid";
 
 import AddIcon from "@mui/icons-material/Add";
@@ -38,17 +39,8 @@ import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-import { PrefixsInterface } from "../Models/IPrefix";
-import { GendersInterface } from "../Models/IGender";
-// import { PolicingsInterface } from "../Models/IPolicing";
 import { PatientsInterface } from "../Models/IPatient";
 
-import { DocPrefixInterface } from "../Models/IDocPrefix";
-import { BloodInterface } from "../Models/IBlood";
-import { MaritalInterface } from "../Models/IMarital";
-import { ReligionInterface } from "../Models/IReligion";
-import { NationalityInterface } from "../Models/INationality";
-import { AddressThailandInterface } from "../Models/IAddressThailand";
 import { EducationsInterface } from "../Models/IEducation";
 import { DoctorInterface } from "../Models/IDoctor";
 import { TreatmentsInterface } from "../Models/ITreatment";
@@ -57,21 +49,13 @@ import { LabNameInterface } from "../Models/ILabName";
 import { LabInterface } from "../Models/ILab";
 
 import {
-  GetGender,
-  GetPrefix,
-  GetDocPrefix,
-  GetEducation,
-  GetBlood,
-  GetMarital,
-  GetReligion,
-  GetNationality,
-  GetAddressThailand,
   GetDoctor,
   GetShow,
   CreateDoctor,
   ListLabName,
   ListLab,
   CreateLab,
+  GetDoctorByUID,
 } from "../Services/HttpClientService";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -80,7 +64,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function Doctor() {
+function Lab() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
@@ -88,46 +72,77 @@ function Doctor() {
   };
 
   const [Patiends, setPatiends] = useState<PatientsInterface>({});
-  const [Genders, setGenders] = useState<GendersInterface[]>([]);
-  const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
   // const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
 
-  const [DocPrefix, setDocPrefix] = useState<DocPrefixInterface[]>([]);
-  const [Blood, setBlood] = useState<BloodInterface[]>([]);
-  const [Marital, setMarital] = useState<MaritalInterface[]>([]);
-  const [Religion, setReligion] = useState<ReligionInterface[]>([]);
-  const [Nationality, setNationality] = useState<NationalityInterface[]>([]);
-  const [AddressThailand, setAddressThailand] = useState<
-    AddressThailandInterface[]
-  >([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled2, setIsDisabled2] = useState(false);
+
+  const [ValueInput, setValueInput] = useState<string>("");
   const [isDisabledPrefix, setIsDisabledPrefix] = useState(false);
   const [Educations, setEducations] = useState<EducationsInterface[]>([]);
   const [Doctor, setDoctor] = useState<Partial<DoctorInterface>>({});
+  const [Lab, setLab] = useState<Partial<LabInterface>>({});
+
   const [DoctorA, setDoctorA] = useState<DoctorInterface[]>([]);
 
   const [Show, setShow] = useState<TreatmentsInterface[]>([]);
   const [ShowLab, setShowLab] = useState<TreatmentsInterface[]>([]);
-
-  const [DocterCode, setDocterCode] = useState<string>("");
-  const [DocterIDCar, setDocterIDCar] = useState<string>("");
-  const [FirstNameTH, setFirstNameTH] = useState<string>("");
-  const [LastNameTH, setLastNameTH] = useState<string>("");
-  const [FirstNameEN, setFirstNameEN] = useState<string>("");
-  const [LastNameEN, setLastNameEN] = useState<string>("");
+  const [LabName, setLabName] = useState<LabNameInterface[]>([]);
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [openD, setOpenD] = React.useState(false);
+
+  const [LabID, setLabID] = React.useState(0);
+  const [openDelete, setOpendelete] = React.useState(false);
+  const [openUpdate, setOpenupdate] = React.useState(false);
+
+
   const [valueDate, setValueDate] = React.useState<Dayjs | null>(
     dayjs("2000-01-01T21:11:54")
   );
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
+  const handleRowClick: GridEventListener<"rowClick"> = (params) => {
+    setLabID(Number(params.row.ID));
+    localStorage.setItem("LabID", params.row.ID);
+  };
+
+  const Delete_Lab = async () => {
+    const apiUrl = `http://localhost:8080/Lab/${LabID}`;
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    await fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          console.log(res);
+          console.log(res.data);
+          // console.log("delete ID: " + DispenseID);
+        } else {
+          console.log("NO DATA");
+        }
+      });
+
+    handleCloseRow();
+    getShowLab();
+  };
+
   const handleClickAnyRegion = () => {
     console.log(Doctor.ReligionID);
     setIsDisabled(false);
+  };
+
+  const handleCloseRow = () => {
+    setOpendelete(false);
+    setOpenupdate(false);
   };
 
   const handleClose = (
@@ -161,83 +176,64 @@ function Doctor() {
     // console.log(`${name}: ${value}`);
   };
 
-  const handleChangeDoctor = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof Doctor;
+  const handleChangeLabName = (event: SelectChangeEvent) => {
+    const name = event.target.name as keyof typeof Lab;
     const value = event.target.value;
-    setDoctor({
-      ...Doctor,
+    setLab({
+      ...Lab,
       [name]: value,
     });
   };
 
-  const handleChangeReligion = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof Doctor;
+  const handleChangeBox = (event: SelectChangeEvent) => {
+    const name = event.target.name as keyof typeof Lab;
     const value = event.target.value;
-    setDoctor({
-      ...Doctor,
-      [name]: value,
-    });
-
-    // console.log(Doctor.ReligionID)
-    if (event.target.value === "5") {
+    
+    //ถ้าติ๊กถูก Posi ให้ทำ if
+    if(isDisabled){
       setIsDisabled(false);
-    } else {
+      setLab({
+        ...Lab,
+        [name]: "",
+      });
+    }
+    //ถ้าไม่มีติ๊กถูก Posi
+    else{
+      //ให้ติ๊ก
       setIsDisabled(true);
+      setLab({
+        ...Lab,
+        [name]: "Positive",
+      });
+      setIsDisabled2(false);
     }
   };
-  const handleChangeMarital = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof Doctor;
+
+  const handleChangeBox2 = (event: SelectChangeEvent) => {
+    const name = event.target.name as keyof typeof Lab;
     const value = event.target.value;
-    setDoctor({
-      ...Doctor,
-      [name]: value,
-    });
 
-    // console.log(Doctor.ReligionID)
-    if (event.target.value === "0") {
-      setIsDisabledPrefix(true);
-    } else if (event.target.value === "1") {
-      setIsDisabledPrefix(true);
-    } else if (event.target.value === "4") {
-      setIsDisabledPrefix(true);
-    } else {
-      setIsDisabledPrefix(false);
+    //ถ้าติ๊กถูก Nege ให้ทำ if
+    if(isDisabled2){
+      setIsDisabled2(false);
+      setLab({
+        ...Lab,
+        [name]: "",
+      });
+      
     }
-  };
-
-  const handleChangeDate = (newValue: Dayjs | null) => {
-    setValueDate(newValue);
-  };
-
-  const getGender = async () => {
-    let res = await GetGender();
-    if (res) {
-      setGenders(res);
-      // console.log(res);
-    }
-  };
-  const getDocPrefix = async () => {
-    let res = await GetDocPrefix();
-    if (res) {
-      setDocPrefix(res);
-      // console.log(res);
-    }
-  };
-  const getPrefix = async () => {
-    let res = await GetPrefix();
-    if (res) {
-      setPrefixs(res);
-      // console.log(res);
+    //ถ้าไม่มีติ๊กถูก Nege
+    else{
+      //ให้ติ๊ก
+      setIsDisabled2(true);
+      setLab({
+        ...Lab,
+        [name]: "Negetive",
+      });
+      setIsDisabled(false);
     }
   };
 
-  const getBlood = async () => {
-    let res = await GetBlood();
-    if (res) {
-      setBlood(res);
-      // console.log(res);
-    }
-  };
   const getDoctor = async () => {
     let res = await GetDoctor();
     if (res) {
@@ -267,39 +263,12 @@ function Doctor() {
     }
   };
 
-  const getMarital = async () => {
-    let res = await GetMarital();
+  const getLabName = async () => {
+    let res = await ListLabName();
     if (res) {
-      setMarital(res);
-      // console.log(res);
-    }
-  };
-  const getReligion = async () => {
-    let res = await GetReligion();
-    if (res) {
-      setReligion(res);
-      // console.log(res);
-    }
-  };
-  const getNationality = async () => {
-    let res = await GetNationality();
-    if (res) {
-      setNationality(res);
-      // // console.log("OkkkOkkkOkkkk");
-      // // console.log(res);
-    }
-  };
-  const getAddressThailand = async () => {
-    let res = await GetAddressThailand();
-    if (res) {
-      setAddressThailand(res);
-      // console.log(res);
-    }
-  };
-  const getEducations = async () => {
-    let res = await GetEducation();
-    if (res) {
-      setEducations(res);
+      // setDoctor(res);
+      setLabName(res);
+      // console.log(res, " -> set await ListLabName()");
       // console.log(res);
     }
   };
@@ -308,47 +277,44 @@ function Doctor() {
     // setOpen(true);
     setOpenD(true);
   };
-  const touchPage = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
+
 
   useEffect(() => {
     getDoctor();
     getShow();
-    getBlood();
-    getMarital();
-    getReligion();
-    getNationality();
-    getAddressThailand();
-    getGender();
-    getPrefix();
-    // getPolicing();
-    getDocPrefix();
-    getEducations();
-    setIsDisabled(!isDisabled);
-    setIsDisabledPrefix(true);
 
     getShowLab();
+    getLabName();
+    GetDoctorByUID();
+    fetchDoctorID();
+
+    setIsDisabled(false);
+    setIsDisabled2(false);
   }, []);
+
+  const fetchDoctorID = async () => {
+    let res = await GetDoctorByUID();
+    Lab.DoctorID = res.ID;
+    if (res) {
+        setLab({
+          ...Lab,
+          ["Med_EmployeeID"]: res.ID,
+        });
+    }
+  };
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
   };
 
-  const convertTypePrefix = (data: string | number | undefined) => {
-    let val = typeof data === "string" ? parseInt(data) : data;
-    if (typeof val === "undefined") {
-      return 99;
-    } else if (val > 0) {
-      return val;
-    } else {
-      return 99;
-    }
+  const convertTypeFloat = (data: string | number | undefined) => {
+    let val = typeof data === "string" ? parseFloat(data) : data;
+    return val;
   };
 
   const columns: GridColDef[] = [
-    { field: "ID", headerName: "ลำดับ", width: 50 },
+    { field: "ไอดี", headerName: "ลำดับ", width: 50 },
     {
       field: "TREATMENT_ID",
       headerName: "เลขกำกับการรักษา",
@@ -380,7 +346,41 @@ function Doctor() {
   ];
 
   const columnsLab: GridColDef[] = [
-    { field: "ID", headerName: "ลำดับ", width: 50 },
+    { field: "ไอดี", headerName: "ลำดับ", width: 50 },
+    {
+      field: "UPDATE",
+      headerName: "แก้ไข",
+      width: 100,
+      renderCell: () => {
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => setOpenupdate(true)}
+          >
+            Edit
+          </Button>
+        );
+      },
+    },
+    {
+      field: "DELETE",
+      headerName: "ลบ",
+      width: 100,
+      renderCell: () => {
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => setOpendelete(true)}
+          >
+            Delete
+          </Button>
+        );
+      },
+    },
     {
       field: "CreatedAt",
       headerName: "วันที่และเวลา",
@@ -419,18 +419,18 @@ function Doctor() {
       field: "Med_Employee",
       headerName: "ผู้รายงานผลแลป",
       width: 120,
-      valueFormatter: (params) => params.value.ID,
+      valueFormatter: (params) => params.value.Name,
     },
   ];
 
   async function submit() {
     let data = {
-      Lab_test: "Negative",
-      Value: 20,
-      LabNameID: convertType(1),
-      TreatmentID: convertType(1),
-      Med_EmployeeID: convertType(1),
-      DoctorID: convertType(2),
+      Lab_test: (Lab.Lab_test || ""),
+      Value: convertTypeFloat(ValueInput),
+      LabNameID: convertType(Lab.LabNameID),
+      TreatmentID: convertType(Lab.TreatmentID),
+      Med_EmployeeID: convertType(Lab.Med_EmployeeID),
+      DoctorID: convertType(1),
     };
 
     console.log("เมื่อกดดดดดดด submit");
@@ -446,14 +446,66 @@ function Doctor() {
       console.log("เข้าเงื่อนไข res.error");
     } else {
       setSuccess(true);
-      // getDocCode();
       console.log("ไม่มี res.error");
-      // getDoctor();
+      getShowLab();
       setOpenD(false);
     }
   }
 
   return (
+    <div>
+      {/* ยืนยันการลบ */}
+      <Dialog
+        open={openDelete}
+        onClose={handleCloseRow}
+        fullWidth
+        maxWidth="xs"
+      >
+        <DialogTitle>
+          <div className="good-font">ยืนยันการลบรายการ</div>
+        </DialogTitle>
+        <DialogContent>
+          <Grid container sx={{ padding: 2 }}>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={2}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={Delete_Lab}
+              >
+                <div className="good-font">ยืนยัน</div>
+              </Button>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleCloseRow}
+              >
+                <div className="good-font">ยกเลิก</div>
+              </Button>
+            </Grid>
+            <Grid item xs={3}></Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
+
+      {/* ยืนยันการแก้ไข */}
+      <Dialog open={openUpdate} onClose={handleCloseRow}>
+        <DialogTitle>
+          <div className="good-font">ยืนยันการแก้ไขรายการ</div>
+        </DialogTitle>
+        <Button
+          variant="contained"
+          color="primary"
+          //กด "ยืนยัน" ไปที่หน้าแก้ไข
+          component={RouterLink}
+          to="/EmployeeattemdanceINUpdate"
+        >
+          <div className="good-font">ยืนยัน</div>
+        </Button>
+      </Dialog>
     <Container maxWidth="md">
       <Snackbar
         open={success}
@@ -522,14 +574,14 @@ function Doctor() {
                       <FormControl fullWidth variant="outlined" size="small">
                         <Select
                           native
-                          value={Doctor.DocPrefixID + ""}
-                          onChange={handleChangeDoctor}
+                          value={Lab.TreatmentID + ""}
+                          onChange={handleChangeLabName}
                           inputProps={{
-                            name: "DocPrefixID",
+                            name: "TreatmentID",
                           }}
                         >
                           <option aria-label="None" value="">
-                            รหัสข้อมูลการรักษา
+                            เลขกำกับการรักษา
                           </option>
                           {Show.map((item: TreatmentsInterface) => (
                             <option value={item.ID} key={item.ID}>
@@ -543,18 +595,18 @@ function Doctor() {
                       <FormControl fullWidth variant="outlined" size="small">
                         <Select
                           native
-                          value={Doctor.DocPrefixID + ""}
-                          onChange={handleChangeDoctor}
+                          value={Lab.LabNameID + ""}
+                          onChange={handleChangeLabName}
                           inputProps={{
-                            name: "DocPrefixID",
+                            name: "LabNameID",
                           }}
                         >
                           <option aria-label="None" value="">
                             ประเภทแลป
                           </option>
-                          {Show.map((item: TreatmentsInterface) => (
+                          {LabName.map((item: LabNameInterface) => (
                             <option value={item.ID} key={item.ID}>
-                              {item.TREATMENT_ID}
+                              {item.Discription}
                             </option>
                           ))}
                         </Select>
@@ -569,8 +621,10 @@ function Doctor() {
                         <FormControlLabel
                           control={
                             <Checkbox
-                              onChange={handleChange}
-                              // name="gilad"
+                              // disabled={isDisabled}
+                              checked={isDisabled}
+                              onChange={handleChangeBox}
+                              name="Lab_test"
                               sx={{
                                 color: green[600],
                                 "&.Mui-checked": {
@@ -584,8 +638,10 @@ function Doctor() {
                         <FormControlLabel
                           control={
                             <Checkbox
-                              onChange={handleChange}
-                              // name="gilad"
+                              // disabled={isDisabled2}
+                              checked={isDisabled2}
+                              onChange={handleChangeBox2}
+                              name="Lab_test"
                               sx={{
                                 color: pink[500],
                                 "&.Mui-checked": {
@@ -602,11 +658,11 @@ function Doctor() {
                       <TextField
                         label="ค่าที่รายงาน"
                         fullWidth
-                        id="LastNameTH"
+                        id="ValueInput"
                         type="string"
                         variant="outlined"
                         size="small"
-                        onChange={(event) => setLastNameTH(event.target.value)}
+                        onChange={(event) => setValueInput(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={4}></Grid>
@@ -634,13 +690,15 @@ function Doctor() {
               columns={columnsLab}
               pageSize={5}
               rowsPerPageOptions={[5]}
+              onRowClick={handleRowClick}
             />
           </div>
         </Grid>
         <Grid container spacing={1} sx={{ marginY: 58, padding: 2 }}></Grid>
       </Paper>
     </Container>
+    </div>
   );
 }
 
-export default Doctor;
+export default Lab;

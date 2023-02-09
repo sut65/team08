@@ -318,12 +318,12 @@ type Track struct {
 // การรักษา
 type Treatment struct {
 	gorm.Model
-	TREATMENT_ID string    `valid:"matches(^T\\d{6}$)~T cannot be blank"`
-	TREATMENT    string    `valid:"maxstringlength(20)~Please enter details"`
+	TREATMENT_ID string    `valid:"matches(^T\\d{6}$)~T cannot be blank :Txxxxxx"`
+	TREATMENT    string    `valid:"maxstringlength(20)~Please enter details (20)"`
 	DATE         time.Time `valid:"required,CheckDateTime~Please enter the current time"`
 	APPOINTMENT  uint      `valid:"range(0|100)"`
-	CONCLUSION   string    `valid:"maxstringlength(100)~Please enter details"`
-	GUIDANCE     string    `valid:"maxstringlength(100)~Please enter details"`
+	CONCLUSION   string    `valid:"maxstringlength(100)~Please enter details (100)"`
+	GUIDANCE     string    `valid:"maxstringlength(100)~Please enter details (100)"`
 
 	DoctorID *uint  `valid:"-"`
 	Doctor   Doctor `gorm:"references:id" valid:"-"`
@@ -531,9 +531,9 @@ type Location struct {
 // ตารางหลัก การเบิก
 type Request struct {
 	gorm.Model
-	R_ID     string    `valid:"matches(^R\\d{6}$)~R cannot be blank"`
-	R_NAME   string    `valid:"maxstringlength(20)~Please enter details"`
-	QUANTITY uint      `valid:"range(1|2000)"`
+	R_ID     string    `valid:"matches(^R\\d{6}$)~R cannot be blank :Rxxxxxx"`
+	R_NAME   string    `valid:"maxstringlength(20)~Please enter details (20)"`
+	QUANTITY uint      `valid:"range(1|1000)"`
 	TIME     time.Time `valid:"required,CheckDateTime~Please enter the current time"`
 
 	Med_EmployeeID *uint        `valid:"-"`

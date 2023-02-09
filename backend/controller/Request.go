@@ -4,6 +4,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team08/entity"
 )
@@ -41,13 +42,19 @@ func CreateRequest(c *gin.Context) {
  
 	// 12: สร้าง
 	wv := entity.Request{
-		Med_Equipment: med_equipment, // โยงความสัมพันธ์กับ Entity
-		Location:      location,      // โยงความสัมพันธ์กับ Entity
-		Med_Employee:  medemployees,
+		Med_EquipmentID: request.Med_EquipmentID, // โยงความสัมพันธ์กับ Entity
+		LocationID:      request.LocationID,      // โยงความสัมพันธ์กับ Entity
+		Med_EmployeeID:  request.Med_EmployeeID,
 		R_ID:          request.R_ID,
 		R_NAME:        request.R_NAME,
 		QUANTITY:      request.QUANTITY,
 		TIME:          request.TIME,
+	}
+
+	// : ขั้นตอนการ validate ข้อมูล 
+	if _, err := govalidator.ValidateStruct(wv); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 13: บันทึก

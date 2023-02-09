@@ -71,7 +71,7 @@ type Screening_officer struct {
 	EducationName  string `valid:"required~EducationName officer cannot be blank"`
 	EducationMajor string `valid:"required~EducationMajor officer cannot be blank"`
 	University     string `valid:"required~University officer cannot be blank"`
-	ScPassword string `valid:"-"`
+	ScPassword     string `valid:"-"`
 
 	//foreignKey
 
@@ -448,19 +448,19 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time
-	Date_appoint time.Time
-	Text_appoint string
+	Date_now     time.Time `valid:"required,IsnotPast~Please enter the current time"`
+	Date_appoint time.Time `valid:"required,IsFuture~Please enter the current time"`
+	Text_appoint string    `valid:"maxstringlength(100)~Please record the appointment details."`
 
-	Screening_officerID *uint
-	TreatmentID         *uint
-	LevelcureID         *uint
-	DepartmentID        *uint
+	Screening_officerID *uint `valid:"-"`
+	TreatmentID         *uint `valid:"-"`
+	LevelcureID         *uint `valid:"-"`
+	DepartmentID        *uint `valid:"-"`
 
-	Screening_officer Screening_officer `gorm:"references:id"`
-	Treatment         Treatment         `gorm:"references:id"`
-	Levelcure         Levelcure         `gorm:"references:id"`
-	Department        Department        `gorm:"references:id"`
+	Screening_officer Screening_officer `gorm:"references:id" valid:"-"`
+	Treatment         Treatment         `gorm:"references:id" valid:"-"`
+	Levelcure         Levelcure         `gorm:"references:id" valid:"-"`
+	Department        Department        `gorm:"references:id" valid:"-"`
 }
 
 // Leo

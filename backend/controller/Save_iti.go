@@ -116,20 +116,35 @@ func DeleteSave_ITI(c *gin.Context) {
 
 // PATCH /save_iti
 func UpdateSave_ITI(c *gin.Context) {
-	var save_iti entity.Save_ITI
-	if err := c.ShouldBindJSON(&save_iti); err != nil {
+	var Save_ITI entity.Save_ITI
+
+	if err := c.ShouldBindJSON(&Save_ITI); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", save_iti.ID).First(&save_iti); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "save_iti not found"})
-		return
+	
+	// สร้าง
+	upsave := entity.Save_ITI{
+		Date_checkin: Save_ITI.Date_checkin,
+		Date_checkout: Save_ITI.Date_checkout,
+		
+		TreatmentID: 	Save_ITI.TreatmentID,
+		BuildingID:  	Save_ITI.BuildingID,
+		RoomID:		Save_ITI.RoomID,
+		StateID:		Save_ITI.StateID,
 	}
-	if err := entity.DB().Save(&save_iti).Error; err != nil {
+
+	// if _, err := govalidator.ValidateStruct(u_p); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	if err := entity.DB().Where("id = ?", Save_ITI.ID).Updates(&upsave).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": save_iti})
+
+	c.JSON(http.StatusOK, gin.H{"data": upsave})
 }
 
 func ListReady_Save(c *gin.Context) {

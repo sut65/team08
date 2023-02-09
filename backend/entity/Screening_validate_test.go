@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/asaskevich/govalidator"
@@ -28,7 +27,7 @@ func TestScreening_officerNameValidate(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Name officer cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่ชื่อ..นามสกุล"))
 }
 
 func TestBirthday_ScNotBlank(t *testing.T) {
@@ -51,7 +50,7 @@ func TestBirthday_ScNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Birthday officer cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่วันเดือนปีเกิด"))
 }
 
 func TestPhone_ScMustBeInValidPattern(t *testing.T) {
@@ -90,7 +89,7 @@ func TestPhone_ScMustBeInValidPattern(t *testing.T) {
 		g.Expect(err).ToNot(gomega.BeNil())
 
 		// err.Error() ต้องมี message แสดงออกมา
-		g.Expect(err.Error()).To(gomega.Equal(fmt.Sprintf(`Phone: %s does not validate as matches(^[0]\d{9}$)`, fixture)))
+		g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก"))
 	}
 }
 
@@ -114,7 +113,7 @@ func TestPhone_ScNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Phone officer cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่เบอร์โทรศัพท์"))
 }
 
 func TestIDCard_ScMustBeInValidPattern(t *testing.T) {
@@ -153,7 +152,7 @@ func TestIDCard_ScMustBeInValidPattern(t *testing.T) {
 		g.Expect(err).ToNot(gomega.BeNil())
 
 		// err.Error() ต้องมี message แสดงออกมา
-		g.Expect(err.Error()).To(gomega.Equal(fmt.Sprintf(`ScreeningIDCard: %s does not validate as matches(^[1-9]\d{12}$)`, fixture)))
+		g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก"))
 	}
 }
 
@@ -177,7 +176,7 @@ func TestIDCard_ScNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("IDCard officer cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่รหัสบัตรประชาชน"))
 }
 
 func TestEducationNameNotBlank(t *testing.T) {
@@ -200,7 +199,7 @@ func TestEducationNameNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("EducationName officer cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่ชื่อปริญญา"))
 }
 
 func TestEducationMajorNotBlank(t *testing.T) {
@@ -223,7 +222,7 @@ func TestEducationMajorNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("EducationMajor officer cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่ชื่อสาขา"))
 }
 
 func TestUniversityMajorNotBlank(t *testing.T) {
@@ -246,7 +245,7 @@ func TestUniversityMajorNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("University officer cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่ชื่อมหาลัย"))
 }
 
 func TestEmailMustBeInValidPattern(t *testing.T) {
@@ -269,5 +268,5 @@ func TestEmailMustBeInValidPattern(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Email: dfgdfg does not validate as email"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่อีเมลให้ถูกต้อง"))
 }

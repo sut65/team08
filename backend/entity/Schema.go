@@ -55,24 +55,23 @@ type Screening_officer struct {
 
 	//หน้าต่างข้อมูลส่วนตัวเจ้่าหน้าที่ฝ่ายคัดกรอง
 	PrefixID               *uint  `valid:"-"`
-	Screening_officer_Name string `valid:"required~Name officer cannot be blank"`
+	Screening_officer_Name string `valid:"required~กรุณาใส่ชื่อ..นามสกุล"`
 
 	GenderID   *uint  `valid:"-"`
-	BloodID    *uint  `valid:"-"`
-	ReligionID *uint  `valid:"-"`
-	Birthday   string `valid:"required~Birthday officer cannot be blank"`
+	BloodID    *uint `valid:"-"`
+	ReligionID *uint `valid:"-"`
+	Birthday   string `valid:"required~กรุณาใส่วันเดือนปีเกิด"`
 
 	NationalityID   *uint  `valid:"-"`
-	CountryID       *uint  `valid:"-"`
-	ScreeningIDCard string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$),required~IDCard officer cannot be blank"`
+	ScreeningIDCard string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$)~กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก,required~กรุณาใส่รหัสบัตรประชาชน"`
 
-	Phone string `valid:"matches(^[0]\\d{9}$),required~Phone officer cannot be blank"`
-	Email string `valid:"email"`
+	Phone string `valid:"matches(^[0]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
+	Email string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
 	//หน้าต่างข้อมูลการศึกษา
 	EducationID    *uint  `valid:"-"`
-	EducationName  string `valid:"required~EducationName officer cannot be blank"`
-	EducationMajor string `valid:"required~EducationMajor officer cannot be blank"`
-	University     string `valid:"required~University officer cannot be blank"`
+	EducationName  string `valid:"required~กรุณาใส่ชื่อปริญญา"`
+	EducationMajor string `valid:"required~กรุณาใส่ชื่อสาขา"`
+	University     string `valid:"required~กรุณาใส่ชื่อมหาลัย"`
 	ScPassword     string `valid:"-"`
 
 	//foreignKey
@@ -88,7 +87,7 @@ type Screening_officer struct {
 	Appoint []Appoint `gorm:"foreignkey:Screening_officerID"`
 	Patient []Patient `gorm:"foreignkey:Screening_officerID"`
 
-	OfficerID *uint
+	OfficerID *uint `valid:"-"`
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
 }
 

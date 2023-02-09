@@ -35,3 +35,43 @@ func TestMedEmployeeCorrect(t *testing.T) {
 		fmt.Println(err)
 	})
 }
+
+func TestPhoneMedicalEmployeeMustBeInValidPattern(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	fixtures := []string{
+		"1987786788",
+		"01234566544",
+		"000000000000",
+		"1000cccc000000",
+		"1000zz00000000",
+		"10000000000x",
+		"0",
+		"xxxxxxxxxx",
+	}
+
+	for _, fixture := range fixtures {
+
+		m := Med_Employee{
+			Name:           "Name",
+			Age:           	21,
+			Phone:          fixture,
+			Email:          "med@gmail.com",
+			Password:       "0645068380",
+			University:     "University",
+			EducationName:  "EducationName",
+			EducationMajor: "EducationMajor",
+		}
+
+		ok, err := govalidator.ValidateStruct(m)
+
+		// ok ต้องไม่เป็น true แปลว่าต้องจับ error ได้
+		g.Expect(ok).ToNot(BeTrue())
+
+		// err ต้องไม่เป็น nil แปลว่าต้องจับ error ได้
+		g.Expect(err).ToNot(BeNil())
+
+		// err.Error() ต้องมี message แสดงออกมา
+		g.Expect(err.Error()).To(Equal(fmt.Sprintf(`Phone: %s does not validate as matches(^[0]\d{9}$)`, fixture)))
+	}
+}

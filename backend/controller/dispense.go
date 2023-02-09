@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"net/http"
-
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team08/entity"
+	"net/http"
 )
 
 // POST /dispenses
@@ -47,13 +47,18 @@ func CreateDispense(c *gin.Context) {
 	}
 	// 14: สร้าง Dispense
 	cr := entity.Dispense{
-		Drug:      drug,      // โยงความสัมพันธ์กับ Entity Drug
-		Practice:  practice,  // โยงความสัมพันธ์กับ Entity Practice
-		Treatment: treatment, // โยงความสัมพันธ์กับ Entity Treatment
-		Doctor:      doctor,           // โยงความสัมพันธ์กับ Entity Doctor
-		Date:   dispense.Date,   // ตั้งค่าฟิลด์ Date
-		Number: dispense.Number, // ตั้งค่าฟิลด์ Number
-		Text:   dispense.Text,   // ตั้งค่าฟิลด์ Text
+		Drug:      drug,            // โยงความสัมพันธ์กับ Entity Drug
+		Practice:  practice,        // โยงความสัมพันธ์กับ Entity Practice
+		Treatment: treatment,       // โยงความสัมพันธ์กับ Entity Treatment
+		Doctor:    doctor,          // โยงความสัมพันธ์กับ Entity Doctor
+		Date:      dispense.Date,   // ตั้งค่าฟิลด์ Date
+		Number:    dispense.Number, // ตั้งค่าฟิลด์ Number
+		Text:      dispense.Text,   // ตั้งค่าฟิลด์ Text
+	}
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(cr); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 15: บันทึก

@@ -76,7 +76,6 @@ type Screening_officer struct {
 
 	//foreignKey
 
-	Country     Nationality `gorm:"references:id" valid:"-"`
 	Nationality Nationality `gorm:"references:id" valid:"-"`
 	Religion    Religion    `gorm:"references:id" valid:"-"`
 	Gender      Gender      `gorm:"references:id" valid:"-"`

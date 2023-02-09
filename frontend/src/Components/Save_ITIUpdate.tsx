@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -23,6 +23,7 @@ import { Save_ITIsInterface } from "../Models/ISave_ITI";
 
 import {GetBuilding,GetRoom,GetState,CreateSave_ITI,GetReady_Treat,ListReady_Treat,GetDoctorByUID} from "../Services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { updateSourceFile } from "typescript";
 import { DoctorInterface } from "../Models/IDoctor";
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -32,11 +33,13 @@ import { DoctorInterface } from "../Models/IDoctor";
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   
-  function Save_ITICreate() {
+  function Save_ITIUpdate() {
     const [Save_ITIs, setSave_ITIs] = useState<Save_ITIsInterface>({
       Date_checkin: new Date(),
       Date_checkout: new Date(),
     });
+    const [Save_ITIs_ID, setSave_ITIs_ID] = React.useState<Number | undefined>(undefined);
+
     const [treatment, setTreatment] = useState<TreatmentsInterface[]>([]);
     const [Building, setBuilding] = useState<BuildingInterface[]>([]);
     const [Room, setRoom] = useState<RoomInterface[]>([]);
@@ -48,6 +51,7 @@ import { DoctorInterface } from "../Models/IDoctor";
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const params = useParams()
 
     const handleClose = (
       event?: React.SyntheticEvent | Event,
@@ -70,12 +74,6 @@ import { DoctorInterface } from "../Models/IDoctor";
       }
     };
 
-    function clear() {
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    }
-    
 // เอาฟังก์ชั่นมารวมกัน
   const final_Change =async (e: SelectChangeEvent) => {
   const id = e.target.value
@@ -93,15 +91,67 @@ import { DoctorInterface } from "../Models/IDoctor";
   console.log(TreatOne);
 }
 
-// เพิ่มฟังก์ชั่น
-const onChange_Save = async (e: SelectChangeEvent) =>{
-  const id = e.target.value
-  let res = await GetReady_Treat(id);
-  if (res) {
-    setTreatOne(res);
-    console.log(res);
-  }
+function timeout(delay: number) {
+  return new Promise(res => setTimeout(res, delay));
 }
+
+function update() {
+    let upsave = {
+      ID: Save_ITIs.ID,
+
+      Date_checkin: Save_ITIs.Date_checkin,
+      Date_checkout: Save_ITIs.Date_checkin,
+
+      TreatmentID: Save_ITIs.TreatmentID,
+      BuildingID: Number(Save_ITIs.BuildingID),
+      RoomID: Number(Save_ITIs.RoomID),
+      StateID: Number(Save_ITIs.StateID),
+    };
+
+    const requestOptions = {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(upsave),
+    };
+    console.log(upsave);
+
+    fetch(`http://localhost:8080/Save_ITIUpdate`, requestOptions)
+      .then((response) => response.json())
+      .then(async (res) => {
+        console.log(res);
+        if (res.data) {
+          setSuccess(true);
+          await timeout(1000); //for 1 sec delay
+          window.location.reload();     
+          
+        } else {
+          setError(true);
+        }
+      });
+  }
+
+  const getSave_ITI = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(`http://localhost:8080/Save_ITI/${params.id}`, requestOptions )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data)
+        if (res.data) {
+          setSave_ITIs(res.data);
+          setSave_ITIs_ID(res.data.ID);
+        }
+      });
+  };
 
 const handleChange = (event: SelectChangeEvent) => {
   const name = event.target.name as keyof typeof Save_ITIs;
@@ -142,40 +192,18 @@ const handleChange = (event: SelectChangeEvent) => {
   }
 };
   useEffect(() => {
-    getDoctorByUID();
     getTreatment();
     getBuilding();
     getRoom();
     getState();
-
+    getSave_ITI();
+    getDoctorByUID();
   }, []);
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
   };
-
-  async function submit() {
-    let data = {
-      DoctorID: convertType(Save_ITIs.DoctorID),
-      TreatmentID: convertType(Save_ITIs.TreatmentID),
-      BuildingID: convertType(Save_ITIs.BuildingID),
-      RoomID: convertType(Save_ITIs.RoomID),
-      StateID: convertType(Save_ITIs.StateID),
-
-      Date_checkin: Save_ITIs.Date_checkin,
-      Date_checkout: Save_ITIs.Date_checkout,
-    };
-    
-    let res = await CreateSave_ITI(data);
-    console.log(res);
-    if (res) {
-      clear();
-      setSuccess(true);
-    } else {
-      setError(true);
-    }
-  }
 
   return (
     <Container maxWidth="md">
@@ -397,7 +425,7 @@ const handleChange = (event: SelectChangeEvent) => {
             </Button>
             <Button
               style={{ float: "right" }}
-              onClick={submit}
+              onClick={update}
               variant="contained"
               color="primary"
             >
@@ -410,4 +438,4 @@ const handleChange = (event: SelectChangeEvent) => {
   );
 }
 
-export default Save_ITICreate;
+export default Save_ITIUpdate;

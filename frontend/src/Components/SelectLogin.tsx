@@ -25,6 +25,12 @@ import SigninScreening from "./SigninScreening";
 import SigninDoctor from "./SigninDoctor";
 import SigninScreening_officer from "./SigninScreening";
 
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import CoPresentIcon from '@mui/icons-material/CoPresent';
+import PersonIcon from '@mui/icons-material/Person';
+import { Grid } from "@mui/material";
+
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -94,10 +100,10 @@ const mdTheme = createTheme({
   });
 
 const menu = [
-    { name: "ฝ่ายผู้ดูแลระบบ", icon: <BookIcon />, path: "/signin_officer" },
-    { name: "ฝ่ายเทคนิคการแพทย์", icon: <HomeIcon />, path: "/signinMed_employee" },
-    { name: "ฝ่ายคัดกรอง", icon: <HomeIcon />, path: "/signinScreening_officer" },
-    { name: "ฝ่ายแพทย์", icon: <HomeIcon />, path: "/signinDoctor" },
+    { name: "ฝ่ายผู้ดูแลระบบ", icon: <ManageAccountsIcon />, path: "/signin_officer" },
+    { name: "ฝ่ายคัดกรอง", icon: <PersonSearchIcon />, path: "/signinScreening_officer" },
+    { name: "ฝ่ายแพทย์", icon: <PersonIcon />, path: "/signinDoctor" },
+    { name: "ฝ่ายเทคนิคการแพทย์", icon: <PersonIcon />, path: "/signinMed_employee" },
 ];
 
 function SelectLogin() {
@@ -136,7 +142,7 @@ function SelectLogin() {
                                 noWrap
                                 sx={{ flexGrow: 1 }}
                             >
-                                System Analysis and Design 1/65 (ระบบลงทะเบียนเรียน)
+                                Software Engineering 2/65 (ระบบโรงพยาบาล)
                             </Typography>
                         </Toolbar>
                     </AppBar>
@@ -197,6 +203,6 @@ function SelectLogin() {
         </Router>
     );
 }
-
+ 
 export default SelectLogin;
 

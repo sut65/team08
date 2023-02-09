@@ -36,7 +36,7 @@ func TestRequestID(t *testing.T) {
 
 	// เช็คข้อมูล RequestID จะต้องขึ้นต้นด้วย R ตามด้วยเลข 6 ตัว
 	Request := Request{
-		R_ID:     "R12345",
+		R_ID:     "R123",
 		R_NAME:   "ตรวจปัจสาวะ",
 		QUANTITY: 200,
 		TIME:     time.Now(),
@@ -51,7 +51,7 @@ func TestRequestID(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("R cannot be blank :Rxxxxxx"))
+	g.Expect(err.Error()).To(gomega.Equal("ผิดรูปแบบ ตัวอย่าง:Rxxxxxx"))
 }
 
 // ////3
@@ -103,13 +103,60 @@ func TestRequest_DATE(t *testing.T) {
 }
 
 // //////5
-func TestRequest_DATETREATMENT(t *testing.T) {
+func TestRequest_NAME(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	// เช็คข้อมูล R_NAME =ได้20ตัวอักษร
+	Request := Request{
+		R_ID:     "R100002",
+		R_NAME:   "ตรวจเลือดดดดดดดดดดดดดดดดดดดดดดดด",
+		QUANTITY: 800,
+		TIME:     time.Now(),
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(Request)
+
+	// ok ต้องเป็น true แปลว่าไม่มี error
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	// err ต้องเป็น nil แปลว่าไม่มี error
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("กรอกค่าได้สูงสุด20ตัวอักษร"))
+}
+
+////////not null
+func TestRequestID_NotBlank(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	// เช็คข้อมูล RequestID จะต้องขึ้นต้นด้วย R ตามด้วยเลข 6 ตัว
+	Request := Request{
+		R_ID:     "",
+		R_NAME:   "ตรวจปัจสาวะ",
+		QUANTITY: 200,
+		TIME:     time.Now(),
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(Request)
+
+	// ok ต้องเป็น true แปลว่าไม่มี error
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	// err ต้องเป็น nil แปลว่าไม่มี error
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"))
+}
+// //////5
+func TestRequest_R_NAME_NotBlank(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
 	// เช็คข้อมูล DATE จะต้องไม่เป็นอดีต
 	Request := Request{
 		R_ID:     "R100002",
-		R_NAME:   "ตรวจเลือดดดดดดดดดดดดดดดดดดดดดดดด",
+		R_NAME:   "",
 		QUANTITY: 800,
 		TIME:     time.Now(),
 	}

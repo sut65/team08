@@ -24,21 +24,21 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const theme = createTheme({
-    palette: {
-      primary: {
-          main: '#698269',
+//     palette: {
+//       primary: {
+//           main: '#698269',
 
-          light: '#B99B6B',
+//           light: '#B99B6B',
 
-          //สีสว่าง
-          contrastText: '#F1DBBF',
-      },
-      secondary: {
-          main: '#AA5656',
-          light: '#B99B6B',
-          contrastText: '#F1DBBF',
-      },
-  },
+//           //สีสว่าง
+//           contrastText: '#F1DBBF',
+//       },
+//       secondary: {
+//           main: '#AA5656',
+//           light: '#B99B6B',
+//           contrastText: '#F1DBBF',
+//       },
+//   },
   });
 
 function SignIn() {
@@ -113,7 +113,7 @@ function SignIn() {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: "url(https://source.unsplash.com/random)",
+                        backgroundImage: "url(https://lh3.googleusercontent.com/wkFLQvuZh54VGx7ROjrRbhjrT0laET55AewuLJ1w7H27GcRdlhCDRq-nxP9cxoGEBKlIGhUvahZ6BGOSJmKJwq_fcKglRJnYxLkkJmk)",
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) =>
                             t.palette.mode === "light"
@@ -176,7 +176,7 @@ function SignIn() {
                                 sx={{ mt: 3, mb: 2 }}
                                 onClick={submit}
                             >
-                                Officer Sign In
+                                Sign In
                             </Button>
                         </Box>
                     </Box>

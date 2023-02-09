@@ -108,7 +108,7 @@ function SigninMed_employee() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: "url(https://i.pinimg.com/564x/55/a8/f7/55a8f770d1550196ec6733e801d35cfc.jpg)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -133,7 +133,7 @@ function SigninMed_employee() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Medical Technique Sign in
             </Typography>
             <Box sx={{ mt: 1 }}>
               <TextField

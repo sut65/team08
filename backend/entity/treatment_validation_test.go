@@ -38,7 +38,7 @@ func TestTreatmentID(t *testing.T) {
 
 	// เช็คข้อมูล TREATMENT_ID จะต้องขึ้นต้นด้วย T ตามด้วยเลข 6 ตัว
 	Treatment := Treatment{
-		TREATMENT_ID: "T12345",
+		TREATMENT_ID: "T123",
 		TREATMENT:    "ปวดหลัง",
 		DATE:         time.Now(),
 		APPOINTMENT:  10,
@@ -55,7 +55,7 @@ func TestTreatmentID(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("T cannot be blank :Txxxxxx"))
+	g.Expect(err.Error()).To(gomega.Equal("ผิดรูปแบบ ตัวอย่าง:Txxxxxx"))
 }
 /////3
 func TestTreatment_APPOINTMENT(t *testing.T) {
@@ -108,10 +108,10 @@ func TestTreatment_DATE(t *testing.T) {
 	g.Expect(err.Error()).To(gomega.Equal("Please enter the current time"))
 }
 /////5
-func TestTreatment_DATETREATMENT(t *testing.T) {
+func TestTreatment_TREATMENT(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
-	// เช็คข้อมูล DATE จะต้องไม่เป็นอดีต
+	// เช็คข้อมูล TREATMENT = ไม่เกิน20ตัว
 	Treatment := Treatment{
 		TREATMENT_ID: "T666666",
 		TREATMENT:    "ปวดหลังงงงงงงงงงงงงงงงงงงงงงงงง",
@@ -130,6 +130,89 @@ func TestTreatment_DATETREATMENT(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Please enter details (20)"))
+	g.Expect(err.Error()).To(gomega.Equal("กรอกค่าได้สูงสุด20ตัวอักษร"))
+}
+
+func TestCONCLUSION_NotBlank(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	Treatment := Treatment{
+		TREATMENT_ID: "T123456",
+		TREATMENT:    "ปวดหลัง",
+		DATE:         time.Now(),
+		APPOINTMENT:  20,
+		CONCLUSION:   "",
+		GUIDANCE:     "นั่งให้ถูกลักษณะ",
+	}
+
+	ok, err := govalidator.ValidateStruct(Treatment)
+
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("CONCLUSION cannot be blank"))
+}
+
+func TestCGUIDANCE_NotBlank(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	Treatment := Treatment{
+		TREATMENT_ID: "T123456",
+		TREATMENT:    "ปวดหลัง",
+		DATE:         time.Now(),
+		APPOINTMENT:  20,
+		CONCLUSION:   "ออฟฟิตซินโดม",
+		GUIDANCE:     "",
+	}
+
+	ok, err := govalidator.ValidateStruct(Treatment)
+
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("GUIDANCE cannot be blank"))
+}
+
+func TestTREATMENT_NotBlank(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	Treatment := Treatment{
+		TREATMENT_ID: "T123456",
+		TREATMENT:    "",
+		DATE:         time.Now(),
+		APPOINTMENT:  20,
+		CONCLUSION:   "ออฟฟิตซินโดม",
+		GUIDANCE:     "นั่งให้ถูกลักษณะ",
+	}
+
+	ok, err := govalidator.ValidateStruct(Treatment)
+
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("TREATMENT cannot be blank"))
+}
+func TestTREATMENTID_NotBlank(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	Treatment := Treatment{
+		TREATMENT_ID: "",
+		TREATMENT:    "ไข้สูง",
+		DATE:         time.Now(),
+		APPOINTMENT:  20,
+		CONCLUSION:   "ออฟฟิตซินโดม",
+		GUIDANCE:     "นั่งให้ถูกลักษณะ",
+	}
+
+	ok, err := govalidator.ValidateStruct(Treatment)
+
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"))
 }
 

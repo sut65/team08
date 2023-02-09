@@ -1541,11 +1541,13 @@ async function Request(data: RequestInterface) {
   let res = await fetch(`${apiUrl}/requests`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-          if (res.data) {
-              return res.data;
-          } else {
-              return false;
-          }
+        if (res.data) {
+          
+          return { status: true, message: res.data };
+        } else {
+       
+          return { status: false, message: res.error };
+        }
       });
 
   return res;

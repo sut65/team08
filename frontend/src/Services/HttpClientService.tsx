@@ -239,11 +239,11 @@ async function Med_Employee(data: MedEmployeeInterface) {
   let res = await fetch(`${apiUrl}/medemployees/create`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-          if (res.data) {
-              return res.data;
-          } else {
-              return false;
-          }
+        if (res.data) {
+          return { status: true, message: res.data };
+        } else {
+          return { status: false, message: res.error };
+        }
       });
 
   return res;

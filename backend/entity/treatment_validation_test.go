@@ -82,3 +82,54 @@ func TestTreatment_APPOINTMENT(t *testing.T) {
 
 	g.Expect(err.Error()).To(gomega.Equal("APPOINTMENT: 101 does not validate as range(0|100)"))
 }
+////////4
+func TestTreatment_DATE(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	// เช็คข้อมูล DATE จะต้องไม่เป็นอดีต
+	Treatment := Treatment{
+		TREATMENT_ID: "T666666",
+		TREATMENT:    "ปวดหลัง",
+		DATE:         time.Date(2021, 1, 1, 12, 00, 00, 00, time.UTC),
+		APPOINTMENT:  20,
+		CONCLUSION:   "ตรวจพบหมอนรองกระดูกด้วย",
+		GUIDANCE:     "นั่งให้ถูกลักษณะ",
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(Treatment)
+
+	// ok ต้องเป็น true แปลว่าไม่มี error
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	// err ต้องเป็น nil แปลว่าไม่มี error
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("Please enter the current time"))
+}
+/////5
+func TestTreatment_DATETREATMENT(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	// เช็คข้อมูล DATE จะต้องไม่เป็นอดีต
+	Treatment := Treatment{
+		TREATMENT_ID: "T666666",
+		TREATMENT:    "ปวดหลังงงงงงงงงงงงงงงงงงงงงงงงง",
+		DATE:         time.Now(),
+		APPOINTMENT:  20,
+		CONCLUSION:   "ตรวจพบหมอนรองกระดูกด้วย",
+		GUIDANCE:     "นั่งให้ถูกลักษณะ",
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(Treatment)
+
+	// ok ต้องเป็น true แปลว่าไม่มี error
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	// err ต้องเป็น nil แปลว่าไม่มี error
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("Please enter details"))
+}
+

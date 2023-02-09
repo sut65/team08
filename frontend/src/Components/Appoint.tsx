@@ -224,7 +224,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             <p>เจ้าหน้าที่ผู้บันทึก</p>
             <FormControl fullWidth variant="outlined">
               <TextField
-                value={screening_officer.ID || ""}
+                value={screening_officer.Screening_officer_Name || ""}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -253,7 +253,18 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={3}>
+            <p>หมายเลขการรักษา</p>
+            <FormControl fullWidth variant="outlined">
+            <TextField
+            value={treatment_Dis?.TREATMENT_ID || ""}
+            InputProps={{
+              readOnly: true,
+            }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={9}>
             <p>รายละเอียดการรักษา</p>
             <FormControl fullWidth variant="outlined">
             <TextField
@@ -311,7 +322,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <p>จำนวนวันที่แพทย์ต้องการนัด</p>
             <FormControl fullWidth variant="outlined">
               <TextField

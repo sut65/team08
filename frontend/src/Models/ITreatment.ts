@@ -29,4 +29,5 @@ export interface TreatmentsInterface {
     DiseaseID?: number;  // foreignkey.ID?
 
 
+
 }

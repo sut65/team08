@@ -422,12 +422,12 @@ type Dispense struct {
 	gorm.Model
 	Date time.Time `valid:"required,IsnotPast~Please enter the current time"`
 
-	Number     uint
-	Text        string
-	DoctorID    *uint
-	TreatmentID *uint
-	DrugID      *uint
-	PracticeID  *uint
+	Number      uint   `valid:"range(0|100)"`
+	Text        string `valid:"maxstringlength(100)~Please enter details"`
+	DoctorID    *uint  `valid:"-"`
+	TreatmentID *uint  `valid:"-"`
+	DrugID      *uint  `valid:"-"`
+	PracticeID  *uint  `valid:"-"`
 
 	Doctor    Doctor    `gorm:"references:id" valid:"-"`
 	Treatment Treatment `gorm:"references:id" valid:"-"`

@@ -23,7 +23,23 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+        main: '#698269',
+
+        light: '#B99B6B',
+
+        //สีสว่าง
+        contrastText: '#F1DBBF',
+    },
+    secondary: {
+        main: '#AA5656',
+        light: '#B99B6B',
+        contrastText: '#F1DBBF',
+    },
+},
+});
 
 function SigninDoctor() {
   const [signin, setSignin] = useState<Partial<SigninDoctorInterface>>({});
@@ -95,7 +111,7 @@ function SigninDoctor() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: "url(https://scontent.fnak2-1.fna.fbcdn.net/v/t39.30808-6/263156316_3131679140492986_628657044570739153_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=174925&_nc_eui2=AeFm8eHr1HTCK7I3rUvfA_o6F8rfVIwRJ1kXyt9UjBEnWbJQCM-acO20F-GKOWn_SmcvM4f5RDfVHIL1lXuzoa33&_nc_ohc=wiYbBEiXeE0AX90YEkm&_nc_ht=scontent.fnak2-1.fna&oh=00_AfCsz85NyxxfkSABGlFyDHZP0mmh_y3nMhk2wPOfnE72iQ&oe=63EA779A)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

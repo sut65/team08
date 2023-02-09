@@ -314,7 +314,7 @@ function Lab() {
   };
 
   const columns: GridColDef[] = [
-    { field: "ไอดี", headerName: "ลำดับ", width: 50 },
+    { field: "ID", headerName: "ไอดี", width: 50 },
     {
       field: "TREATMENT_ID",
       headerName: "เลขกำกับการรักษา",
@@ -346,7 +346,7 @@ function Lab() {
   ];
 
   const columnsLab: GridColDef[] = [
-    { field: "ไอดี", headerName: "ลำดับ", width: 50 },
+    { field: "ID", headerName: "ไอดี", width: 50 },
     {
       field: "UPDATE",
       headerName: "แก้ไข",

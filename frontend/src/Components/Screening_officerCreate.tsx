@@ -48,6 +48,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     const [EducationMajor, setEducationMajors] = useState<string>("");
     const [University, setUniversitys] = useState<string>("");
     const [officers, setOfficers] = useState<OfficersInterface[]>([]);
+    const [ScPassword, setScPassword] = useState<string>("");
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -198,19 +199,18 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           }}
         >
           <Box sx={{ paddingX: 2, paddingY: 1 }}>
-            <Typography
-              component="h2"
-              variant="h6"
-              color="primary"
-              gutterBottom
-            >
-              ข้อมูลเจ้าหน้าที่ฝ่ายคัดกรอง
-            </Typography>
+          <Typography variant="h5" color="primary">
+            <p>ระบบบันทึกข้อมูลฝ่ายคัดกรอง</p>
+          </Typography>
           </Box>
         </Box>
         <Divider />
+        <Box sx={{ paddingX: 2, paddingY: 0.1 }}>
+          <Typography variant="h6" color="primary">
+            <p>ข้อมูลส่วนตัว</p>
+          </Typography>
+        </Box>
         <Grid container spacing={3} sx={{ padding: 2 }}>
-        <Grid item xs={12}><h3>ข้อมูลส่วนตัว</h3>  </Grid>
           <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>

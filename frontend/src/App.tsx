@@ -16,7 +16,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Button from "@mui/material/Button";
-
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 
@@ -54,11 +54,9 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import HotelIcon from '@mui/icons-material/Hotel';
-//import SignIn from "./Components/SigninOfficer";
+
 import  Home  from "./Components/Home";
 import SelectLogin from "./Components/SelectLogin";
-
-// import SignIn from "./components/SignIn";
 
 const drawerWidth = 240;
 
@@ -200,9 +198,10 @@ function App() {
               >
                 ระบบโรงพยาบาล
               </Typography>
-              <Button color="inherit" onClick={signout}>
-                ออกจากระบบ
-              </Button>
+
+              <Button color="inherit" onClick={signout} style={{ fontFamily: "Kanit" }}>
+                    <ExitToAppIcon style={{ fontSize: 30, marginRight: 2 }} />
+                  </Button>
             </Toolbar>
           </AppBar>
           <Drawer variant="permanent" open={open}>

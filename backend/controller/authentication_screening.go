@@ -16,24 +16,24 @@ type LoginPayload_Screening_officer struct {
 
 // SignUpPayload signup body
 type SignUpPayload_Screening_officer struct {
-	Screening_officer_Name string `json:"Screening_officer_Name" valid:"required~Name officer cannot be blank"`
+	Screening_officer_Name string `json:"Screening_officer_Name"`
 	Email                  string `json:"email" `
-	ScreeningIDCard        string `json:"ScreeningIDCard" valid:"matches(^[1-9]\\d{12}$),required~IDCard officer cannot be blank"`
-	Birthday               string `json:"Birthday" valid:"required~Birthday officer cannot be blank"`
+	ScreeningIDCard        string `json:"ScreeningIDCard"`
+	Birthday               string `json:"Birthday"`
 
-	OfficerID     *uint `json:"OfficerID" valid:"-"`
-	PrefixID      *uint `json:"PrefixID" valid:"-"`
-	GenderID      *uint `json:"GenderID" valid:"-"`
-	BloodID       *uint `json:"BloodID" valid:"-"`
-	ReligionID    *uint `json:"ReligionID" valid:"-"`
-	CountryID     *uint `json:"CountryID" valid:"-"`
-	EducationID   *uint `json:"EducationID" valid:"-"`
-	NationalityID *uint `json:"NationalityID" valid:"-"`
+	OfficerID     *uint `json:"OfficerID"`
+	PrefixID      *uint `json:"PrefixID"`
+	GenderID      *uint `json:"GenderID"`
+	BloodID       *uint `json:"BloodID" `
+	ReligionID    *uint `json:"ReligionID"`
+	CountryID     *uint `json:"CountryID"`
+	EducationID   *uint `json:"EducationID"`
+	NationalityID *uint `json:"NationalityID"`
 
-	Phone          string `json:"Phone" valid:"matches(^[0]\\d{9}$),required~Phone officer cannot be blank"`
-	EducationName  string `json:"EducationName" valid:"required~EducationName officer cannot be blank"`
-	EducationMajor string `json:"EducationMajor" valid:"required~EducationMajor officer cannot be blank"`
-	University     string `json:"University" valid:"required~University officer cannot be blank"`
+	Phone          string `json:"Phone"`
+	EducationName  string `json:"EducationName"`
+	EducationMajor string `json:"EducationMajor"`
+	University     string `json:"University"`
 }
 
 // LoginResponse token response
@@ -59,16 +59,12 @@ func Login_Screening_officer(c *gin.Context) {
 	}
 
 	// ตรวจสอบรหัสผ่าน
-	err := bcrypt.CompareHashAndPassword([]byte(Screening_officer.ScreeningIDCard), []byte(payload.ScreeningIDCard))
+	err := bcrypt.CompareHashAndPassword([]byte(Screening_officer.ScPassword), []byte(payload.ScreeningIDCard))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ScreeningIDCard is incerrect"})
 		return
 	}
 
-	// กำหนดค่า SecretKey, Issuer และระยะเวลาหมดอายุของ Token สามารถกำหนดเองได้
-	// SecretKey ใช้สำหรับการ sign ข้อความเพื่อบอกว่าข้อความมาจากตัวเราแน่นอน
-	// Issuer เป็น unique id ที่เอาไว้ระบุตัว client
-	// ExpirationHours เป็นเวลาหมดอายุของ token
 
 	jwtWrapper := service.JwtWrapper{
 		SecretKey:       "SvNQpBN8y3qlVrsGAYYWoJJk56LtzFHx",

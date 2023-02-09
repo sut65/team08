@@ -469,21 +469,21 @@ type Appoint struct {
 // ADD
 type Med_Employee struct {
 	gorm.Model
-	Name           string
-	Age            uint
-	Phone          string
-	Email          string
-	Password       string
-	University     string
-	EducationName  string
-	EducationMajor string
+	Name           string   `valid:"required~กรุณากรอกชื่อ"`
+	Age            uint		`valid:"range(0|100)"`
+	Phone          string 	`valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
+	Email          string	`valid:"email"`
+	Password       string	`valid:"required~กรุณากรอกรหัสผ่าน"`
+	University     string	`valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
+	EducationName  string	`valid:"required~กรุณากรอกการศึกษา"`
+	EducationMajor string	`valid:"required~กรุณากรอกสาขาวิชา"`
 
-	GenderID      *uint
-	PrefixID      *uint
-	EducationID   *uint
-	Gender        Gender          `gorm:"references:id"`
-	Prefix        Prefix          `gorm:"references:id"`
-	Education     Education       `gorm:"references:id"`
+	GenderID      *uint				`valid:"-"`
+	PrefixID      *uint				`valid:"-"`
+	EducationID   *uint				`valid:"-"`
+	Gender        Gender          `gorm:"references:id" valid:"-"`
+	Prefix        Prefix          `gorm:"references:id" valid:"-"`
+	Education     Education       `gorm:"references:id" valid:"-"`
 	Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_EmployeeID"`
 	Request       []Request       `gorm:"foreignKey:Med_EmployeeID"`
 

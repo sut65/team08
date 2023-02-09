@@ -256,8 +256,8 @@ func main() {
 			//LEO
 			// Medical Equipment Employee Routes
 			router.GET("/medemployees", controller.ListMedEmployees)
-			router.GET("/medemployees/:id", controller.GetMed_Employee)
-			router.POST("/medemployees/create", controller.CreateMed_Employee)
+			router.GET("/medemployees/:id", controller.GetMedEmployee)
+			router.POST("/medemployees/create", controller.CreateMedEmployee)
 			router.PATCH("/medemployees", controller.UpdateMedEmployee)
 			router.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
 

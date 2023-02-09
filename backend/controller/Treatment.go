@@ -54,11 +54,11 @@ func CreateTreatment(c *gin.Context) {
 	}
 	// 12: สร้าง WatchVideo
 	wv := entity.Treatment{
-		DiseaseID: treatment.DiseaseID, // โยงความสัมพันธ์กับ Entity
-		PatientID: treatment.PatientID, // โยงความสัมพันธ์กับ Entity
-		StatusID:  treatment.StatusID,  // โยงความสัมพันธ์กับ Entity
-		TrackID:   treatment.TrackID,   // โยงความสัมพันธ์กับ Entity
-		DoctorID:       treatment.DoctorID,  // โยงความสัมพันธ์กับ Entity
+		DiseaseID:    treatment.DiseaseID, // โยงความสัมพันธ์กับ Entity
+		PatientID:    treatment.PatientID, // โยงความสัมพันธ์กับ Entity
+		StatusID:     treatment.StatusID,  // โยงความสัมพันธ์กับ Entity
+		TrackID:      treatment.TrackID,   // โยงความสัมพันธ์กับ Entity
+		DoctorID:     treatment.DoctorID,  // โยงความสัมพันธ์กับ Entity
 		TREATMENT_ID: treatment.TREATMENT_ID,
 		TREATMENT:    treatment.TREATMENT,
 		DATE:         treatment.DATE,
@@ -66,7 +66,7 @@ func CreateTreatment(c *gin.Context) {
 		CONCLUSION:   treatment.CONCLUSION,
 		GUIDANCE:     treatment.GUIDANCE,
 	}
-	// : ขั้นตอนการ validate ข้อมูล 
+	// : ขั้นตอนการ validate ข้อมูล
 	if _, err := govalidator.ValidateStruct(wv); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

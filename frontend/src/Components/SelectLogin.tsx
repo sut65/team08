@@ -75,7 +75,23 @@ const Drawer = styled(MuiDrawer, {
     },
 }));
 
-const mdTheme = createTheme();
+const mdTheme = createTheme({
+    palette: {
+      primary: {
+          main: '#698269',
+
+          light: '#B99B6B',
+
+          //สีสว่าง
+          contrastText: '#F1DBBF',
+      },
+      secondary: {
+          main: '#AA5656',
+          light: '#B99B6B',
+          contrastText: '#F1DBBF',
+      },
+  },
+  });
 
 const menu = [
     { name: "ฝ่ายผู้ดูแลระบบ", icon: <BookIcon />, path: "/signin_officer" },
@@ -85,7 +101,7 @@ const menu = [
 ];
 
 function SelectLogin() {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
     };

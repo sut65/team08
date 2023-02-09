@@ -74,7 +74,7 @@ func CreateAppoint(c *gin.Context) {
 func GetAppoint(c *gin.Context) {
 	var appoint entity.Appoint
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM appoints WHERE id = ?", id).Scan(&appoint).Error; err != nil {
+	if err := entity.DB().Preload("Screening_officer").Preload("Levelcure").Preload("Treatment").Preload("Department").Raw("SELECT * FROM appoints WHERE id = ?", id).Find(&appoint).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

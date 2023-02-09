@@ -57,6 +57,8 @@ import HotelIcon from '@mui/icons-material/Hotel';
 
 import  Home  from "./Components/Home";
 import SelectLogin from "./Components/SelectLogin";
+import Save_ITIUpdate from "./Components/Save_ITIUpdate";
+import Operating_RoomUpdate from "./Components/Operating_RoomUpdate";
 
 const drawerWidth = 240;
 
@@ -259,8 +261,10 @@ function App() {
                 <Route path="/Treatment/create" element={<TreatmentCreate />} />
                 <Route path="/Save_ITICreate" element={<Save_ITICreate />} />
                 <Route path="/Save_ITI" element={<Save_ITI />} />
+                <Route path="/Save_ITIUpdate/:id" element={<Save_ITIUpdate />} />
                 <Route path="/Operating_RoomCreate" element={<Operating_RoomCreate />} />
                 <Route path="/Operating_Room" element={<Operating_Room />} />
+                <Route path="/Operating_RoomUpdate/:id" element={<Operating_RoomUpdate />} />
                 <Route path="/DispenseList" element={<DispenseList />} />
                 <Route path="/DispenseCreate" element={<DispenseCreate />} />
                 <Route path="/AppointList" element={<AppointList />} />

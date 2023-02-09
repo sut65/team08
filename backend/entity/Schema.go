@@ -1,9 +1,9 @@
 package entity
 
 import (
-	"time"
-
+	"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
+	"time"
 )
 
 // Officer บนสุด
@@ -540,4 +540,26 @@ type Request struct {
 
 	LocationID *uint
 	Location   Location `gorm:"references:id"`
+}
+
+func init() {
+	govalidator.CustomTypeTagMap.Set("IsFuture", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.After(time.Now())
+	})
+
+	govalidator.CustomTypeTagMap.Set("IsPresent", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.Equal(time.Now())
+	})
+
+	govalidator.CustomTypeTagMap.Set("IsPast", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.Before(time.Now())
+	})
+	govalidator.CustomTypeTagMap.Set("IsnotPast", func(i interface{}, o interface{}) bool {
+		t := i.(time.Time)
+		// ย้อนหลังไม่เกิน 1 วัน
+		return t.After(time.Now().AddDate(0, 0, -1))
+	})
 }

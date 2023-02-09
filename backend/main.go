@@ -52,7 +52,7 @@ func main() {
 			router.GET("/Save_ITIs", controller.ListSave_ITIs)
 			router.GET("/Save_ITI/:id", controller.GetSave_ITI)
 			router.POST("/Save_ITIs", controller.CreateSave_ITI)
-			router.PATCH("/Save_ITI", controller.UpdateSave_ITI)
+			router.PATCH("/Save_ITIUpdate", controller.UpdateSave_ITI)
 			router.DELETE("/Save_ITI/:id", controller.DeleteSave_ITI)
 			router.GET("/Save_ITIs/ready", controller.ListReady_Save)
 
@@ -60,7 +60,7 @@ func main() {
 			router.GET("/Operating_Rooms", controller.ListOperating_Rooms)
 			router.GET("/Operating_Room/:id", controller.GetOperating_Room)
 			router.POST("/Operating_Rooms", controller.CreateOperating_Room)
-			router.PATCH("/Operating_Room", controller.UpdateOperating_Room)
+			router.PATCH("/Operating_RoomUpdate", controller.UpdateOperating_Room)
 			router.DELETE("/Operating_Room/:id", controller.DeleteOperating_Room)
 			//---------------------------------------------------
 
@@ -277,9 +277,9 @@ func main() {
 
 			// med equipment Routes
 			router.GET("/medicalequipments", controller.ListMedEquipments)
-			router.POST("/medicalequipments", controller.CreateloginMedEquipment)
+			//router.POST("/medicalequipments", controller.CreateloginMedEquipment)
 			router.GET("/medicalequipment/:id", controller.GetMedEquipment)
-			//router.POST("/medicalequipments", controller.CreateMedEquipment)
+			router.POST("/medicalequipments", controller.CreateMedEquipment)
 			router.PATCH("/medicalequipments", controller.UpdateMedEquipment)
 			router.DELETE("/medicalequipments/:id", controller.DeleteMedEquipment)
 
@@ -324,7 +324,7 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT , DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PATCH , DELETE")
 
 		if c.Request.Method == "OPTIONS" {
 

@@ -96,19 +96,32 @@ func DeleteOperating_Room(c *gin.Context) {
 
 // PATCH /operating_room
 func UpdateOperating_Room(c *gin.Context) {
-	var operating_room entity.Save_ITI
-	if err := c.ShouldBindJSON(&operating_room); err != nil {
+	var Operating_Room entity.Operating_Room
+
+	if err := c.ShouldBindJSON(&Operating_Room); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", operating_room.ID).First(&operating_room); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "operating_room not found"})
-		return
+	
+	// สร้าง
+	upoperate := entity.Operating_Room{
+		Datetime: Operating_Room.Datetime,
+
+		Save_ITIID: 	Operating_Room.Save_ITIID,
+		BuildingID:  	Operating_Room.BuildingID,
+		RoomID:		Operating_Room.RoomID,
 	}
-	if err := entity.DB().Save(&operating_room).Error; err != nil {
+
+	// if _, err := govalidator.ValidateStruct(u_p); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	if err := entity.DB().Where("id = ?", Operating_Room.ID).Updates(&upoperate).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": operating_room})
+
+	c.JSON(http.StatusOK, gin.H{"data": upoperate})
 }
 

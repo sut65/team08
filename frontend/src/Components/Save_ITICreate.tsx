@@ -45,12 +45,6 @@ import { DoctorInterface } from "../Models/IDoctor";
       Patient:{Patient_Name:"-----"}
     });
     const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
-  
-
-    // const [Date_checkin, setDate_checkin] = useState<string>("");
-    // const [Time_checkin, setTime_checkin] = useState<string>("");
-    // const [Date_checkout, setDate_checkout] = useState<string>("");
-    // const [Time_checkout, setTime_checkout] = useState<string>("");
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -81,6 +75,7 @@ import { DoctorInterface } from "../Models/IDoctor";
         window.location.reload();
       }, 1000);
     }
+    
 // เอาฟังก์ชั่นมารวมกัน
   const final_Change =async (e: SelectChangeEvent) => {
   const id = e.target.value
@@ -97,6 +92,7 @@ import { DoctorInterface } from "../Models/IDoctor";
   setTreatOne(res);
   console.log(TreatOne);
 }
+
 // เพิ่มฟังก์ชั่น
 const onChange_Save = async (e: SelectChangeEvent) =>{
   const id = e.target.value
@@ -276,7 +272,7 @@ const handleChange = (event: SelectChangeEvent) => {
                 name: "Patiend",
               }}
               // แก้ไขตัวแปร ******************
-              value={TreatOne?.Patient?.Patient_Name + "" || "aa"}
+              value={TreatOne?.Patient?.Patient_Name + ""}
               // onChange={handleInputChange_Text}
             />
           </FormControl>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -13,10 +13,11 @@ import { ListSave_ITIs } from "../Services/HttpClientService";
 
 function Save_ITIList() {
     const [Save_ITIs, setSave_ITIs] = useState<Save_ITIsInterface[]>([]);
-
     const [Save_ITIID, setSave_ITIID] = React.useState(0);
+
     const [openDelete, setOpendelete] = React.useState(false);
     const [openUpdate, setOpenupdate] = React.useState(false);
+    const navigate = useNavigate();
   
     useEffect(() => {
       getSave_ITIs();
@@ -26,6 +27,7 @@ function Save_ITIList() {
       setSave_ITIID(Number(params.row.ID));
       localStorage.setItem("Save_ITIID", params.row.ID);
     };
+
     const handleClose = () => {
       setOpendelete(false);
       setOpenupdate(false);
@@ -38,11 +40,9 @@ function Save_ITIList() {
           headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
               "Content-Type": "application/json",
-          },
-          
+          }, 
       };
       
-  
       await fetch(apiUrl, requestOptions)
         .then((response) => response.json())
         .then((res) => {
@@ -141,20 +141,24 @@ function Save_ITIList() {
             </Dialog>
           
         {/* ยืนยันการแก้ไข */}
-        <Dialog open={openUpdate} onClose={handleClose} >
+        {Save_ITIs.map((row) => (
+            <Dialog open={openUpdate} onClose={handleClose} key={row.ID}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <DialogTitle><div className="good-font">ยืนยันการแก้ไขรายการ</div></DialogTitle>
                 <Button
                         variant="contained"
                         color="primary"
+                        aria-lable="outlined button group"
                         //กด "ยืนยัน" ไปที่หน้าแก้ไข
-                        component={RouterLink}
-                        to="/EmployeeattemdanceINUpdate"
+                        onClick={() => navigate({ pathname: `/save_itiUpdate/${row.ID}` })} autoFocus
                     >
                         <div className="good-font">
-                            ยืนยัน
+                          ยืนยัน
                         </div>
-                    </Button>
-            </Dialog>
+                  </Button>
+              </Dialog>
+        ))}
+
         <Container maxWidth="md">
           <Box
             display="flex"

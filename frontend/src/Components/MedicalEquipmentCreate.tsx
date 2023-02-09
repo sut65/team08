@@ -49,9 +49,11 @@ function MedicalEquipmentCreate() {
 
   const [Equipment, setEquipments] = useState<string>("");
   const [Quantity, setQuantitys] = useState<string>("");
+  const [Shop, setShops] = useState<string>("");
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   
 
@@ -124,40 +126,61 @@ function MedicalEquipmentCreate() {
     let data = {
         Equipment: (Equipment),
         Quantity: (convertType(Quantity)),
+        Shop: (Shop),
         BrandID: convertType(MedicalEquipment.BrandID),
         Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
         Med_EmployeeID: convertType(MedicalEquipment.Med_EmployeeID),
     };
+    console.log()
   
-    console.log(data)
-    let res = await MedicalEquipments(data);
-    if (res) {
-      setSuccess(true);
-    } else {
-      setError(true);
-    }
-  }
+    const apiUrl = "http://localhost:8080";
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch(`${apiUrl}/medicalequipments`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res)
+        if (res.data) {
+          console.log("บันทึกได้")
+          setSuccess(true);
+          setErrorMessage("บันทึกได้")
+        } else {
+          console.log("บันทึกไม่ได้")
+          setError(true);
+          setErrorMessage(res.error)
+        }
+});
+}
 
   return (
     <Container maxWidth="md">
       <Snackbar
+        id='success'
         open={success}
         autoHideDuration={3000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
-          Successed!!
+        บันทึกข้อมูลสำเร็จ
         </Alert>
       </Snackbar>
       <Snackbar
+        id='error'
         open={error}
         autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="error">
-          Unsuccess!!
+        บันทึกข้อมูลไม่สำเร็จ : {errorMessage}
         </Alert>
       </Snackbar>
       <Paper>
@@ -252,6 +275,12 @@ function MedicalEquipmentCreate() {
             </FormControl>  
           </Grid>
 
+          <Grid item xs={6}>
+                <p>ร้านค้า</p>
+                <TextField fullWidth id="Shop" type="string" variant="outlined"  
+                onChange={(event) => setShops(event.target.value)} />
+              </Grid>
+
           {/* <Grid item xs={12}>
           <p>Employee</p>
             <FormControl fullWidth variant="outlined">
@@ -281,7 +310,7 @@ function MedicalEquipmentCreate() {
           <Grid item xs={12}>
             <Button
               component={RouterLink}
-              to="/medicalequipments"
+              to="/medicalequipment"
               variant="contained"
               color="inherit"
             >

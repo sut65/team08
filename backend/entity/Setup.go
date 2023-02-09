@@ -95,7 +95,7 @@ func SetupDatabase() {
 	db.Model(&Screening_officer{}).Create(&Screening_officer{
 		
 		Email:    "pp@gmail.com",
-		ScreeningIDCard: string(password2),
+		ScPassword: string(password2),
 	})
 
 	var Sabaithip Officer
@@ -53181,7 +53181,7 @@ func SetupDatabase() {
 		TREATMENT_ID: "201_TREATMENT_ID",
 		TREATMENT:    "TREATMENT",
 		DATE:         t1,
-		APPOINTMENT:  "APPOINTMENT",
+		APPOINTMENT:  21,
 		CONCLUSION:   "CONCLUSION",
 		GUIDANCE:     "GUIDANCE",
 		Status:       S2,
@@ -53192,7 +53192,7 @@ func SetupDatabase() {
 		TREATMENT_ID: "treatment_2",
 		TREATMENT:    "TREATMENT",
 		DATE:         t1,
-		APPOINTMENT:  "APPOINTMENT",
+		APPOINTMENT:  20,
 		CONCLUSION:   "CONCLUSION",
 		GUIDANCE:     "GUIDANCE",
 		Status:       S2,

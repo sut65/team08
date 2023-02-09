@@ -23,7 +23,23 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+        main: '#698269',
+
+        light: '#B99B6B',
+
+        //สีสว่าง
+        contrastText: '#F1DBBF',
+    },
+    secondary: {
+        main: '#AA5656',
+        light: '#B99B6B',
+        contrastText: '#F1DBBF',
+    },
+},
+});
 
 function SigninScreening_officer() {
   const [signin, setSignin] = useState<Partial<SigninScreeningInterface>>({});

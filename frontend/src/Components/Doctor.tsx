@@ -438,7 +438,7 @@ function Doctor() {
   };
 
   const columns: GridColDef[] = [
-    { field: "ID", headerName: "ลำดับ", width: 50 },
+    { field: "ไอดี", headerName: "ลำดับ", width: 50 },
     {
       field: "UPDATE",
       headerName: "แก้ไข",

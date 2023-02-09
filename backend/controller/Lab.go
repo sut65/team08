@@ -12,6 +12,7 @@ import (
 
 func CreateLab(c *gin.Context) {
 	var Lab entity.Lab
+
 	var Lab_Name entity.Lab_Name
 	var Treatment entity.Treatment
 	var Med_Employee entity.Med_Employee
@@ -19,6 +20,22 @@ func CreateLab(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&Lab); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", Lab.LabNameID).First(&Lab_Name); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Lab_NameID not found"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", Lab.TreatmentID).First(&Treatment); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "TreatmentID not found"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", Lab.Med_EmployeeID).First(&Med_Employee); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Med_EmployeeID not found"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", Lab.DoctorID).First(&Doctor); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "DoctorID not found"})
 		return
 	}
 

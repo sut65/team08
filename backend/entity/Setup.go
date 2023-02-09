@@ -95,7 +95,7 @@ func SetupDatabase() {
 	db.Model(&Screening_officer{}).Create(&Screening_officer{
 		
 		Email:    "pp@gmail.com",
-		ScreeningIDCard: string(password2),
+		ScPassword: string(password2),
 	})
 
 	var Sabaithip Officer

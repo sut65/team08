@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -13,10 +13,11 @@ import { GetOperating_Room } from "../Services/HttpClientService";
 
 function Operating_RoomList() {
     const [Operating_Rooms, setOperating_Rooms] = useState<Operating_RoomsInterface[]>([]);
+    const [Operating_RoomID, setOperating_RoomID] = React.useState(0);
 
-     const [Operating_RoomID, setOperating_RoomID] = React.useState(0);
     const [openDelete, setOpendelete] = React.useState(false);
     const [openUpdate, setOpenupdate] = React.useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
       getOperating_Rooms();
@@ -26,6 +27,7 @@ function Operating_RoomList() {
       setOperating_RoomID(Number(params.row.ID));
       localStorage.setItem("Operating_RoomID", params.row.ID);
     };
+    
     const handleClose = () => {
       setOpendelete(false);
       setOpenupdate(false);
@@ -39,10 +41,8 @@ function Operating_RoomList() {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
               "Content-Type": "application/json",
           },
-          
       };
       
-  
       await fetch(apiUrl, requestOptions)
         .then((response) => response.json())
         .then((res) => {
@@ -133,20 +133,24 @@ function Operating_RoomList() {
             </Dialog>
           
         {/* ยืนยันการแก้ไข */}
-        <Dialog open={openUpdate} onClose={handleClose} >
+        {Operating_Rooms.map((row) => (
+            <Dialog open={openUpdate} onClose={handleClose} key={row.ID}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <DialogTitle><div className="good-font">ยืนยันการแก้ไขรายการ</div></DialogTitle>
                 <Button
                         variant="contained"
                         color="primary"
+                        aria-lable="outlined button group"
                         //กด "ยืนยัน" ไปที่หน้าแก้ไข
-                        component={RouterLink}
-                        to="/EmployeeattemdanceINUpdate"
+                        onClick={() => navigate({ pathname: `/operating_roomUpdate/${row.ID}` })} autoFocus
                     >
                         <div className="good-font">
-                            ยืนยัน
+                          ยืนยัน
                         </div>
-                    </Button>
-            </Dialog>
+                  </Button>
+              </Dialog>
+        ))}
+
         <Container maxWidth="md">
           <Box
             display="flex"

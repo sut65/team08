@@ -74,7 +74,7 @@ func CreateDispense(c *gin.Context) {
 func GetDispense(c *gin.Context) {
 	var dispense entity.Dispense
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM dispenses WHERE id = ?", id).Scan(&dispense).Error; err != nil {
+	if err := entity.DB().Preload("Doctor").Preload("Drug").Preload("Treatment").Preload("Practice").Raw("SELECT * FROM dispenses WHERE id = ?", id).Find(&dispense).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

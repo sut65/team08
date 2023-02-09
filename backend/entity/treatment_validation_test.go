@@ -38,7 +38,7 @@ func TestTreatmentID(t *testing.T) {
 
 	// เช็คข้อมูล TREATMENT_ID จะต้องขึ้นต้นด้วย T ตามด้วยเลข 6 ตัว
 	Treatment := Treatment{
-		TREATMENT_ID: "T11111",
+		TREATMENT_ID: "T12345",
 		TREATMENT:    "ปวดหลัง",
 		DATE:         time.Now(),
 		APPOINTMENT:  10,
@@ -55,7 +55,7 @@ func TestTreatmentID(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("T cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("T cannot be blank :Txxxxxx"))
 }
 /////3
 func TestTreatment_APPOINTMENT(t *testing.T) {
@@ -130,6 +130,6 @@ func TestTreatment_DATETREATMENT(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Please enter details"))
+	g.Expect(err.Error()).To(gomega.Equal("Please enter details (20)"))
 }
 

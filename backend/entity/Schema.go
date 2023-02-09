@@ -533,7 +533,7 @@ type Request struct {
 	gorm.Model
 	R_ID     string    `valid:"matches(^R\\d{6}$)~R cannot be blank"`
 	R_NAME   string    `valid:"maxstringlength(20)~Please enter details"`
-	QUANTITY uint      `valid:"range(0|2000)"`
+	QUANTITY uint      `valid:"range(1|2000)"`
 	TIME     time.Time `valid:"required,CheckDateTime~Please enter the current time"`
 
 	Med_EmployeeID *uint        `valid:"-"`

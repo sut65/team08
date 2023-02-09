@@ -50,6 +50,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     const [EducationMajor, setEducationMajors] = useState<string>("");
     const [University, setUniversitys] = useState<string>("");
     const [officers, setOfficers] = useState<OfficersInterface[]>([]);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -138,6 +139,33 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
   };
 
   async function submit() {
+
+    if (Screening_officers.PrefixID == undefined){
+      setError(true);
+      setAlertMessage("กรุณาเลือกคำนำหน้า");
+  }
+    else if (Screening_officers.GenderID == undefined){
+      setError(true);
+      setAlertMessage("กรุณาเลือกเพศ")
+  }
+    else if (Screening_officers.BloodID == undefined){
+      setError(true);
+      setAlertMessage("กรุณาเลือกกรุ๊ปเลือด")
+    }
+    else if (Screening_officers.ReligionID == undefined){
+      setError(true);
+      setAlertMessage("กรุณาเลือกศาสนา")
+  }
+  else if (Screening_officers.NationalityID == undefined){
+    setError(true);
+    setAlertMessage("กรุณาเลือกสัญชาติ")
+  }
+  else if (Screening_officers.EducationID == undefined){
+    setError(true);
+    setAlertMessage("กรุณาเลือกระดับการศึกษา")
+  }
+
+    else{
     let data = {
       PrefixID: convertType(Screening_officers.PrefixID),
       GenderID: convertType(Screening_officers.GenderID),
@@ -168,6 +196,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
       setError(true);
     }
   }
+}
 
   return (
     <Container maxWidth="md">
@@ -453,7 +482,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           <Grid item xs={12}>
           <Button
               component={RouterLink}
-              to="/PatientList"
+              to="/Screening_officerList"
               variant="contained"
               color="inherit"
               startIcon={<BoyIcon />}

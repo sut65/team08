@@ -12,6 +12,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
+import SaveIcon from '@mui/icons-material/Save';
+import BoyIcon from '@mui/icons-material/Boy';
 
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
@@ -210,19 +212,18 @@ const getAddress = async () => {
           }}
         >
           <Box sx={{ paddingX: 2, paddingY: 1 }}>
-            <Typography
-              component="h2"
-              variant="h6"
-              color="primary"
-              gutterBottom
-            >
-              ข้อมูลผู้ป่วย
-            </Typography>
+          <Typography variant="h5" color="primary">
+            <p>ระบบบันทึกข้อมูลผู้ป่วย</p>
+          </Typography>
           </Box>
         </Box>
         <Divider />
+        <Box sx={{ paddingX: 2, paddingY: 0.1 }}>
+          <Typography variant="h6" color="primary">
+            <p>ข้อมูลส่วนตัวผู้ป่วย</p>
+          </Typography>
+        </Box>
         <Grid container spacing={3} sx={{ padding: 2 }}>
-        <Grid item xs={12}><h3>ข้อมูลส่วนตัว</h3>  </Grid>
           <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>
@@ -248,13 +249,11 @@ const getAddress = async () => {
 
           <Grid item xs={8}>
                 <p>ชื่อ-นามสกุล</p>
-                <TextField fullWidth id="Patient_Name" type="string" variant="outlined"  
+                <TextField fullWidth id="Patient_Name" type="string" variant="outlined"
+                label="ชื่อ-นามสกุล"  
                 onChange={(event) => setPatient_Names(event.target.value)} />
-              </Grid>
-
-
-          
-              <Grid item xs={4}>
+              </Grid>          
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>
               <Select
@@ -326,6 +325,7 @@ const getAddress = async () => {
           <Grid item xs={4}>
                 <p>วันเดือนปีเกิด</p>
                 <TextField fullWidth id="Birthday" type="string" variant="outlined"  
+                label="DD/MM/YYYY" 
                 onChange={(event) => setBirthdays(event.target.value)} />
               </Grid>
 
@@ -356,7 +356,7 @@ const getAddress = async () => {
             <FormControl fullWidth variant="outlined">
               <p>เชื้อชาติ</p>
               <Select
-                native
+                disabled
                 value={Patients.NationalityID + ""}
                 onChange={handleChange}
                 inputProps={{
@@ -376,30 +376,40 @@ const getAddress = async () => {
           </Grid>
 
           
-          <Grid item xs={3.5}>
+          <Grid item xs={3}>
                 <p>อายุ</p>
-                <TextField fullWidth id="ScreeningIDCard" type="number" variant="outlined"  
+                <TextField fullWidth id="ScreeningIDCard" type="number" variant="outlined" 
+                inputProps={{ name: "Age", min: 0}} 
                 onChange={(event) => setAges(event.target.value)} />
               </Grid>
 
-          <Grid item xs={5.5}>
+          <Grid item xs={9}>
                 <p>รหัสบัตรประชาชน</p>
-                <TextField fullWidth id="IDCard" type="string" variant="outlined"  
+                <TextField fullWidth id="IDCard" type="string" variant="outlined" 
+                 label="รหัสบัตรประชาชน 13 หลัก" 
                 onChange={(event) => setIDCards(event.target.value)} />
               </Grid>
+          </Grid>
 
-          <Grid item xs={12}><h3>ข้อมูลการติดต่อ</h3>  </Grid>
+          <Box sx={{ paddingX: 2, paddingY: 0.1 }}>
+          <Divider />
+          <Typography variant="h6" color="primary">
+            <p>ข้อมูลการติดต่อ</p>
+          </Typography>
+          </Box>
+          <Grid container spacing={3} sx={{ padding: 2 }}>
 
           <Grid item xs={6}>
                 <p>เบอร์โทรศัพท์</p>
-                <TextField fullWidth id="Phone" type="string" variant="outlined"  
+                <TextField fullWidth id="Phone" type="string" variant="outlined" 
+                label="ตัวอย่าง 08xxxxxxxx" 
                 onChange={(event) => setPhones(event.target.value)} />
               </Grid>
-          <Grid item xs={6}> </Grid>
 
           <Grid item xs={6}>
                 <p>บ้านเลขที่</p>
                 <TextField fullWidth id="House_ID" type="string" variant="outlined"  
+                label="บ้านเลขที่" 
                 onChange={(event) => setHouse_IDs(event.target.value)} />
               </Grid>
           
@@ -430,7 +440,7 @@ const getAddress = async () => {
             <FormControl fullWidth variant="outlined">
               <p>อำเภอ</p>
               <Select
-                native
+                disabled
                 value={Patients.AddressID + ""}
                 onChange={handleChange}
                 inputProps={{
@@ -453,7 +463,7 @@ const getAddress = async () => {
             <FormControl fullWidth variant="outlined">
               <p>จังหวัด</p>
               <Select
-                native
+                disabled
                 value={Patients.AddressID + ""}
                 onChange={handleChange}
                 inputProps={{
@@ -476,7 +486,7 @@ const getAddress = async () => {
             <FormControl fullWidth variant="outlined">
               <p>รหัสไปรณีย์</p>
               <Select
-                native
+                disabled
                 value={Patients.AddressID + ""}
                 onChange={handleChange}
                 inputProps={{
@@ -495,26 +505,26 @@ const getAddress = async () => {
             </FormControl>
           </Grid>
 
-          
-      
-
-
           <Grid item xs={12}>
-            <Button
+          <Button
               component={RouterLink}
-              to="/PatientCreate"
+              to="/PatientList"
               variant="contained"
               color="inherit"
+              startIcon={<BoyIcon />}
             >
-              กลับ
+              ดูข้อมูลผู้ป่วย
             </Button>
+
             <Button
               style={{ float: "right" }}
               onClick={submit}
               variant="contained"
               color="primary"
+              startIcon={<SaveIcon />}
+
             >
-              บันทึก
+              บันทึกข้อมูลผู้ป่วย
             </Button>
           </Grid>
         </Grid>

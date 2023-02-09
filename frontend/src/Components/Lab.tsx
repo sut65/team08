@@ -13,6 +13,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -62,6 +63,24 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   ref
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const theme = createTheme({
+  palette: {
+    primary: {
+        main: '#698269',
+
+        light: '#B99B6B',
+
+        //สีสว่าง
+        contrastText: '#F1DBBF',
+    },
+    secondary: {
+        main: '#AA5656',
+        light: '#B99B6B',
+        contrastText: '#F1DBBF',
+    },
+},
 });
 
 function Lab() {

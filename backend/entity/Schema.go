@@ -316,12 +316,12 @@ type Track struct {
 // การรักษา
 type Treatment struct {
 	gorm.Model
-	TREATMENT_ID string    `valid:"matches(^T\\d{6}$)~T cannot be blank :Txxxxxx"`
-	TREATMENT    string    `valid:"maxstringlength(20)~Please enter details (20)"`
+	TREATMENT_ID string    `gorm:"uniqueIndex" valid:"matches(^T\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Txxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"`
+	TREATMENT    string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~TREATMENT cannot be blank"`
 	DATE         time.Time `valid:"required,CheckDateTime~Please enter the current time"`
 	APPOINTMENT  uint      `valid:"range(0|100)"`
-	CONCLUSION   string    `valid:"maxstringlength(100)~Please enter details (100)"`
-	GUIDANCE     string    `valid:"maxstringlength(100)~Please enter details (100)"`
+	CONCLUSION   string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~CONCLUSION cannot be blank"`
+	GUIDANCE     string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~GUIDANCE cannot be blank"`
 
 	DoctorID *uint  `valid:"-"`
 	Doctor   Doctor `gorm:"references:id" valid:"-"`
@@ -529,9 +529,9 @@ type Location struct {
 // ตารางหลัก การเบิก
 type Request struct {
 	gorm.Model
-	R_ID     string    `valid:"matches(^R\\d{6}$)~R cannot be blank :Rxxxxxx"`
-	R_NAME   string    `valid:"maxstringlength(20)~Please enter details (20)"`
-	QUANTITY uint      `valid:"range(1|1000)"`
+	R_ID     string    `gorm:"uniqueIndex" valid:"matches(^R\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Rxxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"`
+	R_NAME   string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~Please enter details (20)"`
+	QUANTITY uint      `valid:"range(1|1000),required~cannot be blank :range(1|1000)"`
 	TIME     time.Time `valid:"required,CheckDateTime~Please enter the current time"`
 
 	Med_EmployeeID *uint        `valid:"-"`

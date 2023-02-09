@@ -18,6 +18,7 @@ import { TreatmentsInterface } from "../Models/ITreatment";
 import { PatientsInterface } from "../Models/IPatient";
 import { StatusInterface } from "../Models/IStatus";
 import { TrackInterface } from "../Models/ITrack";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   GetDisease,
   GetStatus,
@@ -210,6 +211,7 @@ function TreatmentCreate() {
                 id="TREATMENT_ID"
                 type="string"
                 variant="outlined"
+                label="Txxxxxx"
                 onChange={(event) => setTREATMENT_ID(event.target.value)} />
             </Grid>
             <Grid item xs={6}>
@@ -292,7 +294,7 @@ function TreatmentCreate() {
 
             <Grid item xs={6}>
               <FormControl fullWidth variant="outlined">
-                <p>สถาณะติดตามผล</p>
+                <p>สถานะติดตามผล</p>
                 <Select
                   native
                   value={treatment.TrackID + ""}
@@ -302,7 +304,7 @@ function TreatmentCreate() {
                   }}
                 >
                   <option aria-label="None" value="">
-                    กรุณาเลือกสถาณะติดตามผล
+                    กรุณาเลือกสถานะติดตามผล
                   </option>
                   {Track.map((item: TrackInterface) => (
                     <option value={item.ID} key={item.ID}>
@@ -320,6 +322,7 @@ function TreatmentCreate() {
                 id="APPOINTMENT"
                 type="string"
                 variant="outlined"
+                label="0-100"
                 onChange={(event) => setAPPOINTMENT(event.target.value)} />
               {/*นัดครั้งถัดไป*/}
             </Grid>
@@ -348,7 +351,7 @@ function TreatmentCreate() {
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth variant="outlined">
-                <p>สถาณะการรักษา</p>
+                <p>สถานะการรักษา</p>
                 <Select
                   native
                   value={treatment.StatusID + ""}
@@ -358,7 +361,7 @@ function TreatmentCreate() {
                   }}
                 >
                   <option aria-label="None" value="">
-                    กรุณาเลือกสถาณะการรักษา
+                    กรุณาเลือกสถานะการรักษา
                   </option>
                   {Status.map((item: StatusInterface) => (
                     <option value={item.ID} key={item.ID}>
@@ -369,7 +372,7 @@ function TreatmentCreate() {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Button component={RouterLink} to="/students" variant="contained" color='info'>Back</Button>
+              <Button component={RouterLink} to="/Treatments" variant="contained" color='info' startIcon={<FavoriteIcon />}>ดูข้อมูลการรักษา</Button>
               <Button
                 variant="contained"
                 color='success'

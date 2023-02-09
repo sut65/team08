@@ -23,6 +23,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { MedEmployeeInterface } from '../Models/IMedEmployee';
 import { MedicalEquimentInterface } from '../Models/IMedEquipment';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 //import moment from 'moment';
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -118,7 +119,7 @@ function RequestCreate() {
     };
 
     let res = await Request(data);
-    if (res) {
+    if (res.status) {
       setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
@@ -165,7 +166,7 @@ function RequestCreate() {
               paddingY: 2,
             }}
           >
-            <h2>Creat Request</h2>
+            การเบิกอุปกรณ์เครื่องมือแลป
           </Box>
           <hr />
           <Grid container spacing={2} sx={{ padding: 2 }} >
@@ -267,7 +268,7 @@ function RequestCreate() {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Button component={RouterLink} to="/students" variant="contained" color='info'>Back</Button>
+              <Button component={RouterLink} to="/requests" variant="contained" color='info' startIcon={<FactCheckIcon /> }>ดูข้อมูลการเบิกอุปกรณ์เครื่องมือแลป</Button>
               <Button
                 variant="contained"
                 color='success'

@@ -123,7 +123,6 @@ const mdTheme = createTheme({
 
 const menu = [
   
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/",role: 'officer' },
   { name: "ข้อมูลฝ่ายคัดกรอง", icon: <AccountCircleIcon />, path: "/Screening_officerList" ,role: 'officer'},
   { name: "ข้อมูลผู้ป่วย", icon: <PersonAddAlt1Icon />, path: "/PatientList" ,role: 'screening_officer'},
   { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" ,role: 'officer'},

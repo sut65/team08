@@ -9,7 +9,7 @@ export interface TreatmentsInterface {
     TREATMENT_ID?: string;
     TREATMENT?: string;
     DATE?: Date | null;
-    APPOINTMENT?: string;
+    APPOINTMENT?: number;
     CONCLUSION?: string;
     GUIDANCE?: string;
 

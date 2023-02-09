@@ -50,8 +50,10 @@ function TreatmentCreate() {
   const [doctor, setDoctors] = useState<DoctorInterface[]>([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [APPOINTMENT, setAPPOINTMENT] = useState<string>("");
+  const [APPOINTMENT, setAPPOINTMENT] = useState<string>(""); 
   const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface[]>([]);
+
+  const [message, setAlertMessage] = React.useState("");
 
 
   // handleClose ประมาณว่าแสดงสเน็บบลาเร็จ ก็ปิดไป
@@ -138,14 +140,16 @@ function TreatmentCreate() {
       DATE: treatment.DATE,
       CONCLUSION: (CONCLUSION),
       GUIDANCE: (GUIDANCE),
-      APPOINTMENT: (APPOINTMENT),
+      APPOINTMENT: convertType(APPOINTMENT),
 
     };
 
     let res = await Treatment(data);
-    if (res) {
+    if (res.status) {
+      setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
+      setAlertMessage(res.message);
       setError(true);
     }
   };
@@ -155,16 +159,19 @@ function TreatmentCreate() {
     <div>
       <Container maxWidth="md">
         <Snackbar
+          id="success"
           open={success}
-          autoHideDuration={3000}
+          autoHideDuration={6000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert onClose={handleClose} severity="success">
             บันทึกข้อมูลสำเร็จ
+            {message}
           </Alert>
         </Snackbar>
         <Snackbar
+          id="error"
           open={error}
           autoHideDuration={6000}
           onClose={handleClose}
@@ -172,6 +179,7 @@ function TreatmentCreate() {
         >
           <Alert onClose={handleClose} severity="error">
             บันทึกข้อมูลไม่สำเร็จ
+            {message}
           </Alert>
         </Snackbar>
         {/*<Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />*/}

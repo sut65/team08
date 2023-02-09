@@ -1,7 +1,9 @@
 package entity
 
 import (
+
 	"github.com/asaskevich/govalidator"
+
 	"gorm.io/gorm"
 	"time"
 )
@@ -255,8 +257,8 @@ type Doctor struct {
 	Dispense []Dispense `gorm:"foreignkey:DoctorID" valid:"-"`
 
 	//J
-	Save_ITI       []Save_ITI       `gorm:"foreignkey:DoctorID" valid:"-"`
-	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID" valid:"-"`
+	Save_ITI []Save_ITI `gorm:"foreignkey:DoctorID"`
+	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID"`
 
 	//
 	OfficerID *uint   `valid:"-"`
@@ -316,27 +318,27 @@ type Track struct {
 // การรักษา
 type Treatment struct {
 	gorm.Model
-	TREATMENT_ID string
-	TREATMENT    string
-	DATE         time.Time
-	APPOINTMENT  string
-	CONCLUSION   string
-	GUIDANCE     string
+	TREATMENT_ID string    `valid:"matches(^T\\d{6}$)~T cannot be blank"`
+	TREATMENT    string    `valid:"maxstringlength(20)~Please enter details"`
+	DATE         time.Time `valid:"required,CheckDateTime~Please enter the current time"`
+	APPOINTMENT  uint      `valid:"range(0|100)"`
+	CONCLUSION   string    `valid:"maxstringlength(100)~Please enter details"`
+	GUIDANCE     string    `valid:"maxstringlength(100)~Please enter details"`
 
-	DoctorID *uint
-	Doctor   Doctor `gorm:"references:id"`
+	DoctorID *uint  `valid:"-"`
+	Doctor   Doctor `gorm:"references:id" valid:"-"`
 
-	StatusID *uint
-	Status   Status `gorm:"references:id"`
+	StatusID *uint  `valid:"-"`
+	Status   Status `gorm:"references:id" valid:"-"`
 
-	TrackID *uint
-	Track   Track `gorm:"references:id"`
+	TrackID *uint `valid:"-"`
+	Track   Track `gorm:"references:id" valid:"-"`
 
-	PatientID *uint
-	Patient   Patient `gorm:"references:id"`
+	PatientID *uint   `valid:"-"`
+	Patient   Patient `gorm:"references:id" valid:"-"`
 
-	DiseaseID *uint
-	Disease   Disease `gorm:"references:id"`
+	DiseaseID *uint   `valid:"-"`
+	Disease   Disease `gorm:"references:id" valid:"-"`
 
 	Save_ITI *Save_ITI `gorm:"foreignkey:TreatmentID"`
 
@@ -420,12 +422,12 @@ type Dispense struct {
 	gorm.Model
 	Date time.Time `valid:"required,IsnotPast~Please enter the current time"`
 
-	Number      uint   `valid:"range(0|100)"`
-	Text        string `valid:"maxstringlength(100)~Please enter details"`
-	DoctorID    *uint  `valid:"-"`
-	TreatmentID *uint  `valid:"-"`
-	DrugID      *uint  `valid:"-"`
-	PracticeID  *uint  `valid:"-"`
+	Number     uint
+	Text        string
+	DoctorID    *uint
+	TreatmentID *uint
+	DrugID      *uint
+	PracticeID  *uint
 
 	Doctor    Doctor    `gorm:"references:id" valid:"-"`
 	Treatment Treatment `gorm:"references:id" valid:"-"`
@@ -529,19 +531,31 @@ type Location struct {
 // ตารางหลัก การเบิก
 type Request struct {
 	gorm.Model
-	R_ID     string
-	R_NAME   string
-	QUANTITY string //int
-	TIME     time.Time
+	R_ID     string    `valid:"matches(^R\\d{6}$)~R cannot be blank"`
+	R_NAME   string    `valid:"maxstringlength(20)~Please enter details"`
+	QUANTITY uint      `valid:"range(0|2000)"`
+	TIME     time.Time `valid:"required,CheckDateTime~Please enter the current time"`
 
-	Med_EmployeeID *uint
-	Med_Employee   Med_Employee `gorm:"references:id"`
+	Med_EmployeeID *uint        `valid:"-"`
+	Med_Employee   Med_Employee `gorm:"references:id" valid:"-"`
 
-	Med_EquipmentID *uint
-	Med_Equipment   Med_Equipment `gorm:"references:id"`
+	Med_EquipmentID *uint         `valid:"-"`
+	Med_Equipment   Med_Equipment `gorm:"references:id" valid:"-"`
 
-	LocationID *uint
-	Location   Location `gorm:"references:id"`
+	LocationID *uint    `valid:"-"`
+	Location   Location `gorm:"references:id" valid:"-"`
+}
+
+func init() {
+	govalidator.CustomTypeTagMap.Set("CheckDateTime", func(i interface{}, _ interface{}) bool {
+		t := i.(time.Time)
+		if t.Before(time.Now().Add(-2*time.Minute)) || t.After(time.Now().Add(2*time.Minute)) {
+			return false
+
+		} else {
+			return true
+		}
+	})
 }
 
 func init() {

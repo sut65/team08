@@ -51,7 +51,7 @@ function RequestCreate() {
     TIME: new Date(),
   });
   const [R_ID, setR_ID] = useState<string>("");
-  const [QUANTITY, setQUANTITY] = useState<string>("");
+  const [QUANTITY, setQUANTITY] = useState<string>(""); 
   const [R_NAME, setR_NAME] = useState<string>("");
   
   const [Med_Equipment, setMed_Equipment] = useState<MedicalEquimentInterface[]>([]);
@@ -128,7 +128,7 @@ function RequestCreate() {
       LocationID: convertType(request.LocationID),
       Med_EmployeeID: convertType(request.Med_EmployeeID),
       R_ID: (R_ID),
-      QUANTITY: (QUANTITY),
+      QUANTITY: convertType(QUANTITY),
       TIME: request.TIME,
       R_NAME: (R_NAME),
       

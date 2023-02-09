@@ -71,6 +71,7 @@ type Screening_officer struct {
 	EducationName  string `valid:"required~EducationName officer cannot be blank"`
 	EducationMajor string `valid:"required~EducationMajor officer cannot be blank"`
 	University     string `valid:"required~University officer cannot be blank"`
+	ScPassword string `valid:"-"`
 
 	//foreignKey
 

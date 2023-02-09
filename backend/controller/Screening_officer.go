@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/asaskevich/govalidator"
 	"github.com/sut65/team08/entity"
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/gin-gonic/gin"
 
@@ -63,11 +64,12 @@ func CreateScreening_officer(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "officer not found"})
 		return
 	}
-
+	password, _ := bcrypt.GenerateFromPassword([]byte(screening_officer.ScreeningIDCard), 14)
 	// 	// 16: สร้าง Screening_officer
 	sc := entity.Screening_officer{
 		Prefix:                 screening_officer.Prefix,
 		Screening_officer_Name: screening_officer.Screening_officer_Name,
+		
 		GenderID:               screening_officer.GenderID,
 		BloodID:                screening_officer.BloodID,
 		ReligionID:             screening_officer.ReligionID,
@@ -80,7 +82,7 @@ func CreateScreening_officer(c *gin.Context) {
 		EducationName:          screening_officer.EducationName,
 		EducationMajor:         screening_officer.EducationMajor,
 		University:             screening_officer.University,
-
+		ScPassword:             string(password),
 		OfficerID: screening_officer.OfficerID,
 	}
 

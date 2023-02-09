@@ -67,23 +67,23 @@ func CreateScreening_officer(c *gin.Context) {
 	password, _ := bcrypt.GenerateFromPassword([]byte(screening_officer.ScreeningIDCard), 14)
 	// 	// 16: สร้าง Screening_officer
 	sc := entity.Screening_officer{
-		Prefix:                 screening_officer.Prefix,
+		PrefixID:               screening_officer.PrefixID,
 		Screening_officer_Name: screening_officer.Screening_officer_Name,
-		
-		GenderID:               screening_officer.GenderID,
-		BloodID:                screening_officer.BloodID,
-		ReligionID:             screening_officer.ReligionID,
-		Birthday:               screening_officer.Birthday,
-		NationalityID:          screening_officer.NationalityID,
-		ScreeningIDCard:        screening_officer.ScreeningIDCard,
-		Phone:                  screening_officer.Phone,
-		Email:                  screening_officer.Email,
-		EducationID:            screening_officer.EducationID,
-		EducationName:          screening_officer.EducationName,
-		EducationMajor:         screening_officer.EducationMajor,
-		University:             screening_officer.University,
-		ScPassword:             string(password),
-		OfficerID: screening_officer.OfficerID,
+
+		GenderID:        screening_officer.GenderID,
+		BloodID:         screening_officer.BloodID,
+		ReligionID:      screening_officer.ReligionID,
+		Birthday:        screening_officer.Birthday,
+		NationalityID:   screening_officer.NationalityID,
+		ScreeningIDCard: screening_officer.ScreeningIDCard,
+		Phone:           screening_officer.Phone,
+		Email:           screening_officer.Email,
+		EducationID:     screening_officer.EducationID,
+		EducationName:   screening_officer.EducationName,
+		EducationMajor:  screening_officer.EducationMajor,
+		University:      screening_officer.University,
+		ScPassword:      string(password),
+		OfficerID:       screening_officer.OfficerID,
 	}
 
 	//ขั้นตอนการ validate ที่นำมาจาก  unit test

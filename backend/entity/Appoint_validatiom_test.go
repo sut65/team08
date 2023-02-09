@@ -19,7 +19,21 @@ func Test_appointText(t *testing.T) {
 	ok, err := govalidator.ValidateStruct(appoint)
 	g.Expect(ok).ToNot(gomega.BeTrue())
 	g.Expect(err).ToNot(gomega.BeNil())
-	g.Expect(err.Error()).To(gomega.Equal("Please record the appointment details."))
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร"))
+}
+
+func Test_appointTextNotNull(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	appoint := Appoint{
+		Date_now:     time.Now(),
+		Date_appoint: time.Now().Add(24 * time.Hour),
+		Text_appoint: "",
+	}
+	ok, err := govalidator.ValidateStruct(appoint)
+	g.Expect(ok).ToNot(gomega.BeTrue())
+	g.Expect(err).ToNot(gomega.BeNil())
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดการนัด"))
 }
 
 // เช็คเวลาเป็นปัจจุบัน
@@ -34,7 +48,7 @@ func Test_AppointTimeNow(t *testing.T) {
 	ok, err := govalidator.ValidateStruct(appoint)
 	g.Expect(ok).NotTo(gomega.BeTrue())
 	g.Expect(err).ToNot(gomega.BeNil())
-	g.Expect(err.Error()).To(gomega.Equal("Please enter the current time"))
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุวันที่และเวลาเป็นปัจจุบัน"))
 }
 
 // เช็คเวลาเป็นอนาคต
@@ -49,7 +63,7 @@ func Test_AppointTime(t *testing.T) {
 	ok, err := govalidator.ValidateStruct(appoint)
 	g.Expect(ok).NotTo(gomega.BeTrue())
 	g.Expect(err).ToNot(gomega.BeNil())
-	g.Expect(err.Error()).To(gomega.Equal("Please enter the current time"))
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"))
 }
 
 func Test_AppointAll(t *testing.T) {

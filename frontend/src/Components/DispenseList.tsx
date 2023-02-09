@@ -111,7 +111,7 @@ function DispenseList() {
     {
       field: "Treatment",
       headerName: "หมายเลขการรักษา",
-      width: 200,
+      width: 150,
       valueFormatter: (params) => params.value.TREATMENT_ID,
     },
     {
@@ -129,7 +129,13 @@ function DispenseList() {
     {
       field: "Number",
       headerName: "จำนวนยา",
-      width: 150,
+      width: 100,
+    },
+    {
+      field: "Doctor",
+      headerName: "แพทย์ผู้จ่าย",
+      width: 100,
+      valueFormatter: (params) => params.value.DocterCode,
     },
   ];
 

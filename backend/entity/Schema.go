@@ -258,7 +258,7 @@ type Doctor struct {
 	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID" valid:"-"`
 
 	//
-	OfficerID *uint `valid:"-"`
+	OfficerID *uint   `valid:"-"`
 	Officer   Officer `gorm:"references:id" valid:"-"` //อ้างอิงไอดีที่ใช้เชื่อม FK
 
 	Lab []Lab `gorm:"foreignKey:DoctorID" valid:"-"`
@@ -417,19 +417,19 @@ type Practice struct {
 
 type Dispense struct {
 	gorm.Model
-	Date time.Time
+	Date time.Time `valid:"required,IsnotPast~Please enter the current time"`
 
-	Number      uint
-	Text        string
-	DoctorID    *uint
-	TreatmentID *uint
-	DrugID      *uint
-	PracticeID  *uint
+	Number      uint   `valid:"range(0|100)"`
+	Text        string `valid:"maxstringlength(100)~Please enter details"`
+	DoctorID    *uint  `valid:"-"`
+	TreatmentID *uint  `valid:"-"`
+	DrugID      *uint  `valid:"-"`
+	PracticeID  *uint  `valid:"-"`
 
-	Doctor    Doctor    `gorm:"references:id"`
-	Treatment Treatment `gorm:"references:id"`
-	Drug      Drug      `gorm:"references:id"`
-	Practice  Practice  `gorm:"references:id"`
+	Doctor    Doctor    `gorm:"references:id" valid:"-"`
+	Treatment Treatment `gorm:"references:id" valid:"-"`
+	Drug      Drug      `gorm:"references:id" valid:"-"`
+	Practice  Practice  `gorm:"references:id" valid:"-"`
 }
 
 type Levelcure struct {

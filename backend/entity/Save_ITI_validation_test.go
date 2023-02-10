@@ -36,19 +36,19 @@ func Test_Save_ITI_TextSaveNotNull(t *testing.T) {
 	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดแผนการรักษา"))
 }
 
-// func Test_DispenseTime(t *testing.T) {
-// 	g := gomega.NewGomegaWithT(t)
+func Test_Save_ITI_Date_checkin(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
 
-// 	dispen := Dispense{
-// 		Date:   time.Date(2000, 1, 26, 0, 0, 0, 0, time.UTC),
-// 		Number: 10,
-// 		Text:   "Sabaithip",
-// 	}
-// 	ok, err := govalidator.ValidateStruct(dispen)
-// 	g.Expect(ok).NotTo(gomega.BeTrue())
-// 	g.Expect(err).ToNot(gomega.BeNil())
-// 	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุวันที่และเวลาเป็นปัจจุบัน"))
-// }
+	tectsave := Save_ITI{
+		Date_checkin:  time.Date(2000, 1, 26, 0, 0, 0, 0, time.UTC),
+	    Date_checkout: time.Now().Add(24 * time.Hour),
+	    TextSave: "aaaaaaaaaaaa",
+	}
+	ok, err := govalidator.ValidateStruct(tectsave)
+	g.Expect(ok).NotTo(gomega.BeTrue())
+	g.Expect(err).ToNot(gomega.BeNil())
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุวันที่และเวลาให้ถูกต้อง"))
+}
 
 // func Test_DispenseNumber(t *testing.T) {
 // 	g := gomega.NewGomegaWithT(t)

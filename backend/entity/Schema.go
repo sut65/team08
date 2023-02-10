@@ -372,7 +372,7 @@ type State struct {
 
 type Save_ITI struct {
 	gorm.Model
-	Date_checkin  time.Time
+	Date_checkin  time.Time  `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	Date_checkout time.Time
 	TextSave string	`valid:"maxstringlength(200)~โปรดระบุรายละเอียดของยาไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดแผนการรักษา"`
 	
@@ -393,7 +393,7 @@ type Save_ITI struct {
 type Operating_Room struct {
 	gorm.Model
 	NumOper string
-	Datetime time.Time
+	Datetime time.Time 
 	TextOper string
 
 	Save_ITI   Save_ITI `gorm:"references:id" valid:"-"`

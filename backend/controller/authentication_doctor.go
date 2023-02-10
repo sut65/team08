@@ -15,74 +15,11 @@ type LoginPayload_Doctor struct {
 	DocPassword string `json:"DocPassword"`
 }
 
-// SignUpPayload signup body
-type SignUpPayload_Doctor struct {
-	DocterCode     string `json:"DocterCode"`
-	Email    string `json:"email"`
-
-	DocterIDCard string `json:"DocterIDCard"`
-	FirstNameTH string `json:"FirstNameTH"`
-	LastNameTH string `json:"LastNameTH"`
-	FirstNameEN string `json:"FirstNameEN"`
-	LastNameEN string `json:"LastNameEN"`
-	ReOther  string `json:"ReOther"`
-	TelPhone string `json:"TelPhone"` /////
-	TelOffice string `json:"TelOffice"`
-	AllAddress string `json:"AllAddress"`
-	Subdistrict string `json:"Subdistrict"`
-	District string `json:"District"`
-	Province string `json:"Province"`
-	FaIDCard string `json:"FaIDCard"`
-	FaFirstName string `json:"FaFirstName"`
-	FaLastName string `json:"FaLastName"`
-	FaOccupation string `json:"FaOccupation"`
-	MoIDCard string `json:"MoIDCard"`
-	MoFirstName string `json:"MoFirstName"`
-	MoLastName string `json:"MoLastName"`
-	MoOccupation string `json:"MoOccupation"`
-	WiIDCard string `json:"WiIDCard"`
-	WiFirstName string `json:"WiFirstName"`
-	WiLastName string `json:"WiLastName"`
-	WiOccupation string `json:"WiOccupation"`
-	WiPhone string `json:"WiPhone"`
-	EducationName string `json:"EducationName"`
-	EducationMajor string `json:"EducationMajor"`
-	University string `json:"University"`
-	DocPassword string `json:"DocPassword"`
-
-	OfficerID   *uint `json:"OfficerID"`
-	DocPrefixID *uint `json:"DocPrefixID"`
-	GenderID *uint `json:"GenderID"`
-	BloodID *uint `json:"BloodID"`
-	MaritalID *uint `json:"MaritalID"`
-
-	ReligionID *uint `json:"ReligionID"`
-	CountryID *uint `json:"CountryID"`
-	NationalityID *uint `json:"NationalityID"`
-	AddressID *uint `json:"AddressID"`
-	DocFaPrefixID *uint `json:"DocFaPrefixID"`
-	DocMoPrefixID *uint `json:"DocMoPrefixID"`
-	DocWiPrefixID *uint `json:"DocWiPrefixID"`
-	EducationID *uint `json:"EducationID"`
-
-	
-	
-
-	// Birthday time.Time
-	// StartEducation time.Time
-	// EndEducation   time.Time
-
-
-
-}
-
 // LoginResponse token response
 type LoginResponse_Doctor struct {
 	Token string `json:"token"`
 	ID    uint   `json:"id"`
 	Role  string `json:"role"`
-
-
 }
 
 // POST /login

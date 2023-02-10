@@ -74,7 +74,10 @@ function Save_ITIList() {
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => setOpenupdate(true)}
+                    onClick={() => {
+                      console.log()
+                      setOpenupdate(true)
+                    }}
                 >
                     Edit
                 </Button>
@@ -101,12 +104,12 @@ function Save_ITIList() {
         width: 100,
         valueFormatter: (params) => params.value.Name,
       },
-      {
-        field: "Building",
-        headerName: "ตึก",
-        width: 100,
-        valueFormatter: (params) => params.value.Name,
-      },
+      // {
+      //   field: "Building",
+      //   headerName: "ตึก",
+      //   width: 100,
+      //   valueFormatter: (params) => params.value.Name,
+      // },
       {
         field: "Room",
         headerName: "ห้อง",
@@ -150,7 +153,7 @@ function Save_ITIList() {
                         color="primary"
                         aria-lable="outlined button group"
                         //กด "ยืนยัน" ไปที่หน้าแก้ไข
-                        onClick={() => navigate({ pathname: `/save_itiUpdate/${row.ID}` })} autoFocus
+                        onClick={() => navigate({ pathname: `/save_itiUpdate/${Save_ITIID}` })} autoFocus
                     >
                         <div className="good-font">
                           ยืนยัน

@@ -1,7 +1,6 @@
 package entity
 
 import (
-
 	"github.com/asaskevich/govalidator"
 
 	"gorm.io/gorm"
@@ -55,29 +54,27 @@ type Screening_officer struct {
 
 	//หน้าต่างข้อมูลส่วนตัวเจ้่าหน้าที่ฝ่ายคัดกรอง
 	PrefixID               *uint  `valid:"-"`
-	Screening_officer_Name string `valid:"required~Name officer cannot be blank"`
+	Screening_officer_Name string `valid:"required~กรุณาใส่ชื่อ..นามสกุล"`
 
 	GenderID   *uint  `valid:"-"`
 	BloodID    *uint  `valid:"-"`
 	ReligionID *uint  `valid:"-"`
-	Birthday   string `valid:"required~Birthday officer cannot be blank"`
+	Birthday   string `valid:"required~กรุณาใส่วันเดือนปีเกิด"`
 
 	NationalityID   *uint  `valid:"-"`
-	CountryID       *uint  `valid:"-"`
-	ScreeningIDCard string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$),required~IDCard officer cannot be blank"`
+	ScreeningIDCard string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$)~กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก,required~กรุณาใส่รหัสบัตรประชาชน"`
 
-	Phone string `valid:"matches(^[0]\\d{9}$),required~Phone officer cannot be blank"`
-	Email string `valid:"email"`
+	Phone string `valid:"matches(^[0]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
+	Email string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
 	//หน้าต่างข้อมูลการศึกษา
 	EducationID    *uint  `valid:"-"`
-	EducationName  string `valid:"required~EducationName officer cannot be blank"`
-	EducationMajor string `valid:"required~EducationMajor officer cannot be blank"`
-	University     string `valid:"required~University officer cannot be blank"`
+	EducationName  string `valid:"required~กรุณาใส่ชื่อปริญญา"`
+	EducationMajor string `valid:"required~กรุณาใส่ชื่อสาขา"`
+	University     string `valid:"required~กรุณาใส่ชื่อมหาลัย"`
 	ScPassword     string `valid:"-"`
 
 	//foreignKey
 
-	Country     Nationality `gorm:"references:id" valid:"-"`
 	Nationality Nationality `gorm:"references:id" valid:"-"`
 	Religion    Religion    `gorm:"references:id" valid:"-"`
 	Gender      Gender      `gorm:"references:id" valid:"-"`
@@ -88,7 +85,7 @@ type Screening_officer struct {
 	Appoint []Appoint `gorm:"foreignkey:Screening_officerID"`
 	Patient []Patient `gorm:"foreignkey:Screening_officerID"`
 
-	OfficerID *uint
+	OfficerID *uint   `valid:"-"`
 	Officer   Officer `gorm:"references:id"` //อ้างอิงไอดีที่ใช้เชื่อม FK
 }
 
@@ -96,19 +93,19 @@ type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
 	PrefixID            *uint  `valid:"-"`
-	Patient_Name        string `valid:"required~Patient Name cannot be blank"`
-	Age                 uint   `valid:"range(0|120)"`
+	Patient_Name        string `valid:"required~กรุณาใส่ชื่อ-นามสกุล"`
+	Age                 uint   `valid:"range(0|120)~กรุณาใส่อายุให้ถูกต้อง"`
 	GenderID            *uint  `valid:"-"`
 	BloodID             *uint  `valid:"-"`
 	ReligionID          *uint  `valid:"-"`
-	Birthday            string `valid:"required~Birthday cannot be blank"`
+	Birthday            string `valid:"required~กรุณาใส่วันเดือนปีเกืด"`
 	NationalityID       *uint  `valid:"-"`
 	Screening_officerID *uint  `valid:"-"`
-	IDCard              string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$), required~IDCard cannot be blank"`
+	IDCard              string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$)~กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก,required~กรุณาใส่รหัสบัตรประชาชน"`
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
-	Phone     string `valid:"matches(^[0]\\d{9}$),required~Phone cannot be blank"`
-	House_ID  string `valid:"required~House_ID cannot be blank"`
+	Phone     string `valid:"matches(^[0]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
+	House_ID  string `valid:"required~กรุณาใส่บ้านเลขที่"`
 	AddressID *uint  `valid:"-"`
 
 	//foreignKey
@@ -257,7 +254,7 @@ type Doctor struct {
 	Dispense []Dispense `gorm:"foreignkey:DoctorID" valid:"-"`
 
 	//J
-	Save_ITI []Save_ITI `gorm:"foreignkey:DoctorID"`
+	Save_ITI       []Save_ITI       `gorm:"foreignkey:DoctorID"`
 	Operating_Room []Operating_Room `gorm:"foreignkey:DoctorID"`
 
 	//
@@ -318,12 +315,12 @@ type Track struct {
 // การรักษา
 type Treatment struct {
 	gorm.Model
-	TREATMENT_ID string    `valid:"matches(^T\\d{6}$)~T cannot be blank"`
-	TREATMENT    string    `valid:"maxstringlength(20)~Please enter details"`
+	TREATMENT_ID string    `gorm:"uniqueIndex" valid:"matches(^T\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Txxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"`
+	TREATMENT    string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~TREATMENT cannot be blank"`
 	DATE         time.Time `valid:"required,CheckDateTime~Please enter the current time"`
 	APPOINTMENT  uint      `valid:"range(0|100)"`
-	CONCLUSION   string    `valid:"maxstringlength(100)~Please enter details"`
-	GUIDANCE     string    `valid:"maxstringlength(100)~Please enter details"`
+	CONCLUSION   string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~CONCLUSION cannot be blank"`
+	GUIDANCE     string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~GUIDANCE cannot be blank"`
 
 	DoctorID *uint  `valid:"-"`
 	Doctor   Doctor `gorm:"references:id" valid:"-"`
@@ -353,13 +350,15 @@ type Treatment struct {
 type Building struct {
 	gorm.Model
 	Name           string           `gorm:"uniqueIndex"`
-	Save_ITI       []Save_ITI       `gorm:"foreignKey:BuildingID"`
-	Operating_Room []Operating_Room `gorm:"foreignKey:BuildingID"`
+	Room       []Room       `gorm:"foreignKey:BuildingID"`
 }
 
 type Room struct {
 	gorm.Model
 	Name           string           `gorm:"uniqueIndex"`
+	Building   Building `gorm:"references:id"`
+	BuildingID *uint
+	
 	Save_ITI       []Save_ITI       `gorm:"foreignKey:RoomID"`
 	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
 }
@@ -420,10 +419,10 @@ type Practice struct {
 
 type Dispense struct {
 	gorm.Model
-	Date time.Time `valid:"required,IsnotPast~Please enter the current time"`
+	Date time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 
 	Number      uint   `valid:"range(0|100)"`
-	Text        string `valid:"maxstringlength(100)~Please enter details"`
+	Text        string `valid:"maxstringlength(50)~โปรดระบุรายละเอียดของยาไม่เกิน  50 ตัวอักษร,required~โปรดระบุรายละเอียดของยา"`
 	DoctorID    *uint  `valid:"-"`
 	TreatmentID *uint  `valid:"-"`
 	DrugID      *uint  `valid:"-"`
@@ -450,9 +449,9 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time `valid:"required,IsnotPast~Please enter the current time"`
-	Date_appoint time.Time `valid:"required,IsFuture~Please enter the current time"`
-	Text_appoint string    `valid:"maxstringlength(100)~Please record the appointment details."`
+	Date_now     time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_appoint time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
+	Text_appoint string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
 
 	Screening_officerID *uint `valid:"-"`
 	TreatmentID         *uint `valid:"-"`
@@ -469,21 +468,21 @@ type Appoint struct {
 // ADD
 type Med_Employee struct {
 	gorm.Model
-	Name           string
-	Age            uint
-	Phone          string
-	Email          string
-	Password       string
-	University     string
-	EducationName  string
-	EducationMajor string
+	Name           string `valid:"required~กรุณากรอกชื่อ"`
+	Age            uint   `valid:"range(0|100)"`
+	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
+	Email          string `valid:"email"`
+	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
+	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
+	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
+	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชา"`
 
-	GenderID      *uint
-	PrefixID      *uint
-	EducationID   *uint
-	Gender        Gender          `gorm:"references:id"`
-	Prefix        Prefix          `gorm:"references:id"`
-	Education     Education       `gorm:"references:id"`
+	GenderID      *uint           `valid:"-"`
+	PrefixID      *uint           `valid:"-"`
+	EducationID   *uint           `valid:"-"`
+	Gender        Gender          `gorm:"references:id" valid:"-"`
+	Prefix        Prefix          `gorm:"references:id" valid:"-"`
+	Education     Education       `gorm:"references:id" valid:"-"`
 	Med_Equipment []Med_Equipment `gorm:"foreignKey:Med_EmployeeID"`
 	Request       []Request       `gorm:"foreignKey:Med_EmployeeID"`
 
@@ -531,9 +530,9 @@ type Location struct {
 // ตารางหลัก การเบิก
 type Request struct {
 	gorm.Model
-	R_ID     string    `valid:"matches(^R\\d{6}$)~R cannot be blank"`
-	R_NAME   string    `valid:"maxstringlength(20)~Please enter details"`
-	QUANTITY uint      `valid:"range(1|2000)"`
+	R_ID     string    `gorm:"uniqueIndex" valid:"matches(^R\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Rxxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"`
+	R_NAME   string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~Please enter details (20)"`
+	QUANTITY uint      `valid:"range(1|1000),required~cannot be blank :range(1|1000)"`
 	TIME     time.Time `valid:"required,CheckDateTime~Please enter the current time"`
 
 	Med_EmployeeID *uint        `valid:"-"`

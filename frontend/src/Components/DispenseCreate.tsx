@@ -191,14 +191,15 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
         open={success}
         autoHideDuration={6000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
         {message}
         </Alert>
       </Snackbar>
 
-      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }} >
         <Alert onClose={handleClose} severity="error">
         {message}
         </Alert>
@@ -221,11 +222,22 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
           <Divider />
         </Box>
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={6}>
+          <Grid item xs={2}>
             <p>แพทย์ผู้รักษา</p>
             <FormControl fullWidth variant="outlined">
               <TextField
-                value={DoctorByUID.FirstNameTH || ""}
+                value={DoctorByUID.DocterCode || ""}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <p>แพทย์</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                value={DoctorByUID.FirstNameEN || ""}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -273,8 +285,9 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
                 value={dispense.DrugID + ""}
                 onChange={handleChange}
                 inputProps={{
-                  name: "DrugID",
+                  name: "DrugID"
                 }}
+
               >
                 <option aria-label="None" value="">
                   กรุณาเลือกประเภทยา
@@ -294,9 +307,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
                 id="setNumber"
                 label="Number"
                 type="Number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                inputProps={{ name: "Number", min: 0}} 
                 onChange={(event) => setNumber(event.target.value)}
               />
             </FormControl>
@@ -328,6 +339,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
                 id="Name"
                 type="string"
                 variant="outlined"
+                label="รายละเอียดยา" 
                 onChange={(event) => setText(event.target.value)}
               />
             </FormControl>

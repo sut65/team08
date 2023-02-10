@@ -45,6 +45,8 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
+    const [message, setAlertMessage] = React.useState("")
+
     const [officers, setOfficers] = useState<OfficersInterface[]>([]);
 
     const handleClose = (
@@ -131,33 +133,37 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
     
     console.log(data)
     let res = await Med_Employee(data);//////พึ่งแก้ไป 
-    if (res) {
+    if (res.status) {
+      setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
+      setAlertMessage(res.message);
       setError(true);
     }
-  }
+  };
 
   return (
     <Container maxWidth="md">
       <Snackbar
+        id="success"
         open={success}
         autoHideDuration={3000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
-          บันทึกข้อมูลสำเร็จ
+          {message}
         </Alert>
       </Snackbar>
       <Snackbar
+        id="error"
         open={error}
         autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+          {message}
         </Alert>
       </Snackbar>
       <Paper>

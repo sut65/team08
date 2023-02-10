@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import SaveIcon from '@mui/icons-material/Save';
 import { Link as RouterLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -12,6 +13,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
+import BoyIcon from '@mui/icons-material/Boy';
 
 import { PrefixsInterface } from "../Models/IPrefix";
 import { GendersInterface } from "../Models/IGender";
@@ -48,7 +50,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     const [EducationMajor, setEducationMajors] = useState<string>("");
     const [University, setUniversitys] = useState<string>("");
     const [officers, setOfficers] = useState<OfficersInterface[]>([]);
-    const [ScPassword, setScPassword] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -137,6 +139,33 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
   };
 
   async function submit() {
+
+    if (Screening_officers.PrefixID == undefined){
+      setError(true);
+      setAlertMessage("กรุณาเลือกคำนำหน้า");
+  }
+    else if (Screening_officers.GenderID == undefined){
+      setError(true);
+      setAlertMessage("กรุณาเลือกเพศ")
+  }
+    else if (Screening_officers.BloodID == undefined){
+      setError(true);
+      setAlertMessage("กรุณาเลือกกรุ๊ปเลือด")
+    }
+    else if (Screening_officers.ReligionID == undefined){
+      setError(true);
+      setAlertMessage("กรุณาเลือกศาสนา")
+  }
+  else if (Screening_officers.NationalityID == undefined){
+    setError(true);
+    setAlertMessage("กรุณาเลือกสัญชาติ")
+  }
+  else if (Screening_officers.EducationID == undefined){
+    setError(true);
+    setAlertMessage("กรุณาเลือกระดับการศึกษา")
+  }
+
+    else{
     let data = {
       PrefixID: convertType(Screening_officers.PrefixID),
       GenderID: convertType(Screening_officers.GenderID),
@@ -167,6 +196,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
       setError(true);
     }
   }
+}
 
   return (
     <Container maxWidth="md">
@@ -211,6 +241,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           </Typography>
         </Box>
         <Grid container spacing={3} sx={{ padding: 2 }}>
+
           <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>คำนำหน้า</p>
@@ -235,8 +266,9 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           </Grid>
 
           <Grid item xs={8}>
-                <p>ชื่อ</p>
-                <TextField fullWidth id="FirstNameTH" type="string" variant="outlined"  
+                <p>ชื่อ-สกุล</p>
+                <TextField fullWidth id="FirstNameTH" type="string" variant="outlined"
+                label="ชื่อ-นามสกุล" 
                 onChange={(event) => setScreening_officer_Names(event.target.value)} />
               </Grid>
       
@@ -311,7 +343,8 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 
           <Grid item xs={4}>
                 <p>วันเดือนปีเกิด</p>
-                <TextField fullWidth id="Birthday" type="string" variant="outlined"  
+                <TextField fullWidth id="Birthday" type="string" variant="outlined"
+                label="DD/MM/YYYY"  
                 onChange={(event) => setBirthdays(event.target.value)} />
               </Grid>
 
@@ -342,7 +375,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
             <FormControl fullWidth variant="outlined">
               <p>เชื้อชาติ</p>
               <Select
-                native
+                disabled
                 value={Screening_officers.NationalityID + ""}
                 onChange={handleChange}
                 inputProps={{
@@ -363,13 +396,21 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 
           <Grid item xs={5.5}>
                 <p>รหัสบัตรประชาชน</p>
-                <TextField fullWidth id="ScreeningIDCard" type="string" variant="outlined"  
+                <TextField fullWidth id="ScreeningIDCard" type="string" variant="outlined" 
+                label="รหัสบัตรประชาชน 13 หลัก" 
                 onChange={(event) => setScreeningIDCards(event.target.value)} />
               </Grid>
+          <Grid item xs={6.5}> </Grid>
 
-          <Grid item xs={12}><h3>ข้อมูลการศึกษา</h3>  </Grid>
+          </Grid>
+          <Box sx={{ paddingX: 2, paddingY: 0.1 }}>
+          <Divider />
+          <Typography variant="h6" color="primary">
+            <p>ข้อมูลการศึกษา</p>
+          </Typography>
+          </Box>
 
-
+        <Grid container spacing={3} sx={{ padding: 2 }}>
           <Grid item xs={5.5}>
             <FormControl fullWidth variant="outlined">
               <p>ระดับปริญญา</p>
@@ -395,56 +436,71 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 
           <Grid item xs={6.5}>
                 <p>ชื่อปริญญา</p>
-                <TextField fullWidth id="EducationName" type="string" variant="outlined"  
+                <TextField fullWidth id="EducationName" type="string" variant="outlined"
+                label="ชื่อปริญญา"   
                 onChange={(event) => setEducationNames(event.target.value)} />
           </Grid>
 
               <Grid item xs={5.5}>
                 <p>ชื่อสาขาวิชาเอก</p>
-                <TextField fullWidth id="EducationMajor" type="string" variant="outlined"  
+                <TextField fullWidth id="EducationMajor" type="string" variant="outlined"
+                label="ชื่อสาขาวิชาเอก"   
                 onChange={(event) => setEducationMajors(event.target.value)} />
               </Grid>
 
           <Grid item xs={6.5}>
                 <p>ชื่อมหาวิทยาลัย</p>
-                <TextField fullWidth id="University" type="string" variant="outlined"  
+                <TextField fullWidth id="University" type="string" variant="outlined"
+                label="ชื่อมหาวิทยาลัย"  
                 onChange={(event) => setUniversitys(event.target.value)} />
               </Grid>
+          </Grid>
 
-              <Grid item xs={12}><h3>ข้อมูลการติดต่อ</h3>  </Grid>   
-
+          <Box sx={{ paddingX: 2, paddingY: 0.1 }}>
+          <Divider />
+          <Typography variant="h6" color="primary">
+            <p>ข้อมูลการติดต่อ</p>
+          </Typography>
+          </Box>
+          <Grid container spacing={3} sx={{ padding: 2 }}>
           <Grid item xs={6}>
                 <p>เบอร์โทรศัพท์</p>
                 <TextField fullWidth id="Phone" type="string" variant="outlined"  
+                label="ตัวอย่าง 08xxxxxxxx" 
                 onChange={(event) => setPhones(event.target.value)} />
               </Grid>
 
           <Grid item xs={6}>
                 <p>อีเมล</p>
                 <TextField fullWidth id="Email" type="string" variant="outlined"  
+                 label="ตัวอย่าง xxxx@gmail.com" 
                 onChange={(event) => setEmails(event.target.value)} />
               </Grid>
+             
 
 
           <Grid item xs={12}>
-            <Button
+          <Button
               component={RouterLink}
-              to="/Screening_officerCreate/create"
+              to="/Screening_officerList"
               variant="contained"
               color="inherit"
+              startIcon={<BoyIcon />}
             >
-              กลับ
+              ดูข้อมูลเจ้าหน้าที่คัดกรอง
             </Button>
             <Button
-              style={{ float: "right" }}
-              onClick={submit}
-              variant="contained"
-              color="primary"
-            >
-              บันทึก
+             style={{ float: "right" }}
+             onClick={submit}
+             variant="contained"
+             color="primary"
+             startIcon={<SaveIcon />}
+
+           >
+             บันทึกข้อมูลเจ้าหน้าที่คัดกรอง
             </Button>
+            </Grid>
           </Grid>
-        </Grid>
       </Paper>
     </Container>
   );

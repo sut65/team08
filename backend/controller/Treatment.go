@@ -84,7 +84,7 @@ func CreateTreatment(c *gin.Context) {
 func GetTreatment(c *gin.Context) {
 	var treatment entity.Treatment
 	id := c.Param("id")
-	if err := entity.DB().Preload("Doctor").Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Appoint").Preload("Doctor").Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -94,7 +94,7 @@ func GetTreatment(c *gin.Context) {
 // GET /
 func ListTreatment(c *gin.Context) {
 	var treatment []entity.Treatment
-	if err := entity.DB().Preload("Doctor").Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments").Find(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Appoint").Preload("Doctor").Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments").Find(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -163,7 +163,10 @@ func ListReady_Dispense(c *gin.Context) {
 
 func ListReady_Appoint(c *gin.Context) {
 	var ListDispense []entity.Treatment
-	if err := entity.DB().Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.track_id = 1 OR sa.track_id = 3").Find(&ListDispense).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Appoint").Preload("Patient").Preload("Status").Preload("Track").
+		Raw("select * from treatments where id not in " +
+			"(select t.id from treatments t INNER JOIN appoints a on t.id = a.treatment_id )" +
+			"and track_id != 2 and track_id != 4").Find(&ListDispense).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

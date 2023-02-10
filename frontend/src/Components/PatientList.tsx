@@ -5,9 +5,10 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-
 import { PatientsInterface } from "../Models/IPatient";
 import { GetPatient } from "../Services/HttpClientService";
+
+
 
 
 function PatientList() {
@@ -25,55 +26,55 @@ function PatientList() {
     };
   
     const columns: GridColDef[] = [
-      { field: "ID", headerName: "ลำดับ", width: 50 },
+      {  field: "ID", headerName: "ลำดับ", width: 50 },
       {
         field: "Prefix",
         headerName: "คำนำหน้า",
-        width: 300,
+        width: 100,
         valueFormatter: (params) => params.value.Description,
       },
       {
         field: "Patient_Name",
         headerName: "ชื่อ-สกุล",
-        width: 300,
+        width: 180,
       },
       {
         field: "Age",
         headerName: "อายุ",
-        width: 300,
+        width: 100,
       },
       {
         field: "Gender",
         headerName: "เพศ",
-        width: 300,
+        width: 100,
         valueFormatter: (params) => params.value.Description,
       },
       {
-        field: "Date_of_birth",
+        field: "Birthday",
         headerName: "วันเดือนปีเกิด",
-        width: 300,
+        width: 100,
       },
       {
-        field: "ID_card",
+        field: "IDCard",
         headerName: "รหัสบัตรประชาชน",
-        width: 300,
+        width: 150,
       },
       {
         field: "Phone",
         headerName: "เบอร์โทร",
-        width: 300,
+        width: 150,
       },
 
       {
-        field: "Policing",
-        headerName: "สิทธิการรักษา",
-        width: 300,
-        valueFormatter: (params) => params.value.Description,
+        field: "House_ID",
+        headerName: "ที่อยู่",
+        width: 100,
+
       },
       {
-        field: "Address",
-        headerName: "ที่อยู่",
-        width: 500,
+        field: "Subdistrict",
+        headerName: "ตำบล",
+        width: 100,
 
       },
     ];

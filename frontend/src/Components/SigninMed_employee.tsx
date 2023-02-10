@@ -23,7 +23,23 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+        main: '#698269',
+
+        light: '#B99B6B',
+
+        //สีสว่าง
+        contrastText: '#F1DBBF',
+    },
+    secondary: {
+        main: '#AA5656',
+        light: '#B99B6B',
+        contrastText: '#F1DBBF',
+    },
+}},
+);
 
 function SigninMed_employee() {
   const [signin, setSignin] = useState<Partial<SigninMedInterface>>({});
@@ -92,7 +108,7 @@ function SigninMed_employee() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: "url(https://i.pinimg.com/564x/55/a8/f7/55a8f770d1550196ec6733e801d35cfc.jpg)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -117,7 +133,7 @@ function SigninMed_employee() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Medical Technique Sign in
             </Typography>
             <Box sx={{ mt: 1 }}>
               <TextField

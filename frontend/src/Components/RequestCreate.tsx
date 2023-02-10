@@ -1,32 +1,18 @@
 import React, { useEffect, useState } from 'react';
-//import logo from './logo.svg';
-//import './App.css';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import FormControl from '@mui/material/FormControl/FormControl';
-
-//New
 import { Link as RouterLink } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { RequestInterface } from "../Models/IRequest";
 import { LocationInterface } from "../Models/ILocation";
-//box 
 import {
   GetMedicalEquipments,
   GetLocation,
@@ -37,6 +23,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { MedEmployeeInterface } from '../Models/IMedEmployee';
 import { MedicalEquimentInterface } from '../Models/IMedEquipment';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 //import moment from 'moment';
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -53,15 +40,12 @@ function RequestCreate() {
   const [R_ID, setR_ID] = useState<string>("");
   const [QUANTITY, setQUANTITY] = useState<string>(""); 
   const [R_NAME, setR_NAME] = useState<string>("");
-  
   const [Med_Equipment, setMed_Equipment] = useState<MedicalEquimentInterface[]>([]);
   const [Location, setLocation] = useState<LocationInterface[]>([]);
-
   const [Med_Employee, setMedByUID] = useState<MedEmployeeInterface[]>([]);
-
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  
+  const [message, setAlertMessage] = React.useState("");
 
 
   // handleClose ประมาณว่าแสดงสเน็บบลาเร็จ ก็ปิดไป
@@ -135,9 +119,11 @@ function RequestCreate() {
     };
 
     let res = await Request(data);
-    if (res) {
+    if (res.status) {
+      setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
     } else {
+      setAlertMessage(res.message);
       setError(true);
     }
   };
@@ -147,16 +133,19 @@ function RequestCreate() {
     <div>
       <Container maxWidth="md">
         <Snackbar
+          id="success"
           open={success}
-          autoHideDuration={3000}
+          autoHideDuration={6000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert onClose={handleClose} severity="success">
             บันทึกข้อมูลสำเร็จ
+            {message}
           </Alert>
         </Snackbar>
         <Snackbar
+          id="error"
           open={error}
           autoHideDuration={6000}
           onClose={handleClose}
@@ -164,6 +153,7 @@ function RequestCreate() {
         >
           <Alert onClose={handleClose} severity="error">
             บันทึกข้อมูลไม่สำเร็จ
+            {message}
           </Alert>
         </Snackbar>
         {/*<Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />*/}
@@ -176,7 +166,7 @@ function RequestCreate() {
               paddingY: 2,
             }}
           >
-            <h2>Creat Request</h2>
+            การเบิกอุปกรณ์เครื่องมือแลป
           </Box>
           <hr />
           <Grid container spacing={2} sx={{ padding: 2 }} >
@@ -278,7 +268,7 @@ function RequestCreate() {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Button component={RouterLink} to="/students" variant="contained" color='info'>Back</Button>
+              <Button component={RouterLink} to="/requests" variant="contained" color='info' startIcon={<FactCheckIcon /> }>ดูข้อมูลการเบิกอุปกรณ์เครื่องมือแลป</Button>
               <Button
                 variant="contained"
                 color='success'

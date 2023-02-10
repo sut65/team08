@@ -239,11 +239,11 @@ async function Med_Employee(data: MedEmployeeInterface) {
   let res = await fetch(`${apiUrl}/medemployees/create`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-          if (res.data) {
-              return res.data;
-          } else {
-              return false;
-          }
+        if (res.data) {
+          return { status: true, message: res.data };
+        } else {
+          return { status: false, message: res.error };
+        }
       });
 
   return res;
@@ -879,6 +879,29 @@ async function Treatment(data: TreatmentsInterface) {
 }
 
 // J
+
+async function ListRoombyBuildings(bid: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/Rooms/Building/${bid}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 async function GetBuilding() {
   const requestOptions = {
       method: "GET",
@@ -901,6 +924,29 @@ async function GetBuilding() {
 
   return res;
 }
+async function GetBuildingOne(id: any) {
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/Building/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              console.log(res.data);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
 
 async function GetRoom() {
   const requestOptions = {
@@ -1541,11 +1587,13 @@ async function Request(data: RequestInterface) {
   let res = await fetch(`${apiUrl}/requests`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-          if (res.data) {
-              return res.data;
-          } else {
-              return false;
-          }
+        if (res.data) {
+          
+          return { status: true, message: res.data };
+        } else {
+       
+          return { status: false, message: res.error };
+        }
       });
 
   return res;
@@ -1650,6 +1698,8 @@ export {
   CreateOperating_Room,
   ListReady_Save,
   GetReady_Save_ITI,
+  ListRoombyBuildings,
+  GetBuildingOne,
 
   //Aern
   GetDrug,

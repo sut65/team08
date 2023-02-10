@@ -23,7 +23,23 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+        main: '#698269',
+
+        light: '#B99B6B',
+
+        //สีสว่าง
+        contrastText: '#F1DBBF',
+    },
+    secondary: {
+        main: '#AA5656',
+        light: '#B99B6B',
+        contrastText: '#F1DBBF',
+    },
+},
+});
 
 function SigninScreening_officer() {
   const [signin, setSignin] = useState<Partial<SigninScreeningInterface>>({});
@@ -92,7 +108,7 @@ function SigninScreening_officer() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: "url(https://i.pinimg.com/564x/e6/81/eb/e681eb6c5a8f162cfcc897e37481026a.jpg)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -117,7 +133,7 @@ function SigninScreening_officer() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+            Screening officer Sign in
             </Typography>
             <Box sx={{ mt: 1 }}>
               <TextField

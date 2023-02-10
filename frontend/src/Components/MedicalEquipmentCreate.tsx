@@ -197,7 +197,7 @@ function MedicalEquipmentCreate() {
               color="primary"
               gutterBottom
             >
-              Medical Equipment
+              ข้อมูลอุปกรณ์แพทย์
             </Typography>
           </Box>
         </Box>

@@ -40,17 +40,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     const [Religions, setReligions] = useState<ReligionInterface[]>([]);
     const [Educations, setEducations] = useState<EducationsInterface[]>([]);
     const [Nationalitys, setNationalitys] = useState<NationalityInterface[]>([]);
-
-    const [Screening_officer_Names, setScreening_officer_Names] = useState<string>("");
-    const [Birthday, setBirthdays] = useState<string>("");
-    const [ScreeningIDCard, setScreeningIDCards] = useState<string>("");
-    const [Phone, setPhones] = useState<string>("");
-    const [Email, setEmails] = useState<string>("");
-    const [EducationName, setEducationNames] = useState<string>("");
-    const [EducationMajor, setEducationMajors] = useState<string>("");
-    const [University, setUniversitys] = useState<string>("");
     const [officers, setOfficers] = useState<OfficersInterface[]>([]);
-    const [errorMessage, setErrorMessage] = useState("");
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -65,6 +55,16 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
       }
       setSuccess(false);
       setError(false);
+    };
+
+    const handleInputChange = (
+      event: React.ChangeEvent<{ id?: string; value: any }>
+    ) => {
+      const id = event.target.id as keyof typeof Screening_officers;
+  
+      const { value } = event.target;
+  
+      setScreening_officers({ ...Screening_officers, [id]: value });
     };
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -140,50 +140,50 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 
   async function submit() {
 
-    if (Screening_officers.PrefixID == undefined){
+    if (Screening_officers.PrefixID == undefined || Screening_officers.PrefixID == 0){
       setError(true);
       setAlertMessage("กรุณาเลือกคำนำหน้า");
   }
-    else if (Screening_officers.GenderID == undefined){
+    else if (Screening_officers.GenderID == undefined || Screening_officers.GenderID == 0){
       setError(true);
       setAlertMessage("กรุณาเลือกเพศ")
   }
-    else if (Screening_officers.BloodID == undefined){
+    else if (Screening_officers.BloodID == undefined || Screening_officers.BloodID == 0){
       setError(true);
       setAlertMessage("กรุณาเลือกกรุ๊ปเลือด")
     }
-    else if (Screening_officers.ReligionID == undefined){
+    else if (Screening_officers.ReligionID == undefined || Screening_officers.ReligionID == 0){
       setError(true);
       setAlertMessage("กรุณาเลือกศาสนา")
   }
-  else if (Screening_officers.NationalityID == undefined){
+  else if (Screening_officers.NationalityID == undefined || Screening_officers.NationalityID == 0){
     setError(true);
     setAlertMessage("กรุณาเลือกสัญชาติ")
   }
-  else if (Screening_officers.EducationID == undefined){
+  else if (Screening_officers.EducationID == undefined || Screening_officers.EducationID == 0){
     setError(true);
     setAlertMessage("กรุณาเลือกระดับการศึกษา")
   }
 
     else{
     let data = {
-      PrefixID: convertType(Screening_officers.PrefixID),
-      GenderID: convertType(Screening_officers.GenderID),
-      EducationID: convertType(Screening_officers.EducationID),
-      ReligionID: convertType(Screening_officers.ReligionID),
-      BloodID: convertType(Screening_officers.BloodID),
-      NationalityID: convertType(Screening_officers.NationalityID),
 
-      Screening_officer_Name: (Screening_officer_Names),
-      Birthday: (Birthday),
-      ScreeningIDCard: (ScreeningIDCard),
-      Phone: (Phone),
-      Email: (Email),
-      EducationName: (EducationName),
-      EducationMajor: (EducationMajor),
-      University: (University),
-      OfficerID: convertType(Screening_officers.OfficerID),
+      PrefixID: convertType(Screening_officers.PrefixID ?? ""),
+      GenderID: convertType(Screening_officers.GenderID ?? ""),
+      EducationID: convertType(Screening_officers.EducationID ?? ""),
+      ReligionID: convertType(Screening_officers.ReligionID ?? ""),
+      BloodID: convertType(Screening_officers.BloodID ?? ""),
+      NationalityID: convertType(Screening_officers.NationalityID ?? ""),
+      OfficerID: convertType(Screening_officers.OfficerID ?? ""), 
 
+      Screening_officer_Name: Screening_officers.Screening_officer_Name ?? "",
+      ScreeningIDCard: Screening_officers.ScreeningIDCard ?? "",
+      Birthday: Screening_officers.Birthday ?? "",
+      Phone: Screening_officers.Phone ?? "",
+      Email: Screening_officers.Email ?? "",
+      EducationName: Screening_officers.EducationName ?? "",
+      EducationMajor: Screening_officers.EducationMajor ?? "",
+      University: Screening_officers.University ?? "",
     };
     
     console.log(data)
@@ -267,9 +267,10 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 
           <Grid item xs={8}>
                 <p>ชื่อ-สกุล</p>
-                <TextField fullWidth id="FirstNameTH" type="string" variant="outlined"
+                <TextField fullWidth id="Screening_officer_Name" type="string" variant="outlined"
                 label="ชื่อ-นามสกุล" 
-                onChange={(event) => setScreening_officer_Names(event.target.value)} />
+                value={Screening_officers.Screening_officer_Name}
+                onChange={handleInputChange} />
               </Grid>
       
           <Grid item xs={4}>
@@ -345,7 +346,8 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
                 <p>วันเดือนปีเกิด</p>
                 <TextField fullWidth id="Birthday" type="string" variant="outlined"
                 label="DD/MM/YYYY"  
-                onChange={(event) => setBirthdays(event.target.value)} />
+                value={Screening_officers.Birthday}
+                onChange={handleInputChange} />
               </Grid>
 
           <Grid item xs={4}>
@@ -398,7 +400,8 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
                 <p>รหัสบัตรประชาชน</p>
                 <TextField fullWidth id="ScreeningIDCard" type="string" variant="outlined" 
                 label="รหัสบัตรประชาชน 13 หลัก" 
-                onChange={(event) => setScreeningIDCards(event.target.value)} />
+                value={Screening_officers.ScreeningIDCard}
+                onChange={handleInputChange} />
               </Grid>
           <Grid item xs={6.5}> </Grid>
 
@@ -438,21 +441,24 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
                 <p>ชื่อปริญญา</p>
                 <TextField fullWidth id="EducationName" type="string" variant="outlined"
                 label="ชื่อปริญญา"   
-                onChange={(event) => setEducationNames(event.target.value)} />
+                value={Screening_officers.EducationName}
+                onChange={handleInputChange}/>
           </Grid>
 
               <Grid item xs={5.5}>
                 <p>ชื่อสาขาวิชาเอก</p>
                 <TextField fullWidth id="EducationMajor" type="string" variant="outlined"
                 label="ชื่อสาขาวิชาเอก"   
-                onChange={(event) => setEducationMajors(event.target.value)} />
+                value={Screening_officers.EducationMajor}
+                onChange={handleInputChange} />
               </Grid>
 
           <Grid item xs={6.5}>
                 <p>ชื่อมหาวิทยาลัย</p>
                 <TextField fullWidth id="University" type="string" variant="outlined"
                 label="ชื่อมหาวิทยาลัย"  
-                onChange={(event) => setUniversitys(event.target.value)} />
+                value={Screening_officers.University}
+                onChange={handleInputChange}/>
               </Grid>
           </Grid>
 
@@ -467,14 +473,16 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
                 <p>เบอร์โทรศัพท์</p>
                 <TextField fullWidth id="Phone" type="string" variant="outlined"  
                 label="ตัวอย่าง 08xxxxxxxx" 
-                onChange={(event) => setPhones(event.target.value)} />
+                value={Screening_officers.Phone}
+                onChange={handleInputChange} />
               </Grid>
 
           <Grid item xs={6}>
                 <p>อีเมล</p>
                 <TextField fullWidth id="Email" type="string" variant="outlined"  
                  label="ตัวอย่าง xxxx@gmail.com" 
-                onChange={(event) => setEmails(event.target.value)} />
+                 value={Screening_officers.Email}
+                 onChange={handleInputChange} />
               </Grid>
              
 

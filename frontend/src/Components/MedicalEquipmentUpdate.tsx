@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -41,11 +41,15 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function MedicalEquipmentCreate() {
+function MedicalEquipmentUpdate() {
+
+  const [MedicalEquipment_ID, setMedicalEquipment_ID] = React.useState<Number | undefined>(undefined);
+
   const [Brand, setBrands] = useState<BrandsInterface[]>([]);
   const [medstatuses, setMedStatuses] = useState<MedStatusInterface[]>([]);
-  const [medemployees, setMed_Employee] = useState<MedEmployeeInterface[]>([]);
+  //const [medemployees, setMed_Employee] = useState<MedEmployeeInterface[]>([]);
   const [MedicalEquipment, setMedicalEquipment] = useState<MedicalEquimentInterface>({});
+  const params = useParams()
 
   const [Equipment, setEquipments] = useState<string>("");
   const [Quantity, setQuantitys] = useState<string>("");
@@ -79,16 +83,6 @@ function MedicalEquipmentCreate() {
     });
   };
 
-  const handleInputChange = (
-    event: React.ChangeEvent<{ id?: string; value: any }>
-  ) => {
-    const id = event.target.id as keyof typeof MedicalEquipment;
-
-    const { value } = event.target;
-
-    setMedicalEquipment({ ...MedicalEquipment, [id]: value });
-  };
-
   const getMedStatus = async () => {
     let res = await GetMedStatus();
     if (res) {
@@ -110,6 +104,7 @@ function MedicalEquipmentCreate() {
   useEffect(() => {
     getBrand();
     getMedStatus();
+    getMedicalEquipment();
    
   }, []);
 
@@ -119,43 +114,75 @@ function MedicalEquipmentCreate() {
   };
 
 
+  function timeout(delay: number) {
+    return new Promise(res => setTimeout(res, delay));
+  }
 
-  async function submit() {
-    let data = {
-      Equipment: MedicalEquipment.Equipment ?? "",
-      Quantity: convertType(MedicalEquipment.Quantity ?? ""),
-      Shop : MedicalEquipment.Shop ?? "",
-      BrandID: convertType(MedicalEquipment.BrandID),
-      Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
-    };
-    console.log()
-  
-  
-    const apiUrl = "http://localhost:8080";
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
 
-    fetch(`${apiUrl}/medicalequipments`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        console.log(res)
-        if (res.data) {
-          console.log("บันทึกได้")
-          setSuccess(true);
-          setErrorMessage("บันทึกได้")
-        } else {
-          console.log("บันทึกไม่ได้")
-          setError(true);
-          setErrorMessage(res.error)
-        }
-});
+function update() {
+  let upequipment = {
+    ID: MedicalEquipment.ID,
+    Equipment: MedicalEquipment.Equipment ?? "",
+    Quantity: MedicalEquipment.Quantity ?? "",
+    Shop : MedicalEquipment.Shop ?? "",
+    BrandID: convertType(MedicalEquipment.BrandID),
+    Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
+  };
+
+  const requestOptions = {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(upequipment),
+  };
+  console.log(upequipment);
+
+  fetch(`http://localhost:8080/medicalequipmentsUpdate`, requestOptions)
+    .then((response) => response.json())
+    .then(async (res) => {
+      console.log(res);
+      if (res.data) {
+        setSuccess(true);
+        await timeout(1000); //for 1 sec delay
+        window.location.reload();     
+        
+      } else {
+        setError(true);
+      }
+    });
 }
+
+const handleInputChange = (
+  event: React.ChangeEvent<{ id?: string; value: any }>
+) => {
+  const id = event.target.id as keyof typeof MedicalEquipment;
+
+  const { value } = event.target;
+
+  setMedicalEquipment({ ...MedicalEquipment, [id]: value });
+};
+const getMedicalEquipment = async () => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(`http://localhost:8080/medicalequipment/${params.id}`, requestOptions )
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res.data)
+      if (res.data) {
+        setMedicalEquipment(res.data);
+        setMedicalEquipment_ID(res.data.ID);
+      }
+    });
+};
+
 
   return (
     <Container maxWidth="md">
@@ -237,17 +264,15 @@ function MedicalEquipmentCreate() {
                   shrink: true,
                 }}
                 value={MedicalEquipment.Quantity}
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}   />
             </FormControl>
           </Grid>
 
           <Grid item xs={6}>
                 <p>เครื่องมือ</p>
-                <TextField fullWidth id="Equipment" type="string" variant="outlined"
-                 value={MedicalEquipment.Equipment}
-                  onChange={handleInputChange}  
-                 />
+                <TextField fullWidth id="Equipment" type="string" variant="outlined"  
+                  value={MedicalEquipment.Equipment}
+                   onChange={handleInputChange}   />
               </Grid>
 
           <Grid item xs={6}>
@@ -280,7 +305,7 @@ function MedicalEquipmentCreate() {
                 <p>ร้านค้า</p>
                 <TextField fullWidth id="Shop" type="string" variant="outlined"  
                 value={MedicalEquipment.Shop}
-                onChange={handleInputChange} />
+                 onChange={handleInputChange}  />
               </Grid>
 
           {/* <Grid item xs={12}>
@@ -320,7 +345,7 @@ function MedicalEquipmentCreate() {
             </Button>
             <Button
               style={{ float: "right" }}
-              onClick={submit}
+              onClick={update}
               variant="contained"
               color="primary"
             >
@@ -333,4 +358,4 @@ function MedicalEquipmentCreate() {
   );
 }
 
-export default MedicalEquipmentCreate;
+export default MedicalEquipmentUpdate;

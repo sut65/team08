@@ -69,15 +69,15 @@ func Test_Save_ITI_Date_checkout(t *testing.T) {
 }
 
 // เช็คขอมูลการกรอกครบทั้งหมด
-// func Test_Save_ITI_All(t *testing.T) {
-// 	g := gomega.NewGomegaWithT(t)
+func Test_Save_ITI_All(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
 
-// 	testsave := Save_ITI{
-// 		Date_checkin:  time.Now(),
-// 	    Date_checkout: time.Now().Add(24 * time.Hour),
-// 	    TextSave: "aaaaaaaaaaaa",
-// 	}
-// 	ok, err := govalidator.ValidateStruct(testsave)
-// 	g.Expect(ok).To(gomega.BeTrue())
-// 	g.Expect(err).To(gomega.BeNil())
-// }
+	testsave := Save_ITI{
+		Date_checkin:  time.Now(),
+	    Date_checkout: time.Now().Add(24 * time.Hour),
+	    TextSave: "aaaaaaaaaaaa",
+	}
+	ok, err := govalidator.ValidateStruct(testsave)
+	g.Expect(ok).To(gomega.BeTrue())
+	g.Expect(err).To(gomega.BeNil())
+}

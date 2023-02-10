@@ -737,6 +737,33 @@ async function CreateDoctor(data: DoctorInterface) {
   return res;
 }
 
+async function UpdateDoctor(data: DoctorInterface) {
+  const requestOptions = {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      // console.log(res.data);
+      if (res.data) {
+        console.log("เข้า function UpdateDoctor แล้ววววววววว")
+        console.log(res.data);
+        return res;
+      } else {
+        console.log("ไม่เข้า fetch จาก function UpdateDoctor")
+        return res;
+      }
+    });
+
+  return res;
+}
+
 async function CreateLab(data: LabInterface) {
   const requestOptions = {
     method: "POST",
@@ -1699,6 +1726,7 @@ export {
   GetDoctor,
   GetShow,
   CreateDoctor,
+  UpdateDoctor,
   ListLabName,
   ListLab,
   CreateLab,

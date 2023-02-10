@@ -14,7 +14,7 @@ func CreateMedEquipment(c *gin.Context) {
 	var med_equipment entity.Med_Equipment
 	var brand entity.Brand
 	var med_status entity.Med_Status
-	var med_employee entity.Med_Employee
+	//var med_employee entity.Med_Employee
 	
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 9 จะถูก bind เข้าตัวแปร med_equipment
@@ -35,17 +35,17 @@ func CreateMedEquipment(c *gin.Context) {
 		return
 	}
 
-	//12: ค้นหา employee ด้วย id
-	if tx := entity.DB().Where("id = ?", med_equipment.Med_EmployeeID).First(&med_employee); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "employee not found"})
-		return
-	}
+	// //12: ค้นหา employee ด้วย id
+	// if tx := entity.DB().Where("id = ?", med_equipment.Med_EmployeeID).First(&med_employee); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "employee not found"})
+	// 	return
+	// }
 
 	// 13: สร้าง Med_equipment
 	wv := entity.Med_Equipment{
 		Brand:        brand,        // โยงความสัมพันธ์กับ Entity Brand
 		Med_Status:   med_status,   // โยงความสัมพันธ์กับ Entity Status
-		Med_Employee: med_employee, // โยงความสัมพันธ์กับ Entity Employee
+		//Med_Employee: med_employee, // โยงความสัมพันธ์กับ Entity Employee
 		Quantity:     med_equipment.Quantity,
 		Equipment:    med_equipment.Equipment,
 		Shop:		  med_equipment.Shop,
@@ -100,23 +100,34 @@ func DeleteMedEquipment(c *gin.Context) {
 // PATCH /med_equipments
 func UpdateMedEquipment(c *gin.Context) {
 	var med_equipment entity.Med_Equipment
+
 	if err := c.ShouldBindJSON(&med_equipment); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	if tx := entity.DB().Where("id = ?", med_equipment.ID).First(&med_equipment); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Medical Equipment not found"})
-		return
+	
+	// สร้าง
+	upequipment := entity.Med_Equipment{
+		BrandID:        med_equipment.BrandID,        // โยงความสัมพันธ์กับ Entity Brand
+		Med_StatusID:   med_equipment.Med_StatusID,   // โยงความสัมพันธ์กับ Entity Status
+		Quantity:     med_equipment.Quantity,
+		Equipment:    med_equipment.Equipment,
+		Shop:		  med_equipment.Shop,
 	}
 
-	if err := entity.DB().Save(&med_equipment).Error; err != nil {
+	// if _, err := govalidator.ValidateStruct(u_p); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	if err := entity.DB().Where("id = ?", med_equipment.ID).Updates(&upequipment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": med_equipment})
+	c.JSON(http.StatusOK, gin.H{"data": upequipment})
 }
+
 
 func CreateloginMedEquipment(c *gin.Context) {
 

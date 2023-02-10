@@ -32,8 +32,6 @@ export interface Screening_officersInterface {
     PrefixID?: number;     // foreignkey.ID
     Education?: EducationsInterface;
     EducationID?: number;
-    ScPassword?:	   string,
-
     OfficerID ?:    number;
 	Officer ?: OfficersInterface;
    }

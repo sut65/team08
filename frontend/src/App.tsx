@@ -43,6 +43,7 @@ import MedicalEquipmentCreate from "./Components/MedicalEquipmentCreate";
 import MedicalEquipments from "./Components/MedicalEquipment";
 import RequestCreate from "./Components/RequestCreate";
 import Request from "./Components/Request";
+import MedicalEquipmentUpdate from "./Components/MedicalEquipmentUpdate";
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SickIcon from '@mui/icons-material/Sick';
@@ -272,6 +273,7 @@ function App() {
                 <Route path="/medemployees/create" element={<MedEmployeesCreate/>}/>
                 <Route path="/medicalequipment" element={<MedicalEquipments />} />
                 <Route path="/medicalequipment/create" element={<MedicalEquipmentCreate />}/>
+                <Route path="/medicalequipmentsupdate/:id" element={<MedicalEquipmentUpdate/>}/>
 
                 <Route path="/requests" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />

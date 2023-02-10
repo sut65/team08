@@ -84,12 +84,12 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme({
     palette: {
       primary: {
-          main: '#698269',
+          main: '#009688',
 
           light: '#B99B6B',
 
           //สีสว่าง
-          contrastText: '#F1DBBF',
+          contrastText: '#f8f8f8',
       },
       secondary: {
           main: '#AA5656',

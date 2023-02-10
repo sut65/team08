@@ -200,9 +200,9 @@ func main() {
 			// r.GET("/treatments/readyyy", controller.ListReady_Dispense)
 			// r.GET("/treatments/readyapp", controller.ListReady_Appoint)
 			router.GET("/treatments", controller.ListTreatment)
-			router.GET("/treatments/:id", controller.GetTreatment)
+			router.GET("/treatmentss/:id", controller.GetTreatment)
 			router.POST("/treatments", controller.CreateTreatment)
-			router.PATCH("/treatments", controller.UpdateTreatment)
+			router.PATCH("/treatmentsUpdate", controller.UpdateTreatment) ////++
 			router.DELETE("/treatment/:id", controller.DeleteTreatment)
 			router.GET("/treatments/ready", controller.ListReady_Treat)
 			router.GET("/treatments/readyyy", controller.ListReady_Dispense)

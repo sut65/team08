@@ -150,7 +150,7 @@ function RequestCreate() {
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert onClose={handleClose} severity="success">
-            บันทึกข้อมูลสำเร็จ
+            
             {message}
           </Alert>
         </Snackbar>
@@ -162,7 +162,7 @@ function RequestCreate() {
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert onClose={handleClose} severity="error">
-            บันทึกข้อมูลไม่สำเร็จ
+            
             {message}
           </Alert>
         </Snackbar>
@@ -192,13 +192,22 @@ function RequestCreate() {
             </Grid>
             <Grid item xs={6}>
               <p>จำนวน</p>
+              <FormControl fullWidth variant="outlined">
               <TextField
+                id="QUANTITY"
+                label="Number"
+                type="Number"
+                inputProps={{ name: "Number", min: 0 ,max:1000}} 
+                onChange={(event) => setQUANTITY(event.target.value)}
+              />
+            </FormControl>
+              {/* <TextField
                 fullWidth
                 id="QUANTITY"
                 type="string"
                 variant="outlined"
                 onChange={(event) => setQUANTITY(event.target.value)} />
-              {/*<Item>ชื่อนามสกุล</Item>*/}
+              <Item>ชื่อนามสกุล</Item> */}
             </Grid>
 
             <Grid item xs={6}>

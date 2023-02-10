@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"fmt"
+	
 	"testing"
 
 	"github.com/asaskevich/govalidator"
@@ -26,7 +26,7 @@ func TestPatientNameValidate(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Patient Name cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่ชื่อ-นามสกุล"))
 }
 
 func TestAgeMustBeInRange(t *testing.T) {
@@ -50,7 +50,7 @@ func TestAgeMustBeInRange(t *testing.T) {
 	g.Expect(err).ToNot(gomega.BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(gomega.Equal("Age: 150 does not validate as range(0|120)"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่อายุให้ถูกต้อง"))
 
 }
 
@@ -72,7 +72,7 @@ func TestBirthdayNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Birthday cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่วันเดือนปีเกืด"))
 }
 
 func TestIDCardMustBeInValidPattern(t *testing.T) {
@@ -108,7 +108,7 @@ func TestIDCardMustBeInValidPattern(t *testing.T) {
 		g.Expect(err).ToNot(gomega.BeNil())
 
 		// err.Error() ต้องมี message แสดงออกมา
-		g.Expect(err.Error()).To(gomega.Equal(fmt.Sprintf(`IDCard: %s does not validate as matches(^[1-9]\d{12}$)`, fixture)))
+		g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก"))
 	}
 }
 
@@ -145,7 +145,7 @@ func TestPhone_PatientMustBeInValidPattern(t *testing.T) {
 		g.Expect(err).ToNot(gomega.BeNil())
 
 		// err.Error() ต้องมี message แสดงออกมา
-		g.Expect(err.Error()).To(gomega.Equal(fmt.Sprintf(`Phone: %s does not validate as matches(^[0]\d{9}$)`, fixture)))
+		g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก"))
 	}
 }
 
@@ -167,7 +167,7 @@ func TestHouse_IDNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("House_ID cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่บ้านเลขที่"))
 }
 
 func TestIDCardNotBlank(t *testing.T) {
@@ -188,7 +188,7 @@ func TestIDCardNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("IDCard cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่รหัสบัตรประชาชน"))
 }
 
 func TestPhoneNotBlank(t *testing.T) {
@@ -209,5 +209,5 @@ func TestPhoneNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Phone cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่เบอร์โทรศัพท์"))
 }

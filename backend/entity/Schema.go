@@ -93,19 +93,19 @@ type Patient struct {
 	gorm.Model
 	//หน้าต่างข้อมูลส่วนตัวของคนไข้
 	PrefixID            *uint  `valid:"-"`
-	Patient_Name        string `valid:"required~Patient Name cannot be blank"`
-	Age                 uint   `valid:"range(0|120)"`
+	Patient_Name        string `valid:"required~กรุณาใส่ชื่อ-นามสกุล"`
+	Age                 uint   `valid:"range(0|120)~กรุณาใส่อายุให้ถูกต้อง"`
 	GenderID            *uint  `valid:"-"`
 	BloodID             *uint  `valid:"-"`
 	ReligionID          *uint  `valid:"-"`
-	Birthday            string `valid:"required~Birthday cannot be blank"`
+	Birthday            string `valid:"required~กรุณาใส่วันเดือนปีเกืด"`
 	NationalityID       *uint  `valid:"-"`
 	Screening_officerID *uint  `valid:"-"`
-	IDCard              string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$), required~IDCard cannot be blank"`
+	IDCard              string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$)~กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก,required~กรุณาใส่รหัสบัตรประชาชน"`
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
-	Phone     string `valid:"matches(^[0]\\d{9}$),required~Phone cannot be blank"`
-	House_ID  string `valid:"required~House_ID cannot be blank"`
+	Phone     string `valid:"matches(^[0]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
+	House_ID  string `valid:"required~กรุณาใส่บ้านเลขที่"`
 	AddressID *uint  `valid:"-"`
 
 	//foreignKey

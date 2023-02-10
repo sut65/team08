@@ -48,8 +48,11 @@ func CreateOperating_Room(c *gin.Context) {
 
 	// 14: สร้าง Operating_Room
 	save := entity.Operating_Room{
-		Doctor: Doctor,
+		NumOper: Operating_Room.NumOper,
 		Datetime: Operating_Room.Datetime,
+		TextOper: Operating_Room.TextOper,
+
+		Doctor: Doctor,
 		Save_ITI: 	Save_ITI,
 		//Building:  	Building,
 		Room:		Room,
@@ -105,7 +108,9 @@ func UpdateOperating_Room(c *gin.Context) {
 	
 	// สร้าง
 	upoperate := entity.Operating_Room{
+		NumOper: Operating_Room.NumOper,
 		Datetime: Operating_Room.Datetime,
+		TextOper: Operating_Room.TextOper,
 
 		Save_ITIID: 	Operating_Room.Save_ITIID,
 		//BuildingID:  	Operating_Room.BuildingID,

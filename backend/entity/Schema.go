@@ -3,8 +3,9 @@ package entity
 import (
 	"github.com/asaskevich/govalidator"
 
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 // Officer บนสุด
@@ -373,34 +374,37 @@ type Save_ITI struct {
 	gorm.Model
 	Date_checkin  time.Time
 	Date_checkout time.Time
-
-	Treatment   Treatment `gorm:"references:id"`
-	TreatmentID *uint
-	Building    Building `gorm:"references:id"`
-	BuildingID  *uint
-	Room        Room `gorm:"references:id"`
-	RoomID      *uint
-	State       State `gorm:"references:id"`
-	StateID     *uint
-	Doctor      Doctor `gorm:"references:id"`
-	DoctorID    *uint
+	TextSave string	`valid:"maxstringlength(200)~โปรดระบุรายละเอียดของยาไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดแผนการรักษา"`
+	
+	Treatment   Treatment `gorm:"references:id" valid:"-"`
+	TreatmentID *uint	 `valid:"-"`
+	Building    Building `gorm:"references:id" valid:"-"`
+	BuildingID  *uint	 `valid:"-"`
+	Room        Room `gorm:"references:id" valid:"-"`
+	RoomID      *uint	 `valid:"-"`
+	State       State `gorm:"references:id" valid:"-"`
+	StateID     *uint	 `valid:"-"`
+	Doctor      Doctor `gorm:"references:id" valid:"-"`
+	DoctorID    *uint	 `valid:"-"`
 
 	Operating_Room *Operating_Room `gorm:"foreignkey:Save_ITIID"`
 }
 
 type Operating_Room struct {
 	gorm.Model
+	NumOper string
 	Datetime time.Time
+	TextOper string
 
-	Save_ITI   Save_ITI `gorm:"references:id"`
-	Save_ITIID *uint
-	Building   Building `gorm:"references:id"`
-	BuildingID *uint
-	Room       Room `gorm:"references:id"`
-	RoomID     *uint
-	Doctor     Doctor `gorm:"references:id"`
-	DoctorID   *uint
-}
+	Save_ITI   Save_ITI `gorm:"references:id" valid:"-"`
+	Save_ITIID *uint	 `valid:"-"` 
+	Building   Building `gorm:"references:id" valid:"-"`
+	BuildingID *uint	 `valid:"-"`
+	Room       Room `gorm:"references:id"  valid:"-"`
+	RoomID     *uint	 `valid:"-"`
+	Doctor     Doctor `gorm:"references:id" valid:"-"`
+	DoctorID   *uint	 `valid:"-"`
+}	
 
 // Aern
 type Drug struct {

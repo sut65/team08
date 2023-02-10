@@ -67,6 +67,7 @@ func CreateSave_ITI(c *gin.Context) {
 	save := entity.Save_ITI{
 		Date_checkin: Save_ITI.Date_checkin,
 		Date_checkout: Save_ITI.Date_checkout,
+		TextSave: Save_ITI.TextSave,
 
 		Doctor: Doctor,
 		Treatment: 	Treatment,
@@ -127,6 +128,7 @@ func UpdateSave_ITI(c *gin.Context) {
 	upsave := entity.Save_ITI{
 		Date_checkin: Save_ITI.Date_checkin,
 		Date_checkout: Save_ITI.Date_checkout,
+		TextSave: Save_ITI.TextSave,
 		
 		TreatmentID: 	Save_ITI.TreatmentID,
 		//BuildingID:  	Save_ITI.BuildingID,

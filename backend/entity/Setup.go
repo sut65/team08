@@ -157,25 +157,25 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM practices WHERE name = ?", "ยาก่อนนอน ควรรับประทานยาก่อนเข้านอน 15 – 30 นาที").Scan(&Practice_3)
 
 	// J
-	db.Model(&Building{}).Create(&Building{Name: "F01"})
-	db.Model(&Building{}).Create(&Building{Name: "F02"})
-	db.Model(&Building{}).Create(&Building{Name: "F03"})
-	db.Model(&Building{}).Create(&Building{Name: "F04"})
+	db.Model(&Building{}).Create(&Building{Name: "ตึกคนไข้ภายใน"})
+	db.Model(&Building{}).Create(&Building{Name: "ตึกผ่าตัด"})
 	
-	var building1, building2, building3, building4 Building
-	db.Raw("SELECT * FROM buildings WHERE name = ?", "F01").Scan(&building1)
-	db.Raw("SELECT * FROM buildings WHERE name = ?", "F02").Scan(&building2)
-	db.Raw("SELECT * FROM buildings WHERE name = ?", "F03").Scan(&building3)
-	db.Raw("SELECT * FROM buildings WHERE name = ?", "F04").Scan(&building4)
+	var building1, building2 Building
+	db.Raw("SELECT * FROM buildings WHERE name = ?", "ตึกคนไข้ภายใน").Scan(&building1)
+	db.Raw("SELECT * FROM buildings WHERE name = ?", "ตึกผ่าตัด").Scan(&building2)
 
-	db.Model(&Room{}).Create(&Room{Name: "B101", Building: building1})
-	db.Model(&Room{}).Create(&Room{Name: "B102", Building: building1})
-	db.Model(&Room{}).Create(&Room{Name: "B201", Building: building2})
-	db.Model(&Room{}).Create(&Room{Name: "B202", Building: building2})
-	db.Model(&Room{}).Create(&Room{Name: "B301", Building: building3})
-	db.Model(&Room{}).Create(&Room{Name: "B302", Building: building3})
-	db.Model(&Room{}).Create(&Room{Name: "B401", Building: building4})
-	db.Model(&Room{}).Create(&Room{Name: "B402", Building: building4})
+	db.Model(&Room{}).Create(&Room{Name: "Room01", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room02", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room03", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room04", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room05", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room06", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom01", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom02", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom03", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom04", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom05", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom06", Building: building2})
 
 	db.Model(&State{}).Create(&State{Name: "ต้องได้รับการผ่าตัด"})
 	db.Model(&State{}).Create(&State{Name: "นอนดูอาการ"})

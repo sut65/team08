@@ -241,9 +241,7 @@ function MedicalEquipmentCreate() {
                 id="Quantity"
                 label="Number"
                 type="Number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                inputProps={{ name: "Number", min: 0}}
                 value={MedicalEquipment.Quantity}
                 onChange={handleInputChange}
               />

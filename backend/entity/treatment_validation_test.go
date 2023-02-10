@@ -215,4 +215,3 @@ func TestTREATMENTID_NotBlank(t *testing.T) {
 
 	g.Expect(err.Error()).To(gomega.Equal("เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"))
 }
-

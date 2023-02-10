@@ -122,25 +122,35 @@ func DeleteTreatment(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH /
+// PATCH / 
 func UpdateTreatment(c *gin.Context) {
 	var treatment entity.Treatment
 	if err := c.ShouldBindJSON(&treatment); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	// สร้าง
+	uptreat := entity.Treatment{
 
-	if tx := entity.DB().Where("id = ?", treatment.ID).First(&treatment); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "treatment not found"})
-		return
+		DiseaseID:     treatment.DiseaseID, // โยงความสัมพันธ์กับ Entity
+		PatientID:    treatment.PatientID, // โยงความสัมพันธ์กับ Entity
+		StatusID:     treatment.StatusID,  // โยงความสัมพันธ์กับ Entity
+		TrackID:      treatment.TrackID,   // โยงความสัมพันธ์กับ Entity
+		DoctorID:     treatment.DoctorID,  // โยงความสัมพันธ์กับ Entity
+		TREATMENT_ID: treatment.TREATMENT_ID,
+		TREATMENT:    treatment.TREATMENT,
+		DATE:         treatment.DATE,
+		APPOINTMENT:  treatment.APPOINTMENT,
+		CONCLUSION:   treatment.CONCLUSION,
+		GUIDANCE:     treatment.GUIDANCE,
 	}
 
-	if err := entity.DB().Save(&treatment).Error; err != nil {
+	if err := entity.DB().Where("id = ?", treatment.ID).Updates(&uptreat).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": treatment})
+	c.JSON(http.StatusOK, gin.H{"data": uptreat})
 }
 
 func ListReady_Treat(c *gin.Context) {

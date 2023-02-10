@@ -29,20 +29,11 @@ import {
 } from "@mui/x-data-grid";
 
 import AddIcon from "@mui/icons-material/Add";
-import Fab from "@mui/material/Fab";
 import Checkbox from "@mui/material/Checkbox";
 import { pink, green } from "@mui/material/colors";
-
-import InputAdornment from "@mui/material/InputAdornment";
-import SearchIcon from "@mui/icons-material/Search";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs, { Dayjs } from "dayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { PatientsInterface } from "../Models/IPatient";
-
-import { EducationsInterface } from "../Models/IEducation";
 import { DoctorInterface } from "../Models/IDoctor";
 import { TreatmentsInterface } from "../Models/ITreatment";
 
@@ -91,14 +82,11 @@ function Lab() {
   };
 
   const [Patiends, setPatiends] = useState<PatientsInterface>({});
-  // const [Policings, setPolicings] = useState<PolicingsInterface[]>([]);
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [isDisabled2, setIsDisabled2] = useState(false);
 
   const [ValueInput, setValueInput] = useState<string>("");
-  const [isDisabledPrefix, setIsDisabledPrefix] = useState(false);
-  const [Educations, setEducations] = useState<EducationsInterface[]>([]);
   const [Doctor, setDoctor] = useState<Partial<DoctorInterface>>({});
   const [Lab, setLab] = useState<Partial<LabInterface>>({});
 
@@ -117,15 +105,10 @@ function Lab() {
   const [openDelete, setOpendelete] = React.useState(false);
   const [openUpdate, setOpenupdate] = React.useState(false);
 
-
-  const [valueDate, setValueDate] = React.useState<Dayjs | null>(
-    dayjs("2000-01-01T21:11:54")
-  );
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
     setLabID(Number(params.row.ID));
     localStorage.setItem("LabID", params.row.ID);
+    console.log(params.row);
   };
 
   const Delete_Lab = async () => {
@@ -271,7 +254,6 @@ function Lab() {
       // console.log(res);
     }
   };
-
   const getShowLab = async () => {
     let res = await ListLab();
     if (res) {
@@ -281,7 +263,6 @@ function Lab() {
       // console.log(res);
     }
   };
-
   const getLabName = async () => {
     let res = await ListLabName();
     if (res) {
@@ -291,13 +272,10 @@ function Lab() {
       // console.log(res);
     }
   };
-
   const handleClickOpen = () => {
     // setOpen(true);
     setOpenD(true);
   };
-
-
   useEffect(() => {
     getDoctor();
     getShow();
@@ -321,12 +299,10 @@ function Lab() {
         });
     }
   };
-
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
   };
-
   const convertTypeFloat = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseFloat(data) : data;
     return val;
@@ -357,7 +333,7 @@ function Lab() {
       valueFormatter: (params) => params.value.Name,
     },
     {
-      field: "CreatedAt",
+      field: "DATE",
       headerName: "วันที่และเวลา",
       width: 200,
       valueFormatter: (params) => dayjs(params.value).format("H:mm | DD/MM/YY"),
@@ -400,12 +376,12 @@ function Lab() {
         );
       },
     },
-    {
-      field: "CreatedAt",
-      headerName: "วันที่และเวลา",
-      width: 150,
-      valueFormatter: (params) => dayjs(params.value).format("H:mm | DD/MM/YY"),
-    },
+    // {
+    //   field: "CreatedAt",
+    //   headerName: "วันที่และเวลา",
+    //   width: 150,
+    //   valueFormatter: (params) => dayjs(params.value).format("H:mm | DD/MM/YY"),
+    // },
     {
       field: "Lab_Name",
       headerName: "ใบแลป",

@@ -9,7 +9,6 @@ import (
 )
 
 // POST /Lab
-
 func CreateLab(c *gin.Context) {
 	var Lab entity.Lab
 
@@ -90,18 +89,47 @@ func DeleteLab(c *gin.Context) {
 // PATCH /Lab
 func UpdateLab(c *gin.Context) {
 	var Lab entity.Lab
+
+	var Lab_Name entity.Lab_Name
+	var Treatment entity.Treatment
+	var Med_Employee entity.Med_Employee
+	var Doctor entity.Doctor
+
 	if err := c.ShouldBindJSON(&Lab); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", Lab.ID).First(&Lab); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Lab not found"})
+	if tx := entity.DB().Where("id = ?", Lab.LabNameID).First(&Lab_Name); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Lab_NameID not found"})
 		return
 	}
-	if err := entity.DB().Save(&Lab).Error; err != nil {
+	if tx := entity.DB().Where("id = ?", Lab.TreatmentID).First(&Treatment); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "TreatmentID not found"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", Lab.Med_EmployeeID).First(&Med_Employee); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Med_EmployeeID not found"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", Lab.DoctorID).First(&Doctor); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "DoctorID not found"})
+		return
+	}
+
+	CreateLab := entity.Lab{
+		Lab_test: Lab.Lab_test,
+		Value: Lab.Value,
+
+		Lab_Name:     Lab_Name,
+		Treatment:    Treatment,
+		Med_Employee: Med_Employee,
+		Doctor:       Doctor,
+	}
+
+	if err := entity.DB().Model(Lab).Where("id = ?", Lab.ID).First(&Lab).Updates(&CreateLab).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": Lab})
 
+	c.JSON(http.StatusOK, gin.H{"data": CreateLab})
 }

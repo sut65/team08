@@ -194,34 +194,6 @@ func DeleteDoctor(c *gin.Context) {
 }
 
 // PATCH /Doctor
-func UpdateDoctorD(c *gin.Context) {
-	var Doctor entity.Doctor
-
-	if err := c.ShouldBindJSON(&Doctor); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// password, _ := bcrypt.GenerateFromPassword([]byte(Doctor.DocterIDCard), 14)
-
-	// if err := entity.DB().Model(Doctor).Where("id = ?", Doctor.ID).Updates(map[string]interface{}{"Address":    Doctor.Address,"AllAddress": Doctor.AllAddress,"Birthday":   Doctor.Birthday,"Blood":    Doctor.Blood,"Country":     Doctor.Country,"District":      Doctor.District,"DocFaPrefix": Doctor.DocFaPrefix,"DocMoPrefix": Doctor.DocMoPrefix,"DocPassword":   string(password),"DocPrefix":   Doctor.DocPrefix,"DocWiPrefix": Doctor.DocWiPrefix,"DocterCode":    Doctor.DocterCode,"DocterIDCard":   Doctor.DocterIDCard,"Education":    Doctor.Education,"EducationMajor": Doctor.EducationMajor,"EducationName":  Doctor.EducationName,"Email":        Doctor.Email,"EndEducation": Doctor.EndEducation,"FaFirstName":  Doctor.FaFirstName,"FaIDCard":     Doctor.FaIDCard,"FaLastName":   Doctor.FaLastName,"FaOccupation": Doctor.FaOccupation,"FirstNameEN":  Doctor.FirstNameEN,"FirstNameTH":  Doctor.FirstNameTH,"Gender":   Doctor.Gender,"LastNameEN": Doctor.LastNameEN,"LastNameTH": Doctor.LastNameTH,"Marital":  Doctor.Marital,"MoFirstName":  Doctor.MoFirstName,"MoIDCard":     Doctor.MoIDCard,"MoLastName":   Doctor.MoLastName,"MoOccupation": Doctor.MoOccupation,"Nationality": Doctor.Nationality,"Province":      Doctor.Province,"ReOther":       Doctor.ReOther,"Religion":    Doctor.Religion,"StartEducation": Doctor.StartEducation,"Subdistrict":    Doctor.Subdistrict,"TelOffice":      Doctor.TelOffice,"TelPhone":       Doctor.TelPhone,"University":  Doctor.University,"WiFirstName": Doctor.WiFirstName,"WiIDCard":    Doctor.WiIDCard,"WiLastName":  Doctor.WiLastName,"WiOccupation": Doctor.WiOccupation,"WiPhone": Doctor.WiPhone}).Error; err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-
-	if tx := entity.DB().Where("id = ?", Doctor.ID).First(&Doctor); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Doctor not found"})
-		return
-	}
-
-	if err := entity.DB().Save(&Doctor).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": Doctor})
-}
-
 func UpdateDoctor(c *gin.Context) {
 	var Doctor entity.Doctor
 	var DocPrefix entity.DocPrefix
@@ -248,11 +220,6 @@ func UpdateDoctor(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	// if tx := entity.DB().Where("id = ?", Doctor.ID).First(&Doctor); tx.RowsAffected == 0 {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Doctor ID not found"})
-	// 	return
-	// }
 
 	if tx := entity.DB().Where("id = ?", Doctor.DocPrefixID).First(&DocPrefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "DocPrefixID not found"})

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -8,12 +8,14 @@ import { DataGrid, GridColDef,GridEventListener } from "@mui/x-data-grid";
 import { TreatmentsInterface } from "../Models/ITreatment";
 import { GetTreatment } from "../Services/HttpClientService";
 import { Dialog, DialogTitle } from "@mui/material";
-
+ 
 function Treatment() {
     const [treatments, setTreatments] = React.useState<TreatmentsInterface[]>([]);
     const [TreatmentID, setTreatmentID] = React.useState(0);
+    
     const [openDelete, setOpendelete] = React.useState(false);
     const [openUpdate, setOpenupdate] = React.useState(false);
+    const navigate = useNavigate();
  
     useEffect(() => {
         getTreatments();
@@ -121,20 +123,24 @@ function Treatment() {
                     </Dialog>
           
              {/* ยืนยันการแก้ไข */}
-             <Dialog open={openUpdate} onClose={handleClose} >
-                     <DialogTitle><div className="good-font">ยืนยันการแก้ไขรายการ</div></DialogTitle>
-                      <Button
-                             variant="contained"
-                             color="primary"
-                             //กด "ยืนยัน" ไปที่หน้าแก้ไข
-                             component={RouterLink}
-                             to="/EmployeeattemdanceINUpdate"
+             {/* ยืนยันการแก้ไข */}
+        {treatments.map((row) => (
+            <Dialog open={openUpdate} onClose={handleClose} key={row.ID}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <DialogTitle><div className="good-font">ยืนยันการแก้ไขรายการ</div></DialogTitle>
+                <Button
+                        variant="contained"
+                        color="primary"
+                        aria-lable="outlined button group"
+                        //กด "ยืนยัน" ไปที่หน้าแก้ไข
+                        onClick={() => navigate({ pathname: `/treatment/update/${TreatmentID}` })} autoFocus
                     >
-                                <div className="good-font">
-                                     ยืนยัน
-                                </div>
-                            </Button>
-                    </Dialog>            
+                        <div className="good-font">
+                          ยืนยัน
+                        </div>
+                  </Button>
+              </Dialog>
+        ))}            
             <Container maxWidth="md">
                 <Box
                     display="flex"

@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import FormControl from '@mui/material/FormControl/FormControl';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { DiseasesInterface } from "../Models/IDisease";
@@ -37,9 +37,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function TreatmentCreate() {
+function TreatmentUpdate() {
 
   const [treatment, settreatment] = useState<TreatmentsInterface>({DATE: new Date(),});
+  const [treatmentID, settreatmentID] = React.useState<Number | undefined>(undefined);
+
+
   const [TREATMENT_ID, setTREATMENT_ID] = useState<string>("");
   const [TREATMENT, setTREATMENT] = useState<string>("");
   const [CONCLUSION, setCONCLUSION] = useState<string>("");
@@ -55,6 +58,9 @@ function TreatmentCreate() {
   const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface[]>([]);
 
   const [message, setAlertMessage] = React.useState("");
+  const params = useParams()
+  //const [MedicalEquipment, setMedicalEquipment] = useState<MedicalEquimentInterface>({});
+
 
 
   // handleClose ประมาณว่าแสดงสเน็บบลาเร็จ ก็ปิดไป
@@ -76,7 +82,17 @@ function TreatmentCreate() {
       [name]: event.target.value,
     });
   };
-  //
+  //++
+  const handleInputChange = (
+    event: React.ChangeEvent<{ id?: string; value: any }>
+  ) => {
+    const id = event.target.id as keyof typeof treatment;
+
+    const { value } = event.target;
+
+    settreatment({ ...treatment, [id]: value });
+  };
+  //--
   const getDoctorByUID = async () => {
     let res = await GetDoctorByUID();
     treatment.DoctorID = res.ID;
@@ -121,6 +137,7 @@ function TreatmentCreate() {
     getTrack();
     getPatient();
     getDoctorByUID();
+    getTreatment();
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -128,7 +145,11 @@ function TreatmentCreate() {
     return val;
   };
 
-  async function submit() {
+  function timeout(delay: number) {
+    return new Promise(res => setTimeout(res, delay));
+  }
+
+  async function update() {
 
     if (treatment.DiseaseID == 0|| treatment.DiseaseID == undefined){
       setError(true);
@@ -148,18 +169,20 @@ function TreatmentCreate() {
     }
     else{
       let data = {
+        ID: treatment.ID,
+
         DiseaseID: convertType(treatment.DiseaseID),
         StatusID: convertType(treatment.StatusID),
         TrackID: convertType(treatment.TrackID),
         PatientID: convertType(treatment.PatientID),
         DoctorID: convertType(treatment.DoctorID),
   
-        TREATMENT_ID: (TREATMENT_ID),
-        TREATMENT: (TREATMENT),
+        TREATMENT_ID: treatment.TREATMENT_ID,
+        TREATMENT: treatment.TREATMENT,
         DATE: treatment.DATE,
-        CONCLUSION: (CONCLUSION),
-        GUIDANCE: (GUIDANCE),
-        APPOINTMENT: convertType(APPOINTMENT),
+        CONCLUSION: treatment.CONCLUSION,
+        GUIDANCE: treatment.GUIDANCE,
+        APPOINTMENT: convertType(treatment.APPOINTMENT),
   
       };
       console.log(data)
@@ -171,12 +194,51 @@ function TreatmentCreate() {
         setAlertMessage(res.message);
         setError(true);
       }
-
+      const requestOptions = {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      console.log(data);
+  
+      fetch(`http://localhost:8080/treatmentsUpdate`, requestOptions)
+        .then((response) => response.json())
+        .then(async (res) => {
+          console.log(res);
+          if (res.data) {
+            setSuccess(true);
+            await timeout(1000); //for 1 sec delay
+            window.location.reload();     
+            
+          } else {
+            setError(true);
+          }
+        });
     }
-    
-
-    
   };
+
+  const getTreatment = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(`http://localhost:8080/treatmentss/${params.id}`, requestOptions )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data)
+        if (res.data) {
+          settreatment(res.data);
+          settreatmentID(res.data.ID);
+        }
+      });
+  }
 
 
   return (
@@ -234,8 +296,9 @@ function TreatmentCreate() {
                 id="TREATMENT_ID"
                 type="string"
                 variant="outlined"
-                label="Txxxxxx"
-                onChange={(event) => setTREATMENT_ID(event.target.value)} />
+                
+                value={treatment.TREATMENT_ID}
+                onChange={handleInputChange} />
             </Grid>
             <Grid item xs={6}>
               <p>อาการเบื้องต้น</p>
@@ -244,7 +307,8 @@ function TreatmentCreate() {
                 id="TREATMENT"
                 type="string"
                 variant="outlined"
-                onChange={(event) => setTREATMENT(event.target.value)} />
+                value={treatment.TREATMENT}
+                onChange={handleInputChange} />
               {/*<Item>ชื่อนามสกุล</Item>*/}
             </Grid>
 
@@ -343,10 +407,11 @@ function TreatmentCreate() {
               <FormControl fullWidth variant="outlined">
               <TextField
                 id="APPOINTMENT"
-                label="Number"
+                
                 type="Number"
                 inputProps={{ name: "Number", min: 0 ,max:100}} 
-                onChange={(event) => setAPPOINTMENT(event.target.value)}
+                value={treatment.APPOINTMENT}
+                onChange={handleInputChange}
               />
             </FormControl>
               {/* <TextField
@@ -366,7 +431,8 @@ function TreatmentCreate() {
                 id="CONCLUSION"
                 type="string"
                 variant="outlined"
-                onChange={(event) => setCONCLUSION(event.target.value)} />
+                value={treatment.CONCLUSION}
+                onChange={handleInputChange} />
               {/*<Item>เบอร์โทร</Item>*/}
             </Grid>
 
@@ -378,7 +444,8 @@ function TreatmentCreate() {
                 id="GUIDANCE"
                 type="string"
                 variant="outlined"
-                onChange={(event) => setGUIDANCE(event.target.value)} />
+                value={treatment.GUIDANCE}
+                onChange={handleInputChange} />
               {/*<Item>เบอร์โทร</Item>*/}
             </Grid>
             <Grid item xs={6}>
@@ -409,7 +476,7 @@ function TreatmentCreate() {
                 variant="contained"
                 color='success'
                 sx={{ float: "right" }}
-                onClick={submit}
+                onClick={update}
               >Submit</Button>
             </Grid>
           </Grid>
@@ -420,5 +487,5 @@ function TreatmentCreate() {
   );
 }
 
-export default TreatmentCreate;
+export default TreatmentUpdate;
 

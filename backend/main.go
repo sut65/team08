@@ -200,9 +200,9 @@ func main() {
 			// r.GET("/treatments/readyyy", controller.ListReady_Dispense)
 			// r.GET("/treatments/readyapp", controller.ListReady_Appoint)
 			router.GET("/treatments", controller.ListTreatment)
-			router.GET("/treatments/:id", controller.GetTreatment)
+			router.GET("/treatmentss/:id", controller.GetTreatment)
 			router.POST("/treatments", controller.CreateTreatment)
-			router.PATCH("/treatments", controller.UpdateTreatment)
+			router.PATCH("/treatmentsUpdate", controller.UpdateTreatment) ////++
 			router.DELETE("/treatment/:id", controller.DeleteTreatment)
 			router.GET("/treatments/ready", controller.ListReady_Treat)
 			router.GET("/treatments/readyyy", controller.ListReady_Dispense)
@@ -219,39 +219,39 @@ func main() {
 			router.DELETE("/drugs/:id", controller.DeleteDrug)
 
 			// Practice Routes
-			router.GET("/practice", controller.ListPractices)
+			router.GET("/practices", controller.ListPractices)
 			router.GET("/practice/:id", controller.GetPractice)
 			router.POST("/practice", controller.CreatePractice)
 			router.PATCH("/practice", controller.UpdatePractice)
 			router.DELETE("/practice/:id", controller.DeletePractice)
 
 			// Dispense Routes
-			router.GET("/dispense", controller.ListDispenses)
+			router.GET("/dispenses", controller.ListDispenses)
 			router.GET("/dispense/:id", controller.GetDispense)
 			router.POST("/dispense", controller.CreateDispense)
-			router.PATCH("/dispense", controller.UpdateDispense)
+			router.PATCH("/DispenseUpdate", controller.UpdateDispense)
 			router.DELETE("/dispense/:id", controller.DeleteDispense)
 
 			//Aern2
 			// Departments Routes 6
-			router.GET("/department", controller.ListDepartments)
+			router.GET("/departments", controller.ListDepartments)
 			router.GET("/department/:id", controller.GetDepartment)
 			router.POST("/department", controller.CreateDepartment)
 			router.PATCH("/department", controller.UpdateDepartment)
 			router.DELETE("/department/:id", controller.DeleteDepartment)
 
 			// Levelcure Routes 7
-			router.GET("/levelcure", controller.ListLevelcures)
+			router.GET("/levelcures", controller.ListLevelcures)
 			router.GET("/levelcure/:id", controller.GetLevelcure)
 			router.POST("/levelcure", controller.CreateLevelcure)
 			router.PATCH("/levelcure", controller.UpdateLevelcure)
 			router.DELETE("/levelcure/:id", controller.DeleteLevelcure)
 
 			// Appoint Routes 9
-			router.GET("/appoint", controller.ListAppoints)
+			router.GET("/appoints", controller.ListAppoints)
 			router.GET("/appoint/:id", controller.GetAppoint)
 			router.POST("/appoint", controller.CreateAppoint)
-			router.PATCH("/appoint", controller.UpdateAppoint)
+			router.PATCH("/AppointUpdate", controller.UpdateAppoint)
 			router.DELETE("/appoint/:id", controller.DeleteAppoint)
 
 			//LEO

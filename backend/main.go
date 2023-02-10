@@ -52,7 +52,7 @@ func main() {
 			//Save_ITI
 			router.GET("/Save_ITIs", controller.ListSave_ITIs)
 			router.GET("/Save_ITI/:id", controller.GetSave_ITI)
-			router.POST("/Save_ITIs", controller.CreateSave_ITI)
+			router.POST("/Save_ITICreate", controller.CreateSave_ITI)
 			router.PATCH("/Save_ITIUpdate", controller.UpdateSave_ITI)
 			router.DELETE("/Save_ITI/:id", controller.DeleteSave_ITI)
 			router.GET("/Save_ITIs/ready", controller.ListReady_Save)
@@ -60,7 +60,7 @@ func main() {
 			//Operating_Room
 			router.GET("/Operating_Rooms", controller.ListOperating_Rooms)
 			router.GET("/Operating_Room/:id", controller.GetOperating_Room)
-			router.POST("/Operating_Rooms", controller.CreateOperating_Room)
+			router.POST("/Operating_RoomCreate", controller.CreateOperating_Room)
 			router.PATCH("/Operating_RoomUpdate", controller.UpdateOperating_Room)
 			router.DELETE("/Operating_Room/:id", controller.DeleteOperating_Room)
 			//---------------------------------------------------

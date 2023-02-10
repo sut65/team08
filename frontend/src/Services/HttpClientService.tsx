@@ -1027,7 +1027,7 @@ async function CreateSave_ITI(data: Save_ITIsInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Save_ITIs`, requestOptions)
+  let res = await fetch(`${apiUrl}/Save_ITICreate`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1074,7 +1074,7 @@ async function CreateOperating_Room(data: Operating_RoomsInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Operating_Rooms`, requestOptions)
+  let res = await fetch(`${apiUrl}/Operating_RoomCreate`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1169,7 +1169,7 @@ async function GetReady_Treat(id: any) {
       },
   };
 // ****************
-  let res = await fetch(`${apiUrl}/treatments/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/treatmentss/${id}`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {

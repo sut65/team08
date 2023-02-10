@@ -316,11 +316,11 @@ type Track struct {
 type Treatment struct {
 	gorm.Model
 	TREATMENT_ID string    `gorm:"uniqueIndex" valid:"matches(^T\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Txxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"`
-	TREATMENT    string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~TREATMENT cannot be blank"`
-	DATE         time.Time `valid:"required,CheckDateTime~Please enter the current time"`
-	APPOINTMENT  uint      `valid:"range(0|100)"`
-	CONCLUSION   string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~CONCLUSION cannot be blank"`
-	GUIDANCE     string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~GUIDANCE cannot be blank"`
+	TREATMENT    string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~ กรุณากรอกอาการเบื้องต้น"`
+	DATE         time.Time `valid:"required,CheckDateTime~ กรุณาเลือกเวลาที่เป็นปัจจุบัน"`
+	APPOINTMENT  uint      `valid:"range(0|100)~ กรุณากรอกค่าที่อยู่ในช่วง 0-100"`
+	CONCLUSION   string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~ กรุณากรอกสรุปผลการรักษา"`
+	GUIDANCE     string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~ กรุณากรอกคำแนะนำ"`
 
 	DoctorID *uint  `valid:"-"`
 	Doctor   Doctor `gorm:"references:id" valid:"-"`
@@ -533,7 +533,7 @@ type Request struct {
 	R_ID     string    `gorm:"uniqueIndex" valid:"matches(^R\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Rxxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"`
 	R_NAME   string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~Please enter details (20)"`
 	QUANTITY uint      `valid:"range(1|1000),required~cannot be blank :range(1|1000)"`
-	TIME     time.Time `valid:"required,CheckDateTime~Please enter the current time"`
+	TIME     time.Time `valid:"required,CheckDateTime~ กรุณาเลือกเวลาที่เป็นปัจจุบัน"`
 
 	Med_EmployeeID *uint        `valid:"-"`
 	Med_Employee   Med_Employee `gorm:"references:id" valid:"-"`

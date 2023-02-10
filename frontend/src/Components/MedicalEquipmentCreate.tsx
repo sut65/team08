@@ -128,7 +128,15 @@ function MedicalEquipmentCreate() {
       BrandID: convertType(MedicalEquipment.BrandID),
       Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
     };
-    console.log()
+    console.log(data)
+    let res = await MedicalEquipments(data);
+    if (res.status) {
+      setErrorMessage("บันทึกข้อมูลสำเร็จ");
+      setSuccess(true);
+     } else {
+      setErrorMessage(res.message);
+      setError(true);
+    }
   
   
     const apiUrl = "http://localhost:8080";
@@ -141,20 +149,20 @@ function MedicalEquipmentCreate() {
       body: JSON.stringify(data),
     };
 
-    fetch(`${apiUrl}/medicalequipments`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        console.log(res)
-        if (res.data) {
-          console.log("บันทึกได้")
-          setSuccess(true);
-          setErrorMessage("บันทึกได้")
-        } else {
-          console.log("บันทึกไม่ได้")
-          setError(true);
-          setErrorMessage(res.error)
-        }
-});
+//     fetch(`${apiUrl}/medicalequipments`, requestOptions)
+//       .then((response) => response.json())
+//       .then((res) => {
+//         console.log(res)
+//         if (res.data) {
+//           console.log("บันทึกได้")
+//           setSuccess(true);
+//           setErrorMessage("บันทึกได้")
+//         } else {
+//           console.log("บันทึกไม่ได้")
+//           setError(true);
+//           setErrorMessage(res.error)
+//         }
+// });
 }
 
   return (

@@ -99,7 +99,7 @@ func TestRequest_DATE(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Please enter the current time"))
+	g.Expect(err.Error()).To(gomega.Equal(" กรุณาเลือกเวลาที่เป็นปัจจุบัน"))
 }
 
 // //////5
@@ -147,13 +147,13 @@ func TestRequestID_NotBlank(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"))
+	g.Expect(err.Error()).To(gomega.Equal(" เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"))
 }
 // //////5
 func TestRequest_R_NAME_NotBlank(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
-	// เช็คข้อมูล DATE จะต้องไม่เป็นอดีต
+	// เช็คข้อมูล
 	Request := Request{
 		R_ID:     "R100002",
 		R_NAME:   "",
@@ -170,5 +170,5 @@ func TestRequest_R_NAME_NotBlank(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Please enter details (20)"))
+	g.Expect(err.Error()).To(gomega.Equal(" Please enter details (20)"))
 }

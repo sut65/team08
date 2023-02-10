@@ -1536,7 +1536,7 @@ async function GetMedEmployees() {
       body: JSON.stringify(data),
     };
   
-    let res = await fetch(`${apiUrl}/medicalequipments`, requestOptions)
+    let res = await fetch(`${apiUrl}/medicalequipments/create`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {

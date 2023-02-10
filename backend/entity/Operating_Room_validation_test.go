@@ -38,20 +38,20 @@ func Test_Save_ITI_NumOperNotNull(t *testing.T) {
 	g.Expect(err.Error()).To(gomega.Equal("หมายเลขการผ่าตัดห้ามเป็นค่าว่าง ตัวอย่าง:OPxxxxxx"))
 }
 
-// เช็คเวลาเป็นปัจจุบัน
-// func Test_Save_ITI_Datetime(t *testing.T) {
-// 	g := gomega.NewGomegaWithT(t)
+//เช็คเวลาเป็นปัจจุบัน
+func Test_Save_ITI_Datetime(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
 
-// 	testoper := Operating_Room{
-// 		NumOper: "OP0000001",
-// 		Datetime: time.Now().Add(24 * time.Hour),
-// 		TextOper: "aaaaaaaaaaaaaaaa",
-// 	}
-// 	ok, err := govalidator.ValidateStruct(testoper)
-// 	g.Expect(ok).NotTo(gomega.BeTrue())
-// 	g.Expect(err).ToNot(gomega.BeNil())
-// 	g.Expect(err.Error()).To(gomega.Equal("หมายเลขการผ่าตัดห้ามเป็นค่าว่าง ตัวอย่าง:OPxxxxxx"))
-// }
+	testoper := Operating_Room{
+		NumOper: "OP000001",
+		Datetime: time.Date(2000, 1, 26, 0, 0, 0, 0, time.UTC),
+		TextOper: "aaaaaaaaaaaaaaaa",
+	}
+	ok, err := govalidator.ValidateStruct(testoper)
+	g.Expect(ok).NotTo(gomega.BeTrue())
+	g.Expect(err).ToNot(gomega.BeNil())
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุวันที่และเวลาให้ถูกต้อง"))
+}
 
 // // เช็คเวลาเป็นอนาคต
 // func Test_Save_ITI_Date_checkout(t *testing.T) {

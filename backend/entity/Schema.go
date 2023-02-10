@@ -393,7 +393,7 @@ type Save_ITI struct {
 type Operating_Room struct {
 	gorm.Model
 	NumOper string `gorm:"uniqueIndex" valid:"matches(^OP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:OPxxxxxx,required~หมายเลขการผ่าตัดห้ามเป็นค่าว่าง ตัวอย่าง:OPxxxxxx"`
-	Datetime time.Time 
+	Datetime time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	TextOper string
 
 	Save_ITI   Save_ITI `gorm:"references:id" valid:"-"`

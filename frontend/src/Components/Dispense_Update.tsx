@@ -7,35 +7,33 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Divider from "@mui/material/Divider";
-import internal from "stream";
 import Paper from "@mui/material/Paper";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DispenseInterface } from "../Models/IDispense";
+import { DoctorInterface } from "../Models/IDoctor";
 import Typography from "@mui/material/Typography";
-import { AppointInterface } from "../Models/IAppoint";
+import { DrugInterface } from "../Models/IDrug";
+import { PracticeInterface } from "../Models/IPractice";
 import { TreatmentsInterface } from "../Models/ITreatment";
-import { LevelcureInterface } from "../Models/ILevelcure";
-import { DepartmentInterface } from "../Models/IDepartment";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
+import VaccinesIcon from '@mui/icons-material/Vaccines';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 
 import {
+  GetDoctorByUID,
   GetTreatment,
-  GetLevelcure,
-  GetDepartment, 
-  GetScrenByUID, ///++
-  CreateAppoint,
-  ListReady_Appoint,
+  GetDrug,
+  GetPractice,
+  CreateDispense,
+  ListReady_Dispense,
   Treatment_Disease_Text,
 } from "../Services/HttpClientService";
-import { Screening_officersInterface } from "../Models/IScreening_officer";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -44,26 +42,32 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function Appoints() {
-  const [appoint, setAppoint] = useState<AppointInterface>({
-    Date_now: new Date(),
-    Date_appoint: new Date(),
+function DispenseUpdate() {
+  const [doctor, setDoctor] = useState<DoctorInterface>({});
+  const [dispense, setDispense] = useState<DispenseInterface>({
+    Date: new Date(),
   });
+  const [dispenseID, setDispenseID] = React.useState<Number | undefined>(undefined);
   const [treatment, setTreatment] = useState<TreatmentsInterface[]>([]);
-  const [screening_officer, setScrenByUID] = useState<Screening_officersInterface>({});
-  const [levelcure, setLevelcure] = useState<LevelcureInterface[]>([]);
-  const [department, setDepartment] = useState<DepartmentInterface[]>([]);
-  const [Text_appoint, setText_appoint] = useState<string>("");
+  const [practice, setPractice] = useState<PracticeInterface[]>([]);
+  const [drug, setDrug] = useState<DrugInterface[]>([]);
+  const [Text, setText] = useState<string>("");
+  const [Number, setNumber] = useState<string>("");
+  const params = useParams()
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   //เพิ่ม
   const [treatment_Dis, setTreatment_Dis] = useState<TreatmentsInterface>({});
+  const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
+
+  ///
   const [message, setAlertMessage] = React.useState("");
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
   };
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -74,46 +78,19 @@ function Appoints() {
     setSuccess(false);
     setError(false);
   };
-  ///+++gg
-  const getScrenByUID = async () => {
-    let res = await GetScrenByUID();
-    appoint.Screening_officerID = res.ID;
+
+  const getDoctorByUID = async () => {
+    let res = await GetDoctorByUID();
+    dispense.DoctorID = res.ID;
     if (res) {
 
-      setScrenByUID(res);
+      setDoctorByUID(res);
       console.log(res);
     }
   };
 
-  // const getScreening_officer = async () => {
-  //   let res = await GetScreening_officer();
-  //   if (res) {
-  //     setScreening_officer(res);
-  //     console.log("Load Officer Complete");
-  //   } else {
-  //     console.log("Load Officer InComplete!!!!");
-  //   }
-  // };
-  const getDepartment = async () => {
-    let res = await GetDepartment();
-    if (res) {
-      setDepartment(res);
-      console.log("Load Department Complete");
-    } else {
-      console.log("Load Department InComplete!!!!");
-    }
-  };
-  const getLevelcure = async () => {
-    let res = await GetLevelcure();
-    if (res) {
-      setLevelcure(res);
-      console.log("Load Levelcure Complete");
-    } else {
-      console.log("Load Levelcure InComplete!!!!");
-    }
-  };
   const getTreatment = async () => {
-    let res = await ListReady_Appoint();
+    let res = await ListReady_Dispense();
     if (res) {
       setTreatment(res);
       console.log("Load Treatment Complete");
@@ -122,22 +99,46 @@ function Appoints() {
     }
   };
 
+
+  const getPractice = async () => {
+    let res = await GetPractice();
+    if (res) {
+      setPractice(res);
+      console.log("Load Practice Complete");
+    } else {
+      console.log("Load Practice InComplete!!!!");
+    }
+  };
+
+  const getDrug = async () => {
+    let res = await GetDrug();
+    if (res) {
+      setDrug(res);
+      console.log("Load Drug Complete");
+    } else {
+      console.log("Load Drug InComplete!!!!");
+    }
+  };
+
   useEffect(() => {
-    getScrenByUID();//++
-    getDepartment();
+    getDoctorByUID();
+    getDrug();
     getTreatment();
-    getLevelcure();
+    getPractice();
+    getDispense();
   }, []);
 
+  
 // รวมดึงการรักษา
+  
 const Final_OnChangetreat = async (e: SelectChangeEvent) =>{
   const id = e.target.value
-  const name = e.target.name as keyof typeof appoint;
+  const name = e.target.name as keyof typeof dispense;
   const value = e.target.value;
   let res = await Treatment_Disease_Text(id);
   if (res) {
-    setAppoint({
-      ...appoint,
+    setDispense({
+      ...dispense,
       [name]: value,
     });
   }
@@ -154,41 +155,59 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
     console.log(res);
   }
 }
+///
+//++
+const handleInputChange = (
+    event: React.ChangeEvent<{ id?: string; value: any }>
+  ) => {
+    const id = event.target.id as keyof typeof treatment;
+
+    const { value } = event.target;
+
+    setDispense({ ...dispense, [id]: value });
+  };
+  //--
   const handleChange = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof appoint;
+    const name = event.target.name as keyof typeof dispense;
     const value = event.target.value;
-    setAppoint({
-      ...appoint,
+    setDispense({
+      ...dispense,
       [name]: value,
     });
     console.log(`[${name}]: ${value}`);
   };
-
-  async function submit() {
-    if (appoint.TreatmentID == undefined || appoint.TreatmentID == 0){
-      setError(true);
-      setAlertMessage("กรุณาเลือกผู้ป่วยที่ต้องการนัด");
+  function timeout(delay: number) {
+    return new Promise(res => setTimeout(res, delay));
   }
-    else if (appoint.LevelcureID == undefined || appoint.LevelcureID == 0){
+  
+  async function update() {
+
+    if (dispense.TreatmentID == undefined || dispense.TreatmentID == 0){
       setError(true);
-      setAlertMessage("กรุณาเลือกสิทธิการรักษาของผู้ป่วย")
+      setAlertMessage("กรุณาเลือกผู้ป่วยที่ต้องการจ่ายยา");
+  }
+    else if (dispense.DrugID == undefined || dispense.DrugID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกยาที่ต้องการจ่าย")
     }
-    else if (appoint.DepartmentID == undefined|| appoint.DepartmentID == 0){
+    else if (dispense.PracticeID == undefined|| dispense.PracticeID == 0){
       setError(true);
-      setAlertMessage("กรุณาแผนกที่ทำการนัด")
+      setAlertMessage("กรุณาเลือกประเภทการรับประทานยา")
   }
   else{
     let data = {
-      Screening_officerID: convertType(appoint.Screening_officerID),
-      TreatmentID: convertType(appoint.TreatmentID),
-      LevelcureID: convertType(appoint.LevelcureID),
-      DepartmentID: convertType(appoint.DepartmentID),
-      Text_appoint: appoint.Text_appoint,
-      Date_now: appoint.Date_now,
-      Date_appoint: appoint.Date_appoint,
+        ID: dispense.ID,
+      DoctorID: convertType(dispense.DoctorID),
+      TreatmentID: convertType(dispense.TreatmentID),
+      DrugID: convertType(dispense.DrugID),
+      PracticeID: convertType(dispense.PracticeID),
+      Number: convertType(Number),
+      Text: dispense.Text,
+      Date: dispense.Date,
     };
+
     console.log(data);
-    let res = await CreateAppoint(data);
+    let res = await CreateDispense(data);
     if (res.status) {
       setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
@@ -196,25 +215,68 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       setAlertMessage(res.message);
       setError(true);
     }
-  }}
+    const requestOptions = {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      console.log(data);
+  
+      fetch(`http://localhost:8080/DispenseUpdate`, requestOptions)
+        .then((response) => response.json())
+        .then(async (res) => {
+          console.log(res);
+          if (res.data) {
+            setSuccess(true);
+            await timeout(1000); //for 1 sec delay
+            window.location.reload();     
+            
+          } else {
+            setError(true);
+          }
+        });
+  }
+}
+const getDispense = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(`http://localhost:8080/dispense/${params.id}`, requestOptions )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data)
+        if (res.data) {
+            setDispense(res.data);
+            setDispenseID(res.data.ID);
+        }
+      });
+  };
 
   return (
     <Container maxWidth="md">
       <Snackbar
+      id="success"
         open={success}
         autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-
-<Alert onClose={handleClose} severity="success">
+        <Alert onClose={handleClose} severity="success">
         {message}
         </Alert>
       </Snackbar>
 
       <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}
-      anchorOrigin={{ vertical: "top", horizontal: "center" }} >
-      <Alert onClose={handleClose} severity="error">
+            anchorOrigin={{ vertical: "top", horizontal: "center" }} >
+        <Alert onClose={handleClose} severity="error">
         {message}
         </Alert>
       </Snackbar>
@@ -229,18 +291,29 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
                 color="primary"
                 gutterBottom
               >
-                ระบบการนัดคนไข้ของแพทย์
+                ระบบจ่ายยา
               </Typography>
             </Box>
           </Paper>
           <Divider />
         </Box>
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={6}>
-            <p>เจ้าหน้าที่ผู้บันทึก</p>
+          <Grid item xs={2}>
+            <p>แพทย์ผู้รักษา</p>
             <FormControl fullWidth variant="outlined">
               <TextField
-                value={screening_officer.Screening_officer_Name || ""}
+                value={DoctorByUID.DocterCode || ""}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <p>แพทย์</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                value={DoctorByUID.FirstNameEN || ""}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -252,7 +325,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               <p>ผู้ป่วย</p>
               <Select
                 native
-                value={appoint.TreatmentID + ""}
+                value={dispense.TreatmentID + ""}
                 onChange={Final_OnChangetreat}
                 inputProps={{
                   name: "TreatmentID",
@@ -269,18 +342,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={3}>
-            <p>หมายเลขการรักษา</p>
-            <FormControl fullWidth variant="outlined">
-            <TextField
-            value={treatment_Dis?.TREATMENT_ID || ""}
-            InputProps={{
-              readOnly: true,
-            }}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={12}>
             <p>รายละเอียดการรักษา</p>
             <FormControl fullWidth variant="outlined">
             <TextField
@@ -291,22 +353,22 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               />
             </FormControl>
           </Grid>
-
           <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
-              <p>สิทธิในการรักษา</p>
+              <p>ประเภทยา</p>
               <Select
                 native
-                value={appoint.LevelcureID + ""}
+                value={dispense.DrugID + ""}
                 onChange={handleChange}
                 inputProps={{
-                  name: "LevelcureID",
+                  name: "DrugID"
                 }}
+
               >
                 <option aria-label="None" value="">
-                  กรุณาเลือกสิทธิในการรักษา
+                  กรุณาเลือกประเภทยา
                 </option>
-                {levelcure.map((item: LevelcureInterface) => (
+                {drug.map((item: DrugInterface) => (
                   <option value={item.ID} key={item.ID}>
                     {item.Name}
                   </option>
@@ -314,86 +376,62 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               </Select>
             </FormControl>
           </Grid>
-
           <Grid item xs={6}>
-            <FormControl fullWidth variant="outlined">
-              <p>แผนกที่ทำการนัด</p>
-              <Select
-                native
-                value={appoint.DepartmentID + ""}
-                onChange={handleChange}
-                inputProps={{
-                  name: "DepartmentID",
-                }}
-              >
-                <option aria-label="None" value="">
-                  กรุณาเลือกแผนก
-                </option>
-                {department.map((item: DepartmentInterface) => (
-                  <option value={item.ID} key={item.ID}>
-                    {item.Name}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={4}>
-            <p>จำนวนวันที่แพทย์ต้องการนัด</p>
+            <p>จำนวนยา</p>
             <FormControl fullWidth variant="outlined">
               <TextField
-                value={treatment_Dis?.APPOINTMENT || ""}
-                InputProps={{
-                  readOnly: true,
-                }}
+                id="Number"
+                type="Number"
+                inputProps={{ name: "Number", min: 0}} 
+                value={dispense.Number}
+                onChange={handleInputChange}
               />
             </FormControl>
           </Grid>
-
           <Grid item xs={12}>
-            <p>ข้อปฎิบัติก่อนการตรวจ</p>
-            <FormControl fullWidth variant="outlined">
+            <p>การรับประทานยา</p>
+            <FormControl required fullWidth variant="outlined">
+              <Select
+              native
+              value={dispense.PracticeID + ""}
+                onChange={handleChange}
+                inputProps={{
+                  name: "PracticeID",
+                }}
+              >
+               <option aria-label="None" value="">
+                  รายละเอียดการรับประทานยา
+                </option>
+                {practice?.map((item: PracticeInterface) => (
+               <option value={item.ID} key={item.ID}>
+               {item.Name}
+             </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          
+          <Grid item xs={12}>
+            <p>รายละเอียดเพิ่มเติม</p>
               <TextField
                 fullWidth
-                id="Name"
+                id="Text"
                 type="string"
                 variant="outlined"
-                onChange={(event) => setText_appoint(event.target.value)}
-              />
-            </FormControl>
+                value={dispense.Text}
+                onChange={handleInputChange} />
           </Grid>
-
-          <Grid item xs={6}>
-            <p>วันที่และเวลาปัจจุบัน</p>
+          <Grid item xs={12}>
+            <p>วันที่และเวลา</p>
             <FormControl fullWidth>
               <LocalizationProvider required dateAdapter={AdapterDateFns}>
                 <DateTimePicker
                   label="กรุณาเลือกวันและเวลา *"
-                  value={appoint.Date_now}
+                  value={dispense.Date}
                   onChange={(newValue) => {
-                    setAppoint({
-                      ...appoint,
-                      Date_now: newValue,
-                    });
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={6}>
-            <p>วันที่และเวลาในการนัด</p>
-            <FormControl fullWidth>
-              <LocalizationProvider required dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                  label="กรุณาเลือกวันและเวลา *"
-                  value={appoint.Date_appoint}
-                  minDateTime = {appoint.Date_now}
-                  onChange={(newValue) => {
-                    setAppoint({
-                      ...appoint,
-                      Date_appoint: newValue,
+                    setDispense({
+                      ...dispense,
+                      Date: newValue,
                     });
                   }}
                   renderInput={(params) => <TextField {...params} />}
@@ -407,16 +445,16 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               to="/DispenseList"
               variant="contained"
               color="primary"
-              startIcon={<ContentPasteSearchIcon />}
+              startIcon={<VaccinesIcon />}
             >
               ดูข้อมูลการจ่ายยา
             </Button>
             <Button
              style={{ float: "right" }}
-             onClick={submit}
+             onClick={update}
              variant="contained"
              color="primary"
-             startIcon={<AddCircleIcon />}
+             startIcon={<AddBoxIcon />}
 
            >
              บันทึกข้อมูลการจ่ายยา
@@ -427,4 +465,6 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
     </Container>
   );
 }
-export default Appoints;
+//เหลือ load 
+//doctor
+export default DispenseUpdate;

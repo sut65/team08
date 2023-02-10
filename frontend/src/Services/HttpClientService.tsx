@@ -1214,7 +1214,7 @@ async function GetPractice() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/practice`, requestOptions)
+  let res = await fetch(`${apiUrl}/practices`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1236,7 +1236,7 @@ async function GetDispense() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/dispense`, requestOptions)
+  let res = await fetch(`${apiUrl}/dispenses`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1347,7 +1347,7 @@ async function GetAppoint() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/appoint`, requestOptions)
+  let res = await fetch(`${apiUrl}/appoints`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1369,7 +1369,7 @@ async function GetDepartment() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/department`, requestOptions)
+  let res = await fetch(`${apiUrl}/departments`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1392,7 +1392,7 @@ async function GetLevelcure() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/levelcure`, requestOptions)
+  let res = await fetch(`${apiUrl}/levelcures`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {

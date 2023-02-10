@@ -108,11 +108,18 @@ func UpdateDispense(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", dispense.ID).First(&dispense); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "dispense not found"})
-		return
+
+	cr := entity.Dispense{
+		DrugID:      dispense.DrugID,      // โยงความสัมพันธ์กับ Entity Drug
+		PracticeID:  dispense.PracticeID,  // โยงความสัมพันธ์กับ Entity Practice
+		TreatmentID: dispense.TreatmentID, // โยงความสัมพันธ์กับ Entity Treatment
+		DoctorID:    dispense.DoctorID,    // โยงความสัมพันธ์กับ Entity Doctor
+		Date:        dispense.Date,        // ตั้งค่าฟิลด์ Date
+		Number:      dispense.Number,      // ตั้งค่าฟิลด์ Number
+		Text:        dispense.Text,        // ตั้งค่าฟิลด์ Text
 	}
-	if err := entity.DB().Save(&dispense).Error; err != nil {
+
+	if err := entity.DB().Where("id = ?", dispense.ID).Updates(&cr).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

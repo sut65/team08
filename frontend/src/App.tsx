@@ -61,6 +61,7 @@ import SelectLogin from "./Components/SelectLogin";
 import Save_ITIUpdate from "./Components/Save_ITIUpdate";
 import Operating_RoomUpdate from "./Components/Operating_RoomUpdate";
 import TreatmentUpdate from "./Components/TreatmentUpdate";
+import DispenseUpdate from "./Components/Dispense_Update";
 
 const drawerWidth = 240;
 
@@ -267,6 +268,7 @@ function App() {
                 <Route path="/Operating_RoomCreate" element={<Operating_RoomCreate />} />
                 <Route path="/Operating_Room" element={<Operating_Room />} />
                 <Route path="/Operating_RoomUpdate/:id" element={<Operating_RoomUpdate />} />
+                <Route path="/DispenseUpdate/:id" element={<DispenseUpdate />} />
                 <Route path="/DispenseList" element={<DispenseList />} />
                 <Route path="/DispenseCreate" element={<DispenseCreate />} />
                 <Route path="/AppointList" element={<AppointList />} />

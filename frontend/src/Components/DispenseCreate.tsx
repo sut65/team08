@@ -185,7 +185,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       DrugID: convertType(dispense.DrugID),
       PracticeID: convertType(dispense.PracticeID),
       Number: convertType(Number),
-      Text: Text,
+      Text: (Text),
       Date: dispense.Date,
     };
 

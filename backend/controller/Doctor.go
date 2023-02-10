@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"golang.org/x/crypto/bcrypt"
 	"github.com/asaskevich/govalidator"
-	"github.com/sut65/team08/entity"
 	"github.com/gin-gonic/gin"
+	"github.com/sut65/team08/entity"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
 )
 
@@ -99,20 +99,20 @@ func CreateDoctor(c *gin.Context) {
 		Address:    Address,
 		AllAddress: Doctor.AllAddress,
 		Birthday:   Doctor.Birthday,
-		Blood:    Blood,
+		Blood:      Blood,
 
 		Country:     Country,
-		District:      Doctor.District,
+		District:    Doctor.District,
 		DocFaPrefix: DocFaPrefix,
 		DocMoPrefix: DocMoPrefix,
 
-		DocPassword:   string(password),
+		DocPassword: string(password),
 		DocPrefix:   DocPrefix,
 		DocWiPrefix: DocWiPrefix,
-		DocterCode:    Doctor.DocterCode,
+		DocterCode:  Doctor.DocterCode,
 
 		DocterIDCard:   Doctor.DocterIDCard,
-		Education:    Education,
+		Education:      Education,
 		EducationMajor: Doctor.EducationMajor,
 		EducationName:  Doctor.EducationName,
 
@@ -126,10 +126,10 @@ func CreateDoctor(c *gin.Context) {
 		FirstNameEN:  Doctor.FirstNameEN,
 		FirstNameTH:  Doctor.FirstNameTH,
 
-		Gender:   Gender,
+		Gender:     Gender,
 		LastNameEN: Doctor.LastNameEN,
 		LastNameTH: Doctor.LastNameTH,
-		Marital:  Marital,
+		Marital:    Marital,
 
 		MoFirstName:  Doctor.MoFirstName,
 		MoIDCard:     Doctor.MoIDCard,
@@ -137,8 +137,8 @@ func CreateDoctor(c *gin.Context) {
 		MoOccupation: Doctor.MoOccupation,
 
 		Nationality: Nationality,
-		Province:      Doctor.Province,
-		ReOther:       Doctor.ReOther,
+		Province:    Doctor.Province,
+		ReOther:     Doctor.ReOther,
 		Religion:    Religion,
 
 		StartEducation: Doctor.StartEducation,
@@ -279,23 +279,35 @@ func UpdateDoctor(c *gin.Context) {
 	password, _ := bcrypt.GenerateFromPassword([]byte(Doctor.DocterIDCard), 14)
 
 	createDoctor := entity.Doctor{
+
+		DocPrefixID:   Doctor.DocPrefixID,
+		GenderID:      Doctor.GenderID,
+		BloodID:       Doctor.BloodID,
+		MaritalID:     Doctor.MaritalID,
+		ReligionID:    Doctor.ReligionID,
+		AddressID:     Doctor.AddressID,
+		DocFaPrefixID: Doctor.DocFaPrefixID,
+		DocMoPrefixID: Doctor.DocMoPrefixID,
+		DocWiPrefixID: Doctor.DocWiPrefixID,
+		EducationID:   Doctor.EducationID,
+
 		Address:    Address,
 		AllAddress: Doctor.AllAddress,
 		Birthday:   Doctor.Birthday,
-		Blood:    Blood,
+		Blood:      Blood,
 
 		Country:     Country,
-		District:      Doctor.District,
+		District:    Doctor.District,
 		DocFaPrefix: DocFaPrefix,
 		DocMoPrefix: DocMoPrefix,
 
-		DocPassword:   string(password),
+		DocPassword: string(password),
 		DocPrefix:   DocPrefix,
 		DocWiPrefix: DocWiPrefix,
-		DocterCode:    Doctor.DocterCode,
+		DocterCode:  Doctor.DocterCode,
 
 		DocterIDCard:   Doctor.DocterIDCard,
-		Education:    Education,
+		Education:      Education,
 		EducationMajor: Doctor.EducationMajor,
 		EducationName:  Doctor.EducationName,
 
@@ -309,10 +321,10 @@ func UpdateDoctor(c *gin.Context) {
 		FirstNameEN:  Doctor.FirstNameEN,
 		FirstNameTH:  Doctor.FirstNameTH,
 
-		Gender:   Gender,
+		Gender:     Gender,
 		LastNameEN: Doctor.LastNameEN,
 		LastNameTH: Doctor.LastNameTH,
-		Marital:  Marital,
+		Marital:    Marital,
 
 		MoFirstName:  Doctor.MoFirstName,
 		MoIDCard:     Doctor.MoIDCard,
@@ -320,8 +332,8 @@ func UpdateDoctor(c *gin.Context) {
 		MoOccupation: Doctor.MoOccupation,
 
 		Nationality: Nationality,
-		Province:      Doctor.Province,
-		ReOther:       Doctor.ReOther,
+		Province:    Doctor.Province,
+		ReOther:     Doctor.ReOther,
 		Religion:    Religion,
 
 		StartEducation: Doctor.StartEducation,
@@ -336,7 +348,6 @@ func UpdateDoctor(c *gin.Context) {
 
 		WiOccupation: Doctor.WiOccupation,
 		WiPhone:      Doctor.WiPhone,
-
 	}
 
 	if err := entity.DB().Model(Doctor).Where("id = ?", Doctor.ID).First(&Doctor).Updates(&createDoctor).Error; err != nil {

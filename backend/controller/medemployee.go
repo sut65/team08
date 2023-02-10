@@ -59,7 +59,8 @@ func CreateMedEmployee(c *gin.Context) {
 		University:     med_employee.University,     // ตั้งค่าฟิลด์ University
 		EducationName:  med_employee.EducationName,  // ตั้งค่าฟิลด์ EducationName
 		EducationMajor: med_employee.EducationMajor, // ตั้งค่าฟิลด์ EducationMajor
-		Password:       string(password),       // ตั้งค่าฟิลด์ password
+		Password:       med_employee.Password,  // ตั้งค่าฟิลด์ password
+		MedPassword:	string(password),
 		Officer: officer,
 	}
 
@@ -123,20 +124,33 @@ func DeleteMedEmployee(c *gin.Context) {
 // PATCH /med_employee
 func UpdateMedEmployee(c *gin.Context) {
 	var med_employee entity.Med_Employee
+
 	if err := c.ShouldBindJSON(&med_employee); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", med_employee.ID).First(&med_employee); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "med_employee not found"})
-		return
+	password, _ := bcrypt.GenerateFromPassword([]byte(med_employee.Password), 14)
+
+	upmedemployee := entity.Med_Employee{
+		PrefixID:         med_employee.PrefixID,         // โยงความสัมพันธ์กับ Entity Prefix
+		GenderID:         med_employee.GenderID,         // โยงความสัมพันธ์กับ Entity Gender
+		EducationID:      med_employee.EducationID,      // โยงความสัมพันธ์กับ Entity Education
+		Name:           med_employee.Name,           // ตั้งค่าฟิลด์ name
+		Age:            med_employee.Age,            // ตั้งค่าฟิลด์ age
+		Phone:          med_employee.Phone,          // ตั้งค่าฟิลด์ phone
+		Email:          med_employee.Email,          // ตั้งค่าฟิลด์ email
+		University:     med_employee.University,     // ตั้งค่าฟิลด์ University
+		EducationName:  med_employee.EducationName,  // ตั้งค่าฟิลด์ EducationName
+		EducationMajor: med_employee.EducationMajor, // ตั้งค่าฟิลด์ EducationMajor
+		Password:       med_employee.Password,  // ตั้งค่าฟิลด์ password
+		MedPassword:	string(password),
 	}
 
-	if err := entity.DB().Save(&med_employee).Error; err != nil {
+	if err := entity.DB().Where("id = ?", med_employee.ID).Updates(&upmedemployee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": med_employee})
+	c.JSON(http.StatusOK, gin.H{"data": upmedemployee})
 }

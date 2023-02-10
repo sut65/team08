@@ -259,7 +259,7 @@ func main() {
 			router.GET("/medemployees", controller.ListMedEmployees)
 			router.GET("/medemployees/:id", controller.GetMedEmployee)
 			router.POST("/medemployees/create", controller.CreateMedEmployee)
-			router.PATCH("/medemployees", controller.UpdateMedEmployee)
+			router.PATCH("/medemployeesUpdate", controller.UpdateMedEmployee)
 			router.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
 
 			// Brand Routes

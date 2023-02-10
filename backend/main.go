@@ -281,7 +281,7 @@ func main() {
 			//router.POST("/medicalequipments", controller.CreateloginMedEquipment)
 			router.GET("/medicalequipment/:id", controller.GetMedEquipment)
 			router.POST("/medicalequipments", controller.CreateMedEquipment)
-			router.PATCH("/medicalequipments", controller.UpdateMedEquipment)
+			router.PATCH("/medicalequipmentsUpdate", controller.UpdateMedEquipment)
 			router.DELETE("/medicalequipments/:id", controller.DeleteMedEquipment)
 
 			//Gg

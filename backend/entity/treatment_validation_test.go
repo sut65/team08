@@ -80,7 +80,7 @@ func TestTreatment_APPOINTMENT(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("APPOINTMENT: 101 does not validate as range(0|100)"))
+	g.Expect(err.Error()).To(gomega.Equal(" กรุณากรอกค่าที่อยู่ในช่วง 0-100"))
 }
 ////////4
 func TestTreatment_DATE(t *testing.T) {
@@ -105,7 +105,7 @@ func TestTreatment_DATE(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("Please enter the current time"))
+	g.Expect(err.Error()).To(gomega.Equal(" กรุณาเลือกเวลาที่เป็นปัจจุบัน"))
 }
 /////5
 func TestTreatment_TREATMENT(t *testing.T) {
@@ -151,7 +151,7 @@ func TestCONCLUSION_NotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("CONCLUSION cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal(" กรุณากรอกสรุปผลการรักษา"))
 }
 
 func TestCGUIDANCE_NotBlank(t *testing.T) {
@@ -172,7 +172,7 @@ func TestCGUIDANCE_NotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("GUIDANCE cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal(" กรุณากรอกคำแนะนำ"))
 }
 
 func TestTREATMENT_NotBlank(t *testing.T) {
@@ -193,7 +193,7 @@ func TestTREATMENT_NotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("TREATMENT cannot be blank"))
+	g.Expect(err.Error()).To(gomega.Equal(" กรุณากรอกอาการเบื้องต้น"))
 }
 func TestTREATMENTID_NotBlank(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)

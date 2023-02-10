@@ -270,3 +270,26 @@ func TestEmailMustBeInValidPattern(t *testing.T) {
 
 	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่อีเมลให้ถูกต้อง"))
 }
+
+func TestfinishSc_officer(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	Screening_officer := Screening_officer{
+		Screening_officer_Name: "Ratcahnon K",
+		Birthday:               "13/04/2444",
+		ScreeningIDCard:        "1234567891234",
+		Phone:                  "0956768766",
+		Email:                  "pp@gmail.com",
+		EducationName:          "nursing",
+		EducationMajor:         "Children and adolescent branch",
+		University:             "Suranaree university",
+	}
+
+	ok, err := govalidator.ValidateStruct(Screening_officer)
+
+	g.Expect(ok).To(gomega.BeTrue())
+
+	g.Expect(err).To(gomega.BeNil())
+
+
+}

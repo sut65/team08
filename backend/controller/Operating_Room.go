@@ -12,7 +12,7 @@ func CreateOperating_Room(c *gin.Context) {
 
 	var Operating_Room entity.Operating_Room
 	var Save_ITI entity.Save_ITI
-	var Building entity.Building
+	//var Building entity.Building
 	var Room entity.Room
 	var Doctor entity.Doctor
 
@@ -29,10 +29,10 @@ func CreateOperating_Room(c *gin.Context) {
 	}
 
 	// 11 ค้นหา Building ด้วย id
-	if tx := entity.DB().Where("id = ?", Operating_Room.BuildingID).First(&Building); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "not found JobType"})
-		return
-	}
+	// if tx := entity.DB().Where("id = ?", Operating_Room.BuildingID).First(&Building); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "not found JobType"})
+	// 	return
+	// }
 
 	// 12 ค้นหา Room ด้วย id
 	if tx := entity.DB().Where("id = ?", Operating_Room.RoomID).First(&Room); tx.RowsAffected == 0 {
@@ -51,7 +51,7 @@ func CreateOperating_Room(c *gin.Context) {
 		Doctor: Doctor,
 		Datetime: Operating_Room.Datetime,
 		Save_ITI: 	Save_ITI,
-		Building:  	Building,
+		//Building:  	Building,
 		Room:		Room,
 	}
 
@@ -108,7 +108,7 @@ func UpdateOperating_Room(c *gin.Context) {
 		Datetime: Operating_Room.Datetime,
 
 		Save_ITIID: 	Operating_Room.Save_ITIID,
-		BuildingID:  	Operating_Room.BuildingID,
+		//BuildingID:  	Operating_Room.BuildingID,
 		RoomID:		Operating_Room.RoomID,
 	}
 

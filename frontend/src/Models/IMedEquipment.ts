@@ -1,6 +1,5 @@
 import { BrandsInterface } from "./IBrand";
 import { MedStatusInterface } from "./IMedStatus";
-import { MedEmployeeInterface } from "./IMedEmployee";
 
 export interface MedicalEquimentInterface {
     ID?: number;
@@ -12,10 +11,8 @@ export interface MedicalEquimentInterface {
     Med_StatusID?: number;
     Med_Status?: MedStatusInterface;
 
+    Shop?: string;
+
     BrandID?: number;
     Brand?: BrandsInterface;
-
-    Med_EmployeeID?: number;
-    Med_Employee?: MedEmployeeInterface;
-
   }

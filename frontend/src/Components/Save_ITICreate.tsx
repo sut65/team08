@@ -21,7 +21,7 @@ import { RoomInterface } from "../Models/IRoom";
 import { StateInterface } from "../Models/IState";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 
-import {GetBuilding,GetRoom,GetState,CreateSave_ITI,GetReady_Treat,ListReady_Treat,GetDoctorByUID} from "../Services/HttpClientService";
+import {GetBuilding,GetRoom,GetState,CreateSave_ITI,GetReady_Treat,ListReady_Treat,GetDoctorByUID, ListRoombyBuildings, GetBuildingOne} from "../Services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DoctorInterface } from "../Models/IDoctor";
 
@@ -39,6 +39,7 @@ import { DoctorInterface } from "../Models/IDoctor";
     });
     const [treatment, setTreatment] = useState<TreatmentsInterface[]>([]);
     const [Building, setBuilding] = useState<BuildingInterface[]>([]);
+    const [BuildingOne, setBuildingOne] = useState<BuildingInterface>({});
     const [Room, setRoom] = useState<RoomInterface[]>([]);
     const [State, setState] = useState<StateInterface[]>([]);
     const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
@@ -127,6 +128,28 @@ const handleChange = (event: SelectChangeEvent) => {
       console.log(res);
   }
 };
+
+const onChangeBuilding = async (e: SelectChangeEvent) =>{
+  const bid = e.target.value;
+  let res = await ListRoombyBuildings(bid);
+  if (res) {
+    setRoom(res);
+    console.log("Load Room Complete");
+  }
+  else{
+    console.log("Load Room Incomplete!!!");
+  }
+
+  res = await GetBuildingOne(bid);
+  if (res) {
+    setBuildingOne(res) ;
+    console.log("Load Building Complete");
+  }
+  else{
+    console.log("Load Building Incomplete!!!");
+  }
+  
+}
   const getRoom = async () => {
     let res = await GetRoom();
     if (res) {
@@ -159,7 +182,7 @@ const handleChange = (event: SelectChangeEvent) => {
     let data = {
       DoctorID: convertType(Save_ITIs.DoctorID),
       TreatmentID: convertType(Save_ITIs.TreatmentID),
-      BuildingID: convertType(Save_ITIs.BuildingID),
+      //BuildingID: convertType(Save_ITIs.BuildingID),
       RoomID: convertType(Save_ITIs.RoomID),
       StateID: convertType(Save_ITIs.StateID),
 
@@ -283,8 +306,8 @@ const handleChange = (event: SelectChangeEvent) => {
               <p>ตึก</p>
               <Select
                 native
-                value={Save_ITIs.BuildingID + ""}
-                onChange={handleChange}
+                value={BuildingOne.ID + ""}
+                onChange={onChangeBuilding}
                 inputProps={{
                   name: "BuildingID",
                 }}

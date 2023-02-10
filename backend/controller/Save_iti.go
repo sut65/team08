@@ -22,7 +22,7 @@ func CreateSave_ITI(c *gin.Context) {
 
 	var Save_ITI entity.Save_ITI
 	var Treatment entity.Treatment
-	var Building entity.Building
+	//var Building entity.Building
 	var Room entity.Room
 	var State entity.State
 	var Doctor entity.Doctor
@@ -40,10 +40,10 @@ func CreateSave_ITI(c *gin.Context) {
 	}
 
 	// 11 ค้นหา Building ด้วย id
-	if tx := entity.DB().Where("id = ?", Save_ITI.BuildingID).First(&Building); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "not found JobType"})
-		return
-	}
+	// if tx := entity.DB().Where("id = ?", Save_ITI.BuildingID).First(&Building); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "not found JobType"})
+	// 	return
+	// }
 
 	// 12 ค้นหา Room ด้วย id
 	if tx := entity.DB().Where("id = ?", Save_ITI.RoomID).First(&Room); tx.RowsAffected == 0 {
@@ -70,7 +70,7 @@ func CreateSave_ITI(c *gin.Context) {
 
 		Doctor: Doctor,
 		Treatment: 	Treatment,
-		Building:  	Building,
+		//Building:  	Building,
 		Room:		Room,
 		State:		State,
 	}
@@ -129,7 +129,7 @@ func UpdateSave_ITI(c *gin.Context) {
 		Date_checkout: Save_ITI.Date_checkout,
 		
 		TreatmentID: 	Save_ITI.TreatmentID,
-		BuildingID:  	Save_ITI.BuildingID,
+		//BuildingID:  	Save_ITI.BuildingID,
 		RoomID:		Save_ITI.RoomID,
 		StateID:		Save_ITI.StateID,
 	}

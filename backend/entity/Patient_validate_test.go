@@ -211,3 +211,24 @@ func TestPhoneNotBlank(t *testing.T) {
 
 	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่เบอร์โทรศัพท์"))
 }
+
+func TestfinishPatient(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	Patient := Patient{
+		Patient_Name: "Ratchanon K",
+		Age:          40,
+		Birthday:     "13/08/2344",
+		IDCard:       "1234567891234",
+		Phone:        "0977897924",
+		House_ID:     "123/67",
+	}
+
+	ok, err := govalidator.ValidateStruct(Patient)
+
+	g.Expect(ok).To(gomega.BeTrue())
+
+	g.Expect(err).To(gomega.BeNil())
+
+
+}

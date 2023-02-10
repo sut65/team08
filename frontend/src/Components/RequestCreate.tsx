@@ -106,7 +106,16 @@ function RequestCreate() {
   };
 
   async function submit() {
-    let data = {
+    if(request.MedEquipmentID == 0 || request.MedEquipmentID == undefined){
+      setError(true);
+      setAlertMessage("  กรุณาเลือกอุปกรณ์");
+    }
+    else if (request.LocationID == 0 || request.LocationID == undefined){
+      setError(true);
+      setAlertMessage("  กรุณาเลือกสถานที่");
+    }
+    else{
+      let data = {
       
       Med_EquipmentID: convertType(request.MedEquipmentID),
       LocationID: convertType(request.LocationID),
@@ -117,7 +126,6 @@ function RequestCreate() {
       R_NAME: (R_NAME),
       
     };
-
     let res = await Request(data);
     if (res.status) {
       setAlertMessage("บันทึกข้อมูลสำเร็จ");
@@ -125,6 +133,8 @@ function RequestCreate() {
     } else {
       setAlertMessage(res.message);
       setError(true);
+    }
+
     }
   };
 

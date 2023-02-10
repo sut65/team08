@@ -265,3 +265,26 @@ func TestEmailMedicalEmployeeMustBeInValidPattern(t *testing.T) {
 
 	g.Expect(err.Error()).To(Equal("Email: avdwq does not validate as email"))
 }
+
+func TestEmailMedicalEmployeeNotBlank(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	m := Med_Employee{
+		Name:           "Name",
+		Age:           	21,
+		Phone:          "0645068380",
+		Email:          "",
+		Password:       "0645068380",
+		University:     "University",
+		EducationName:  "EducationName",
+		EducationMajor: "EducationMajor",
+	}
+
+	ok, err := govalidator.ValidateStruct(m)
+
+	g.Expect(ok).ToNot(BeTrue())
+
+	g.Expect(err).ToNot(BeNil())
+
+	g.Expect(err.Error()).To(Equal("กรุณากรอกอีเมล"))
+}

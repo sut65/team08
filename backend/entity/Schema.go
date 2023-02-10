@@ -475,7 +475,7 @@ type Med_Employee struct {
 	Name           string `valid:"required~กรุณากรอกชื่อ"`
 	Age            uint   `valid:"range(0|100)"`
 	Phone          string `gorm:"uniqueIndex" valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
-	Email          string `valid:"email"`
+	Email          string `valid:"required~กรุณากรอกอีเมล"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
 	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`

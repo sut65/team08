@@ -83,31 +83,16 @@ func Test_Operating_Room_TextOperNotNull(t *testing.T) {
 	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดการผ่าตัด"))
 }
 
-// // เช็คเวลาเป็นอนาคต
-// func Test_Save_ITI_Date_checkout(t *testing.T) {
-// 	g := gomega.NewGomegaWithT(t)
+// เช็คข้อมูลการกรอกครบทั้งหมด
+func Test_Operating_Room_All(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
 
-// 	testsave := Save_ITI{
-// 		Date_checkin:  time.Now(),
-// 	    Date_checkout: time.Now(),
-// 	    TextSave: "aaaaaaaaaaaa",
-// 	}
-// 	ok, err := govalidator.ValidateStruct(testsave)
-// 	g.Expect(ok).NotTo(gomega.BeTrue())
-// 	g.Expect(err).ToNot(gomega.BeNil())
-// 	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุวันที่และเวลาให้ถูกต้อง"))
-// }
-
-// // เช็คขอมูลการกรอกครบทั้งหมด
-// func Test_Save_ITI_All(t *testing.T) {
-// 	g := gomega.NewGomegaWithT(t)
-
-// 	testsave := Save_ITI{
-// 		Date_checkin:  time.Now(),
-// 	    Date_checkout: time.Now().Add(24 * time.Hour),
-// 	    TextSave: "aaaaaaaaaaaa",
-// 	}
-// 	ok, err := govalidator.ValidateStruct(testsave)
-// 	g.Expect(ok).To(gomega.BeTrue())
-// 	g.Expect(err).To(gomega.BeNil())
-// }
+	testoper := Operating_Room{
+		NumOper: "OP000001",
+	    Datetime: time.Now().Add(24 * time.Hour),
+	    TextOper: "aaaaaaaaaaa",
+	}
+	ok, err := govalidator.ValidateStruct(testoper)
+	g.Expect(ok).To(gomega.BeTrue())
+	g.Expect(err).To(gomega.BeNil())
+}

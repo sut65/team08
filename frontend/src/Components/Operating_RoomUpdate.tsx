@@ -19,7 +19,7 @@ import { BuildingInterface } from "../Models/IBuilding";
 import { RoomInterface } from "../Models/IRoom";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
 
-import {GetBuilding,GetRoom,ListReady_Save,CreateOperating_Room,GetReady_Save_ITI,GetReady_Treat,GetDoctorByUID} from "../Services/HttpClientService";
+import {GetBuilding,GetRoom,ListReady_Save,CreateOperating_Room,GetReady_Save_ITI,GetReady_Treat,GetDoctorByUID, ListRoombyBuildings, GetBuildingOne} from "../Services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Operating_RoomsInterface } from "../Models/IOperating_Room";
 import { TreatmentsInterface } from "../Models/ITreatment";
@@ -40,6 +40,7 @@ function Operating_RoomUpdate() {
 
   const [Save_ITIs, setSave_ITIs] = useState<Save_ITIsInterface[]>([]);
   const [Building, setBuilding] = useState<BuildingInterface[]>([]);
+  const [BuildingOne, setBuildingOne] = useState<BuildingInterface>({});
   const [Room, setRoom] = useState<RoomInterface[]>([]);
   const [Save_ITIOne, setSave_ITIOne] = useState<Save_ITIsInterface>({
     State:{Name:"-----"}
@@ -110,6 +111,27 @@ function Operating_RoomUpdate() {
     console.log(`${name}: ${value}`);
 };
 
+const onChangeBuilding = async (e: SelectChangeEvent) =>{
+  const bid = e.target.value;
+  let res = await ListRoombyBuildings(bid);
+  if (res) {
+    setRoom(res);
+    console.log("Load Room Complete");
+  }
+  else{
+    console.log("Load Room Incomplete!!!");
+  }
+
+  res = await GetBuildingOne(bid);
+  if (res) {
+    setBuildingOne(res) ;
+    console.log("Load Building Complete");
+  }
+  else{
+    console.log("Load Building Incomplete!!!");
+  }
+}
+
 const getSave_ITI = async () => {
   let res = await ListReady_Save();
   if (res) {
@@ -157,7 +179,7 @@ function timeout(delay: number) {
       Datetime: Operating_Rooms.Datetime,
 		
 	  Save_ITI: Operating_Rooms.Save_ITI,
-	  Building: Number(Operating_Rooms.Building),
+	  //Building: Number(Operating_Rooms.Building),
 	  Room: Number(Operating_Rooms.Room),
     };
 
@@ -328,8 +350,8 @@ return (
             <p>ตึก</p>
             <Select
               native
-              value={Operating_Rooms.BuildingID + ""}
-              onChange={handleChange}
+              value={BuildingOne.ID + ""}
+              onChange={onChangeBuilding}
               inputProps={{
                 name: "BuildingID",
               }}

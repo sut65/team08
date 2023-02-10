@@ -69,3 +69,14 @@ func UpdateRoom(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": Room})
 }
+
+func ListRoomBuilding(c *gin.Context) {
+	var room []entity.Room
+	building_id := c.Param("id")
+	if err := entity.DB().Preload("Building").Raw("SELECT * FROM rooms WHERE building_id = ?", building_id).Find(&room).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": room})
+}

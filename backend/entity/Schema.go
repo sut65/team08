@@ -350,13 +350,15 @@ type Treatment struct {
 type Building struct {
 	gorm.Model
 	Name           string           `gorm:"uniqueIndex"`
-	Save_ITI       []Save_ITI       `gorm:"foreignKey:BuildingID"`
-	Operating_Room []Operating_Room `gorm:"foreignKey:BuildingID"`
+	Room       []Room       `gorm:"foreignKey:BuildingID"`
 }
 
 type Room struct {
 	gorm.Model
 	Name           string           `gorm:"uniqueIndex"`
+	Building   Building `gorm:"references:id"`
+	BuildingID *uint
+	
 	Save_ITI       []Save_ITI       `gorm:"foreignKey:RoomID"`
 	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
 }

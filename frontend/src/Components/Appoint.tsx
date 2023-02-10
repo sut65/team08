@@ -22,6 +22,9 @@ import { AppointInterface } from "../Models/IAppoint";
 import { TreatmentsInterface } from "../Models/ITreatment";
 import { LevelcureInterface } from "../Models/ILevelcure";
 import { DepartmentInterface } from "../Models/IDepartment";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
+
 
 import {
   GetTreatment,
@@ -162,6 +165,19 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
   };
 
   async function submit() {
+    if (appoint.TreatmentID == undefined || appoint.TreatmentID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกผู้ป่วยที่ต้องการนัด");
+  }
+    else if (appoint.LevelcureID == undefined || appoint.LevelcureID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกสิทธิการรักษาของผู้ป่วย")
+    }
+    else if (appoint.DepartmentID == undefined|| appoint.DepartmentID == 0){
+      setError(true);
+      setAlertMessage("กรุณาแผนกที่ทำการนัด")
+  }
+  else{
     let data = {
       Screening_officerID: convertType(appoint.Screening_officerID),
       TreatmentID: convertType(appoint.TreatmentID),
@@ -171,7 +187,6 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       Date_now: appoint.Date_now,
       Date_appoint: appoint.Date_appoint,
     };
-
     console.log(data);
     let res = await CreateAppoint(data);
     if (res.status) {
@@ -181,7 +196,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       setAlertMessage(res.message);
       setError(true);
     }
-  }
+  }}
 
   return (
     <Container maxWidth="md">
@@ -387,16 +402,24 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <Button component={RouterLink} to="/appoints" variant="contained">
-              Back
-            </Button>
-            <Button
-              style={{ float: "right" }}
-              onClick={submit}
+          <Button
+              component={RouterLink}
+              to="/DispenseList"
               variant="contained"
               color="primary"
+              startIcon={<ContentPasteSearchIcon />}
             >
-              Submit
+              ดูข้อมูลการจ่ายยา
+            </Button>
+            <Button
+             style={{ float: "right" }}
+             onClick={submit}
+             variant="contained"
+             color="primary"
+             startIcon={<AddCircleIcon />}
+
+           >
+             บันทึกข้อมูลการจ่ายยา
             </Button>
           </Grid>
         </Grid>

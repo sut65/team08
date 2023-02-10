@@ -21,6 +21,8 @@ import Typography from "@mui/material/Typography";
 import { DrugInterface } from "../Models/IDrug";
 import { PracticeInterface } from "../Models/IPractice";
 import { TreatmentsInterface } from "../Models/ITreatment";
+import VaccinesIcon from '@mui/icons-material/Vaccines';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 
 import {
@@ -163,6 +165,20 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
   };
 
   async function submit() {
+
+    if (dispense.TreatmentID == undefined || dispense.TreatmentID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกผู้ป่วยที่ต้องการจ่ายยา");
+  }
+    else if (dispense.DrugID == undefined || dispense.DrugID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกยาที่ต้องการจ่าย")
+    }
+    else if (dispense.PracticeID == undefined|| dispense.PracticeID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกประเภทการรับประทานยา")
+  }
+  else{
     let data = {
       DoctorID: convertType(dispense.DoctorID),
       TreatmentID: convertType(dispense.TreatmentID),
@@ -183,6 +199,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       setError(true);
     }
   }
+}
 
   return (
     <Container maxWidth="md">
@@ -363,16 +380,24 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <Button component={RouterLink} to="/dispensets" variant="contained">
-              Back
-            </Button>
-            <Button
-              style={{ float: "right" }}
-              onClick={submit}
+          <Button
+              component={RouterLink}
+              to="/DispenseList"
               variant="contained"
               color="primary"
+              startIcon={<VaccinesIcon />}
             >
-              Submit
+              ดูข้อมูลการจ่ายยา
+            </Button>
+            <Button
+             style={{ float: "right" }}
+             onClick={submit}
+             variant="contained"
+             color="primary"
+             startIcon={<AddBoxIcon />}
+
+           >
+             บันทึกข้อมูลการจ่ายยา
             </Button>
           </Grid>
         </Grid>

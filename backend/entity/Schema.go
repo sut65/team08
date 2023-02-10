@@ -423,10 +423,10 @@ type Practice struct {
 
 type Dispense struct {
 	gorm.Model
-	Date time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 
-	Number      uint   `valid:"range(0|100)"`
-	Text        string `valid:"maxstringlength(50)~โปรดระบุรายละเอียดของยาไม่เกิน  50 ตัวอักษร,required~โปรดระบุรายละเอียดของยา"`
+	Number      uint   `valid:"range(0|100)~กรุณาใส่จำนวนยาให้ถูกต้อง"`
+	Text        string `valid:"maxstringlength(50)~โปรดระบุรายละเอียดของยาไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดของยา"`
 	DoctorID    *uint  `valid:"-"`
 	TreatmentID *uint  `valid:"-"`
 	DrugID      *uint  `valid:"-"`
@@ -453,7 +453,7 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_now     time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 	Date_appoint time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
 	Text_appoint string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
 

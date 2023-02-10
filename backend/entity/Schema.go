@@ -373,7 +373,7 @@ type State struct {
 type Save_ITI struct {
 	gorm.Model
 	Date_checkin  time.Time  `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
-	Date_checkout time.Time
+	Date_checkout time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	TextSave string	`valid:"maxstringlength(200)~โปรดระบุรายละเอียดของยาไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดแผนการรักษา"`
 	
 	Treatment   Treatment `gorm:"references:id" valid:"-"`

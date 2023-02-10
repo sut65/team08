@@ -474,12 +474,13 @@ type Med_Employee struct {
 	gorm.Model
 	Name           string `valid:"required~กรุณากรอกชื่อ"`
 	Age            uint   `valid:"range(0|100)"`
-	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
+	Phone          string `gorm:"uniqueIndex" valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
 	Email          string `valid:"email"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
 	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
 	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชา"`
+	MedPassword	   string 
 
 	GenderID      *uint           `valid:"-"`
 	PrefixID      *uint           `valid:"-"`

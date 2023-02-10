@@ -12,14 +12,14 @@ import (
 // LoginPayload login body
 type LoginPayload_s struct {
 	Email    string `json:"email"`
-	Password string `json:"password"`
+	Password string `json:"Password"`
 }
 
 // SignUpPayload signup body
 type SignUpPayload_s struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
-	Password string `json:"password"`
+	Password string `json:"Password"`
 
 	Age            uint   `json:"Age"`
 	Phone          string `json:"Phone"`
@@ -56,7 +56,7 @@ func Login_Med_employee(c *gin.Context) {
 	}
 
 	// ตรวจสอบรหัสผ่าน
-	err := bcrypt.CompareHashAndPassword([]byte(Med_Employee.Password), []byte(payload.Password))
+	err := bcrypt.CompareHashAndPassword([]byte(Med_Employee.MedPassword), []byte(payload.Password))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Password is incerrect"})
 		return

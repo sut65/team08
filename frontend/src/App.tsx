@@ -62,6 +62,7 @@ import Save_ITIUpdate from "./Components/Save_ITIUpdate";
 import Operating_RoomUpdate from "./Components/Operating_RoomUpdate";
 import TreatmentUpdate from "./Components/TreatmentUpdate";
 import DispenseUpdate from "./Components/Dispense_Update";
+import MedEmployeesUpdate from "./Components/MedEmployeesUpdate";
 
 const drawerWidth = 240;
 
@@ -278,6 +279,8 @@ function App() {
                 <Route path="/medicalequipment" element={<MedicalEquipments />} />
                 <Route path="/medicalequipment/create" element={<MedicalEquipmentCreate />}/>
                 <Route path="/medicalequipmentsupdate/:id" element={<MedicalEquipmentUpdate/>}/>
+                <Route path="/medemployeesupdate/:id" element={<MedEmployeesUpdate/>}/>
+
 
                 <Route path="/requests" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />

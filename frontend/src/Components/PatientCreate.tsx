@@ -165,12 +165,37 @@ const getAddress = async () => {
       IDCard: (IDCard),
       Phone: (Phone),
       House_ID: (House_ID),
-      AddressID: convertType(Patients.AddressID),
-          
+      AddressID: convertType(Patients.AddressID),        
     };
     console.log(data)
     let res = await CreatePatient(data);
 
+    if (Patients.PrefixID == undefined  || Patients.PrefixID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกคำนำหน้า");
+      
+  }
+  else if (Patients.BloodID == undefined  || Patients.BloodID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกกรุ็ปเลือด");
+  }
+  else if (Patients.GenderID == undefined  || Patients.GenderID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกเพศ");
+  }
+  else if (Patients.ReligionID == undefined  || Patients.ReligionID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกศาสนา");
+  }
+  else if (Patients.NationalityID == undefined  || Patients.NationalityID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกสัญชาติ");
+  }
+  else if (Patients.AddressID == undefined  || Patients.AddressID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกตำบล");
+  }
+  else {
     if (res.status) {
       setAlertMessage("บันทึกข้อมูลสำเร็จ");
       setSuccess(true);
@@ -180,6 +205,7 @@ const getAddress = async () => {
     }
     
   }
+}
 
   return (
     <Container maxWidth="md">

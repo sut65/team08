@@ -737,7 +737,6 @@ async function CreateDoctor(data: DoctorInterface) {
   return res;
 }
 
-
 async function CreateLab(data: LabInterface) {
   const requestOptions = {
     method: "POST",
@@ -758,6 +757,32 @@ async function CreateLab(data: LabInterface) {
         return res;
       } else {
         console.log("ไม่เข้า fetch จาก function CreateLab")
+        return res;
+      }
+    });
+
+  return res;
+}
+async function UpdateLab(data: LabInterface) {
+  const requestOptions = {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/Lab`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res.data);
+      if (res.data) {
+        console.log("เข้า fetch(`${apiUrl}/Lab` method: PATH")
+        console.log(res.data);
+        return res;
+      } else {
+        console.log("ไม่เข้า fetch จาก function UpdateLab")
         return res;
       }
     });
@@ -1677,6 +1702,7 @@ export {
   ListLabName,
   ListLab,
   CreateLab,
+  UpdateLab,
 
   //Gg
   GetTreatment,

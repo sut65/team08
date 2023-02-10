@@ -120,6 +120,11 @@ func UpdateLab(c *gin.Context) {
 		Lab_test: Lab.Lab_test,
 		Value: Lab.Value,
 
+		LabNameID:      Lab.LabNameID,
+		TreatmentID:    Lab.TreatmentID,
+		Med_EmployeeID: Lab.Med_EmployeeID,
+		DoctorID:       Lab.DoctorID,
+
 		Lab_Name:     Lab_Name,
 		Treatment:    Treatment,
 		Med_Employee: Med_Employee,

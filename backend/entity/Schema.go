@@ -3,8 +3,9 @@ package entity
 import (
 	"github.com/asaskevich/govalidator"
 
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 // Officer บนสุด
@@ -316,11 +317,11 @@ type Track struct {
 type Treatment struct {
 	gorm.Model
 	TREATMENT_ID string    `gorm:"uniqueIndex" valid:"matches(^T\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Txxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"`
-	TREATMENT    string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~TREATMENT cannot be blank"`
-	DATE         time.Time `valid:"required,CheckDateTime~Please enter the current time"`
-	APPOINTMENT  uint      `valid:"range(0|100)"`
-	CONCLUSION   string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~CONCLUSION cannot be blank"`
-	GUIDANCE     string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~GUIDANCE cannot be blank"`
+	TREATMENT    string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~ กรุณากรอกอาการเบื้องต้น"`
+	DATE         time.Time `valid:"required,CheckDateTime~ กรุณาเลือกเวลาที่เป็นปัจจุบัน"`
+	APPOINTMENT  uint      `valid:"range(0|100)~ กรุณากรอกค่าที่อยู่ในช่วง 0-100"`
+	CONCLUSION   string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~ กรุณากรอกสรุปผลการรักษา"`
+	GUIDANCE     string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~ กรุณากรอกคำแนะนำ"`
 
 	DoctorID *uint  `valid:"-"`
 	Doctor   Doctor `gorm:"references:id" valid:"-"`
@@ -350,13 +351,15 @@ type Treatment struct {
 type Building struct {
 	gorm.Model
 	Name           string           `gorm:"uniqueIndex"`
-	Save_ITI       []Save_ITI       `gorm:"foreignKey:BuildingID"`
-	Operating_Room []Operating_Room `gorm:"foreignKey:BuildingID"`
+	Room       []Room       `gorm:"foreignKey:BuildingID"`
 }
 
 type Room struct {
 	gorm.Model
 	Name           string           `gorm:"uniqueIndex"`
+	Building   Building `gorm:"references:id"`
+	BuildingID *uint
+	
 	Save_ITI       []Save_ITI       `gorm:"foreignKey:RoomID"`
 	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
 }
@@ -369,36 +372,39 @@ type State struct {
 
 type Save_ITI struct {
 	gorm.Model
-	Date_checkin  time.Time
-	Date_checkout time.Time
-
-	Treatment   Treatment `gorm:"references:id"`
-	TreatmentID *uint
-	Building    Building `gorm:"references:id"`
-	BuildingID  *uint
-	Room        Room `gorm:"references:id"`
-	RoomID      *uint
-	State       State `gorm:"references:id"`
-	StateID     *uint
-	Doctor      Doctor `gorm:"references:id"`
-	DoctorID    *uint
+	Date_checkin  time.Time  `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
+	Date_checkout time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
+	TextSave string	`valid:"maxstringlength(200)~โปรดระบุรายละเอียดของยาไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดแผนการรักษา"`
+	
+	Treatment   Treatment `gorm:"references:id" valid:"-"`
+	TreatmentID *uint	 `valid:"-"`
+	Building    Building `gorm:"references:id" valid:"-"`
+	BuildingID  *uint	 `valid:"-"`
+	Room        Room `gorm:"references:id" valid:"-"`
+	RoomID      *uint	 `valid:"-"`
+	State       State `gorm:"references:id" valid:"-"`
+	StateID     *uint	 `valid:"-"`
+	Doctor      Doctor `gorm:"references:id" valid:"-"`
+	DoctorID    *uint	 `valid:"-"`
 
 	Operating_Room *Operating_Room `gorm:"foreignkey:Save_ITIID"`
 }
 
 type Operating_Room struct {
 	gorm.Model
-	Datetime time.Time
+	NumOper string
+	Datetime time.Time 
+	TextOper string
 
-	Save_ITI   Save_ITI `gorm:"references:id"`
-	Save_ITIID *uint
-	Building   Building `gorm:"references:id"`
-	BuildingID *uint
-	Room       Room `gorm:"references:id"`
-	RoomID     *uint
-	Doctor     Doctor `gorm:"references:id"`
-	DoctorID   *uint
-}
+	Save_ITI   Save_ITI `gorm:"references:id" valid:"-"`
+	Save_ITIID *uint	 `valid:"-"` 
+	Building   Building `gorm:"references:id" valid:"-"`
+	BuildingID *uint	 `valid:"-"`
+	Room       Room `gorm:"references:id"  valid:"-"`
+	RoomID     *uint	 `valid:"-"`
+	Doctor     Doctor `gorm:"references:id" valid:"-"`
+	DoctorID   *uint	 `valid:"-"`
+}	
 
 // Aern
 type Drug struct {
@@ -417,10 +423,10 @@ type Practice struct {
 
 type Dispense struct {
 	gorm.Model
-	Date time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 
-	Number      uint   `valid:"range(0|100)"`
-	Text        string `valid:"maxstringlength(50)~โปรดระบุรายละเอียดของยาไม่เกิน  50 ตัวอักษร,required~โปรดระบุรายละเอียดของยา"`
+	Number      uint   `valid:"range(0|100)~กรุณาใส่จำนวนยาให้ถูกต้อง"`
+	Text        string `valid:"maxstringlength(50)~โปรดระบุรายละเอียดของยาไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดของยา"`
 	DoctorID    *uint  `valid:"-"`
 	TreatmentID *uint  `valid:"-"`
 	DrugID      *uint  `valid:"-"`
@@ -447,7 +453,7 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_now     time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 	Date_appoint time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
 	Text_appoint string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
 
@@ -531,7 +537,7 @@ type Request struct {
 	R_ID     string    `gorm:"uniqueIndex" valid:"matches(^R\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Rxxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"`
 	R_NAME   string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~Please enter details (20)"`
 	QUANTITY uint      `valid:"range(1|1000),required~cannot be blank :range(1|1000)"`
-	TIME     time.Time `valid:"required,CheckDateTime~Please enter the current time"`
+	TIME     time.Time `valid:"required,CheckDateTime~ กรุณาเลือกเวลาที่เป็นปัจจุบัน"`
 
 	Med_EmployeeID *uint        `valid:"-"`
 	Med_Employee   Med_Employee `gorm:"references:id" valid:"-"`

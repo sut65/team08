@@ -129,30 +129,53 @@ function TreatmentCreate() {
   };
 
   async function submit() {
-    let data = {
-      DiseaseID: convertType(treatment.DiseaseID),
-      StatusID: convertType(treatment.StatusID),
-      TrackID: convertType(treatment.TrackID),
-      PatientID: convertType(treatment.PatientID),
-      DoctorID: convertType(treatment.DoctorID),
 
-      TREATMENT_ID: (TREATMENT_ID),
-      TREATMENT: (TREATMENT),
-      DATE: treatment.DATE,
-      CONCLUSION: (CONCLUSION),
-      GUIDANCE: (GUIDANCE),
-      APPOINTMENT: convertType(APPOINTMENT),
-
-    };
-
-    let res = await Treatment(data);
-    if (res.status) {
-      setAlertMessage("บันทึกข้อมูลสำเร็จ");
-      setSuccess(true);
-    } else {
-      setAlertMessage(res.message);
+    if (treatment.DiseaseID == 0|| treatment.DiseaseID == undefined){
       setError(true);
+      setAlertMessage("  กรุณาเลือกโรคจากการวินิจฉัย");
     }
+    else if (treatment.StatusID == 0 ||treatment.StatusID == undefined ){
+      setError(true);
+      setAlertMessage("  กรุณาเลือกสถานะการรักษา");
+    }
+    else if (treatment.TrackID == 0 ||treatment.TrackID == undefined ){
+      setError(true);
+      setAlertMessage("  กรุณาเลือกสถานะติดตามผล");
+    }
+    else if (treatment.PatientID == 0 ||treatment.PatientID == undefined){
+      setError(true);
+      setAlertMessage("  กรุณาเลือกผู้ป่วย");
+    }
+    else{
+      let data = {
+        DiseaseID: convertType(treatment.DiseaseID),
+        StatusID: convertType(treatment.StatusID),
+        TrackID: convertType(treatment.TrackID),
+        PatientID: convertType(treatment.PatientID),
+        DoctorID: convertType(treatment.DoctorID),
+  
+        TREATMENT_ID: (TREATMENT_ID),
+        TREATMENT: (TREATMENT),
+        DATE: treatment.DATE,
+        CONCLUSION: (CONCLUSION),
+        GUIDANCE: (GUIDANCE),
+        APPOINTMENT: convertType(APPOINTMENT),
+  
+      };
+      console.log(data)
+      let res = await Treatment(data);
+      if (res.status) {
+        setAlertMessage("บันทึกข้อมูลสำเร็จ");
+        setSuccess(true);
+       } else {
+        setAlertMessage(res.message);
+        setError(true);
+      }
+
+    }
+    
+
+    
   };
 
 
@@ -167,7 +190,7 @@ function TreatmentCreate() {
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert onClose={handleClose} severity="success">
-            บันทึกข้อมูลสำเร็จ
+            
             {message}
           </Alert>
         </Snackbar>
@@ -179,7 +202,7 @@ function TreatmentCreate() {
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert onClose={handleClose} severity="error">
-            บันทึกข้อมูลไม่สำเร็จ
+            
             {message}
           </Alert>
         </Snackbar>

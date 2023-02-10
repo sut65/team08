@@ -19,7 +19,7 @@ func Test_DispenseText(t *testing.T) {
 	ok, err := govalidator.ValidateStruct(dispen)
 	g.Expect(ok).NotTo(gomega.BeTrue())
 	g.Expect(err).ToNot(gomega.BeNil())
-	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดของยาไม่เกิน  50 ตัวอักษร"))
+	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดของยาไม่เกิน 50 ตัวอักษร"))
 }
 func Test_DispenseTextNotNull(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
@@ -60,7 +60,7 @@ func Test_DispenseNumber(t *testing.T) {
 	ok, err := govalidator.ValidateStruct(dispen)
 	g.Expect(ok).NotTo(gomega.BeTrue())
 	g.Expect(err).ToNot(gomega.BeNil())
-	g.Expect(err.Error()).To(gomega.Equal("Number: 120 does not validate as range(0|100)"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่จำนวนยาให้ถูกต้อง"))
 }
 
 func Test_DispenseAll(t *testing.T) {

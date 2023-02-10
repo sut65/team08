@@ -157,14 +157,26 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM practices WHERE name = ?", "ยาก่อนนอน ควรรับประทานยาก่อนเข้านอน 15 – 30 นาที").Scan(&Practice_3)
 
 	// J
-	db.Model(&Building{}).Create(&Building{Name: "ตึก A"})
-	db.Model(&Building{}).Create(&Building{Name: "ตึก B"})
-	db.Model(&Building{}).Create(&Building{Name: "ตึก C"})
-	db.Model(&Building{}).Create(&Building{Name: "ตึก D"})
-	db.Model(&Room{}).Create(&Room{Name: "ห้อง A"})
-	db.Model(&Room{}).Create(&Room{Name: "ห้อง B"})
-	db.Model(&Room{}).Create(&Room{Name: "ห้อง C"})
-	db.Model(&Room{}).Create(&Room{Name: "ห้อง D"})
+	db.Model(&Building{}).Create(&Building{Name: "ตึกคนไข้ภายใน"})
+	db.Model(&Building{}).Create(&Building{Name: "ตึกผ่าตัด"})
+	
+	var building1, building2 Building
+	db.Raw("SELECT * FROM buildings WHERE name = ?", "ตึกคนไข้ภายใน").Scan(&building1)
+	db.Raw("SELECT * FROM buildings WHERE name = ?", "ตึกผ่าตัด").Scan(&building2)
+
+	db.Model(&Room{}).Create(&Room{Name: "Room01", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room02", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room03", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room04", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room05", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "Room06", Building: building1})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom01", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom02", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom03", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom04", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom05", Building: building2})
+	db.Model(&Room{}).Create(&Room{Name: "OperatingRoom06", Building: building2})
+
 	db.Model(&State{}).Create(&State{Name: "ต้องได้รับการผ่าตัด"})
 	db.Model(&State{}).Create(&State{Name: "นอนดูอาการ"})
 

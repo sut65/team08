@@ -26,19 +26,19 @@ func CreateMedEmployee(c *gin.Context) {
 
 	// 10: ค้นหา Prefix ด้วย id
 	if tx := entity.DB().Where("id = ?", med_employee.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกคำนำหน้า"})
 		return
 	}
 
 	// 11: ค้นหา Gender ด้วย id
 	if tx := entity.DB().Where("id = ?", med_employee.GenderID).First(&gender); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Gender not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกเพศ"})
 		return
 	}
 
 	// 12: ค้นหา Education ด้วย id
 	if tx := entity.DB().Where("id = ?", med_employee.EducationID).First(&education); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "education not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกการศึกษา"})
 		return
 	}
 	//  ค้น OfficerID

@@ -79,15 +79,17 @@ function MedicalEquipmentCreate() {
     });
   };
 
-  const handleInputChange = (
-    event: React.ChangeEvent<{ id?: string; value: any }>
-  ) => {
-    const id = event.target.id as keyof typeof MedicalEquipment;
+  
 
-    const { value } = event.target;
+  // const getMedByUID = async () => {
+  //   let res = await GetMedByUID();
+  //   MedicalEquipment.Med_EmployeeID = res.ID;
+  //   if (res) {
 
-    setMedicalEquipment({ ...MedicalEquipment, [id]: value });
-  };
+  //     setMedStatuses(res);
+  //     console.log(res);
+  //   }
+  // };
 
   const getMedStatus = async () => {
     let res = await GetMedStatus();
@@ -108,6 +110,7 @@ function MedicalEquipmentCreate() {
 
  
   useEffect(() => {
+    // getMedByUID();
     getBrand();
     getMedStatus();
    
@@ -122,22 +125,14 @@ function MedicalEquipmentCreate() {
 
   async function submit() {
     let data = {
-      Equipment: MedicalEquipment.Equipment ?? "",
-      Quantity: convertType(MedicalEquipment.Quantity ?? ""),
-      Shop : MedicalEquipment.Shop ?? "",
-      BrandID: convertType(MedicalEquipment.BrandID),
-      Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
+        Equipment: (Equipment),
+        Quantity: (convertType(Quantity)),
+        Shop: (Shop),
+        BrandID: convertType(MedicalEquipment.BrandID),
+        Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
+        // Med_EmployeeID: convertType(MedicalEquipment.Med_EmployeeID),
     };
-    console.log(data)
-    let res = await MedicalEquipments(data);
-    if (res.status) {
-      setErrorMessage("บันทึกข้อมูลสำเร็จ");
-      setSuccess(true);
-     } else {
-      setErrorMessage(res.message);
-      setError(true);
-    }
-  
+    console.log()
   
     const apiUrl = "http://localhost:8080";
     const requestOptions = {
@@ -149,20 +144,20 @@ function MedicalEquipmentCreate() {
       body: JSON.stringify(data),
     };
 
-//     fetch(`${apiUrl}/medicalequipments`, requestOptions)
-//       .then((response) => response.json())
-//       .then((res) => {
-//         console.log(res)
-//         if (res.data) {
-//           console.log("บันทึกได้")
-//           setSuccess(true);
-//           setErrorMessage("บันทึกได้")
-//         } else {
-//           console.log("บันทึกไม่ได้")
-//           setError(true);
-//           setErrorMessage(res.error)
-//         }
-// });
+    fetch(`${apiUrl}/medicalequipments`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res)
+        if (res.data) {
+          console.log("บันทึกได้")
+          setSuccess(true);
+          setErrorMessage("บันทึกได้")
+        } else {
+          console.log("บันทึกไม่ได้")
+          setError(true);
+          setErrorMessage(res.error)
+        }
+});
 }
 
   return (
@@ -203,7 +198,7 @@ function MedicalEquipmentCreate() {
               color="primary"
               gutterBottom
             >
-              ข้อมูลอุปกรณ์แพทย์
+              Medical Equipment
             </Typography>
           </Box>
         </Box>
@@ -238,22 +233,21 @@ function MedicalEquipmentCreate() {
             <p>จำนวน</p>
             <FormControl fullWidth variant="outlined">
               <TextField
-                id="Quantity"
+                id="setQuantity"
                 label="Number"
                 type="Number"
-                inputProps={{ name: "Number", min: 0}}
-                value={MedicalEquipment.Quantity}
-                onChange={handleInputChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={(event) => setQuantitys(event.target.value)}
               />
             </FormControl>
           </Grid>
 
           <Grid item xs={6}>
                 <p>เครื่องมือ</p>
-                <TextField fullWidth id="Equipment" type="string" variant="outlined"
-                 value={MedicalEquipment.Equipment}
-                  onChange={handleInputChange}  
-                 />
+                <TextField fullWidth id="Name" type="string" variant="outlined"  
+                onChange={(event) => setEquipments(event.target.value)} />
               </Grid>
 
           <Grid item xs={6}>
@@ -285,8 +279,7 @@ function MedicalEquipmentCreate() {
           <Grid item xs={6}>
                 <p>ร้านค้า</p>
                 <TextField fullWidth id="Shop" type="string" variant="outlined"  
-                value={MedicalEquipment.Shop}
-                onChange={handleInputChange} />
+                onChange={(event) => setShops(event.target.value)} />
               </Grid>
 
           {/* <Grid item xs={12}>

@@ -82,16 +82,17 @@ import { DoctorInterface } from "../Models/IDoctor";
   const id = e.target.value
   const name = e.target.name as keyof typeof Save_ITIs;
   const value = e.target.value;
-  let res = await GetReady_Treat(id);
-  if (res) {
   setSave_ITIs({
-      ...Save_ITIs,
-      [name]: value,
+    ...Save_ITIs,
+    [name]: value,
   });
+  let res = await GetReady_Treat(id);
+  if (res) { 
+    setTreatOne(res);
   }
   console.log(`${name}: ${value}`);
-  setTreatOne(res);
-  console.log(TreatOne);
+  
+  
 }
 
 // เพิ่มฟังก์ชั่น
@@ -295,7 +296,7 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
                 name: "Patiend",
               }}
               // แก้ไขตัวแปร ******************
-              value={TreatOne?.Patient?.Patient_Name + ""}
+              value={TreatOne.Patient?.Patient_Name + ""}
               // onChange={handleInputChange_Text}
             />
           </FormControl>

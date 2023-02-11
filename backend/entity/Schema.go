@@ -319,7 +319,7 @@ type Treatment struct {
 	TREATMENT_ID string    `gorm:"uniqueIndex" valid:"matches(^T\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Txxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"`
 	TREATMENT    string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~ กรุณากรอกอาการเบื้องต้น"`
 	DATE         time.Time `valid:"required,CheckDateTime~ กรุณาเลือกเวลาที่เป็นปัจจุบัน"`
-	APPOINTMENT  uint      `valid:"range(0|100)~ กรุณากรอกค่าที่อยู่ในช่วง 0-100"`
+	APPOINTMENT  uint      `valid:"range(0|100)~ กรุณากรอกค่าที่อยู่ในช่วง 0-100,required~กรุณากรอกจำนวนวัน"`
 	CONCLUSION   string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~ กรุณากรอกสรุปผลการรักษา"`
 	GUIDANCE     string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~ กรุณากรอกคำแนะนำ"`
 
@@ -454,14 +454,14 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
-	Date_appoint time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
-	Text_appoint string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
-
-	Screening_officerID *uint `valid:"-"`
-	TreatmentID         *uint `valid:"-"`
-	LevelcureID         *uint `valid:"-"`
-	DepartmentID        *uint `valid:"-"`
+	Date_now            time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_appoint        time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
+	Text_appoint        string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
+	Appoint_ID          string    `gorm:"uniqueIndex" valid:"matches(^AP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:APxxxxxx,required~หมายเลขการนัดหมายป็นค่าว่าง ตัวอย่าง:APxxxxxx"`
+	Screening_officerID *uint     `valid:"-"`
+	TreatmentID         *uint     `valid:"-"`
+	LevelcureID         *uint     `valid:"-"`
+	DepartmentID        *uint     `valid:"-"`
 
 	Screening_officer Screening_officer `gorm:"references:id" valid:"-"`
 	Treatment         Treatment         `gorm:"references:id" valid:"-"`
@@ -474,9 +474,9 @@ type Appoint struct {
 type Med_Employee struct {
 	gorm.Model
 	Name           string `valid:"required~กรุณากรอกชื่อ"`
-	Age            uint   `valid:"range(0|100)"`
-	Phone          string `gorm:"uniqueIndex" valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
-	Email          string `valid:"required~กรุณากรอกอีเมล"`
+	Age            int   `valid:"range(0|100)~กรุณาใส่อายุให้ถูกต้อง"`
+	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
+	Email          string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง, required~กรุณากรอกอีเมล"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
 	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
@@ -537,8 +537,8 @@ type Location struct {
 type Request struct {
 	gorm.Model
 	R_ID     string    `gorm:"uniqueIndex" valid:"matches(^R\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Rxxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"`
-	R_NAME   string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~Please enter details (20)"`
-	QUANTITY uint      `valid:"range(1|1000),required~cannot be blank :range(1|1000)"`
+	R_NAME   string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~กรุณากรอกเคส"`
+	QUANTITY uint      `valid:"range(1|1000)~กรุณากรอกค่าที่อยู่ในช่วง 1-1000,required~กรุณากรอกจำนวน"`
 	TIME     time.Time `valid:"required,CheckDateTime~ กรุณาเลือกเวลาที่เป็นปัจจุบัน"`
 
 	Med_EmployeeID *uint        `valid:"-"`

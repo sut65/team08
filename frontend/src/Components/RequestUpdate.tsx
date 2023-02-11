@@ -16,7 +16,7 @@ import { LocationInterface } from "../Models/ILocation";
 import {
   GetMedicalEquipments,
   GetLocation,
-  GetMedByUID,
+  GetMedByUID, 
   Request,
 } from "../Services/HttpClientService";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
@@ -125,7 +125,7 @@ function RequestUpdate() {
   }
 
   async function update() {
-    if(request.MedEquipmentID == 0 || request.MedEquipmentID == undefined){
+    if(request.Med_EquipmentID == 0 || request.Med_EquipmentID == undefined){
       setError(true);
       setAlertMessage("  กรุณาเลือกอุปกรณ์");
     }
@@ -137,15 +137,16 @@ function RequestUpdate() {
       let data = {
 
       ID: request.ID,
-      Med_EquipmentID: convertType(request.MedEquipmentID),
+      
+      Med_EquipmentID: convertType(request.Med_EquipmentID),
       LocationID: convertType(request.LocationID),
       Med_EmployeeID: convertType(request.Med_EmployeeID),
-      R_ID: (R_ID),
-      QUANTITY: convertType(QUANTITY),
+      R_ID: request.R_ID,
+      QUANTITY: convertType(request.QUANTITY),
       TIME: request.TIME,
-      R_NAME: (R_NAME),
+      R_NAME: request.R_NAME,
       
-    };
+    }; 
     
     const requestOptions = {
         method: "PATCH",
@@ -157,15 +158,15 @@ function RequestUpdate() {
       };
       console.log(data);
 
-      fetch(`http://localhost:8080/treatmentsUpdate/${data.ID}`, requestOptions)
+      fetch(`http://localhost:8080/requestsUpdate/${data.ID}`, requestOptions)
         .then((response) => response.json())
         .then(async (res) => {
           console.log(res);
           if (res.data) {
-            setAlertMessage("บันทึกข้อมูลสำเร็จ");
+            setAlertMessage("บันทึกข้อมูลสำเร็จ....");
             setSuccess(true);
            } else {
-            setAlertMessage(res.message);
+            setAlertMessage(res.error);
             setError(true);
           }
         });
@@ -180,7 +181,7 @@ function RequestUpdate() {
         "Content-Type": "application/json",
       },
     };
-
+ 
     fetch(`http://localhost:8080/request/${params.id}`, requestOptions )
       .then((response) => response.json())
       .then((res) => {
@@ -196,7 +197,7 @@ function RequestUpdate() {
   return (
     <div>
       <Container maxWidth="md">
-        <Snackbar
+      <Snackbar
           id="success"
           open={success}
           autoHideDuration={6000}
@@ -250,7 +251,7 @@ function RequestUpdate() {
               <FormControl fullWidth variant="outlined">
               <TextField
                 id="QUANTITY"
-                label="Number"
+                
                 type="Number"
                 inputProps={{ name: "Number", min: 0 ,max:1000}} 
                 value={request.QUANTITY}
@@ -326,10 +327,10 @@ function RequestUpdate() {
                 <p>อุปกรณ์</p>
                 <Select
                   native
-                  value={request.MedEquipmentID + ""}
+                  value={request.Med_EquipmentID + ""}
                   onChange={handleChange}
                   inputProps={{
-                    name: "MedEquipmentID",
+                    name: "Med_EquipmentID",
                   }}
                 >
                   <option aria-label="None" value="">

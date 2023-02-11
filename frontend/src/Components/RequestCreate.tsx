@@ -106,7 +106,7 @@ function RequestCreate() {
   };
 
   async function submit() {
-    if(request.MedEquipmentID == 0 || request.MedEquipmentID == undefined){
+    if(request.Med_EquipmentID == 0 || request.Med_EquipmentID == undefined){
       setError(true);
       setAlertMessage("  กรุณาเลือกอุปกรณ์");
     }
@@ -117,7 +117,7 @@ function RequestCreate() {
     else{
       let data = {
       
-      Med_EquipmentID: convertType(request.MedEquipmentID),
+      Med_EquipmentID: convertType(request.Med_EquipmentID),
       LocationID: convertType(request.LocationID),
       Med_EmployeeID: convertType(request.Med_EmployeeID),
       R_ID: (R_ID),
@@ -269,10 +269,10 @@ function RequestCreate() {
                 <p>อุปกรณ์</p>
                 <Select
                   native
-                  value={request.MedEquipmentID + ""}
+                  value={request.Med_EquipmentID + ""}
                   onChange={handleChange}
                   inputProps={{
-                    name: "MedEquipmentID",
+                    name: "Med_EquipmentID",
                   }}
                 >
                   <option aria-label="None" value="">

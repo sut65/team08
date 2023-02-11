@@ -176,10 +176,7 @@ const handleInputChange = (
     });
     console.log(`[${name}]: ${value}`);
   };
-  function timeout(delay: number) {
-    return new Promise(res => setTimeout(res, delay));
-  }
-  
+
   async function update() {
 
     if (dispense.TreatmentID == undefined || dispense.TreatmentID == 0){

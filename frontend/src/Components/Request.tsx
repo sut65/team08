@@ -9,12 +9,13 @@ import { RequestInterface } from "../Models/IRequest";
 import { GetRequest } from "../Services/HttpClientService";
 import { Dialog, DialogTitle } from "@mui/material";
 
-function Request() {
+function Request() { 
     const [requests, setRequests] = React.useState<RequestInterface[]>([]);
     const [RequestID, setRequestID] = React.useState(0);
     
     const [openDelete, setOpendelete] = React.useState(false);
     const [openUpdate, setOpenupdate] = React.useState(false);
+
     const navigate = useNavigate();
     useEffect(() => {
         getRequests();
@@ -99,6 +100,8 @@ function Request() {
         {field: "Med_Equipment", headerName: "อุปกรณ์", width: 150 ,valueFormatter: (params) => params.value.Equipment,},
         {field: "TIME", headerName: "วันที่ เวลา", width: 100 },
         {field: "Location", headerName: "สถานที่", width: 120 ,valueFormatter: (params) => params.value.Name,},
+        {field: "Med_Employee", headerName: "เทคนิคการแพทย์", width: 120 ,valueFormatter: (params) => params.value.Name,},
+
         
     ];
     return (
@@ -161,6 +164,7 @@ function Request() {
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
+                        onRowClick={handleRowClick}
                     />
                 </div>
             </Container>

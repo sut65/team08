@@ -65,6 +65,7 @@ import DispenseUpdate from "./Components/Dispense_Update";
 import MedEmployeesUpdate from "./Components/MedEmployeesUpdate";
 import Screening_officerUpdate from "./Components/Screening_officer_update";
 import RequestUpdate from "./Components/RequestUpdate";
+import AppointUpdate from "./Components/AppointUpdate";
 
 const drawerWidth = 240;
 
@@ -275,6 +276,7 @@ function App() {
                 <Route path="/DispenseUpdate/:id" element={<DispenseUpdate />} />
                 <Route path="/DispenseList" element={<DispenseList />} />
                 <Route path="/DispenseCreate" element={<DispenseCreate />} />
+                <Route path="/AppointUpdate/:id" element={<AppointUpdate />} /> 
                 <Route path="/AppointList" element={<AppointList />} />
                 <Route path="/AppointCreate" element={<Appoint />} />
                 <Route path="/medemployees" element={<MedEmployees />} />

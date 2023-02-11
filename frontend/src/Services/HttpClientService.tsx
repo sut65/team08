@@ -697,7 +697,7 @@ async function CreatePatient(data: PatientsInterface) {
 
   console.log(requestOptions);
 
-  let res = await fetch(`${apiUrl}/Patients`, requestOptions)
+  let res = await fetch(`${apiUrl}/Patients/create`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1466,7 +1466,7 @@ async function Treatment_Disease_Text(id:any) {
     },
   };
 
-  let res = await fetch(`${apiUrl}/treatmentss/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/treatment/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {

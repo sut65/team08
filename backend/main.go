@@ -95,9 +95,9 @@ func main() {
 			//Patient
 			router.GET("/Patients", controller.ListPatient)
 			router.GET("/Patient/:id", controller.GetPatient)
-			router.POST("/Patients", controller.CreatePatient)
-			router.PATCH("/Patients", controller.UpdatePatient)
-			router.DELETE("/Patient/:id", controller.DeletePatient)
+			router.POST("/Patients/create", controller.CreatePatient)
+			router.PATCH("/PatientsUpdate/:id", controller.UpdatePatient)
+			router.DELETE("/Patients/:id", controller.DeletePatient)
 
 			// Run the server
 

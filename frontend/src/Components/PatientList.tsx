@@ -1,22 +1,63 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
 import { PatientsInterface } from "../Models/IPatient";
 import { GetPatient } from "../Services/HttpClientService";
+import { Dialog, DialogTitle } from "@mui/material";
 
 
 
 
 function PatientList() {
     const [Patients, setPatients] = useState<PatientsInterface[]>([]);
+    const [PatientID, setPatientID] = React.useState(0);  
+    const [openDelete, setOpendelete] = React.useState(false); 
+    const [openUpdate, setOpenupdate] = React.useState(false);
+    const navigate = useNavigate(); 
   
     useEffect(() => {
       getPatients();
     }, []);
+
+    const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+      setPatientID(Number(params.row.ID)); 
+      localStorage.setItem("setPatientID", params.row.ID); 
+  };
+
+const handleClose = () => {
+      setOpendelete(false)
+      setOpenupdate(false)
+  };
+
+  const Delete_Patient = async () => {
+    const apiUrl = `http://localhost:8080/Patients/${PatientID}`;
+    const requestOptions = {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+        },
+        
+    };
+    
+
+    await fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+
+        } else {
+          console.log("NO DATA")
+        }
+    });
+    
+    handleClose();
+    getPatients();
+};
   
     const getPatients = async () => {
       let res = await GetPatient();
@@ -27,6 +68,34 @@ function PatientList() {
   
     const columns: GridColDef[] = [
       {  field: "ID", headerName: "ลำดับ", width: 50 },
+      {
+        field: "UPDATE", headerName: "แก้ไข", width: 100,
+        renderCell: () => {
+            return (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setOpenupdate(true)}
+                >
+                    Edit
+                </Button>
+            );
+        },
+    },
+    {
+        field: "DELETE", headerName: "ลบ", width: 100,
+        renderCell: () => {
+            return (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setOpendelete(true)}
+                >
+                    Delete
+                </Button>
+            );
+        },
+    },
       {
         field: "Prefix",
         headerName: "คำนำหน้า",
@@ -81,6 +150,34 @@ function PatientList() {
   
     return (
       <div>
+      {/* ยืนยันการลบ */}
+      <Dialog open={openDelete} onClose={handleClose} >
+                <DialogTitle><div className="good-font">ยืนยันการลบรายการ</div></DialogTitle>
+                <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={Delete_Patient}
+                    >
+                        <div className="good-font">
+                            ยืนยัน
+                        </div>
+                    </Button>
+            </Dialog>
+          
+        {/* ยืนยันการแก้ไข */}
+        <Dialog open={openUpdate} onClose={handleClose} >
+           <DialogTitle><div className="good-font">ยืนยันการแก้ไข</div></DialogTitle>
+           <Button
+                   variant="contained"
+                   color="primary"
+
+                   onClick={() => navigate({ pathname: `/PatientsUpdate/${PatientID}` })}
+               >
+                   <div className="good-font">
+                       ยืนยัน
+                   </div>
+               </Button>
+       </Dialog>
         <Container maxWidth="md">
           <Box
             display="flex"
@@ -116,6 +213,7 @@ function PatientList() {
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
+              onRowClick={handleRowClick}
             />
           </div>
         </Container>

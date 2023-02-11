@@ -201,20 +201,12 @@ const handleInputChange = (
       TreatmentID: convertType(dispense.TreatmentID),
       DrugID: convertType(dispense.DrugID),
       PracticeID: convertType(dispense.PracticeID),
-      Number: convertType(Number),
+      Number: convertType(dispense.Number),
       Text: dispense.Text,
       Date: dispense.Date,
+      Dispense_ID:dispense.Dispense_ID,
     };
 
-    console.log(data);
-    let res = await CreateDispense(data);
-    if (res.status) {
-      setAlertMessage("บันทึกข้อมูลสำเร็จ");
-      setSuccess(true);
-    } else {
-      setAlertMessage(res.message);
-      setError(true);
-    }
     const requestOptions = {
         method: "PATCH",
         headers: {
@@ -225,18 +217,17 @@ const handleInputChange = (
       };
       console.log(data);
   
-      fetch(`http://localhost:8080/DispenseUpdate`, requestOptions)
+      fetch(`http://localhost:8080/DispenseUpdate/${data.ID}`, requestOptions)
         .then((response) => response.json())
         .then(async (res) => {
           console.log(res);
-          if (res.data) {
-            setSuccess(true);
-            await timeout(1000); //for 1 sec delay
-            window.location.reload();     
-            
-          } else {
-            setError(true);
-          }
+        if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
+          setSuccess(true);
+        } else {
+          setAlertMessage(res.message);
+          setError(true);
+    }
         });
   }
 }
@@ -249,7 +240,7 @@ const getDispense = async () => {
       },
     };
 
-    fetch(`http://localhost:8080/dispense/${params.id}`, requestOptions )
+    fetch(`http://localhost:8080/dispensess/${params.id}`, requestOptions )
       .then((response) => response.json())
       .then((res) => {
         console.log(res.data)
@@ -342,14 +333,27 @@ const getDispense = async () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <p>รายละเอียดการรักษา</p>
             <FormControl fullWidth variant="outlined">
             <TextField
-            value={treatment_Dis?.CONCLUSION || ""}
+            value={dispense.Treatment?.CONCLUSION || ""}
             InputProps={{
               readOnly: true,
             }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <p>เลขกำกับการจ่ายยา</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                fullWidth
+                id="Dispense_ID"
+                type="string"
+                variant="outlined"
+                value={dispense.Dispense_ID}
+                onChange={handleInputChange}
               />
             </FormControl>
           </Grid>

@@ -54,6 +54,7 @@ func CreateDispense(c *gin.Context) {
 		Date:        dispense.Date,        // ตั้งค่าฟิลด์ Date
 		Number:      dispense.Number,      // ตั้งค่าฟิลด์ Number
 		Text:        dispense.Text,        // ตั้งค่าฟิลด์ Text
+		Dispense_ID: dispense.Dispense_ID,
 	}
 	// แทรกการ validate ไว้ช่วงนี้ของ controller
 	if _, err := govalidator.ValidateStruct(cr); err != nil {
@@ -103,13 +104,14 @@ func DeleteDispense(c *gin.Context) {
 
 // PATCH /dispenses
 func UpdateDispense(c *gin.Context) {
+	id := c.Param("id")
 	var dispense entity.Dispense
 	if err := c.ShouldBindJSON(&dispense); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	cr := entity.Dispense{
+	crupdate := entity.Dispense{
 		DrugID:      dispense.DrugID,      // โยงความสัมพันธ์กับ Entity Drug
 		PracticeID:  dispense.PracticeID,  // โยงความสัมพันธ์กับ Entity Practice
 		TreatmentID: dispense.TreatmentID, // โยงความสัมพันธ์กับ Entity Treatment
@@ -117,9 +119,14 @@ func UpdateDispense(c *gin.Context) {
 		Date:        dispense.Date,        // ตั้งค่าฟิลด์ Date
 		Number:      dispense.Number,      // ตั้งค่าฟิลด์ Number
 		Text:        dispense.Text,        // ตั้งค่าฟิลด์ Text
+		Dispense_ID: dispense.Dispense_ID,
 	}
-
-	if err := entity.DB().Where("id = ?", dispense.ID).Updates(&cr).Error; err != nil {
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(crupdate); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if err := entity.DB().Where("id = ?", id).Updates(&crupdate).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

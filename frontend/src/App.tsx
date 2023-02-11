@@ -64,6 +64,7 @@ import TreatmentUpdate from "./Components/TreatmentUpdate";
 import DispenseUpdate from "./Components/Dispense_Update";
 import MedEmployeesUpdate from "./Components/MedEmployeesUpdate";
 import Screening_officerUpdate from "./Components/Screening_officer_update";
+import RequestUpdate from "./Components/RequestUpdate";
 
 const drawerWidth = 240;
 
@@ -286,6 +287,7 @@ function App() {
 
                 <Route path="/requests" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />
+                <Route path="/request/update/:id" element={<RequestUpdate />} />
                 <Route path="/" element={<Home />} />
                 
               </Routes>

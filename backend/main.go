@@ -189,19 +189,10 @@ func main() {
 			router.DELETE("/track/:id", controller.DeleteTrack)
 
 			// ตารางหลัก ข้อมูลการรักษา ************************************************************
-			//r.GET("/treatments", controller.ListTreatment)
-			// r.GET("/treatmentstatus", controller.ListTreatment)
-			// //r.GET("/treatments/:id", controller.GetTreatment)
-			// //r.POST("/treatments", controller.CreateTreatment)
-			// //r.PATCH("/treatments", controller.UpdateTreatment)
-			// //r.DELETE("/treatment/:id", controller.DeleteTreatment)
-			// r.GET("/treatments/ready", controller.ListReady_Treat)
-			// r.GET("/treatments/readyyy", controller.ListReady_Dispense)
-			// r.GET("/treatments/readyapp", controller.ListReady_Appoint)
 			router.GET("/treatments", controller.ListTreatment)
-			router.GET("/treatmentss/:id", controller.GetTreatment)
+			router.GET("/treatment/:id", controller.GetTreatment) //---ss
 			router.POST("/treatments", controller.CreateTreatment)
-			router.PATCH("/treatmentsUpdate", controller.UpdateTreatment) ////++
+			router.PATCH("/treatmentsUpdate/:id", controller.UpdateTreatment) ////++++
 			router.DELETE("/treatment/:id", controller.DeleteTreatment)
 			router.GET("/treatments/ready", controller.ListReady_Treat)
 			router.GET("/treatments/readyyy", controller.ListReady_Dispense)
@@ -291,9 +282,9 @@ func main() {
 			router.DELETE("/location/:id", controller.DeleteLocation)
 
 			router.GET("/requests", controller.ListRequest) ////------------------------
-			router.GET("/requests/:id", controller.GetRequest)
+			router.GET("/request/:id", controller.GetRequest)
 			router.POST("/requests", controller.CreateRequest)
-			router.PATCH("/requests", controller.UpdateRequest)
+			router.PATCH("/requestsUpdate/:id", controller.UpdateRequest) //++++++++
 			router.DELETE("/request/:id", controller.DeleteRequest)
 
 		}

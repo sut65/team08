@@ -513,9 +513,9 @@ type Med_Status struct {
 // ข้อมูลอุปกรณ์ *****************
 type Med_Equipment struct {
 	gorm.Model
-	Equipment      string `valid:"required~Equipment cannot be blank"`
-	Quantity       int    `valid:"range(0|1000)~Quantity is not in range 0 to 1000"`
-	Shop           string `valid:"required~Shop cannot be blank"`
+	Equipment      string `valid:"required~กรุณากรอกอุปกรณ์"`
+	Quantity       int    `valid:"range(0|1000)~กรุณากรอกจำนวนอุปกรณ์ไม่เกิน 1000"`
+	Shop           string `valid:"required~กรุณากรอกร้านค้าที่รับเข้า"`
 	BrandID        *uint
 	Brand          Brand `gorm:"references:id" valid:"-"`
 	Med_StatusID   *uint

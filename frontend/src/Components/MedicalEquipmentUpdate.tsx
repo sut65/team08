@@ -123,7 +123,7 @@ function update() {
   let upequipment = {
     ID: MedicalEquipment.ID,
     Equipment: MedicalEquipment.Equipment ?? "",
-    Quantity: MedicalEquipment.Quantity ?? "",
+    Quantity: convertType(MedicalEquipment.Quantity) ,
     Shop : MedicalEquipment.Shop ?? "",
     BrandID: convertType(MedicalEquipment.BrandID),
     Med_StatusID: convertType(MedicalEquipment.Med_StatusID),

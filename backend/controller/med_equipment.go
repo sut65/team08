@@ -25,13 +25,13 @@ func CreateMedEquipment(c *gin.Context) {
 
 	// 10: ค้นหา brand ด้วย id
 	if tx := entity.DB().Where("id = ?", med_equipment.BrandID).First(&brand); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "brand not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกยี่ห้อของอุปกรณ์"})
 		return
 	}
 
 	// 11: ค้นหา status ด้วย id
 	if tx := entity.DB().Where("id = ?", med_equipment.Med_StatusID).First(&med_status); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "status not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกสถานะของอุปกรณ์"})
 		return
 	}
 

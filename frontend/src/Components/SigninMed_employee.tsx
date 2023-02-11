@@ -160,10 +160,7 @@ function SigninMed_employee() {
                 value={signin.Password || ""}
                 onChange={handleInputChange}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              
               <Button
                 type="submit"
                 fullWidth

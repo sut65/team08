@@ -239,7 +239,7 @@ func TestAgeMedEmployeeMustBeInRange(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Age: 101 does not validate as range(0|100)"))
+	g.Expect(err.Error()).To(Equal("กรุณาใส่อายุให้ถูกต้อง"))
 
 }
 
@@ -263,7 +263,7 @@ func TestEmailMedicalEmployeeMustBeInValidPattern(t *testing.T) {
 
 	g.Expect(err).ToNot(BeNil())
 
-	g.Expect(err.Error()).To(Equal("Email: avdwq does not validate as email"))
+	g.Expect(err.Error()).To(Equal("กรุณาใส่อีเมลให้ถูกต้อง"))
 }
 
 func TestEmailMedicalEmployeeNotBlank(t *testing.T) {

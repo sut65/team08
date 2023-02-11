@@ -34,24 +34,24 @@ func CreateRequest(c *gin.Context) {
 		return
 	}
 
-	// // 11: ค้นหา resolution ด้วย id			//ของเราเป็น ค้นหา medemployees ด้วย id
+	// // 11: ค้นหา Med_EmployeeID ด้วย id			//ของเราเป็น ค้นหา medemployees ด้วย id
 	if tx := entity.DB().Where("id = ?", request.Med_EmployeeID).First(&medemployees); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "medemployees not found"})
 		return
 	}
- 
+
 	// 12: สร้าง
 	wv := entity.Request{
 		Med_EquipmentID: request.Med_EquipmentID, // โยงความสัมพันธ์กับ Entity
 		LocationID:      request.LocationID,      // โยงความสัมพันธ์กับ Entity
 		Med_EmployeeID:  request.Med_EmployeeID,
-		R_ID:          request.R_ID,
-		R_NAME:        request.R_NAME,
-		QUANTITY:      request.QUANTITY,
-		TIME:          request.TIME,
+		R_ID:            request.R_ID,
+		R_NAME:          request.R_NAME,
+		QUANTITY:        request.QUANTITY,
+		TIME:            request.TIME,
 	}
 
-	// : ขั้นตอนการ validate ข้อมูล 
+	// : ขั้นตอนการ validate ข้อมูล
 	if _, err := govalidator.ValidateStruct(wv); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -69,7 +69,7 @@ func CreateRequest(c *gin.Context) {
 func GetRequest(c *gin.Context) {
 	var request entity.Request
 	id := c.Param("id")
-	if err := entity.DB().Preload("Med_Equipment").Preload("Location").Raw("SELECT * FROM requests WHERE id = ?", id).Scan(&request).Error; err != nil {
+	if err := entity.DB().Preload("Med_Employee").Preload("Med_Equipment").Preload("Location").Raw("SELECT * FROM requests WHERE id = ?", id).Scan(&request).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -79,7 +79,7 @@ func GetRequest(c *gin.Context) {
 // GET /
 func ListRequest(c *gin.Context) {
 	var request []entity.Request
-	if err := entity.DB().Preload("Med_Equipment").Preload("Location").Raw("SELECT * FROM requests").Find(&request).Error; err != nil {
+	if err := entity.DB().Preload("Med_Employee").Preload("Med_Equipment").Preload("Location").Raw("SELECT * FROM requests").Find(&request).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -100,21 +100,44 @@ func DeleteRequest(c *gin.Context) {
 
 // PATCH /
 func UpdateRequest(c *gin.Context) {
+	id := c.Param("id")
 	var request entity.Request
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	if tx := entity.DB().Where("id = ?", request.ID).First(&request); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "request not found"})
-		return
+	// สร้าง
+	uprequest := entity.Request{
+		Med_EquipmentID: request.Med_EquipmentID, // โยงความสัมพันธ์กับ Entity
+		LocationID:      request.LocationID,      // โยงความสัมพันธ์กับ Entity
+		Med_EmployeeID:  request.Med_EmployeeID,
+		R_ID:            request.R_ID,
+		R_NAME:          request.R_NAME,
+		QUANTITY:        request.QUANTITY,
+		TIME:            request.TIME,
 	}
 
-	if err := entity.DB().Save(&request).Error; err != nil {
+	// : ขั้นตอนการ validate ข้อมูล
+	if _, err := govalidator.ValidateStruct(uprequest); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": request})
+
+	// if tx := entity.DB().Where("id = ?", id).Updates(&uprequest); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "request not found"})
+	// 	return
+	// }
+	if err := entity.DB().Where("id = ?", id).Updates(&uprequest).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+
+	// if err := entity.DB().Save(&request).Error; err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	c.JSON(http.StatusOK, gin.H{"data": uprequest})
 }

@@ -160,10 +160,7 @@ function SigninScreening_officer() {
                 value={signin.ScreeningIDCard || ""}
                 onChange={handleInputChange}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              
               <Button
                 type="submit"
                 fullWidth

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SaveIcon from '@mui/icons-material/Save';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
@@ -24,7 +24,7 @@ import { NationalityInterface } from "../Models/INationality";
 import { Screening_officersInterface } from "../Models/IScreening_officer";
 import { OfficersInterface } from "../Models/IOfficer";/////
 
-import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,GetNationality,Screening_officer,} from "../Services/HttpClientService";
+import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,GetNationality,} from "../Services/HttpClientService";
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -32,7 +32,8 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   
-  function Screening_officerCreate() {
+  function Screening_officerUpdate() {
+    const [Screening_officerID, setScreening_officerID] = React.useState<Number | undefined>(undefined);
     const [Screening_officers, setScreening_officers] = useState<Screening_officersInterface>({});
     const [Genders, setGenders] = useState<GendersInterface[]>([]);
     const [Prefixs, setPrefixs] = useState<PrefixsInterface[]>([]);
@@ -41,11 +42,12 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
     const [Educations, setEducations] = useState<EducationsInterface[]>([]);
     const [Nationalitys, setNationalitys] = useState<NationalityInterface[]>([]);
     const [officers, setOfficers] = useState<OfficersInterface[]>([]);
-
+    const params = useParams()
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     //
     const [message, setAlertMessage] = React.useState("");
+
     const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
@@ -130,15 +132,42 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 };
 
 
+  const getScreening_officer = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+  
+    fetch(`http://localhost:8080/Screening_officer/${params.id}`, requestOptions )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data)
+        if (res.data) {
+          setScreening_officers(res.data);
+          setScreening_officerID(res.data.ID);
+        }
+      });
+  };
+  function clear() {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
+
+
+
   useEffect(() => {
-    getGender(); getPrefix(); getEducation(); getBlood(); getReligion(); getNationality();getOfficersID(); }, []);
+    getGender(); getPrefix(); getEducation(); getBlood(); getReligion(); getNationality();getOfficersID(); getScreening_officer(); }, []);
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
   };
 
-  async function submit() {
+  async function update() {
 
     if (Screening_officers.PrefixID == undefined || Screening_officers.PrefixID == 0){
       setError(true);
@@ -166,37 +195,53 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
   }
 
     else{
-    let data = {
-
-      PrefixID: convertType(Screening_officers.PrefixID),
-      GenderID: convertType(Screening_officers.GenderID),
-      EducationID: convertType(Screening_officers.EducationID),
-      ReligionID: convertType(Screening_officers.ReligionID),
-      BloodID: convertType(Screening_officers.BloodID),
-      NationalityID: convertType(Screening_officers.NationalityID),
-      OfficerID: convertType(Screening_officers.OfficerID), 
-
-      Screening_officer_Name: Screening_officers.Screening_officer_Name,
-      ScreeningIDCard: Screening_officers.ScreeningIDCard,
-      Birthday: Screening_officers.Birthday,
-      Phone: Screening_officers.Phone,
-      Email: Screening_officers.Email,
-      EducationName: Screening_officers.EducationName,
-      EducationMajor: Screening_officers.EducationMajor,
-      University: Screening_officers.University,
-    };
-    
-    console.log(data)
-    let res = await Screening_officer(data);
-    if (res.status) {
-      setAlertMessage("บันทึกข้อมูลสำเร็จ");
-      setSuccess(true);
-    } else {
-      setAlertMessage(res.message);
-      setError(true);
-    }
+      let data_update = {
+        PrefixID: convertType(Screening_officers.PrefixID),
+        GenderID: convertType(Screening_officers.GenderID),
+        EducationID: convertType(Screening_officers.EducationID),
+        ReligionID: convertType(Screening_officers.ReligionID),
+        BloodID: convertType(Screening_officers.BloodID),
+        NationalityID: convertType(Screening_officers.NationalityID),
+        OfficerID: convertType(Screening_officers.OfficerID), 
+  
+        Screening_officer_Name: Screening_officers.Screening_officer_Name,
+        ScreeningIDCard: Screening_officers.ScreeningIDCard,
+        Birthday: Screening_officers.Birthday,
+        Phone: Screening_officers.Phone,
+        Email: Screening_officers.Email,
+        EducationName: Screening_officers.EducationName,
+        EducationMajor: Screening_officers.EducationMajor,
+        University: Screening_officers.University,
+      };
+  
+      let Screening_officer_ID = localStorage.getItem("Screening_officerID");
+      const requestOptions = {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data_update),
+      };
+      console.log(data_update);
+      
+      fetch(`http://localhost:8080/Screening_officerUpdate/${Screening_officer_ID}`, requestOptions)
+      .then((response) => response.json())
+         .then((res) => {
+             if (res.data) {
+                 setSuccess(true);
+                 setAlertMessage("อัพเดตเรียบร้อย")
+                 return { status: true, message: res.data };
+             } else {
+                 setError(true);
+                 setAlertMessage(res.error)
+                 return { status: false, message: res.error };
+             }
+         });
   }
+
 }
+
 
   return (
     <Container maxWidth="md">
@@ -268,7 +313,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           <Grid item xs={8}>
                 <p>ชื่อ-สกุล</p>
                 <TextField fullWidth id="Screening_officer_Name" type="string" variant="outlined"
-                label="ชื่อ-นามสกุล" 
+                
                 value={Screening_officers.Screening_officer_Name}
                 onChange={handleInputChange} />
               </Grid>
@@ -344,8 +389,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 
           <Grid item xs={4}>
                 <p>วันเดือนปีเกิด</p>
-                <TextField fullWidth id="Birthday" type="string" variant="outlined"
-                label="DD/MM/YYYY"  
+                <TextField fullWidth id="Birthday" type="string" variant="outlined"  
                 value={Screening_officers.Birthday}
                 onChange={handleInputChange} />
               </Grid>
@@ -398,8 +442,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
 
           <Grid item xs={5.5}>
                 <p>รหัสบัตรประชาชน</p>
-                <TextField fullWidth id="ScreeningIDCard" type="string" variant="outlined" 
-                label="รหัสบัตรประชาชน 13 หลัก" 
+                <TextField fullWidth id="ScreeningIDCard" type="string" variant="outlined"  
                 value={Screening_officers.ScreeningIDCard}
                 onChange={handleInputChange} />
               </Grid>
@@ -440,15 +483,14 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           <Grid item xs={6.5}>
                 <p>ชื่อปริญญา</p>
                 <TextField fullWidth id="EducationName" type="string" variant="outlined"
-                label="ชื่อปริญญา"   
+   
                 value={Screening_officers.EducationName}
                 onChange={handleInputChange}/>
           </Grid>
 
               <Grid item xs={5.5}>
                 <p>ชื่อสาขาวิชาเอก</p>
-                <TextField fullWidth id="EducationMajor" type="string" variant="outlined"
-                label="ชื่อสาขาวิชาเอก"   
+                <TextField fullWidth id="EducationMajor" type="string" variant="outlined"  
                 value={Screening_officers.EducationMajor}
                 onChange={handleInputChange} />
               </Grid>
@@ -456,7 +498,6 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           <Grid item xs={6.5}>
                 <p>ชื่อมหาวิทยาลัย</p>
                 <TextField fullWidth id="University" type="string" variant="outlined"
-                label="ชื่อมหาวิทยาลัย"  
                 value={Screening_officers.University}
                 onChange={handleInputChange}/>
               </Grid>
@@ -472,7 +513,6 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           <Grid item xs={6}>
                 <p>เบอร์โทรศัพท์</p>
                 <TextField fullWidth id="Phone" type="string" variant="outlined"  
-                label="ตัวอย่าง 08xxxxxxxx" 
                 value={Screening_officers.Phone}
                 onChange={handleInputChange} />
               </Grid>
@@ -480,7 +520,6 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
           <Grid item xs={6}>
                 <p>อีเมล</p>
                 <TextField fullWidth id="Email" type="string" variant="outlined"  
-                 label="ตัวอย่าง xxxx@gmail.com" 
                  value={Screening_officers.Email}
                  onChange={handleInputChange} />
               </Grid>
@@ -499,7 +538,7 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
             </Button>
             <Button
              style={{ float: "right" }}
-             onClick={submit}
+             onClick={update}
              variant="contained"
              color="primary"
              startIcon={<SaveIcon />}
@@ -514,4 +553,4 @@ import {GetOfficerByUID,GetEducation,GetGender,GetPrefix,GetBlood,GetReligion,Ge
   );
 }
 
-export default Screening_officerCreate;
+export default Screening_officerUpdate;

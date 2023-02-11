@@ -697,7 +697,7 @@ async function CreatePatient(data: PatientsInterface) {
 
   console.log(requestOptions);
 
-  let res = await fetch(`${apiUrl}/Patients`, requestOptions)
+  let res = await fetch(`${apiUrl}/Patients/create`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1080,15 +1080,14 @@ async function CreateSave_ITI(data: Save_ITIsInterface) {
   };
 
   let res = await fetch(`${apiUrl}/Save_ITICreate`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-          console.log(res.data);
-        return res.data;
-      } else {
-        return false;
-      }
-    });
+  .then((response) => response.json())
+  .then((res) => {
+    if (res.data) {
+      return { status: true, message: res.data };
+    } else {
+      return { status: false, message: res.error };
+    }
+  });
 
   return res;
 }
@@ -1127,14 +1126,14 @@ async function CreateOperating_Room(data: Operating_RoomsInterface) {
   };
 
   let res = await fetch(`${apiUrl}/Operating_RoomCreate`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return {status: true, data: res.data};
-      } else {
-        return {status: false, data: res.error};
-      }
-    });
+  .then((response) => response.json())
+  .then((res) => {
+    if (res.data) {
+      return { status: true, message: res.data };
+    } else {
+      return { status: false, message: res.error };
+    }
+  });
 
   return res;
 }
@@ -1220,7 +1219,7 @@ async function GetReady_Treat(id: any) {
       },
   };
 // ****************
-  let res = await fetch(`${apiUrl}/treatmentss/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/treatment/${id}`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
@@ -1466,7 +1465,7 @@ async function Treatment_Disease_Text(id:any) {
     },
   };
 
-  let res = await fetch(`${apiUrl}/treatmentss/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/treatment/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1636,16 +1635,14 @@ async function Request(data: RequestInterface) {
   };
 
   let res = await fetch(`${apiUrl}/requests`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        if (res.data) {
-          
-          return { status: true, message: res.data };
-        } else {
-       
-          return { status: false, message: res.error };
-        }
-      });
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return { status: true, message: res.data };
+      } else {
+        return { status: false, message: res.error };
+      }
+    });
 
   return res;
 }

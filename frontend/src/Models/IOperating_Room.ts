@@ -7,6 +7,9 @@ export interface Operating_RoomsInterface {
     DoctorID?: number;
     Doctor?: DoctorInterface;
 
+    NumOper?: string;
+    TextOper?: string;
+
     Save_ITIID?: number
     Save_ITI?: Save_ITIsInterface;
 

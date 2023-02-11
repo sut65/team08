@@ -185,15 +185,6 @@ function TreatmentUpdate() {
         APPOINTMENT: convertType(treatment.APPOINTMENT),
   
       };
-      console.log(data)
-      let res = await Treatment(data);
-      if (res.status) {
-        setAlertMessage("บันทึกข้อมูลสำเร็จ");
-        setSuccess(true);
-       } else {
-        setAlertMessage(res.message);
-        setError(true);
-      }
       const requestOptions = {
         method: "PATCH",
         headers: {
@@ -204,16 +195,15 @@ function TreatmentUpdate() {
       };
       console.log(data);
   
-      fetch(`http://localhost:8080/treatmentsUpdate`, requestOptions)
+      fetch(`http://localhost:8080/treatmentsUpdate/${data.ID}`, requestOptions) ////++
         .then((response) => response.json())
         .then(async (res) => {
           console.log(res);
           if (res.data) {
+            setAlertMessage("บันทึกข้อมูลสำเร็จ");
             setSuccess(true);
-            await timeout(1000); //for 1 sec delay
-            window.location.reload();     
-            
-          } else {
+           } else {
+            setAlertMessage(res.error);
             setError(true);
           }
         });
@@ -229,7 +219,7 @@ function TreatmentUpdate() {
       },
     };
 
-    fetch(`http://localhost:8080/treatmentss/${params.id}`, requestOptions )
+    fetch(`http://localhost:8080/treatment/${params.id}`, requestOptions )
       .then((response) => response.json())
       .then((res) => {
         console.log(res.data)

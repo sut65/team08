@@ -69,7 +69,7 @@ func CreateScreening_officer(c *gin.Context) {
 	sc := entity.Screening_officer{
 		PrefixID:               screening_officer.PrefixID,
 		Screening_officer_Name: screening_officer.Screening_officer_Name,
-
+   
 		GenderID:        screening_officer.GenderID,
 		BloodID:         screening_officer.BloodID,
 		ReligionID:      screening_officer.ReligionID,
@@ -108,25 +108,13 @@ func GetScreening_officer(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": screening_officer})
 }
 
-// // GET /Screening_officer/:id
-// func GetScreening_officer(c *gin.Context) {
-// 	var screening_officer entity.Screening_officer
-// 	id := c.Param("id")
-// 	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM screening_officers WHERE id = ?", id).Find(&screening_officer).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"data": screening_officer})
-// }
-
 // GET /screening_officer
 func ListScreening_officer(c *gin.Context) {
 	var screening_officer []entity.Screening_officer
-	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM screening_officers").Find(&screening_officer).Error; err != nil {
+	if err := entity.DB().Preload("Officer").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Education").Preload("Prefix").Raw("SELECT * FROM screening_officers").Find(&screening_officer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"data": screening_officer})
 }
 
@@ -143,21 +131,44 @@ func DeleteScreening_officer(c *gin.Context) {
 
 // PATCH /Screening_officer
 func UpdateScreening_officer(c *gin.Context) {
+	id := c.Param("id")
 	var screening_officer entity.Screening_officer
 	if err := c.ShouldBindJSON(&screening_officer); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", screening_officer.ID).First(&screening_officer); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "screening_officer not found"})
-		return
+	password, _ := bcrypt.GenerateFromPassword([]byte(screening_officer.ScreeningIDCard), 14)
+	sc_up := entity.Screening_officer{
+		PrefixID:               screening_officer.PrefixID,
+		Screening_officer_Name: screening_officer.Screening_officer_Name,
+
+		GenderID:        screening_officer.GenderID,
+		BloodID:         screening_officer.BloodID,
+		ReligionID:      screening_officer.ReligionID,
+		Birthday:        screening_officer.Birthday,
+		NationalityID:   screening_officer.NationalityID,
+		ScreeningIDCard: screening_officer.ScreeningIDCard,
+		Phone:           screening_officer.Phone,
+		Email:           screening_officer.Email,
+		EducationID:     screening_officer.EducationID,
+		EducationName:   screening_officer.EducationName,
+		EducationMajor:  screening_officer.EducationMajor,
+		University:      screening_officer.University,
+		ScPassword:      string(password),
+		OfficerID:       screening_officer.OfficerID,
 	}
 
-	if err := entity.DB().Save(&screening_officer).Error; err != nil {
+	if _, err := govalidator.ValidateStruct(sc_up); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": screening_officer})
+
+	if err := entity.DB().Where("id = ?", id).Updates(&sc_up).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": sc_up})
 }

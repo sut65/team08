@@ -14,7 +14,8 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
+import BedIcon from '@mui/icons-material/Bed';
+import DataSaverOffIcon from '@mui/icons-material/DataSaverOff';
 import { BuildingInterface } from "../Models/IBuilding";
 import { RoomInterface } from "../Models/IRoom";
 import { Save_ITIsInterface } from "../Models/ISave_ITI";
@@ -46,16 +47,14 @@ function Operating_RoomCreate() {
   const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
     Patient:{Patient_Name:"-----"}
   });
+  const [NumOper, setNumOper] = useState<string>("");
+  const [TextOper, setTextOper] = useState<string>("");
   const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
- 
-  // const [Date_checkin, setDate_checkin] = useState<string>("");
-  // const [Time_checkin, setTime_checkin] = useState<string>("");
-  // const [Date_checkout, setDate_checkout] = useState<string>("");
-  // const [Time_checkout, setTime_checkout] = useState<string>("");
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [message, setAlertMessage] = React.useState("");
 
 
   const handleClose = (
@@ -184,36 +183,50 @@ const convertType = (data: string | number | undefined) => {
 };
 
 async function submit() {
-  let data = {
-    DoctorID: convertType(Operating_Rooms.DoctorID),
-    Save_ITIID: convertType(Operating_Rooms.Save_ITIID),
-    //BuildingID: convertType(Save_ITIOne.ID),
-    RoomID: convertType(Operating_Rooms.RoomID),
-
-    Datetime: Operating_Rooms.Datetime,
-  };
-  
-  let res = await CreateOperating_Room(data);
-  console.log(res);
-  if (res.status) {
-    clear();
-    setSuccess(true);
-  } else {
+  if (Operating_Rooms.Save_ITIID == undefined || Operating_Rooms.Save_ITIID == 0){
     setError(true);
-    setErrorMessage(res.data);
+    setAlertMessage("กรุณาเลือกเคสผู้ป่วยที่ต้องการผ่าตัด");
   }
+  else if (Operating_Rooms.RoomID == undefined || Operating_Rooms.RoomID == 0){
+    setError(true);
+    setAlertMessage("กรุณาเลือกตึกและห้องที่ต้องการผ่าตัด")
+  }
+
+  else {
+    let data = {
+      DoctorID: convertType(Operating_Rooms.DoctorID),
+      Save_ITIID: convertType(Operating_Rooms.Save_ITIID),
+      //BuildingID: convertType(Save_ITIOne.ID),
+      RoomID: convertType(Operating_Rooms.RoomID),
+
+      NumOper: (NumOper),
+      TextOper: (TextOper),
+      Datetime: Operating_Rooms.Datetime,
+    };
+  
+    console.log(data);
+    let res = await CreateOperating_Room(data);
+      if (res.status) {
+        setAlertMessage("บันทึกข้อมูลสำเร็จ");
+        setSuccess(true);
+      } else {
+        setAlertMessage(res.message);
+        setError(true);
+      }
+    }
 }
 
 return (
   <Container maxWidth="md">
     <Snackbar
+      id="success"
       open={success}
-      autoHideDuration={3000}
+      autoHideDuration={6000}
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
       <Alert onClose={handleClose} severity="success">
-        บันทึกข้อมูลสำเร็จ
+        {message}
       </Alert>
     </Snackbar>
     <Snackbar
@@ -223,9 +236,10 @@ return (
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
       <Alert onClose={handleClose} severity="error">
-        บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
+        {message}
       </Alert>
     </Snackbar>
+
     <Paper>
       <Box
         display="flex"
@@ -246,6 +260,20 @@ return (
       </Box>
       <Divider />
       <Grid container spacing={3} sx={{ padding: 2 }}>
+
+      <Grid item xs={3}>
+            <p>หมายเลขการผ่าตัด</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                fullWidth
+                id="NumOper"
+                type="string"
+                variant="outlined"
+                label="ระบุหมายเลข" 
+                onChange={(event) => setNumOper(event.target.value)}
+              />
+           </FormControl>
+      </Grid>
 
         <Grid item xs={4}>
           <FormControl fullWidth variant="outlined">
@@ -270,7 +298,7 @@ return (
           </FormControl>
         </Grid>
 
-      <Grid item xs={8}>
+      <Grid item xs={5}>
         <p>ชื่อแพทย์ที่รับผิดชอบ</p>
         <FormControl fullWidth >
           <TextField
@@ -366,13 +394,27 @@ return (
             </Select>
           </FormControl>
         </Grid>
+      
+        <Grid item xs={7}>
+            <p>ระบุรายละเอียดการผ่าตัด</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                fullWidth
+                id="setTextOper"
+                type="string"
+                variant="outlined"
+                label="รายละเอียดแผนการรักษา" 
+                onChange={(event) => setTextOper(event.target.value)}
+              />
+            </FormControl>
+          </Grid>
 
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <p>วันเวลาที่จอง</p>
         <FormControl fullWidth > 
           <LocalizationProvider required dateAdapter={AdapterDateFns}>
             <DateTimePicker
-              label="กรุณาเลือกวันเวลาที่เข้า *"
+              label="กรุณาเลือกวันเวลาที่ต้องการจอง"
               value={Operating_Rooms.Datetime}
               onChange={(newValue) => {
                 setOperating_Rooms({
@@ -386,22 +428,25 @@ return (
         </FormControl>
       </Grid>
 
-        <Grid item xs={12}>
+      <Grid item xs={12}>
           <Button
-            component={RouterLink}
-            to="/Operating_RoomCreate"
-            variant="contained"
-            color="inherit"
-          >
-            กลับ
-          </Button>
-          <Button
-            style={{ float: "right" }}
-            onClick={submit}
-            variant="contained"
-            color="primary"
-          >
-            บันทึก
+              component={RouterLink}
+              to="/Operating_Room"
+              variant="contained"
+              color="primary"
+              startIcon={<BedIcon />}
+            >
+              ดูข้อมูลคนการจองห้องผ่าตัด
+            </Button>
+            <Button
+             style={{ float: "right" }}
+             onClick={submit}
+             variant="contained"
+             color="primary"
+             startIcon={<DataSaverOffIcon />}
+
+           >
+             บันทึกข้อมูลการจองห้องผ่าตัด
           </Button>
         </Grid>
       </Grid>

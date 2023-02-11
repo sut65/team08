@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import FormControl from '@mui/material/FormControl/FormControl';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { RequestInterface } from "../Models/IRequest";
@@ -16,7 +16,7 @@ import { LocationInterface } from "../Models/ILocation";
 import {
   GetMedicalEquipments,
   GetLocation,
-  GetMedByUID,
+  GetMedByUID, 
   Request,
 } from "../Services/HttpClientService";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
@@ -32,11 +32,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function RequestCreate() {
+function RequestUpdate() {
 
   const [request, setrequest] = React.useState<RequestInterface>({
     TIME: new Date(),
   });
+
+  const [requestID, setrequestID] = React.useState<Number | undefined>(undefined);
   const [R_ID, setR_ID] = useState<string>("");
   const [QUANTITY, setQUANTITY] = useState<string>(""); 
   const [R_NAME, setR_NAME] = useState<string>("");
@@ -46,6 +48,7 @@ function RequestCreate() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [message, setAlertMessage] = React.useState("");
+  const params = useParams()
 
 
   // handleClose ประมาณว่าแสดงสเน็บบลาเร็จ ก็ปิดไป
@@ -68,6 +71,17 @@ function RequestCreate() {
     });
   };
   ////
+  //++
+  const handleInputChange = (
+    event: React.ChangeEvent<{ id?: string; value: any }>
+  ) => {
+    const id = event.target.id as keyof typeof request;
+
+    const { value } = event.target;
+
+    setrequest({ ...request, [id]: value });
+  };
+  //--
 
   const getMedByUID = async () => {
     let res = await GetMedByUID();
@@ -98,6 +112,7 @@ function RequestCreate() {
     getMed_Equipment();
     getLocation();
     getMedByUID();
+    getRequest();
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -105,7 +120,11 @@ function RequestCreate() {
     return val;
   };
 
-  async function submit() {
+  function timeout(delay: number) {
+    return new Promise(res => setTimeout(res, delay));
+  }
+
+  async function update() {
     if(request.Med_EquipmentID == 0 || request.Med_EquipmentID == undefined){
       setError(true);
       setAlertMessage("  กรุณาเลือกอุปกรณ์");
@@ -116,33 +135,69 @@ function RequestCreate() {
     }
     else{
       let data = {
+
+      ID: request.ID,
       
       Med_EquipmentID: convertType(request.Med_EquipmentID),
       LocationID: convertType(request.LocationID),
       Med_EmployeeID: convertType(request.Med_EmployeeID),
-      R_ID: (R_ID),
-      QUANTITY: convertType(QUANTITY),
+      R_ID: request.R_ID,
+      QUANTITY: convertType(request.QUANTITY),
       TIME: request.TIME,
-      R_NAME: (R_NAME),
+      R_NAME: request.R_NAME,
       
-    };
-    let res = await Request(data);
-    if (res.status) {
-      setAlertMessage("บันทึกข้อมูลสำเร็จ");
-      setSuccess(true);
-    } else {
-      setAlertMessage(res.message);
-      setError(true);
-    }
+    }; 
+    
+    const requestOptions = {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      console.log(data);
+
+      fetch(`http://localhost:8080/requestsUpdate/${data.ID}`, requestOptions)
+        .then((response) => response.json())
+        .then(async (res) => {
+          console.log(res);
+          if (res.data) {
+            setAlertMessage("บันทึกข้อมูลสำเร็จ....");
+            setSuccess(true);
+           } else {
+            setAlertMessage(res.error);
+            setError(true);
+          }
+        });
 
     }
   };
+  const getRequest = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+ 
+    fetch(`http://localhost:8080/request/${params.id}`, requestOptions )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data)
+        if (res.data) {
+          setrequest(res.data);
+          setrequestID(res.data.ID);
+        }
+      });
+  }
 
 
   return (
     <div>
       <Container maxWidth="md">
-        <Snackbar
+      <Snackbar
           id="success"
           open={success}
           autoHideDuration={6000}
@@ -187,7 +242,8 @@ function RequestCreate() {
                 id="R_ID"
                 type="string"
                 variant="outlined"
-                onChange={(event) => setR_ID(event.target.value)} />
+                value={request.R_ID}
+                onChange={handleInputChange} />
               {/*<Item>ชื่อนามสกุล</Item>*/}
             </Grid>
             <Grid item xs={6}>
@@ -195,10 +251,11 @@ function RequestCreate() {
               <FormControl fullWidth variant="outlined">
               <TextField
                 id="QUANTITY"
-                label="Number"
+                
                 type="Number"
                 inputProps={{ name: "Number", min: 0 ,max:1000}} 
-                onChange={(event) => setQUANTITY(event.target.value)}
+                value={request.QUANTITY}
+                onChange={handleInputChange}
               />
             </FormControl>
               {/* <TextField
@@ -260,7 +317,8 @@ function RequestCreate() {
                 id="R_NAME"
                 type="string"
                 variant="outlined"
-                onChange={(event) => setR_NAME(event.target.value)} />
+                value={request.R_NAME}
+                onChange={handleInputChange}/>
               {/*<Item>เบอร์โทร</Item>*/}
             </Grid>
 
@@ -292,7 +350,7 @@ function RequestCreate() {
                 variant="contained"
                 color='success'
                 sx={{ float: "right" }}
-                onClick={submit}
+                onClick={update}
               >Submit</Button>
             </Grid>
           </Grid>
@@ -303,4 +361,4 @@ function RequestCreate() {
   );
 }
 
-export default RequestCreate;
+export default RequestUpdate;

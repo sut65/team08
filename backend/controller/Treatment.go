@@ -124,6 +124,7 @@ func DeleteTreatment(c *gin.Context) {
 
 // PATCH /
 func UpdateTreatment(c *gin.Context) {
+	id := c.Param("id")
 	var treatment entity.Treatment
 	if err := c.ShouldBindJSON(&treatment); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -144,8 +145,13 @@ func UpdateTreatment(c *gin.Context) {
 		CONCLUSION:   treatment.CONCLUSION,
 		GUIDANCE:     treatment.GUIDANCE,
 	}
+	// : ขั้นตอนการ validate ข้อมูล
+	if _, err := govalidator.ValidateStruct(uptreat); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-	if err := entity.DB().Where("id = ?", treatment.ID).Updates(&uptreat).Error; err != nil {
+	if err := entity.DB().Where("id = ?", id).Updates(&uptreat).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

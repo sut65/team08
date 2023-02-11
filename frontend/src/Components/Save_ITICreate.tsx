@@ -14,7 +14,8 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
+import BedIcon from '@mui/icons-material/Bed';
+import DataSaverOffIcon from '@mui/icons-material/DataSaverOff';
 import { TreatmentsInterface } from "../Models/ITreatment";
 import { BuildingInterface } from "../Models/IBuilding";
 import { RoomInterface } from "../Models/IRoom";
@@ -42,6 +43,7 @@ import { DoctorInterface } from "../Models/IDoctor";
     const [BuildingOne, setBuildingOne] = useState<BuildingInterface>({});
     const [Room, setRoom] = useState<RoomInterface[]>([]);
     const [State, setState] = useState<StateInterface[]>([]);
+    const [TextSave, setTextSave] = useState<string>("");
     const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
       Patient:{Patient_Name:"-----"}
     });
@@ -49,6 +51,7 @@ import { DoctorInterface } from "../Models/IDoctor";
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [message, setAlertMessage] = React.useState("");
 
     const handleClose = (
       event?: React.SyntheticEvent | Event,
@@ -180,49 +183,69 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
   };
 
   async function submit() {
-    let data = {
-      DoctorID: convertType(Save_ITIs.DoctorID),
-      TreatmentID: convertType(Save_ITIs.TreatmentID),
-      //BuildingID: convertType(Save_ITIs.BuildingID),
-      RoomID: convertType(Save_ITIs.RoomID),
-      StateID: convertType(Save_ITIs.StateID),
-
-      Date_checkin: Save_ITIs.Date_checkin,
-      Date_checkout: Save_ITIs.Date_checkout,
-    };
-    
-    let res = await CreateSave_ITI(data);
-    console.log(res);
-    if (res) {
-      clear();
-      setSuccess(true);
-    } else {
+    if (Save_ITIs.TreatmentID == undefined || Save_ITIs.TreatmentID == 0){
       setError(true);
+      setAlertMessage("กรุณาเลือกเคสผู้ป่วยที่ให้เข้าพัก");
     }
-  }
+    else if (Save_ITIs.RoomID == undefined || Save_ITIs.RoomID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกตึกและห้องที่ต้องการให้คนไข้เข้าพัก")
+    }
+    else if (Save_ITIs.StateID == undefined|| Save_ITIs.StateID == 0){
+      setError(true);
+      setAlertMessage("กรุณาสถานะการรักษา")
+    }
+
+    else {
+      let data = {
+        DoctorID: convertType(Save_ITIs.DoctorID),
+        TreatmentID: convertType(Save_ITIs.TreatmentID),
+        //BuildingID: convertType(Save_ITIs.BuildingID),
+        RoomID: convertType(Save_ITIs.RoomID),
+        StateID: convertType(Save_ITIs.StateID),
+
+        TextSave: (TextSave),
+        Date_checkin: Save_ITIs.Date_checkin,
+        Date_checkout: Save_ITIs.Date_checkout,
+      };
+      
+      console.log(data);
+      let res = await CreateSave_ITI(data);
+      if (res.status) {
+        setAlertMessage("บันทึกข้อมูลสำเร็จ");
+        setSuccess(true);
+      } else {
+        setAlertMessage(res.message);
+        setError(true);
+      }
+    }
+}
 
   return (
     <Container maxWidth="md">
       <Snackbar
+        id="success"
         open={success}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={handleClose} severity="success">
-          บันทึกข้อมูลสำเร็จ
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={error}
         autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+        <Alert onClose={handleClose} severity="success">
+          {message}
         </Alert>
       </Snackbar>
+
+      <Snackbar 
+        open={error}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }} 
+      >
+        <Alert onClose={handleClose} severity="error">
+          {message}
+        </Alert>
+      </Snackbar>
+
       <Paper>
         <Box
           display="flex"
@@ -244,7 +267,7 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
 
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>การรักษา</p>
               <Select
@@ -267,7 +290,7 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
             </FormControl>
           </Grid>
 
-        <Grid item xs={4.5}>
+        <Grid item xs={4}>
           <p>ชื่อแพทย์ที่รับผิดชอบ</p>
           <FormControl fullWidth >
             <TextField
@@ -284,7 +307,7 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
           </FormControl>
         </Grid>
 
-        <Grid item xs={4.5}>
+        <Grid item xs={4}>
           <p>ชื่อผู้ป่วย</p>
           <FormControl fullWidth >
             <TextField
@@ -348,7 +371,7 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
             </FormControl>
           </Grid>
 
-          <Grid item xs={7}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>สถานะ</p>
               <Select
@@ -368,6 +391,20 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
                   </option>
                 ))}
               </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={8}>
+            <p>แผนการรักษา</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                fullWidth
+                id="TextSave"
+                type="string"
+                variant="outlined"
+                label="รายละเอียดแผนการรักษา" 
+                onChange={(event) => setTextSave(event.target.value)}
+              />
             </FormControl>
           </Grid>
 
@@ -411,21 +448,24 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
         </Grid>
 
           <Grid item xs={12}>
-            <Button
+          <Button
               component={RouterLink}
-              to="/Save_ITICreate"
-              variant="contained"
-              color="inherit"
-            >
-              กลับ
-            </Button>
-            <Button
-              style={{ float: "right" }}
-              onClick={submit}
+              to="/Save_ITI"
               variant="contained"
               color="primary"
+              startIcon={<BedIcon />}
             >
-              บันทึก
+              ดูข้อมูลคนไข้ภายใน
+            </Button>
+            <Button
+             style={{ float: "right" }}
+             onClick={submit}
+             variant="contained"
+             color="primary"
+             startIcon={<DataSaverOffIcon />}
+
+           >
+             บันทึกข้อมูลคนไข้ภายใน
             </Button>
           </Grid>
         </Grid>

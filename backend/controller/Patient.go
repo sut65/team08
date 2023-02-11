@@ -21,7 +21,6 @@ func CreatePatient(c *gin.Context) {
 	var screening_officer entity.Screening_officer
 	var address entity.AddressThailand
 
-
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Patient
 	if err := c.ShouldBindJSON(&patient); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -97,7 +96,7 @@ func CreatePatient(c *gin.Context) {
 func GetPatient(c *gin.Context) {
 	var patient entity.Patient
 	id := c.Param("id")
-	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Prefix").Raw("SELECT * FROM patients WHERE id = ?", id).Find(&patient).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM patients WHERE id = ?", id).Scan(&patient).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -107,7 +106,7 @@ func GetPatient(c *gin.Context) {
 // GET /patient
 func ListPatient(c *gin.Context) {
 	var patient []entity.Patient
-	if err := entity.DB().Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Prefix").Raw("SELECT * FROM patients").Find(&patient).Error; err != nil {
+	if err := entity.DB().Preload("Screening_officer").Preload("Nationality").Preload("Religion").Preload("Blood").Preload("Gender").Preload("Prefix").Raw("SELECT * FROM patients").Find(&patient).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -129,20 +128,37 @@ func DeletePatient(c *gin.Context) {
 // PATCH /Patient
 func UpdatePatient(c *gin.Context) {
 	var patient entity.Patient
+	id := c.Param("id")
 	if err := c.ShouldBindJSON(&patient); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", patient.ID).First(&patient); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "patient not found"})
-		return
+	sc_up := entity.Patient{
+		Screening_officerID: patient.Screening_officerID,
+		PrefixID:            patient.PrefixID,
+		Patient_Name:        patient.Patient_Name,
+		Age:                 patient.Age,
+		GenderID:            patient.GenderID,
+		BloodID:             patient.BloodID,
+		ReligionID:          patient.ReligionID,
+		Birthday:            patient.Birthday,
+		NationalityID:       patient.NationalityID,
+		IDCard:              patient.IDCard,
+		Phone:               patient.Phone,
+		House_ID:            patient.House_ID,
+		AddressID:           patient.AddressID,
 	}
 
-	if err := entity.DB().Save(&patient).Error; err != nil {
+	// 13: บันทึก
+	if _, err := govalidator.ValidateStruct(sc_up); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if err := entity.DB().Where("id = ?", id).Updates(&sc_up).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": patient})
+	c.JSON(http.StatusOK, gin.H{"data": sc_up})
 }

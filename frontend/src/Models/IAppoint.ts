@@ -20,4 +20,5 @@ export interface AppointInterface {
 
   DepartmentID?: number;
   Department?: DepartmentInterface;
+  Appoint_ID?: string;
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -16,6 +16,7 @@ function Screening_officerList() {
     const [Screening_officerID, setScreening_officerID] = React.useState(0);  
     const [openDelete, setOpendelete] = React.useState(false); 
     const [openUpdate, setOpenupdate] = React.useState(false); 
+    const navigate = useNavigate();
     
     useEffect(() => {
       getScreening_officer();  
@@ -129,19 +130,18 @@ function Screening_officerList() {
           
         {/* ยืนยันการแก้ไข */}
         <Dialog open={openUpdate} onClose={handleClose} >
-                <DialogTitle><div className="good-font">ยืนยันการแก้ไขรายการ</div></DialogTitle>
-                <Button
-                        variant="contained"
-                        color="primary"
-                        //กด "ยืนยัน" ไปที่หน้าแก้ไข
-                        component={RouterLink}
-                        to="/EmployeeattemdanceINUpdate"
-                    >
-                        <div className="good-font">
-                            ยืนยัน
-                        </div>
-                    </Button>
-            </Dialog>
+           <DialogTitle><div className="good-font">ยืนยันการแก้ไข</div></DialogTitle>
+           <Button
+                   variant="contained"
+                   color="primary"
+
+                   onClick={() => navigate({ pathname: `/Screening_officersupdate/${Screening_officerID}` })}
+               >
+                   <div className="good-font">
+                       ยืนยัน
+                   </div>
+               </Button>
+       </Dialog>
         <Container maxWidth="md">
           <Box
             display="flex"

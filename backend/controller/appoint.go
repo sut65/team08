@@ -55,6 +55,7 @@ func CreateAppoint(c *gin.Context) {
 		Date_now:            appoint.Date_now,            // ตั้งค่าฟิลด์ Date
 		Date_appoint:        appoint.Date_appoint,        // ตั้งค่าฟิลด์ Date
 		Text_appoint:        appoint.Text_appoint,        // ตั้งค่าฟิลด์ Text
+		Appoint_ID:          appoint.Appoint_ID,
 	}
 	// แทรกการ validate ไว้ช่วงนี้ของ controller
 	if _, err := govalidator.ValidateStruct(cr); err != nil {
@@ -103,12 +104,13 @@ func DeleteAppoint(c *gin.Context) {
 
 // PATCH /appoints
 func UpdateAppoint(c *gin.Context) {
+	id := c.Param("id")
 	var appoint entity.Appoint
 	if err := c.ShouldBindJSON(&appoint); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	cr := entity.Appoint{
+	crupdate := entity.Appoint{
 		LevelcureID:         appoint.LevelcureID,         // โยงความสัมพันธ์กับ Entity Levelcure
 		DepartmentID:        appoint.DepartmentID,        // โยงความสัมพันธ์กับ Entity Department
 		TreatmentID:         appoint.TreatmentID,         // โยงความสัมพันธ์กับ Entity Treatment
@@ -116,11 +118,17 @@ func UpdateAppoint(c *gin.Context) {
 		Date_now:            appoint.Date_now,            // ตั้งค่าฟิลด์ Date
 		Date_appoint:        appoint.Date_appoint,        // ตั้งค่าฟิลด์ Date
 		Text_appoint:        appoint.Text_appoint,        // ตั้งค่าฟิลด์ Text
+		Appoint_ID:          appoint.Appoint_ID,
 	}
-	if err := entity.DB().Where("id = ?", appoint.ID).Updates(&cr).Error; err != nil {
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(crupdate); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if err := entity.DB().Where("id = ?", id).Updates(&crupdate).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": cr})
+	c.JSON(http.StatusOK, gin.H{"data": crupdate})
 }

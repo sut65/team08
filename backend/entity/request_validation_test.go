@@ -75,7 +75,7 @@ func TestRequest_QUANTITY(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal("QUANTITY: 2001 does not validate as range(1|1000)"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณากรอกค่าที่อยู่ในช่วง 1-1000"))
 }
 
 // ////4
@@ -147,7 +147,7 @@ func TestRequestID_NotBlank(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal(" เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"))
+	g.Expect(err.Error()).To(gomega.Equal("เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Rxxxxxx"))
 }
 // //////5
 func TestRequest_R_NAME_NotBlank(t *testing.T) {
@@ -170,5 +170,5 @@ func TestRequest_R_NAME_NotBlank(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal(" Please enter details (20)"))
+	g.Expect(err.Error()).To(gomega.Equal("กรุณากรอกเคส"))
 }

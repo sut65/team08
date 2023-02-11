@@ -16,6 +16,6 @@ export interface RequestInterface {
     Location?: LocationInterface; 
     LocationID?: number;     // foreignkey.ID?
 
-    MedEquipment?: MedicalEquimentInterface;
-    MedEquipmentID?: number; // foreignkey.ID?
+    Med_Equipment?: MedicalEquimentInterface;
+    Med_EquipmentID?: number; // foreignkey.ID?
 }

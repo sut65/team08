@@ -34,7 +34,7 @@ func CreateRequest(c *gin.Context) {
 		return
 	}
 
-	// // 11: ค้นหา resolution ด้วย id			//ของเราเป็น ค้นหา medemployees ด้วย id
+	// // 11: ค้นหา Med_EmployeeID ด้วย id			//ของเราเป็น ค้นหา medemployees ด้วย id
 	if tx := entity.DB().Where("id = ?", request.Med_EmployeeID).First(&medemployees); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "medemployees not found"})
 		return
@@ -69,7 +69,7 @@ func CreateRequest(c *gin.Context) {
 func GetRequest(c *gin.Context) {
 	var request entity.Request
 	id := c.Param("id")
-	if err := entity.DB().Preload("Med_Equipment").Preload("Location").Raw("SELECT * FROM requests WHERE id = ?", id).Scan(&request).Error; err != nil {
+	if err := entity.DB().Preload("Med_Employee").Preload("Med_Equipment").Preload("Location").Raw("SELECT * FROM requests WHERE id = ?", id).Scan(&request).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -79,7 +79,7 @@ func GetRequest(c *gin.Context) {
 // GET /
 func ListRequest(c *gin.Context) {
 	var request []entity.Request
-	if err := entity.DB().Preload("Med_Equipment").Preload("Location").Raw("SELECT * FROM requests").Find(&request).Error; err != nil {
+	if err := entity.DB().Preload("Med_Employee").Preload("Med_Equipment").Preload("Location").Raw("SELECT * FROM requests").Find(&request).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -124,10 +124,15 @@ func UpdateRequest(c *gin.Context) {
 	}
 
 
-	if tx := entity.DB().Where("id = ?", id).Updates(&uprequest); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "request not found"})
+	// if tx := entity.DB().Where("id = ?", id).Updates(&uprequest); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "request not found"})
+	// 	return
+	// }
+	if err := entity.DB().Where("id = ?", id).Updates(&uprequest).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 
 	// if err := entity.DB().Save(&request).Error; err != nil {
 	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

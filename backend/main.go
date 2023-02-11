@@ -67,7 +67,7 @@ func main() {
 
 			// Screening_officer
 			router.GET("/Screening_officers", controller.ListScreening_officer)
-			router.GET("/Screening_officerss/:id", controller.GetScreening_officer)
+			router.GET("/Screening_officer/:id", controller.GetScreening_officer)
 			router.PATCH("/Screening_officerUpdate/:id", controller.UpdateScreening_officer)
 			router.DELETE("/Screening_officers/:id", controller.DeleteScreening_officer)
 			router.POST("/Screening_officer/create", controller.CreateScreening_officer) //////////***New

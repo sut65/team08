@@ -125,7 +125,20 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
 
 
   function update() {
-    let upmedemployee = {
+    if (MedEmployees.PrefixID == undefined || MedEmployees.PrefixID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกคำนำหน้า");
+  }
+    else if (MedEmployees.GenderID == undefined || MedEmployees.GenderID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกเพศ")
+    }
+    else if (MedEmployees.EducationID == undefined|| MedEmployees.EducationID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกการศึกษา")
+  }
+  else{
+    let data = {
       ID: MedEmployees.ID,
       PrefixID: convertType(MedEmployees.PrefixID),
       GenderID: convertType(MedEmployees.GenderID),
@@ -139,34 +152,34 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
       Email: MedEmployees.Email ?? "",
       Password: MedEmployees.Password ?? "",
     };
-
-    
-  
     const requestOptions = {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(upmedemployee),
-    };
-    console.log(upmedemployee);
-  
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      console.log(data);
+
+
     fetch(`http://localhost:8080/medemployeesUpdate`, requestOptions)
       .then((response) => response.json())
       .then(async (res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           await timeout(1000); //for 1 sec delay
           window.location.reload();     
           
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
   }
-  
+  }
   const handleInputChange = (event: React.ChangeEvent<{ id?: string; value: any }>) => {
     const id = event.target.id as keyof typeof MedEmployees;
   
@@ -204,7 +217,6 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
-        บันทึกข้อมูลสำเร็จ
         {message}
         </Alert>
       </Snackbar>
@@ -216,7 +228,6 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="error">
-        บันทึกข้อมูลไม่สำเร็จ
         {message}
         </Alert>
       </Snackbar>

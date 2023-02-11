@@ -147,6 +147,12 @@ func UpdateMedEmployee(c *gin.Context) {
 		MedPassword:	string(password),
 	}
 
+	// validation
+	if _, err := govalidator.ValidateStruct(med_employee); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if err := entity.DB().Where("id = ?", med_employee.ID).Updates(&upmedemployee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

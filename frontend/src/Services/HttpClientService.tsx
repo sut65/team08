@@ -697,7 +697,7 @@ async function CreatePatient(data: PatientsInterface) {
 
   console.log(requestOptions);
 
-  let res = await fetch(`${apiUrl}/Patients`, requestOptions)
+  let res = await fetch(`${apiUrl}/Patients/create`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {

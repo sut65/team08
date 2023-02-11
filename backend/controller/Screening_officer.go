@@ -69,7 +69,7 @@ func CreateScreening_officer(c *gin.Context) {
 	sc := entity.Screening_officer{
 		PrefixID:               screening_officer.PrefixID,
 		Screening_officer_Name: screening_officer.Screening_officer_Name,
-
+   
 		GenderID:        screening_officer.GenderID,
 		BloodID:         screening_officer.BloodID,
 		ReligionID:      screening_officer.ReligionID,

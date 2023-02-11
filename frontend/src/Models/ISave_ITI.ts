@@ -17,6 +17,7 @@ export interface Save_ITIsInterface {
     StateID?: number;
     State?: StateInterface;
 
+    TextSave?: string;
     Date_checkin?: Date | null;
 	Date_checkout?: Date | null;
 }

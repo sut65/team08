@@ -38,7 +38,7 @@ func Test_Save_ITI_TextSaveNotNull(t *testing.T) {
 	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุรายละเอียดแผนการรักษา"))
 }
 
-// เช็คเวลาเป็นปัจจุบัน
+// เช็คเวลาห้ามเป็นอดีต
 func Test_Save_ITI_Date_checkin(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
@@ -53,13 +53,13 @@ func Test_Save_ITI_Date_checkin(t *testing.T) {
 	g.Expect(err.Error()).To(gomega.Equal("โปรดระบุวันที่และเวลาให้ถูกต้อง"))
 }
 
-// เช็คเวลาเป็นอนาคต
+// เช็คห้ามเป็นอดีต
 func Test_Save_ITI_Date_checkout(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
 	testsave := Save_ITI{
 		Date_checkin:  time.Now(),
-	    Date_checkout: time.Now(),
+	    Date_checkout: time.Date(2000, 1, 26, 0, 0, 0, 0, time.UTC),
 	    TextSave: "aaaaaaaaaaaa",
 	}
 	ok, err := govalidator.ValidateStruct(testsave)

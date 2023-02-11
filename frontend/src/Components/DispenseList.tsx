@@ -109,6 +109,12 @@ function DispenseList() {
           );
       },
   },
+  {
+    field: "Dispense_ID",
+    headerName: "หมายเลขการจ่ายยา",
+    width: 150,
+    valueFormatter: (params) => params.value.TREATMENT_ID,
+  },
     {
       field: "Treatment",
       headerName: "หมายเลขการรักษา",

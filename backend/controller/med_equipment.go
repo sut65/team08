@@ -115,10 +115,12 @@ func UpdateMedEquipment(c *gin.Context) {
 		Shop:		  med_equipment.Shop,
 	}
 
-	// if _, err := govalidator.ValidateStruct(u_p); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
+
+	// validation
+	if _, err := govalidator.ValidateStruct(med_equipment); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if err := entity.DB().Where("id = ?", med_equipment.ID).Updates(&upequipment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

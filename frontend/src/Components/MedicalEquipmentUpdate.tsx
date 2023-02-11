@@ -119,15 +119,24 @@ function MedicalEquipmentUpdate() {
   }
 
 
-function update() {
-  let upequipment = {
-    ID: MedicalEquipment.ID,
-    Equipment: MedicalEquipment.Equipment ?? "",
-    Quantity: convertType(MedicalEquipment.Quantity) ,
-    Shop : MedicalEquipment.Shop ?? "",
-    BrandID: convertType(MedicalEquipment.BrandID),
-    Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
-  };
+  function update() {
+    if (MedicalEquipment.BrandID == undefined || MedicalEquipment.BrandID == 0){
+      setError(true);
+      setErrorMessage("กรุณาเลือกยี่ห้อสินค้า");
+  }
+    else if (MedicalEquipment.Med_StatusID == undefined || MedicalEquipment.Med_StatusID == 0){
+      setError(true);
+      setErrorMessage("กรุณาเลือกสถานะสินค้า")
+    }
+  else{
+    let upequipment = {
+      ID: MedicalEquipment.ID,
+      Equipment: MedicalEquipment.Equipment ?? "",
+      Quantity: convertType(MedicalEquipment.Quantity) ,
+      Shop : MedicalEquipment.Shop ?? "",
+      BrandID: convertType(MedicalEquipment.BrandID),
+      Med_StatusID: convertType(MedicalEquipment.Med_StatusID),
+    };
 
   const requestOptions = {
     method: "PATCH",
@@ -144,16 +153,18 @@ function update() {
     .then(async (res) => {
       console.log(res);
       if (res.data) {
+        setErrorMessage("บันทึกข้อมูลสำเร็จ");
         setSuccess(true);
         await timeout(1000); //for 1 sec delay
         window.location.reload();     
         
       } else {
+        setErrorMessage(res.error);
         setError(true);
       }
     });
 }
-
+}
 const handleInputChange = (
   event: React.ChangeEvent<{ id?: string; value: any }>
 ) => {

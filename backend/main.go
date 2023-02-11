@@ -52,7 +52,7 @@ func main() {
 			//Save_ITI
 			router.GET("/Save_ITIs", controller.ListSave_ITIs)
 			router.GET("/Save_ITI/:id", controller.GetSave_ITI)
-			router.POST("/Save_ITIs", controller.CreateSave_ITI)
+			router.POST("/Save_ITICreate", controller.CreateSave_ITI)
 			router.PATCH("/Save_ITIUpdate", controller.UpdateSave_ITI)
 			router.DELETE("/Save_ITI/:id", controller.DeleteSave_ITI)
 			router.GET("/Save_ITIs/ready", controller.ListReady_Save)
@@ -60,16 +60,15 @@ func main() {
 			//Operating_Room
 			router.GET("/Operating_Rooms", controller.ListOperating_Rooms)
 			router.GET("/Operating_Room/:id", controller.GetOperating_Room)
-			router.POST("/Operating_Rooms", controller.CreateOperating_Room)
+			router.POST("/Operating_RoomCreate", controller.CreateOperating_Room)
 			router.PATCH("/Operating_RoomUpdate", controller.UpdateOperating_Room)
 			router.DELETE("/Operating_Room/:id", controller.DeleteOperating_Room)
 			//---------------------------------------------------
 
 			// Screening_officer
 			router.GET("/Screening_officers", controller.ListScreening_officer)
-			router.GET("/Screening_officer/:id", controller.GetScreening_officer)
-			//router.POST("/Screening_officers", controller.CreateScreening_officer)
-			router.PATCH("/Screening_officers", controller.UpdateScreening_officer)
+			router.GET("/Screening_officerss/:id", controller.GetScreening_officer)
+			router.PATCH("/Screening_officerUpdate/:id", controller.UpdateScreening_officer)
 			router.DELETE("/Screening_officers/:id", controller.DeleteScreening_officer)
 			router.POST("/Screening_officer/create", controller.CreateScreening_officer) //////////***New
 			//Prefix
@@ -227,9 +226,9 @@ func main() {
 
 			// Dispense Routes
 			router.GET("/dispenses", controller.ListDispenses)
-			router.GET("/dispense/:id", controller.GetDispense)
+			router.GET("/dispensess/:id", controller.GetDispense)
 			router.POST("/dispense", controller.CreateDispense)
-			router.PATCH("/DispenseUpdate", controller.UpdateDispense)
+			router.PATCH("/DispenseUpdate/:id", controller.UpdateDispense)
 			router.DELETE("/dispense/:id", controller.DeleteDispense)
 
 			//Aern2
@@ -259,7 +258,7 @@ func main() {
 			router.GET("/medemployees", controller.ListMedEmployees)
 			router.GET("/medemployees/:id", controller.GetMedEmployee)
 			router.POST("/medemployees/create", controller.CreateMedEmployee)
-			router.PATCH("/medemployees", controller.UpdateMedEmployee)
+			router.PATCH("/medemployeesUpdate", controller.UpdateMedEmployee)
 			router.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
 
 			// Brand Routes

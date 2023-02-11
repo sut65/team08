@@ -737,6 +737,32 @@ async function CreateDoctor(data: DoctorInterface) {
   return res;
 }
 
+async function UpdateDoctor(data: DoctorInterface) {
+  const requestOptions = {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/Doctor`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      // console.log(res.data);
+      if (res.data) {
+        console.log("เข้า function UpdateDoctor แล้ววววววววว")
+        console.log(res.data);
+        return res;
+      } else {
+        console.log("ไม่เข้า fetch จาก function UpdateDoctor")
+        return res;
+      }
+    });
+
+  return res;
+}
 
 async function CreateLab(data: LabInterface) {
   const requestOptions = {
@@ -758,6 +784,32 @@ async function CreateLab(data: LabInterface) {
         return res;
       } else {
         console.log("ไม่เข้า fetch จาก function CreateLab")
+        return res;
+      }
+    });
+
+  return res;
+}
+async function UpdateLab(data: LabInterface) {
+  const requestOptions = {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/Lab`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res.data);
+      if (res.data) {
+        console.log("เข้า fetch(`${apiUrl}/Lab` method: PATH")
+        console.log(res.data);
+        return res;
+      } else {
+        console.log("ไม่เข้า fetch จาก function UpdateLab")
         return res;
       }
     });
@@ -1027,7 +1079,7 @@ async function CreateSave_ITI(data: Save_ITIsInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Save_ITIs`, requestOptions)
+  let res = await fetch(`${apiUrl}/Save_ITICreate`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1074,14 +1126,13 @@ async function CreateOperating_Room(data: Operating_RoomsInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Operating_Rooms`, requestOptions)
+  let res = await fetch(`${apiUrl}/Operating_RoomCreate`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-          console.log(res.data);
-        return res.data;
+        return {status: true, data: res.data};
       } else {
-        return false;
+        return {status: false, data: res.error};
       }
     });
 
@@ -1169,7 +1220,7 @@ async function GetReady_Treat(id: any) {
       },
   };
 // ****************
-  let res = await fetch(`${apiUrl}/treatments/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/treatmentss/${id}`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
           if (res.data) {
@@ -1415,7 +1466,7 @@ async function Treatment_Disease_Text(id:any) {
     },
   };
 
-  let res = await fetch(`${apiUrl}/treatments/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/treatmentss/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1674,9 +1725,11 @@ export {
   GetDoctor,
   GetShow,
   CreateDoctor,
+  UpdateDoctor,
   ListLabName,
   ListLab,
   CreateLab,
+  UpdateLab,
 
   //Gg
   GetTreatment,

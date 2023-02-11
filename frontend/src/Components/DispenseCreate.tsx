@@ -51,6 +51,7 @@ function DispenseCreate() {
   const [practice, setPractice] = useState<PracticeInterface[]>([]);
   const [drug, setDrug] = useState<DrugInterface[]>([]);
   const [Text, setText] = useState<string>("");
+  const [Dispense_ID,setDispense_ID] = useState<string>("");
   const [Number, setNumber] = useState<string>("");
 
   const [success, setSuccess] = useState(false);
@@ -187,6 +188,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       Number: convertType(Number),
       Text: (Text),
       Date: dispense.Date,
+      Dispense_ID:(Dispense_ID)
     };
 
     console.log(data);
@@ -283,7 +285,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <p>รายละเอียดการรักษา</p>
             <FormControl fullWidth variant="outlined">
             <TextField
@@ -291,6 +293,19 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             InputProps={{
               readOnly: true,
             }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <p>เลขกำกับการจ่ายยา</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                fullWidth
+                id="Dispense_ID"
+                type="string"
+                variant="outlined"
+                label="รายละเอียดยา" 
+                onChange={(event) => setDispense_ID(event.target.value)}
               />
             </FormControl>
           </Grid>

@@ -372,7 +372,7 @@ type State struct {
 
 type Save_ITI struct {
 	gorm.Model
-	Date_checkin  time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
+	Date_checkin  time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	Date_checkout time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	TextSave      string    `valid:"maxstringlength(200)~โปรดระบุรายละเอียดแผนการรักษาไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดแผนการรักษา"`
 
@@ -393,7 +393,7 @@ type Save_ITI struct {
 type Operating_Room struct {
 	gorm.Model
 	NumOper  string    `gorm:"uniqueIndex" valid:"matches(^OP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:OPxxxxxx,required~หมายเลขการผ่าตัดห้ามเป็นค่าว่าง ตัวอย่าง:OPxxxxxx"`
-	Datetime time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
+	Datetime time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	TextOper string    `valid:"maxstringlength(200)~โปรดระบุรายละเอียดการผ่าตัดไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดการผ่าตัด"`
 
 	Save_ITI   Save_ITI `gorm:"references:id" valid:"-"`
@@ -431,6 +431,7 @@ type Dispense struct {
 	TreatmentID *uint  `valid:"-"`
 	DrugID      *uint  `valid:"-"`
 	PracticeID  *uint  `valid:"-"`
+	Dispense_ID string `gorm:"uniqueIndex" valid:"matches(^DP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:DPxxxxxx,required~หมายเลขการจ่ายยาเป็นค่าว่าง ตัวอย่าง:DPxxxxxx"`
 
 	Doctor    Doctor    `gorm:"references:id" valid:"-"`
 	Treatment Treatment `gorm:"references:id" valid:"-"`
@@ -474,12 +475,13 @@ type Med_Employee struct {
 	gorm.Model
 	Name           string `valid:"required~กรุณากรอกชื่อ"`
 	Age            uint   `valid:"range(0|100)"`
-	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
-	Email          string `valid:"email"`
+	Phone          string `gorm:"uniqueIndex" valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
+	Email          string `valid:"required~กรุณากรอกอีเมล"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
 	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
 	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชา"`
+	MedPassword    string
 
 	GenderID      *uint           `valid:"-"`
 	PrefixID      *uint           `valid:"-"`

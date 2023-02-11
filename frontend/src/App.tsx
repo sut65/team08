@@ -62,6 +62,8 @@ import Save_ITIUpdate from "./Components/Save_ITIUpdate";
 import Operating_RoomUpdate from "./Components/Operating_RoomUpdate";
 import TreatmentUpdate from "./Components/TreatmentUpdate";
 import DispenseUpdate from "./Components/Dispense_Update";
+import MedEmployeesUpdate from "./Components/MedEmployeesUpdate";
+import Screening_officerUpdate from "./Components/Screening_officer_update";
 
 const drawerWidth = 240;
 
@@ -254,7 +256,8 @@ function App() {
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Routes>
                 <Route path="/Screening_officerCreate" element={<Screening_officerCreate />} />
-                <Route path="/Screening_officerList" element={<Screening_officerList />} /> 
+                <Route path="/Screening_officerList" element={<Screening_officerList />} />
+                <Route path="/Screening_officersupdate/:id" element={<Screening_officerUpdate/>}/> 
                 <Route path="/PatientCreate" element={<PatientCreate />} /> 
                 <Route path="/PatientList" element={<PatientList />} />
                 <Route path="/Doctor" element={<Doctor />} />
@@ -278,6 +281,8 @@ function App() {
                 <Route path="/medicalequipment" element={<MedicalEquipments />} />
                 <Route path="/medicalequipment/create" element={<MedicalEquipmentCreate />}/>
                 <Route path="/medicalequipmentsupdate/:id" element={<MedicalEquipmentUpdate/>}/>
+                <Route path="/medemployeesupdate/:id" element={<MedEmployeesUpdate/>}/>
+
 
                 <Route path="/requests" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />

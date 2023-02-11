@@ -183,7 +183,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
       TreatmentID: convertType(appoint.TreatmentID),
       LevelcureID: convertType(appoint.LevelcureID),
       DepartmentID: convertType(appoint.DepartmentID),
-      Text_appoint: Text_appoint,
+      Text_appoint: appoint.Text_appoint,
       Date_now: appoint.Date_now,
       Date_appoint: appoint.Date_appoint,
     };

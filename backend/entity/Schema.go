@@ -350,16 +350,16 @@ type Treatment struct {
 // J
 type Building struct {
 	gorm.Model
-	Name           string           `gorm:"uniqueIndex"`
-	Room       []Room       `gorm:"foreignKey:BuildingID"`
+	Name string `gorm:"uniqueIndex"`
+	Room []Room `gorm:"foreignKey:BuildingID"`
 }
 
 type Room struct {
 	gorm.Model
-	Name           string           `gorm:"uniqueIndex"`
+	Name       string   `gorm:"uniqueIndex"`
 	Building   Building `gorm:"references:id"`
 	BuildingID *uint
-	
+
 	Save_ITI       []Save_ITI       `gorm:"foreignKey:RoomID"`
 	Operating_Room []Operating_Room `gorm:"foreignKey:RoomID"`
 }
@@ -372,39 +372,39 @@ type State struct {
 
 type Save_ITI struct {
 	gorm.Model
-	Date_checkin  time.Time  `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
+	Date_checkin  time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	Date_checkout time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
-	TextSave string	`valid:"maxstringlength(200)~โปรดระบุรายละเอียดแผนการรักษาไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดแผนการรักษา"`
-	
+	TextSave      string    `valid:"maxstringlength(200)~โปรดระบุรายละเอียดแผนการรักษาไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดแผนการรักษา"`
+
 	Treatment   Treatment `gorm:"references:id" valid:"-"`
-	TreatmentID *uint	 `valid:"-"`
-	Building    Building `gorm:"references:id" valid:"-"`
-	BuildingID  *uint	 `valid:"-"`
-	Room        Room `gorm:"references:id" valid:"-"`
-	RoomID      *uint	 `valid:"-"`
-	State       State `gorm:"references:id" valid:"-"`
-	StateID     *uint	 `valid:"-"`
-	Doctor      Doctor `gorm:"references:id" valid:"-"`
-	DoctorID    *uint	 `valid:"-"`
+	TreatmentID *uint     `valid:"-"`
+	Building    Building  `gorm:"references:id" valid:"-"`
+	BuildingID  *uint     `valid:"-"`
+	Room        Room      `gorm:"references:id" valid:"-"`
+	RoomID      *uint     `valid:"-"`
+	State       State     `gorm:"references:id" valid:"-"`
+	StateID     *uint     `valid:"-"`
+	Doctor      Doctor    `gorm:"references:id" valid:"-"`
+	DoctorID    *uint     `valid:"-"`
 
 	Operating_Room *Operating_Room `gorm:"foreignkey:Save_ITIID"`
 }
 
 type Operating_Room struct {
 	gorm.Model
-	NumOper string `gorm:"uniqueIndex" valid:"matches(^OP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:OPxxxxxx,required~หมายเลขการผ่าตัดห้ามเป็นค่าว่าง ตัวอย่าง:OPxxxxxx"`
-	Datetime time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
-	TextOper string `valid:"maxstringlength(200)~โปรดระบุรายละเอียดการผ่าตัดไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดการผ่าตัด"`
+	NumOper  string    `gorm:"uniqueIndex" valid:"matches(^OP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:OPxxxxxx,required~หมายเลขการผ่าตัดห้ามเป็นค่าว่าง ตัวอย่าง:OPxxxxxx"`
+	Datetime time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
+	TextOper string    `valid:"maxstringlength(200)~โปรดระบุรายละเอียดการผ่าตัดไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดการผ่าตัด"`
 
 	Save_ITI   Save_ITI `gorm:"references:id" valid:"-"`
-	Save_ITIID *uint	 `valid:"-"` 
+	Save_ITIID *uint    `valid:"-"`
 	Building   Building `gorm:"references:id" valid:"-"`
-	BuildingID *uint	 `valid:"-"`
-	Room       Room `gorm:"references:id"  valid:"-"`
-	RoomID     *uint	 `valid:"-"`
-	Doctor     Doctor `gorm:"references:id" valid:"-"`
-	DoctorID   *uint	 `valid:"-"`
-}	
+	BuildingID *uint    `valid:"-"`
+	Room       Room     `gorm:"references:id"  valid:"-"`
+	RoomID     *uint    `valid:"-"`
+	Doctor     Doctor   `gorm:"references:id" valid:"-"`
+	DoctorID   *uint    `valid:"-"`
+}
 
 // Aern
 type Drug struct {
@@ -423,7 +423,7 @@ type Practice struct {
 
 type Dispense struct {
 	gorm.Model
-	Date time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 
 	Number      uint   `valid:"range(0|100)~กรุณาใส่จำนวนยาให้ถูกต้อง"`
 	Text        string `valid:"maxstringlength(50)~โปรดระบุรายละเอียดของยาไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดของยา"`
@@ -431,6 +431,7 @@ type Dispense struct {
 	TreatmentID *uint  `valid:"-"`
 	DrugID      *uint  `valid:"-"`
 	PracticeID  *uint  `valid:"-"`
+	Dispense_ID string `gorm:"uniqueIndex" valid:"matches(^DP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:DPxxxxxx,required~หมายเลขการจ่ายยาเป็นค่าว่าง ตัวอย่าง:DPxxxxxx"`
 
 	Doctor    Doctor    `gorm:"references:id" valid:"-"`
 	Treatment Treatment `gorm:"references:id" valid:"-"`
@@ -453,7 +454,7 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_now     time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 	Date_appoint time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
 	Text_appoint string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
 
@@ -474,12 +475,13 @@ type Med_Employee struct {
 	gorm.Model
 	Name           string `valid:"required~กรุณากรอกชื่อ"`
 	Age            uint   `valid:"range(0|100)"`
-	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
-	Email          string `valid:"email"`
+	Phone          string `gorm:"uniqueIndex" valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
+	Email          string `valid:"required~กรุณากรอกอีเมล"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
 	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
 	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชา"`
+	MedPassword    string
 
 	GenderID      *uint           `valid:"-"`
 	PrefixID      *uint           `valid:"-"`
@@ -511,9 +513,9 @@ type Med_Status struct {
 // ข้อมูลอุปกรณ์ *****************
 type Med_Equipment struct {
 	gorm.Model
-	Equipment      string `valid:"required~Equipment cannot be blank"`
-	Quantity       int    `valid:"range(0|1000)~Quantity is not in range 0 to 1000"`
-	Shop           string `valid:"required~Shop cannot be blank"`
+	Equipment      string `valid:"required~กรุณากรอกอุปกรณ์"`
+	Quantity       int    `valid:"range(0|1000)~กรุณากรอกจำนวนอุปกรณ์ไม่เกิน 1000"`
+	Shop           string `valid:"required~กรุณากรอกร้านค้าที่รับเข้า"`
 	BrandID        *uint
 	Brand          Brand `gorm:"references:id" valid:"-"`
 	Med_StatusID   *uint

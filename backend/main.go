@@ -52,7 +52,7 @@ func main() {
 			//Save_ITI
 			router.GET("/Save_ITIs", controller.ListSave_ITIs)
 			router.GET("/Save_ITI/:id", controller.GetSave_ITI)
-			router.POST("/Save_ITIs", controller.CreateSave_ITI)
+			router.POST("/Save_ITICreate", controller.CreateSave_ITI)
 			router.PATCH("/Save_ITIUpdate", controller.UpdateSave_ITI)
 			router.DELETE("/Save_ITI/:id", controller.DeleteSave_ITI)
 			router.GET("/Save_ITIs/ready", controller.ListReady_Save)
@@ -60,16 +60,15 @@ func main() {
 			//Operating_Room
 			router.GET("/Operating_Rooms", controller.ListOperating_Rooms)
 			router.GET("/Operating_Room/:id", controller.GetOperating_Room)
-			router.POST("/Operating_Rooms", controller.CreateOperating_Room)
+			router.POST("/Operating_RoomCreate", controller.CreateOperating_Room)
 			router.PATCH("/Operating_RoomUpdate", controller.UpdateOperating_Room)
 			router.DELETE("/Operating_Room/:id", controller.DeleteOperating_Room)
 			//---------------------------------------------------
 
 			// Screening_officer
 			router.GET("/Screening_officers", controller.ListScreening_officer)
-			router.GET("/Screening_officer/:id", controller.GetScreening_officer)
-			//router.POST("/Screening_officers", controller.CreateScreening_officer)
-			router.PATCH("/Screening_officers", controller.UpdateScreening_officer)
+			router.GET("/Screening_officerss/:id", controller.GetScreening_officer)
+			router.PATCH("/Screening_officerUpdate/:id", controller.UpdateScreening_officer)
 			router.DELETE("/Screening_officers/:id", controller.DeleteScreening_officer)
 			router.POST("/Screening_officer/create", controller.CreateScreening_officer) //////////***New
 			//Prefix
@@ -190,19 +189,10 @@ func main() {
 			router.DELETE("/track/:id", controller.DeleteTrack)
 
 			// ตารางหลัก ข้อมูลการรักษา ************************************************************
-			//r.GET("/treatments", controller.ListTreatment)
-			// r.GET("/treatmentstatus", controller.ListTreatment)
-			// //r.GET("/treatments/:id", controller.GetTreatment)
-			// //r.POST("/treatments", controller.CreateTreatment)
-			// //r.PATCH("/treatments", controller.UpdateTreatment)
-			// //r.DELETE("/treatment/:id", controller.DeleteTreatment)
-			// r.GET("/treatments/ready", controller.ListReady_Treat)
-			// r.GET("/treatments/readyyy", controller.ListReady_Dispense)
-			// r.GET("/treatments/readyapp", controller.ListReady_Appoint)
 			router.GET("/treatments", controller.ListTreatment)
-			router.GET("/treatmentss/:id", controller.GetTreatment)
+			router.GET("/treatment/:id", controller.GetTreatment) //---ss
 			router.POST("/treatments", controller.CreateTreatment)
-			router.PATCH("/treatmentsUpdate", controller.UpdateTreatment) ////++
+			router.PATCH("/treatmentsUpdate/:id", controller.UpdateTreatment) ////++++
 			router.DELETE("/treatment/:id", controller.DeleteTreatment)
 			router.GET("/treatments/ready", controller.ListReady_Treat)
 			router.GET("/treatments/readyyy", controller.ListReady_Dispense)
@@ -219,39 +209,39 @@ func main() {
 			router.DELETE("/drugs/:id", controller.DeleteDrug)
 
 			// Practice Routes
-			router.GET("/practice", controller.ListPractices)
+			router.GET("/practices", controller.ListPractices)
 			router.GET("/practice/:id", controller.GetPractice)
 			router.POST("/practice", controller.CreatePractice)
 			router.PATCH("/practice", controller.UpdatePractice)
 			router.DELETE("/practice/:id", controller.DeletePractice)
 
 			// Dispense Routes
-			router.GET("/dispense", controller.ListDispenses)
-			router.GET("/dispense/:id", controller.GetDispense)
+			router.GET("/dispenses", controller.ListDispenses)
+			router.GET("/dispensess/:id", controller.GetDispense)
 			router.POST("/dispense", controller.CreateDispense)
-			router.PATCH("/dispense", controller.UpdateDispense)
+			router.PATCH("/DispenseUpdate/:id", controller.UpdateDispense)
 			router.DELETE("/dispense/:id", controller.DeleteDispense)
 
 			//Aern2
 			// Departments Routes 6
-			router.GET("/department", controller.ListDepartments)
+			router.GET("/departments", controller.ListDepartments)
 			router.GET("/department/:id", controller.GetDepartment)
 			router.POST("/department", controller.CreateDepartment)
 			router.PATCH("/department", controller.UpdateDepartment)
 			router.DELETE("/department/:id", controller.DeleteDepartment)
 
 			// Levelcure Routes 7
-			router.GET("/levelcure", controller.ListLevelcures)
+			router.GET("/levelcures", controller.ListLevelcures)
 			router.GET("/levelcure/:id", controller.GetLevelcure)
 			router.POST("/levelcure", controller.CreateLevelcure)
 			router.PATCH("/levelcure", controller.UpdateLevelcure)
 			router.DELETE("/levelcure/:id", controller.DeleteLevelcure)
 
 			// Appoint Routes 9
-			router.GET("/appoint", controller.ListAppoints)
+			router.GET("/appoints", controller.ListAppoints)
 			router.GET("/appoint/:id", controller.GetAppoint)
 			router.POST("/appoint", controller.CreateAppoint)
-			router.PATCH("/appoint", controller.UpdateAppoint)
+			router.PATCH("/AppointUpdate", controller.UpdateAppoint)
 			router.DELETE("/appoint/:id", controller.DeleteAppoint)
 
 			//LEO
@@ -259,7 +249,7 @@ func main() {
 			router.GET("/medemployees", controller.ListMedEmployees)
 			router.GET("/medemployees/:id", controller.GetMedEmployee)
 			router.POST("/medemployees/create", controller.CreateMedEmployee)
-			router.PATCH("/medemployees", controller.UpdateMedEmployee)
+			router.PATCH("/medemployeesUpdate", controller.UpdateMedEmployee)
 			router.DELETE("/medemployees/:id", controller.DeleteMedEmployee)
 
 			// Brand Routes
@@ -292,9 +282,9 @@ func main() {
 			router.DELETE("/location/:id", controller.DeleteLocation)
 
 			router.GET("/requests", controller.ListRequest) ////------------------------
-			router.GET("/requests/:id", controller.GetRequest)
+			router.GET("/request/:id", controller.GetRequest)
 			router.POST("/requests", controller.CreateRequest)
-			router.PATCH("/requests", controller.UpdateRequest)
+			router.PATCH("/requestsUpdate/:id", controller.UpdateRequest) //++++++++
 			router.DELETE("/request/:id", controller.DeleteRequest)
 
 		}

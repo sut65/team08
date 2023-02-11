@@ -84,7 +84,7 @@ func CreateTreatment(c *gin.Context) {
 func GetTreatment(c *gin.Context) {
 	var treatment entity.Treatment
 	id := c.Param("id")
-	if err := entity.DB().Preload("Appoint").Preload("Doctor").Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE id = ?", id).Scan(&treatment).Error; err != nil {
+	if err := entity.DB().Preload("Appoint").Preload("Doctor").Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("SELECT * FROM treatments WHERE id = ?", id).Find(&treatment).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -122,8 +122,9 @@ func DeleteTreatment(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH / 
+// PATCH /
 func UpdateTreatment(c *gin.Context) {
+	id := c.Param("id")
 	var treatment entity.Treatment
 	if err := c.ShouldBindJSON(&treatment); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -132,7 +133,7 @@ func UpdateTreatment(c *gin.Context) {
 	// สร้าง
 	uptreat := entity.Treatment{
 
-		DiseaseID:     treatment.DiseaseID, // โยงความสัมพันธ์กับ Entity
+		DiseaseID:    treatment.DiseaseID, // โยงความสัมพันธ์กับ Entity
 		PatientID:    treatment.PatientID, // โยงความสัมพันธ์กับ Entity
 		StatusID:     treatment.StatusID,  // โยงความสัมพันธ์กับ Entity
 		TrackID:      treatment.TrackID,   // โยงความสัมพันธ์กับ Entity
@@ -144,8 +145,13 @@ func UpdateTreatment(c *gin.Context) {
 		CONCLUSION:   treatment.CONCLUSION,
 		GUIDANCE:     treatment.GUIDANCE,
 	}
+	// : ขั้นตอนการ validate ข้อมูล
+	if _, err := govalidator.ValidateStruct(uptreat); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-	if err := entity.DB().Where("id = ?", treatment.ID).Updates(&uptreat).Error; err != nil {
+	if err := entity.DB().Where("id = ?", id).Updates(&uptreat).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -155,7 +161,10 @@ func UpdateTreatment(c *gin.Context) {
 
 func ListReady_Treat(c *gin.Context) {
 	var save_itis []entity.Treatment
-	if err := entity.DB().Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").Raw("Select sa.* from treatments sa where sa.status_id = 3").Find(&save_itis).Error; err != nil {
+	if err := entity.DB().Preload("Disease").Preload("Patient").Preload("Status").Preload("Track").
+		Raw("select * from treatments where id not in " +
+			"(select t.id from treatments t INNER JOIN save_itis s on t.id = s.treatment_id )" +
+			"and status_id = 3").Find(&save_itis).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

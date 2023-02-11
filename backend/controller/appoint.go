@@ -108,13 +108,19 @@ func UpdateAppoint(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", appoint.ID).First(&appoint); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "appoint not found"})
-		return
+	cr := entity.Appoint{
+		LevelcureID:         appoint.LevelcureID,         // โยงความสัมพันธ์กับ Entity Levelcure
+		DepartmentID:        appoint.DepartmentID,        // โยงความสัมพันธ์กับ Entity Department
+		TreatmentID:         appoint.TreatmentID,         // โยงความสัมพันธ์กับ Entity Treatment
+		Screening_officerID: appoint.Screening_officerID, // โยงความสัมพันธ์กับ Entity Officer
+		Date_now:            appoint.Date_now,            // ตั้งค่าฟิลด์ Date
+		Date_appoint:        appoint.Date_appoint,        // ตั้งค่าฟิลด์ Date
+		Text_appoint:        appoint.Text_appoint,        // ตั้งค่าฟิลด์ Text
 	}
-	if err := entity.DB().Save(&appoint).Error; err != nil {
+	if err := entity.DB().Where("id = ?", appoint.ID).Updates(&cr).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": appoint})
+
+	c.JSON(http.StatusOK, gin.H{"data": cr})
 }

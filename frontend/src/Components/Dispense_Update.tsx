@@ -9,7 +9,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Divider from "@mui/material/Divider";
@@ -42,18 +42,18 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function DispenseCreate() {
+function DispenseUpdate() {
   const [doctor, setDoctor] = useState<DoctorInterface>({});
   const [dispense, setDispense] = useState<DispenseInterface>({
     Date: new Date(),
   });
+  const [dispenseID, setDispenseID] = React.useState<Number | undefined>(undefined);
   const [treatment, setTreatment] = useState<TreatmentsInterface[]>([]);
   const [practice, setPractice] = useState<PracticeInterface[]>([]);
   const [drug, setDrug] = useState<DrugInterface[]>([]);
   const [Text, setText] = useState<string>("");
-  const [Dispense_ID,setDispense_ID] = useState<string>("");
   const [Number, setNumber] = useState<string>("");
-
+  const params = useParams()
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   //เพิ่ม
@@ -125,6 +125,7 @@ function DispenseCreate() {
     getDrug();
     getTreatment();
     getPractice();
+    getDispense();
   }, []);
 
   
@@ -155,6 +156,17 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
   }
 }
 ///
+//++
+const handleInputChange = (
+    event: React.ChangeEvent<{ id?: string; value: any }>
+  ) => {
+    const id = event.target.id as keyof typeof treatment;
+
+    const { value } = event.target;
+
+    setDispense({ ...dispense, [id]: value });
+  };
+  //--
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof dispense;
     const value = event.target.value;
@@ -164,8 +176,11 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
     });
     console.log(`[${name}]: ${value}`);
   };
-
-  async function submit() {
+  function timeout(delay: number) {
+    return new Promise(res => setTimeout(res, delay));
+  }
+  
+  async function update() {
 
     if (dispense.TreatmentID == undefined || dispense.TreatmentID == 0){
       setError(true);
@@ -181,27 +196,60 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
   }
   else{
     let data = {
+        ID: dispense.ID,
       DoctorID: convertType(dispense.DoctorID),
       TreatmentID: convertType(dispense.TreatmentID),
       DrugID: convertType(dispense.DrugID),
       PracticeID: convertType(dispense.PracticeID),
-      Number: convertType(Number),
-      Text: (Text),
+      Number: convertType(dispense.Number),
+      Text: dispense.Text,
       Date: dispense.Date,
-      Dispense_ID:(Dispense_ID)
+      Dispense_ID:dispense.Dispense_ID,
     };
 
-    console.log(data);
-    let res = await CreateDispense(data);
-    if (res.status) {
-      setAlertMessage("บันทึกข้อมูลสำเร็จ");
-      setSuccess(true);
-    } else {
-      setAlertMessage(res.message);
-      setError(true);
+    const requestOptions = {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      console.log(data);
+  
+      fetch(`http://localhost:8080/DispenseUpdate/${data.ID}`, requestOptions)
+        .then((response) => response.json())
+        .then(async (res) => {
+          console.log(res);
+        if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
+          setSuccess(true);
+        } else {
+          setAlertMessage(res.message);
+          setError(true);
     }
+        });
   }
 }
+const getDispense = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(`http://localhost:8080/dispensess/${params.id}`, requestOptions )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data)
+        if (res.data) {
+            setDispense(res.data);
+            setDispenseID(res.data.ID);
+        }
+      });
+  };
 
   return (
     <Container maxWidth="md">
@@ -289,7 +337,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             <p>รายละเอียดการรักษา</p>
             <FormControl fullWidth variant="outlined">
             <TextField
-            value={treatment_Dis?.CONCLUSION || ""}
+            value={dispense.Treatment?.CONCLUSION || ""}
             InputProps={{
               readOnly: true,
             }}
@@ -304,8 +352,8 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
                 id="Dispense_ID"
                 type="string"
                 variant="outlined"
-                label="รายละเอียดยา" 
-                onChange={(event) => setDispense_ID(event.target.value)}
+                value={dispense.Dispense_ID}
+                onChange={handleInputChange}
               />
             </FormControl>
           </Grid>
@@ -336,11 +384,11 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             <p>จำนวนยา</p>
             <FormControl fullWidth variant="outlined">
               <TextField
-                id="setNumber"
-                label="Number"
+                id="Number"
                 type="Number"
                 inputProps={{ name: "Number", min: 0}} 
-                onChange={(event) => setNumber(event.target.value)}
+                value={dispense.Number}
+                onChange={handleInputChange}
               />
             </FormControl>
           </Grid>
@@ -348,33 +396,34 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             <p>การรับประทานยา</p>
             <FormControl required fullWidth variant="outlined">
               <Select
-                defaultValue={"0"}
+              native
+              value={dispense.PracticeID + ""}
                 onChange={handleChange}
                 inputProps={{
                   name: "PracticeID",
                 }}
               >
-                <MenuItem value={"0"}>รายละเอียดการรับประทาน</MenuItem>
+               <option aria-label="None" value="">
+                  รายละเอียดการรับประทานยา
+                </option>
                 {practice?.map((item: PracticeInterface) => (
-                  <MenuItem key={item.ID} value={item.ID}>
-                    {item.Name}
-                  </MenuItem>
+               <option value={item.ID} key={item.ID}>
+               {item.Name}
+             </option>
                 ))}
               </Select>
             </FormControl>
           </Grid>
+          
           <Grid item xs={12}>
             <p>รายละเอียดเพิ่มเติม</p>
-            <FormControl fullWidth variant="outlined">
               <TextField
                 fullWidth
-                id="Name"
+                id="Text"
                 type="string"
                 variant="outlined"
-                label="รายละเอียดยา" 
-                onChange={(event) => setText(event.target.value)}
-              />
-            </FormControl>
+                value={dispense.Text}
+                onChange={handleInputChange} />
           </Grid>
           <Grid item xs={12}>
             <p>วันที่และเวลา</p>
@@ -406,7 +455,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
             </Button>
             <Button
              style={{ float: "right" }}
-             onClick={submit}
+             onClick={update}
              variant="contained"
              color="primary"
              startIcon={<AddBoxIcon />}
@@ -422,4 +471,4 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
 }
 //เหลือ load 
 //doctor
-export default DispenseCreate;
+export default DispenseUpdate;

@@ -227,9 +227,9 @@ func main() {
 
 			// Dispense Routes
 			router.GET("/dispenses", controller.ListDispenses)
-			router.GET("/dispense/:id", controller.GetDispense)
+			router.GET("/dispensess/:id", controller.GetDispense)
 			router.POST("/dispense", controller.CreateDispense)
-			router.PATCH("/DispenseUpdate", controller.UpdateDispense)
+			router.PATCH("/DispenseUpdate/:id", controller.UpdateDispense)
 			router.DELETE("/dispense/:id", controller.DeleteDispense)
 
 			//Aern2

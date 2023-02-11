@@ -7,6 +7,7 @@ export interface DispenseInterface {
   ID?: number;
   Date?: Date | null;
   Text?: string;
+  Dispense_ID?: string;
   Number?: number;
 
   DoctorID?: number;

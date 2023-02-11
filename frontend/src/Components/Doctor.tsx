@@ -67,6 +67,7 @@ import {
   GetAddressThailand,
   GetDoctor,
   CreateDoctor,
+  UpdateDoctor,
   GetOfficerByUID,
 } from "../Services/HttpClientService";
 import { OfficersInterface } from "../Models/IOfficer";
@@ -253,7 +254,9 @@ function Doctor() {
   };
 
   const Delete_Doctor = async () => {
-    const apiUrl = `http://localhost:8080/Doctor/${localStorage.getItem("DoctorID")}`;
+    const apiUrl = `http://localhost:8080/Doctor/${localStorage.getItem(
+      "DoctorID"
+    )}`;
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -531,11 +534,11 @@ function Doctor() {
   };
 
   const columns: GridColDef[] = [
-    { field: "ID",headerAlign: 'center', headerName: "ไอดี", width: 50 },
+    { field: "ID", headerAlign: "center", headerName: "ไอดี", width: 50 },
     {
       field: "UPDATE",
       headerName: "แก้ไข",
-      headerAlign: 'center',
+      headerAlign: "center",
       width: 90,
       renderCell: () => {
         return (
@@ -543,7 +546,7 @@ function Doctor() {
             style={{
               borderRadius: 35,
               padding: "2px 7px",
-              fontSize: "10px"
+              fontSize: "10px",
             }}
             variant="contained"
             color="primary"
@@ -558,7 +561,7 @@ function Doctor() {
     {
       field: "DELETE",
       headerName: "ลบ",
-      headerAlign: 'center',
+      headerAlign: "center",
       width: 90,
       renderCell: () => {
         return (
@@ -566,7 +569,7 @@ function Doctor() {
             style={{
               borderRadius: 35,
               padding: "2px 7px",
-              fontSize: "10px"
+              fontSize: "10px",
             }}
             variant="contained"
             color="secondary"
@@ -581,32 +584,32 @@ function Doctor() {
     {
       field: "DocterCode",
       headerName: "รหัสประจำตัว",
-      headerAlign: 'center',
+      headerAlign: "center",
       width: 100,
     },
     {
       field: "DocterIDCard",
       headerName: "หมายเลขบัตรประชาชน",
-      headerAlign: 'center',
+      headerAlign: "center",
       width: 130,
     },
     {
       field: "DocPrefix",
       headerName: "คำนำหน้า",
-      headerAlign: 'center',
+      headerAlign: "center",
       width: 80,
       valueFormatter: (params) => params.value.PreInitialTH,
     },
     {
       field: "FirstNameTH",
       headerName: "ชื่อจริง",
-      headerAlign: 'center',
+      headerAlign: "center",
       width: 100,
     },
     {
       field: "LastNameTH",
       headerName: "นามสกุล",
-      headerAlign: 'center',
+      headerAlign: "center",
       width: 100,
     },
     {
@@ -930,8 +933,10 @@ function Doctor() {
   }
   async function submitEdit() {
     // console.log(Zip);
+    var ID = localStorage.getItem("DoctorID") || undefined;
 
     let data = {
+      ID: convertType(ID),
       DocterCode: DocterCode,
       DocterIDCard: DocterIDCard,
       DocPrefixID: convertType(Doctor.DocPrefixID),
@@ -993,7 +998,7 @@ function Doctor() {
     console.log("เมื่อกด submit ก็จะขึ้น data ดังนี้");
     console.log(data);
 
-    let res = await CreateDoctor(data);
+    let res = await UpdateDoctor(data);
     // console.log(res);
     // console.log(res.error);
     // console.log(res.data);
@@ -1024,7 +1029,11 @@ function Doctor() {
           maxWidth="xs"
         >
           <DialogTitle>
-            <div className="good-font">ยืนยันการลบรายการ</div>
+            <h2>ยืนยันการลบรายการ 🗑️</h2>
+            ท่านกำลังเลือกไอดี : {localStorage.getItem("DoctorID")}
+            <br />
+            รหัสประจำตัวแพทย์ : {localStorage.getItem("DocterCode")}
+            <p></p>
           </DialogTitle>
           <DialogContent>
             <Grid container sx={{ padding: 2 }}>
@@ -1056,7 +1065,11 @@ function Doctor() {
         {/* ยืนยันการแก้ไข */}
         <Dialog open={openUpdate} onClose={handleCloseRow}>
           <DialogTitle>
-            <div className="good-font">ยืนยันการแก้ไขรายการ</div>
+            <h2>แก้ไขข้อมูลแลป 📂</h2>
+            <p>
+              กำลังแก้ไขไอดี -&gt; {localStorage.getItem("ID")} เลขกำกับการรักษา
+              -&gt; {localStorage.getItem("Treatment_name")}
+            </p>
           </DialogTitle>
           <Button
             variant="contained"
@@ -1067,6 +1080,739 @@ function Doctor() {
           >
             <div className="good-font">ยืนยัน</div>
           </Button>
+        </Dialog>
+
+        <Dialog
+          open={openEdit}
+          // onClose={touchPage(false)}
+          fullWidth
+          maxWidth="md"
+        >
+          <DialogTitle>
+            <h2>แก้ไขข้อมูลแพทย์ 📝</h2>
+            <p>
+              กำลังแก้ไขไอดี : [ &nbsp;{localStorage.getItem("DoctorID")}&nbsp; ] 💡 รหัสประจำตัวแพทย์ : [ &nbsp;{localStorage.getItem("DocterCode")}&nbsp; ]
+            </p>
+          </DialogTitle>
+          <DialogContent>
+            {/* <ส่วนที่1 ข้อมูลส่วนตัว/> */}
+            <DialogTitle>ข้อมูลส่วนตัว</DialogTitle>
+            <Grid container spacing={2} sx={{ padding: 4 }}>
+              {/* <คำนำหน้า ชื่อจริงสกุล/> */}
+              <Grid item xs={2}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.DocPrefixID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "DocPrefixID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      คำนำหน้า
+                    </option>
+                    {DocPrefix.map((item: DocPrefixInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.PreInitialTH}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="ชื่อจริง"
+                  fullWidth
+                  id="FirstNameTH"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setFirstNameTH(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="นามสกุล"
+                  fullWidth
+                  id="LastNameTH"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setLastNameTH(event.target.value)}
+                />
+              </Grid>
+
+              {/* <ชื่อสกุลอิ้ง วันเกิด/> */}
+              <Grid item xs={4.5}>
+                <TextField
+                  label="First Name"
+                  fullWidth
+                  id="FirstNameEN"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setFirstNameEN(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={4.5}>
+                <TextField
+                  label="Last Name"
+                  fullWidth
+                  id="LastNameEN"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setLastNameEN(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                    label="เลือกวันเกิด"
+                    inputFormat="MM/DD/YYYY"
+                    value={Doctor.Birthday}
+                    onChange={(e) => {
+                      setDoctor({
+                        ...Doctor,
+                        Birthday: e,
+                      });
+                    }}
+                    renderInput={(params) => (
+                      <TextField size="small" {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Grid>
+
+              {/* <เพศ เลือด สถานภาพ ศาสนา อื่นๆ/> */}
+              <Grid item xs={2}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.GenderID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "GenderID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      เพศ
+                    </option>
+                    {Genders.map((item: GendersInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.Description}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={3}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.BloodID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "BloodID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      หมู่โลหิต
+                    </option>
+                    {Blood.map((item: BloodInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.Phenotype}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={2.5}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.MaritalID + ""}
+                    onChange={handleChangeMarital}
+                    inputProps={{
+                      name: "MaritalID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      สถานภาพ
+                    </option>
+                    {Marital.map((item: MaritalInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.MaritalStatus}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={2.5}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.ReligionID + ""}
+                    onChange={handleChangeReligion}
+                    inputProps={{
+                      name: "ReligionID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      ศาสนา
+                    </option>
+                    {Religion.map((item: ReligionInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.ReligionType}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={2}>
+                <TextField
+                  label="โปรดระบุฯ "
+                  disabled={isDisabled}
+                  fullWidth
+                  id="ddaa"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setReOther(event.target.value)}
+                />
+              </Grid>
+
+              {/* <สัญชาติ เชื้อชาติ รหัส หมายเลขบัตร/> */}
+              <Grid item xs={2.2}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.NationalityID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "NationalityID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      สัญชาติ
+                    </option>
+                    {Nationality.map((item: NationalityInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.NationalityType}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={2.2}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.CountryID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "CountryID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      เชื้อชาติ
+                    </option>
+                    {Nationality.map((item: NationalityInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.NationalityType}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={2.6}>
+                <TextField
+                  disabled
+                  label="รหัสประจำตัวแพทย์"
+                  fullWidth
+                  id="DocterCode"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  defaultValue={localStorage.getItem("DocterCode")}
+                  onChange={(event) => setDocterCode(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="หมายเลขบัตรประชาชน"
+                  fullWidth
+                  id="DocterIDCard"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setDocterIDCard(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+
+            {/* <ส่วนที่2 ข้อมูลการติดต่อ/> */}
+            <DialogTitle>ข้อมูลการติดต่อ</DialogTitle>
+            <Grid container spacing={2} sx={{ padding: 4 }}>
+              {/* <ค้นหารหัสไปรษณีย์/> */}
+              <Grid item xs={4}>
+                <TextField
+                  // value={Doctor.GenderID + ""}
+                  fullWidth
+                  id="ID"
+                  type="search"
+                  label="ป้อนรหัสไปรษณีย์"
+                  variant="outlined"
+                  size="small"
+                  value={FindAddress.ID}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={1.3}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  onClick={shearch}
+                  // onClick={handleClickAnyRegion}
+                  startIcon={<SearchIcon />}
+                >
+                  Find
+                </Button>
+              </Grid>
+              <Grid item xs={6.7}>
+                <TextField
+                  label="อีเมล์"
+                  fullWidth
+                  id="Email"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Grid>
+
+              {/* <ที่อยู่ ตำบล อำเภอ/> */}
+              <Grid item xs={6}>
+                <TextField
+                  disabled={isAddress}
+                  label="ที่อยู่"
+                  fullWidth
+                  id="AllAddress"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setAllAddress(event.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.Subdistrict + ""}
+                    // onChange={handleChangeSubdistrict}
+                    onChange={(e: SelectChangeEvent) => {
+                      handleChangeSubdistrict(e);
+                      setZip(e.target.value);
+                    }}
+                    inputProps={{
+                      name: "Subdistrict",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      ตำบล
+                    </option>
+                    {Address.map((item: AddressThailandInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.Subdistrict}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  disabled
+                  label="อำเภอ"
+                  fullWidth
+                  id="District"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  value={District}
+                  onChange={(event) => setDistrict(event.target.value)}
+                />
+              </Grid>
+
+              {/* <จังหวัด เบอร์ โทรสาร/> */}
+              <Grid item xs={5}>
+                <TextField
+                  disabled
+                  label="จังหวัด"
+                  fullWidth
+                  id="Province"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  value={Province}
+                  onChange={(event) => setProvince(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3.5}>
+                <TextField
+                  label="เบอร์โทรศัพท์"
+                  fullWidth
+                  id="TelPhone"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setTelPhone(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3.5}>
+                <TextField
+                  label="โทรสาร"
+                  fullWidth
+                  id="TelOffice"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setTelOffice(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+
+            {/* <ส่วนที่2 ข้อมูลบิดา/> */}
+            <DialogTitle>ข้อมูลบิดา</DialogTitle>
+            <Grid container spacing={2} sx={{ padding: 4 }}>
+              <Grid item xs={2}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.DocFaPrefixID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "DocFaPrefixID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      คำนำหน้า
+                    </option>
+                    {DocPrefix.map((item: DocPrefixInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.PreInitialTH}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="ชื่อจริง"
+                  fullWidth
+                  id="FaFirstName"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setFaFirstName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="นามสกุล"
+                  fullWidth
+                  id="FaLastName"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setFaLastName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  label="อาชีพ"
+                  fullWidth
+                  id="FaOccupation"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setFaOccupation(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="เลขบัตรประชาชน"
+                  fullWidth
+                  id="FaIDCard"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setFaIDCard(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+
+            {/* <ส่วนที่4 ข้อมูลมารดาดา/> */}
+            <DialogTitle>ข้อมูลมารดา</DialogTitle>
+            <Grid container spacing={2} sx={{ padding: 4 }}>
+              <Grid item xs={2}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.DocMoPrefixID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "DocMoPrefixID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      คำนำหน้า
+                    </option>
+                    {DocPrefix.map((item: DocPrefixInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.PreInitialTH}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="ชื่อจริง"
+                  fullWidth
+                  id="MoFirstName"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setMoFirstName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="นามสกุล"
+                  fullWidth
+                  id="MoLastName"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setMoLastName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  label="อาชีพ"
+                  fullWidth
+                  id="MoOccupation"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setMoOccupation(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="เลขบัตรประชาชน"
+                  fullWidth
+                  id="MoIDCard"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setMoIDCard(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+
+            {/* <ส่วนที่5 ข้อมูลคู่สมรส/> */}
+            <DialogTitle>ข้อมูลคู่สมรส</DialogTitle>
+            <Grid container spacing={2} sx={{ padding: 4 }}>
+              <Grid item xs={2}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    disabled={isDisabledPrefix}
+                    value={Doctor.DocWiPrefixID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "DocWiPrefixID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      คำนำหน้า
+                    </option>
+                    {DocPrefix.map((item: DocPrefixInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.PreInitialTH}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="ชื่อจริง"
+                  fullWidth
+                  disabled={isDisabledPrefix}
+                  id="WiFirstName"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setWiFirstName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="นามสกุล"
+                  fullWidth
+                  disabled={isDisabledPrefix}
+                  id="WiLastName"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setWiLastName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  label="อาชีพ"
+                  fullWidth
+                  disabled={isDisabledPrefix}
+                  id="WiOccupation"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setWiOccupation(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="เลขบัตรประชาชน"
+                  fullWidth
+                  disabled={isDisabledPrefix}
+                  id="WiIDCard"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setWiIDCard(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  label="เบอร์โทร"
+                  fullWidth
+                  disabled={isDisabledPrefix}
+                  id="WiPhone"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setWiPhone(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+
+            {/* <ส่วนที่6 ประวัติการศึกษา/> */}
+            <DialogTitle>ประวัติการศึกษา</DialogTitle>
+            <Grid container spacing={2} sx={{ padding: 4 }}>
+              <Grid item xs={4}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Doctor.EducationID + ""}
+                    onChange={handleChangeDoctor}
+                    inputProps={{
+                      name: "EducationID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      ระดับการศึกษาสูงสุด
+                    </option>
+                    {Educations.map((item: EducationsInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.Description}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField
+                  label="ชื่อปริญา"
+                  fullWidth
+                  id="EducationName"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setEducationName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="สาขาวิชาเอก"
+                  fullWidth
+                  id="EducationMajor"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setEducationMajor(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={7}>
+                <TextField
+                  label="สถานศึกษา"
+                  fullWidth
+                  id="University"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setUniversity(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    views={["year"]}
+                    label="ปีที่เข้ารับการศึกษา"
+                    value={Doctor.StartEducation}
+                    onChange={(e) => {
+                      setDoctor({
+                        ...Doctor,
+                        StartEducation: e,
+                      });
+                    }}
+                    renderInput={(params) => (
+                      <TextField size="small" {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={3}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    views={["year"]}
+                    label="ปีที่จบการศึกษา"
+                    value={Doctor.EndEducation}
+                    onChange={(e) => {
+                      setDoctor({
+                        ...Doctor,
+                        EndEducation: e,
+                      });
+                    }}
+                    renderInput={(params) => (
+                      <TextField size="small" {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="outlined" onClick={handleCloseEdit}>
+              ยกเลิก
+            </Button>
+            <Button variant="contained" onClick={submitEdit}>
+              แก้ไขข้อมูล
+            </Button>
+          </DialogActions>
         </Dialog>
         <Container maxWidth="md">
           <Snackbar
@@ -1164,7 +1910,8 @@ function Doctor() {
                   fullWidth
                   maxWidth="md"
                 >
-                  <DialogTitle>เพิ่มข้อมูลของแพทย์</DialogTitle>
+                  <DialogTitle>
+                  <h2>เพิ่มข้อมูลของแพทย์ 👨🏻‍⚕️</h2></DialogTitle>
                   <DialogContent>
                     {/* <ส่วนที่1 ข้อมูลส่วนตัว/> */}
                     <DialogTitle>ข้อมูลส่วนตัว</DialogTitle>
@@ -1915,769 +2662,12 @@ function Doctor() {
                     </Grid>
                   </DialogContent>
                   <DialogActions>
-                    <Button variant="outlined" onClick={handleCloseD}>ยกเลิก</Button>
-                    <Button variant="contained" onClick={submit}>บันทึกข้อมูล</Button>
-                  </DialogActions>
-                </Dialog>
-                <Dialog
-                  open={openEdit}
-                  // onClose={touchPage(false)}
-                  fullWidth
-                  maxWidth="md"
-                >
-                  <DialogTitle>แก้ไขข้อมูลของแพทย์ 🧑🏻‍⚕️</DialogTitle>
-                  <DialogContent>
-                    {/* <ส่วนที่1 ข้อมูลส่วนตัว/> */}
-                    <DialogTitle>ข้อมูลส่วนตัว</DialogTitle>
-                    <Grid container spacing={2} sx={{ padding: 4 }}>
-                      {/* <คำนำหน้า ชื่อจริงสกุล/> */}
-                      <Grid item xs={2}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.DocPrefixID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "DocPrefixID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              คำนำหน้า
-                            </option>
-                            {DocPrefix.map((item: DocPrefixInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.PreInitialTH}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="ชื่อจริง"
-                          fullWidth
-                          id="FirstNameTH"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setFirstNameTH(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="นามสกุล"
-                          fullWidth
-                          id="LastNameTH"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setLastNameTH(event.target.value)
-                          }
-                        />
-                      </Grid>
-
-                      {/* <ชื่อสกุลอิ้ง วันเกิด/> */}
-                      <Grid item xs={4.5}>
-                        <TextField
-                          label="First Name"
-                          fullWidth
-                          id="FirstNameEN"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setFirstNameEN(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={4.5}>
-                        <TextField
-                          label="Last Name"
-                          fullWidth
-                          id="LastNameEN"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setLastNameEN(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DesktopDatePicker
-                            label="เลือกวันเกิด"
-                            inputFormat="MM/DD/YYYY"
-                            value={Doctor.Birthday}
-                            onChange={(e) => {
-                              setDoctor({
-                                ...Doctor,
-                                Birthday: e,
-                              });
-                            }}
-                            renderInput={(params) => (
-                              <TextField size="small" {...params} />
-                            )}
-                          />
-                        </LocalizationProvider>
-                      </Grid>
-
-                      {/* <เพศ เลือด สถานภาพ ศาสนา อื่นๆ/> */}
-                      <Grid item xs={2}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.GenderID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "GenderID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              เพศ
-                            </option>
-                            {Genders.map((item: GendersInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.Description}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.BloodID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "BloodID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              หมู่โลหิต
-                            </option>
-                            {Blood.map((item: BloodInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.Phenotype}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={2.5}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.MaritalID + ""}
-                            onChange={handleChangeMarital}
-                            inputProps={{
-                              name: "MaritalID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              สถานภาพ
-                            </option>
-                            {Marital.map((item: MaritalInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.MaritalStatus}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={2.5}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.ReligionID + ""}
-                            onChange={handleChangeReligion}
-                            inputProps={{
-                              name: "ReligionID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              ศาสนา
-                            </option>
-                            {Religion.map((item: ReligionInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.ReligionType}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={2}>
-                        <TextField
-                          label="โปรดระบุฯ "
-                          disabled={isDisabled}
-                          fullWidth
-                          id="ddaa"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) => setReOther(event.target.value)}
-                        />
-                      </Grid>
-
-                      {/* <สัญชาติ เชื้อชาติ รหัส หมายเลขบัตร/> */}
-                      <Grid item xs={2.2}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.NationalityID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "NationalityID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              สัญชาติ
-                            </option>
-                            {Nationality.map((item: NationalityInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.NationalityType}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={2.2}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.CountryID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "CountryID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              เชื้อชาติ
-                            </option>
-                            {Nationality.map((item: NationalityInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.NationalityType}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={2.6}>
-                        <TextField
-                          disabled
-                          label="รหัสประจำตัวแพทย์"
-                          fullWidth
-                          id="DocterCode"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          defaultValue={DocterCode}
-                          onChange={(event) =>
-                            setDocterCode(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="หมายเลขบัตรประชาชน"
-                          fullWidth
-                          id="DocterIDCard"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setDocterIDCard(event.target.value)
-                          }
-                        />
-                      </Grid>
-                    </Grid>
-
-                    {/* <ส่วนที่2 ข้อมูลการติดต่อ/> */}
-                    <DialogTitle>ข้อมูลการติดต่อ</DialogTitle>
-                    <Grid container spacing={2} sx={{ padding: 4 }}>
-                      {/* <ค้นหารหัสไปรษณีย์/> */}
-                      <Grid item xs={4}>
-                        <TextField
-                          // value={Doctor.GenderID + ""}
-                          fullWidth
-                          id="ID"
-                          type="search"
-                          label="ป้อนรหัสไปรษณีย์"
-                          variant="outlined"
-                          size="small"
-                          value={FindAddress.ID}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={1.3}>
-                        <Button
-                          fullWidth
-                          variant="outlined"
-                          onClick={shearch}
-                          // onClick={handleClickAnyRegion}
-                          startIcon={<SearchIcon />}
-                        >
-                          Find
-                        </Button>
-                      </Grid>
-                      <Grid item xs={6.7}>
-                        <TextField
-                          label="อีเมล์"
-                          fullWidth
-                          id="Email"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) => setEmail(event.target.value)}
-                        />
-                      </Grid>
-
-                      {/* <ที่อยู่ ตำบล อำเภอ/> */}
-                      <Grid item xs={6}>
-                        <TextField
-                          disabled={isAddress}
-                          label="ที่อยู่"
-                          fullWidth
-                          id="AllAddress"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setAllAddress(event.target.value)
-                          }
-                        />
-                      </Grid>
-
-                      <Grid item xs={3}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.Subdistrict + ""}
-                            // onChange={handleChangeSubdistrict}
-                            onChange={(e: SelectChangeEvent) => {
-                              handleChangeSubdistrict(e);
-                              setZip(e.target.value);
-                            }}
-                            inputProps={{
-                              name: "Subdistrict",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              ตำบล
-                            </option>
-                            {Address.map((item: AddressThailandInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.Subdistrict}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <TextField
-                          disabled
-                          label="อำเภอ"
-                          fullWidth
-                          id="District"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          value={District}
-                          onChange={(event) => setDistrict(event.target.value)}
-                        />
-                      </Grid>
-
-                      {/* <จังหวัด เบอร์ โทรสาร/> */}
-                      <Grid item xs={5}>
-                        <TextField
-                          disabled
-                          label="จังหวัด"
-                          fullWidth
-                          id="Province"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          value={Province}
-                          onChange={(event) => setProvince(event.target.value)}
-                        />
-                      </Grid>
-                      <Grid item xs={3.5}>
-                        <TextField
-                          label="เบอร์โทรศัพท์"
-                          fullWidth
-                          id="TelPhone"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) => setTelPhone(event.target.value)}
-                        />
-                      </Grid>
-                      <Grid item xs={3.5}>
-                        <TextField
-                          label="โทรสาร"
-                          fullWidth
-                          id="TelOffice"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) => setTelOffice(event.target.value)}
-                        />
-                      </Grid>
-                    </Grid>
-
-                    {/* <ส่วนที่2 ข้อมูลบิดา/> */}
-                    <DialogTitle>ข้อมูลบิดา</DialogTitle>
-                    <Grid container spacing={2} sx={{ padding: 4 }}>
-                      <Grid item xs={2}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.DocFaPrefixID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "DocFaPrefixID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              คำนำหน้า
-                            </option>
-                            {DocPrefix.map((item: DocPrefixInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.PreInitialTH}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="ชื่อจริง"
-                          fullWidth
-                          id="FaFirstName"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setFaFirstName(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="นามสกุล"
-                          fullWidth
-                          id="FaLastName"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setFaLastName(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <TextField
-                          label="อาชีพ"
-                          fullWidth
-                          id="FaOccupation"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setFaOccupation(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="เลขบัตรประชาชน"
-                          fullWidth
-                          id="FaIDCard"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) => setFaIDCard(event.target.value)}
-                        />
-                      </Grid>
-                    </Grid>
-
-                    {/* <ส่วนที่4 ข้อมูลมารดาดา/> */}
-                    <DialogTitle>ข้อมูลมารดา</DialogTitle>
-                    <Grid container spacing={2} sx={{ padding: 4 }}>
-                      <Grid item xs={2}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.DocMoPrefixID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "DocMoPrefixID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              คำนำหน้า
-                            </option>
-                            {DocPrefix.map((item: DocPrefixInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.PreInitialTH}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="ชื่อจริง"
-                          fullWidth
-                          id="MoFirstName"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setMoFirstName(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="นามสกุล"
-                          fullWidth
-                          id="MoLastName"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setMoLastName(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <TextField
-                          label="อาชีพ"
-                          fullWidth
-                          id="MoOccupation"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setMoOccupation(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="เลขบัตรประชาชน"
-                          fullWidth
-                          id="MoIDCard"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) => setMoIDCard(event.target.value)}
-                        />
-                      </Grid>
-                    </Grid>
-
-                    {/* <ส่วนที่5 ข้อมูลคู่สมรส/> */}
-                    <DialogTitle>ข้อมูลคู่สมรส</DialogTitle>
-                    <Grid container spacing={2} sx={{ padding: 4 }}>
-                      <Grid item xs={2}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            disabled={isDisabledPrefix}
-                            value={Doctor.DocWiPrefixID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "DocWiPrefixID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              คำนำหน้า
-                            </option>
-                            {DocPrefix.map((item: DocPrefixInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.PreInitialTH}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="ชื่อจริง"
-                          fullWidth
-                          disabled={isDisabledPrefix}
-                          id="WiFirstName"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setWiFirstName(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="นามสกุล"
-                          fullWidth
-                          disabled={isDisabledPrefix}
-                          id="WiLastName"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setWiLastName(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <TextField
-                          label="อาชีพ"
-                          fullWidth
-                          disabled={isDisabledPrefix}
-                          id="WiOccupation"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setWiOccupation(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="เลขบัตรประชาชน"
-                          fullWidth
-                          disabled={isDisabledPrefix}
-                          id="WiIDCard"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) => setWiIDCard(event.target.value)}
-                        />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <TextField
-                          label="เบอร์โทร"
-                          fullWidth
-                          disabled={isDisabledPrefix}
-                          id="WiPhone"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) => setWiPhone(event.target.value)}
-                        />
-                      </Grid>
-                    </Grid>
-
-                    {/* <ส่วนที่6 ประวัติการศึกษา/> */}
-                    <DialogTitle>ประวัติการศึกษา</DialogTitle>
-                    <Grid container spacing={2} sx={{ padding: 4 }}>
-                      <Grid item xs={4}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Doctor.EducationID + ""}
-                            onChange={handleChangeDoctor}
-                            inputProps={{
-                              name: "EducationID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              ระดับการศึกษาสูงสุด
-                            </option>
-                            {Educations.map((item: EducationsInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.Description}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={8}>
-                        <TextField
-                          label="ชื่อปริญา"
-                          fullWidth
-                          id="EducationName"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setEducationName(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="สาขาวิชาเอก"
-                          fullWidth
-                          id="EducationMajor"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setEducationMajor(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={7}>
-                        <TextField
-                          label="สถานศึกษา"
-                          fullWidth
-                          id="University"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setUniversity(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DatePicker
-                            views={["year"]}
-                            label="ปีที่เข้ารับการศึกษา"
-                            value={Doctor.StartEducation}
-                            onChange={(e) => {
-                              setDoctor({
-                                ...Doctor,
-                                StartEducation: e,
-                              });
-                            }}
-                            renderInput={(params) => (
-                              <TextField size="small" {...params} />
-                            )}
-                          />
-                        </LocalizationProvider>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DatePicker
-                            views={["year"]}
-                            label="ปีที่จบการศึกษา"
-                            value={Doctor.EndEducation}
-                            onChange={(e) => {
-                              setDoctor({
-                                ...Doctor,
-                                EndEducation: e,
-                              });
-                            }}
-                            renderInput={(params) => (
-                              <TextField size="small" {...params} />
-                            )}
-                          />
-                        </LocalizationProvider>
-                      </Grid>
-                    </Grid>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button variant="outlined" onClick={handleCloseEdit}>ยกเลิก</Button>
-                    <Button variant="contained" onClick={submitEdit}>แก้ไขข้อมูล</Button>
+                    <Button variant="outlined" onClick={handleCloseD}>
+                      ยกเลิก
+                    </Button>
+                    <Button variant="contained" onClick={submit}>
+                      บันทึกข้อมูล
+                    </Button>
                   </DialogActions>
                 </Dialog>
               </Grid>

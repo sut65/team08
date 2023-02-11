@@ -55,6 +55,8 @@ function Operating_RoomCreate() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -65,6 +67,7 @@ function Operating_RoomCreate() {
     }
     setSuccess(false);
     setError(false);
+    setErrorMessage("");
   };
 
   const getDoctorByUID = async () => {
@@ -88,7 +91,7 @@ function Operating_RoomCreate() {
     const name = e.target.name as keyof typeof Operating_Rooms;
     const value = e.target.value;
     let res = await GetReady_Save_ITI(id);
-    let res1 = await GetReady_Treat(id);
+    //let res1 = await GetReady_Treat(id);
     if (res) {
       setOperating_Rooms({
         ...Operating_Rooms,
@@ -98,11 +101,8 @@ function Operating_RoomCreate() {
       setSave_ITIOne(res);
       console.log(res);
     }
+    let res1 = await GetReady_Treat(res.TreatmentID);
     if (res1) {
-      setOperating_Rooms({
-        ...Operating_Rooms,
-        [name]: value,
-      });
       console.log(`${name}: ${value}`);
       setTreatOne(res1);
       console.log(res1);
@@ -195,11 +195,12 @@ async function submit() {
   
   let res = await CreateOperating_Room(data);
   console.log(res);
-  if (res) {
+  if (res.status) {
     clear();
     setSuccess(true);
   } else {
     setError(true);
+    setErrorMessage(res.data);
   }
 }
 
@@ -222,7 +223,7 @@ return (
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
       <Alert onClose={handleClose} severity="error">
-        บันทึกข้อมูลไม่สำเร็จ
+        บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
       </Alert>
     </Snackbar>
     <Paper>

@@ -1130,10 +1130,9 @@ async function CreateOperating_Room(data: Operating_RoomsInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-          console.log(res.data);
-        return res.data;
+        return {status: true, data: res.data};
       } else {
-        return false;
+        return {status: false, data: res.error};
       }
     });
 

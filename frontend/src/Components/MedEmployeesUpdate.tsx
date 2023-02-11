@@ -134,7 +134,7 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
       EducationMajor: MedEmployees.EducationMajor ?? "",
       EducationName:MedEmployees.EducationName ?? "",
       University:MedEmployees.University ?? "",
-      Age: (convertType(Age)),
+      Age: convertType(MedEmployees.Age),
       Phone: MedEmployees.Phone ?? "",
       Email: MedEmployees.Email ?? "",
       Password: MedEmployees.Password ?? "",

@@ -151,7 +151,10 @@ func UpdateSave_ITI(c *gin.Context) {
 
 func ListReady_Save(c *gin.Context) {
 	var operating_rooms []entity.Save_ITI
-	if err := entity.DB().Preload("Treatment").Preload("Building").Preload("Room").Preload("State").Raw("Select sa.* from save_itis sa where sa.state_id = 1").Find(&operating_rooms).Error; err != nil {
+	if err := entity.DB().Preload("Treatment").Preload("Building").Preload("Room").Preload("State").
+	Raw("select * from save_itis where id not in " +
+	"(select t.id from save_itis t INNER JOIN operating_rooms o on t.id = o.save_iti_id )" +
+	"and state_id = 1").Find(&operating_rooms).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

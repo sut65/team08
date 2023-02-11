@@ -454,14 +454,14 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
-	Date_appoint time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
-	Text_appoint string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
-
-	Screening_officerID *uint `valid:"-"`
-	TreatmentID         *uint `valid:"-"`
-	LevelcureID         *uint `valid:"-"`
-	DepartmentID        *uint `valid:"-"`
+	Date_now            time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_appoint        time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
+	Text_appoint        string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
+	Appoint_ID          string    `gorm:"uniqueIndex" valid:"matches(^AP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:APxxxxxx,required~หมายเลขการนัดหมายป็นค่าว่าง ตัวอย่าง:APxxxxxx"`
+	Screening_officerID *uint     `valid:"-"`
+	TreatmentID         *uint     `valid:"-"`
+	LevelcureID         *uint     `valid:"-"`
+	DepartmentID        *uint     `valid:"-"`
 
 	Screening_officer Screening_officer `gorm:"references:id" valid:"-"`
 	Treatment         Treatment         `gorm:"references:id" valid:"-"`
@@ -474,9 +474,9 @@ type Appoint struct {
 type Med_Employee struct {
 	gorm.Model
 	Name           string `valid:"required~กรุณากรอกชื่อ"`
-	Age            uint   `valid:"range(0|100)"`
-	Phone          string `gorm:"uniqueIndex" valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
-	Email          string `valid:"required~กรุณากรอกอีเมล"`
+	Age            int   `valid:"range(0|100)~กรุณาใส่อายุให้ถูกต้อง"`
+	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
+	Email          string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง, required~กรุณากรอกอีเมล"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
 	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
@@ -513,9 +513,9 @@ type Med_Status struct {
 // ข้อมูลอุปกรณ์ *****************
 type Med_Equipment struct {
 	gorm.Model
-	Equipment      string `valid:"required~Equipment cannot be blank"`
-	Quantity       int    `valid:"range(0|1000)~Quantity is not in range 0 to 1000"`
-	Shop           string `valid:"required~Shop cannot be blank"`
+	Equipment      string `valid:"required~กรุณากรอกอุปกรณ์"`
+	Quantity       int    `valid:"range(0|1000)~กรุณากรอกจำนวนอุปกรณ์ไม่เกิน 1000"`
+	Shop           string `valid:"required~กรุณากรอกร้านค้าที่รับเข้า"`
 	BrandID        *uint
 	Brand          Brand `gorm:"references:id" valid:"-"`
 	Med_StatusID   *uint

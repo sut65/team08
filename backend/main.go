@@ -67,9 +67,8 @@ func main() {
 
 			// Screening_officer
 			router.GET("/Screening_officers", controller.ListScreening_officer)
-			router.GET("/Screening_officer/:id", controller.GetScreening_officer)
-			//router.POST("/Screening_officers", controller.CreateScreening_officer)
-			router.PATCH("/Screening_officers", controller.UpdateScreening_officer)
+			router.GET("/Screening_officerss/:id", controller.GetScreening_officer)
+			router.PATCH("/Screening_officerUpdate/:id", controller.UpdateScreening_officer)
 			router.DELETE("/Screening_officers/:id", controller.DeleteScreening_officer)
 			router.POST("/Screening_officer/create", controller.CreateScreening_officer) //////////***New
 			//Prefix
@@ -190,19 +189,10 @@ func main() {
 			router.DELETE("/track/:id", controller.DeleteTrack)
 
 			// ตารางหลัก ข้อมูลการรักษา ************************************************************
-			//r.GET("/treatments", controller.ListTreatment)
-			// r.GET("/treatmentstatus", controller.ListTreatment)
-			// //r.GET("/treatments/:id", controller.GetTreatment)
-			// //r.POST("/treatments", controller.CreateTreatment)
-			// //r.PATCH("/treatments", controller.UpdateTreatment)
-			// //r.DELETE("/treatment/:id", controller.DeleteTreatment)
-			// r.GET("/treatments/ready", controller.ListReady_Treat)
-			// r.GET("/treatments/readyyy", controller.ListReady_Dispense)
-			// r.GET("/treatments/readyapp", controller.ListReady_Appoint)
 			router.GET("/treatments", controller.ListTreatment)
-			router.GET("/treatmentss/:id", controller.GetTreatment)
+			router.GET("/treatment/:id", controller.GetTreatment) //---ss
 			router.POST("/treatments", controller.CreateTreatment)
-			router.PATCH("/treatmentsUpdate", controller.UpdateTreatment) ////++
+			router.PATCH("/treatmentsUpdate/:id", controller.UpdateTreatment) ////++++
 			router.DELETE("/treatment/:id", controller.DeleteTreatment)
 			router.GET("/treatments/ready", controller.ListReady_Treat)
 			router.GET("/treatments/readyyy", controller.ListReady_Dispense)
@@ -249,9 +239,9 @@ func main() {
 
 			// Appoint Routes 9
 			router.GET("/appoints", controller.ListAppoints)
-			router.GET("/appoint/:id", controller.GetAppoint)
+			router.GET("/appointss/:id", controller.GetAppoint)
 			router.POST("/appoint", controller.CreateAppoint)
-			router.PATCH("/AppointUpdate", controller.UpdateAppoint)
+			router.PATCH("/AppointUpdate/:id", controller.UpdateAppoint)
 			router.DELETE("/appoint/:id", controller.DeleteAppoint)
 
 			//LEO
@@ -292,9 +282,9 @@ func main() {
 			router.DELETE("/location/:id", controller.DeleteLocation)
 
 			router.GET("/requests", controller.ListRequest) ////------------------------
-			router.GET("/requests/:id", controller.GetRequest)
+			router.GET("/request/:id", controller.GetRequest)
 			router.POST("/requests", controller.CreateRequest)
-			router.PATCH("/requests", controller.UpdateRequest)
+			router.PATCH("/requestsUpdate/:id", controller.UpdateRequest) //++++++++
 			router.DELETE("/request/:id", controller.DeleteRequest)
 
 		}

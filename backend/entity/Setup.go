@@ -92,12 +92,6 @@ func SetupDatabase() {
 		Password: string(password2),
 	})
 
-	db.Model(&Screening_officer{}).Create(&Screening_officer{
-		
-		Email:    "pp@gmail.com",
-		ScPassword: string(password2),
-	})
-
 	var Sabaithip Officer
 	var Khunjira Officer
 	db.Raw("SELECT * FROM officers WHERE email = ?", "aa@gmail.com").Scan(&Sabaithip)

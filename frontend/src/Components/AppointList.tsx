@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -20,6 +20,7 @@ function AppointList() {
   const [AppointID, setAppointID] = React.useState(0);
   const [openDelete, setOpendelete] = React.useState(false);
   const [openUpdate, setOpenupdate] = React.useState(false);
+  const navigate = useNavigate();
   ////
 
   useEffect(() => {
@@ -163,22 +164,24 @@ function AppointList() {
           <div className="good-font">ยืนยัน</div>
         </Button>
       </Dialog>
-
-      {/* ยืนยันการแก้ไข */}
-      <Dialog open={openUpdate} onClose={handleClose}>
-        <DialogTitle>
-          <div className="good-font">ยืนยันการแก้ไขรายการ</div>
-        </DialogTitle>
-        <Button
-          variant="contained"
-          color="primary"
-          //กด "ยืนยัน" ไปที่หน้าแก้ไข
-          component={RouterLink}
-          to="/EmployeeattemdanceINUpdate"
-        >
-          <div className="good-font">ยืนยัน</div>
-        </Button>
-      </Dialog>
+{/* ยืนยันการแก้ไข */}
+      {Appoints.map((row) => (
+            <Dialog open={openUpdate} onClose={handleClose} key={row.ID}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <DialogTitle><div className="good-font">ยืนยันการแก้ไขรายการ</div></DialogTitle>
+                <Button
+                        variant="contained"
+                        color="primary"
+                        aria-lable="outlined button group"
+                        //กด "ยืนยัน" ไปที่หน้าแก้ไข
+                        onClick={() => navigate({ pathname: `/AppointUpdate/${AppointID}` })} autoFocus
+                    >
+                        <div className="good-font">
+                          ยืนยัน
+                        </div>
+                  </Button>
+              </Dialog>
+        ))}
       <Container maxWidth="md">
         <Box
           display="flex"

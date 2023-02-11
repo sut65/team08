@@ -50,7 +50,7 @@ func TestEquipmentNameNotBlank(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Equipment cannot be blank"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกอุปกรณ์"))
 }
 
 func TestQuantityNotNegtive(t *testing.T) {
@@ -76,7 +76,7 @@ func TestQuantityNotNegtive(t *testing.T) {
 
 		g.Expect(err).ToNot(BeNil())
 
-		g.Expect(err.Error()).To(Equal("Quantity is not in range 0 to 1000"))
+		g.Expect(err.Error()).To(Equal("กรุณากรอกจำนวนอุปกรณ์ไม่เกิน 1000"))
 	}
 
 }
@@ -100,5 +100,5 @@ func TestEquipmentShopNotBlank(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Shop cannot be blank"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกร้านค้าที่รับเข้า"))
 }

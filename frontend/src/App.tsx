@@ -63,6 +63,9 @@ import Operating_RoomUpdate from "./Components/Operating_RoomUpdate";
 import TreatmentUpdate from "./Components/TreatmentUpdate";
 import DispenseUpdate from "./Components/Dispense_Update";
 import MedEmployeesUpdate from "./Components/MedEmployeesUpdate";
+import Screening_officerUpdate from "./Components/Screening_officer_update";
+import RequestUpdate from "./Components/RequestUpdate";
+import AppointUpdate from "./Components/AppointUpdate";
 
 const drawerWidth = 240;
 
@@ -255,7 +258,8 @@ function App() {
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Routes>
                 <Route path="/Screening_officerCreate" element={<Screening_officerCreate />} />
-                <Route path="/Screening_officerList" element={<Screening_officerList />} /> 
+                <Route path="/Screening_officerList" element={<Screening_officerList />} />
+                <Route path="/Screening_officersupdate/:id" element={<Screening_officerUpdate/>}/> 
                 <Route path="/PatientCreate" element={<PatientCreate />} /> 
                 <Route path="/PatientList" element={<PatientList />} />
                 <Route path="/Doctor" element={<Doctor />} />
@@ -272,6 +276,7 @@ function App() {
                 <Route path="/DispenseUpdate/:id" element={<DispenseUpdate />} />
                 <Route path="/DispenseList" element={<DispenseList />} />
                 <Route path="/DispenseCreate" element={<DispenseCreate />} />
+                <Route path="/AppointUpdate/:id" element={<AppointUpdate />} /> 
                 <Route path="/AppointList" element={<AppointList />} />
                 <Route path="/AppointCreate" element={<Appoint />} />
                 <Route path="/medemployees" element={<MedEmployees />} />
@@ -284,6 +289,7 @@ function App() {
 
                 <Route path="/requests" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />
+                <Route path="/request/update/:id" element={<RequestUpdate />} />
                 <Route path="/" element={<Home />} />
                 
               </Routes>

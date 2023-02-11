@@ -8,7 +8,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
-
 func main() {
 
 	entity.SetupDatabase()
@@ -27,7 +26,7 @@ func main() {
 			router.DELETE("/officers/:id", controller.DeleteOfficer)
 
 			// J
-			//Building
+
 			router.GET("/Buildings", controller.ListBuildings)
 			router.GET("/Building/:id", controller.GetBuilding)
 			router.POST("/Building", controller.CreateBuilding)

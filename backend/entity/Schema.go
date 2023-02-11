@@ -454,14 +454,14 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now     time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
-	Date_appoint time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
-	Text_appoint string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
-
-	Screening_officerID *uint `valid:"-"`
-	TreatmentID         *uint `valid:"-"`
-	LevelcureID         *uint `valid:"-"`
-	DepartmentID        *uint `valid:"-"`
+	Date_now            time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_appoint        time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
+	Text_appoint        string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
+	Appoint_ID          string    `gorm:"uniqueIndex" valid:"matches(^AP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:APxxxxxx,required~หมายเลขการนัดหมายป็นค่าว่าง ตัวอย่าง:APxxxxxx"`
+	Screening_officerID *uint     `valid:"-"`
+	TreatmentID         *uint     `valid:"-"`
+	LevelcureID         *uint     `valid:"-"`
+	DepartmentID        *uint     `valid:"-"`
 
 	Screening_officer Screening_officer `gorm:"references:id" valid:"-"`
 	Treatment         Treatment         `gorm:"references:id" valid:"-"`

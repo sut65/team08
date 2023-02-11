@@ -239,9 +239,9 @@ func main() {
 
 			// Appoint Routes 9
 			router.GET("/appoints", controller.ListAppoints)
-			router.GET("/appoint/:id", controller.GetAppoint)
+			router.GET("/appointss/:id", controller.GetAppoint)
 			router.POST("/appoint", controller.CreateAppoint)
-			router.PATCH("/AppointUpdate", controller.UpdateAppoint)
+			router.PATCH("/AppointUpdate/:id", controller.UpdateAppoint)
 			router.DELETE("/appoint/:id", controller.DeleteAppoint)
 
 			//LEO

@@ -127,7 +127,7 @@ func SetupDatabase() {
 	db.Model(&Drug{}).Create(&Drug{Name: "Betahistine (เบตาฮีสทีน)"})
 	db.Model(&Drug{}).Create(&Drug{Name: "Budesonide (บูเดโซไนด์)"})
 	db.Model(&Drug{}).Create(&Drug{Name: "Clozapine (โคลซาปีน)"})
-	db.Model(&Drug{}).Create(&Drug{Name: "Fentanyl (เฟนทานิล))"})
+	db.Model(&Drug{}).Create(&Drug{Name: "Fentanyl (เฟนทานิล)"})
 	db.Model(&Drug{}).Create(&Drug{Name: "Hydroxyurea (ไฮดรอกซียูเรีย)"})
 	db.Model(&Drug{}).Create(&Drug{Name: "Lanolin (ลาโนลิน)"})
 	db.Model(&Drug{}).Create(&Drug{Name: "ยาขับเสมหะ"})
@@ -139,7 +139,7 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM drugs WHERE name = ?", "Betahistine (เบตาฮีสทีน)").Scan(&Drug_3)
 	db.Raw("SELECT * FROM drugs WHERE name = ?", "Budesonide (บูเดโซไนด์)").Scan(&Drug_4)
 	db.Raw("SELECT * FROM drugs WHERE name = ?", "Clozapine (โคลซาปีน)").Scan(&Drug_5)
-	db.Raw("SELECT * FROM drugs WHERE name = ?", "Fentanyl (เฟนทานิล))").Scan(&Drug_6)
+	db.Raw("SELECT * FROM drugs WHERE name = ?", "Fentanyl (เฟนทานิล)").Scan(&Drug_6)
 	db.Raw("SELECT * FROM drugs WHERE name = ?", "Hydroxyurea (ไฮดรอกซียูเรีย)").Scan(&Drug_7)
 	db.Raw("SELECT * FROM drugs WHERE name = ?", "Lanolin (ลาโนลิน)").Scan(&Drug_8)
 	db.Raw("SELECT * FROM drugs WHERE name = ?", "ยาขับเสมหะ").Scan(&Drug_9)
@@ -153,7 +153,7 @@ func SetupDatabase() {
 	// J
 	db.Model(&Building{}).Create(&Building{Name: "ตึกคนไข้ภายใน"})
 	db.Model(&Building{}).Create(&Building{Name: "ตึกผ่าตัด"})
-	
+
 	var building1, building2 Building
 	db.Raw("SELECT * FROM buildings WHERE name = ?", "ตึกคนไข้ภายใน").Scan(&building1)
 	db.Raw("SELECT * FROM buildings WHERE name = ?", "ตึกผ่าตัด").Scan(&building2)

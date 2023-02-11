@@ -392,7 +392,7 @@ type Save_ITI struct {
 
 type Operating_Room struct {
 	gorm.Model
-	NumOper  string    `gorm:"uniqueIndex" valid:"matches(^OP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:OPxxxxxx,required~หมายเลขการผ่าตัดห้ามเป็นค่าว่าง ตัวอย่าง:OPxxxxxx"`
+	NumOper  string    `gorm:"uniqueIndex" valid:"matches(^OP\\d{6}$)~ตัวอย่าง:OPxxxxxx,required~หมายเลขการผ่าตัดห้ามเป็นค่าว่าง ตัวอย่าง:OPxxxxxx"`
 	Datetime time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	TextOper string    `valid:"maxstringlength(200)~โปรดระบุรายละเอียดการผ่าตัดไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดการผ่าตัด"`
 
@@ -431,7 +431,7 @@ type Dispense struct {
 	TreatmentID *uint  `valid:"-"`
 	DrugID      *uint  `valid:"-"`
 	PracticeID  *uint  `valid:"-"`
-	Dispense_ID string `gorm:"uniqueIndex" valid:"matches(^DP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:DPxxxxxx,required~หมายเลขการจ่ายยาเป็นค่าว่าง ตัวอย่าง:DPxxxxxx"`
+	Dispense_ID string `valid:"matches(^DP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:DPxxxxxx,required~หมายเลขการจ่ายยาเป็นค่าว่าง ตัวอย่าง:DPxxxxxx"`
 
 	Doctor    Doctor    `gorm:"references:id" valid:"-"`
 	Treatment Treatment `gorm:"references:id" valid:"-"`
@@ -457,7 +457,7 @@ type Appoint struct {
 	Date_now            time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 	Date_appoint        time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
 	Text_appoint        string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
-	Appoint_ID          string    `gorm:"uniqueIndex" valid:"matches(^AP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:APxxxxxx,required~หมายเลขการนัดหมายป็นค่าว่าง ตัวอย่าง:APxxxxxx"`
+	Appoint_ID          string    `valid:"matches(^AP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:APxxxxxx,required~หมายเลขการนัดหมายป็นค่าว่าง ตัวอย่าง:APxxxxxx"`
 	Screening_officerID *uint     `valid:"-"`
 	TreatmentID         *uint     `valid:"-"`
 	LevelcureID         *uint     `valid:"-"`
@@ -474,7 +474,7 @@ type Appoint struct {
 type Med_Employee struct {
 	gorm.Model
 	Name           string `valid:"required~กรุณากรอกชื่อ"`
-	Age            int   `valid:"range(0|100)~กรุณาใส่อายุให้ถูกต้อง"`
+	Age            int    `valid:"range(0|100)~กรุณาใส่อายุให้ถูกต้อง"`
 	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
 	Email          string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง, required~กรุณากรอกอีเมล"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`

@@ -1466,7 +1466,7 @@ async function Treatment_Disease_Text(id:any) {
     },
   };
 
-  let res = await fetch(`${apiUrl}/treatmentss/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/treatment/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {

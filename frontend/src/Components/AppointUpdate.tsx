@@ -233,7 +233,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
           setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
         } else {
-          setAlertMessage(res.message);
+          setAlertMessage(res.error);
           setError(true);
     }
         });

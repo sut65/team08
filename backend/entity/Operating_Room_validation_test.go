@@ -20,7 +20,7 @@ func Test_Operating_Room_NumOper(t *testing.T) {
 	ok, err := govalidator.ValidateStruct(testoper)
 	g.Expect(ok).NotTo(gomega.BeTrue())
 	g.Expect(err).ToNot(gomega.BeNil())
-	g.Expect(err.Error()).To(gomega.Equal("ตัวอย่าง:OPxxxxxx"))
+	g.Expect(err.Error()).To(gomega.Equal("ผิดรูปแบบ ตัวอย่าง:OPxxxxxx"))
 }
 
 // //หมายเลขการผ่าตัดห้ามว่าง

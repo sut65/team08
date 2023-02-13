@@ -213,8 +213,8 @@ function timeout(delay: number) {
         ID: Operating_Rooms.ID,
 
         DoctorID: convertType(Operating_Rooms.DoctorID),
-        NumOper: (NumOper),
-        TextOper: (TextOper),
+        NumOper: Operating_Rooms.NumOper,
+        TextOper: Operating_Rooms.TextOper,
         Datetime: Operating_Rooms.Datetime,
       
         Save_ITIID: Operating_Rooms.Save_ITIID,
@@ -285,7 +285,7 @@ return (
     <Snackbar
       id="success"
       open={success}
-      autoHideDuration={3000}
+      autoHideDuration={6000}
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
@@ -466,7 +466,7 @@ return (
             <FormControl fullWidth variant="outlined">
               <TextField
                 fullWidth
-                id="setTextOper"
+                id="TextOper"
                 type="string"
                 value={Operating_Rooms.TextOper}
                 onChange={handleInputChange}

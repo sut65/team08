@@ -254,6 +254,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               <p>ผู้ป่วย</p>
               <Select
                 native
+                id="TreatmentID"
                 value={appoint.TreatmentID + ""}
                 onChange={Final_OnChangetreat}
                 inputProps={{
@@ -311,6 +312,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               <p>สิทธิในการรักษา</p>
               <Select
                 native
+                id = "LevelcureID"
                 value={appoint.LevelcureID + ""}
                 onChange={handleChange}
                 inputProps={{
@@ -334,6 +336,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               <p>แผนกที่ทำการนัด</p>
               <Select
                 native
+                id = "DepartmentID"
                 value={appoint.DepartmentID + ""}
                 onChange={handleChange}
                 inputProps={{

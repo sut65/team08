@@ -426,7 +426,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               color="primary"
               startIcon={<ContentPasteSearchIcon />}
             >
-              ดูข้อมูลการจ่ายยา
+              ดูข้อมูลการนัดหมาย
             </Button>
             <Button
              style={{ float: "right" }}
@@ -436,7 +436,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
              startIcon={<AddCircleIcon />}
 
            >
-             บันทึกข้อมูลการจ่ายยา
+             บันทึกข้อมูลการนัดหมาย
             </Button>
           </Grid>
         </Grid>

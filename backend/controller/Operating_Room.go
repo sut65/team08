@@ -3,8 +3,9 @@ package controller
 import (
 	"net/http"
 
-	"github.com/sut65/team08/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
+	"github.com/sut65/team08/entity"
 )
 
 // POST /operating_room
@@ -52,10 +53,15 @@ func CreateOperating_Room(c *gin.Context) {
 		Datetime: Operating_Room.Datetime,
 		TextOper: Operating_Room.TextOper,
 
-		Doctor: Doctor,
-		Save_ITI: 	Save_ITI,
-		//Building:  	Building,
-		Room:		Room,
+		DoctorID: Operating_Room.DoctorID,
+		Save_ITIID: 	Operating_Room.Save_ITIID,
+		//BuildingID:  	Operating_Room.BuildingID,
+		RoomID:		Operating_Room.RoomID,
+	}
+
+	if _, err := govalidator.ValidateStruct(save); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 15: บันทึก
@@ -63,6 +69,7 @@ func CreateOperating_Room(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	c.JSON(http.StatusCreated, gin.H{"data": save})
 }
 
@@ -117,10 +124,10 @@ func UpdateOperating_Room(c *gin.Context) {
 		RoomID:		Operating_Room.RoomID,
 	}
 
-	// if _, err := govalidator.ValidateStruct(u_p); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
+	if _, err := govalidator.ValidateStruct(upoperate); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if err := entity.DB().Where("id = ?", Operating_Room.ID).Updates(&upoperate).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

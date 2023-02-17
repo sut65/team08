@@ -268,6 +268,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               <p>ผู้ป่วย</p>
               <Select
                 native
+                id="TreatmentID"
                 value={dispense.TreatmentID + ""}
                 onChange={Final_OnChangetreat}
                 inputProps={{

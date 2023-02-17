@@ -95,9 +95,15 @@ function Operating_RoomList() {
             );
         },
     },
+    {
+      field: "NumOper",
+      headerName: "หมายเลขการผ่าตัด",
+      width: 180,
+      valueFormatter: (params) => params.value.ID,
+    },
       {
         field: "Save_ITI",
-        headerName: "คนนไขเที่ต้องการผ่าตัด",
+        headerName: "คนไข้ที่ต้องการผ่าตัด",
         width: 180,
         valueFormatter: (params) => params.value.ID,
       },
@@ -142,7 +148,7 @@ function Operating_RoomList() {
                         color="primary"
                         aria-lable="outlined button group"
                         //กด "ยืนยัน" ไปที่หน้าแก้ไข
-                        onClick={() => navigate({ pathname: `/operating_roomUpdate/${row.ID}` })} autoFocus
+                        onClick={() => navigate({ pathname: `/operating_roomUpdate/${Operating_RoomID}` })} autoFocus
                     >
                         <div className="good-font">
                           ยืนยัน

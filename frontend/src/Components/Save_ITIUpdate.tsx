@@ -14,7 +14,8 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
+import BedIcon from '@mui/icons-material/Bed';
+import DataSaverOffIcon from '@mui/icons-material/DataSaverOff';
 import { TreatmentsInterface } from "../Models/ITreatment";
 import { BuildingInterface } from "../Models/IBuilding";
 import { RoomInterface } from "../Models/IRoom";
@@ -45,13 +46,16 @@ import { DoctorInterface } from "../Models/IDoctor";
     const [BuildingOne, setBuildingOne] = useState<BuildingInterface>({});
     const [Room, setRoom] = useState<RoomInterface[]>([]);
     const [State, setState] = useState<StateInterface[]>([]);
+    const [TextSave, setTextSave] = useState<string>("");
     const [TreatOne, setTreatOne] = useState<TreatmentsInterface>({
       Patient:{Patient_Name:"-----"}
     });
+    const [treatmentOne, settreatmentOne] = useState<TreatmentsInterface>({});
     const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [message, setAlertMessage] = React.useState("");
     const params = useParams()
 
     const handleClose = (
@@ -74,23 +78,6 @@ import { DoctorInterface } from "../Models/IDoctor";
         console.log(res);
       }
     };
-
-// เอาฟังก์ชั่นมารวมกัน
-  const final_Change =async (e: SelectChangeEvent) => {
-  const id = e.target.value
-  const name = e.target.name as keyof typeof Save_ITIs;
-  const value = e.target.value;
-  let res = await GetReady_Treat(id);
-  if (res) {
-  setSave_ITIs({
-      ...Save_ITIs,
-      [name]: value,
-  });
-  }
-  console.log(`${name}: ${value}`);
-  setTreatOne(res);
-  console.log(TreatOne);
-}
 
 function timeout(delay: number) {
   return new Promise(res => setTimeout(res, delay));
@@ -118,62 +105,106 @@ const onChangeBuilding = async (e: SelectChangeEvent) =>{
 }
 
 function update() {
-    let upsave = {
-      ID: Save_ITIs.ID,
+   if (Save_ITIs.TreatmentID == undefined || Save_ITIs.TreatmentID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกเคสผู้ป่วยที่ให้เข้าพัก");
+    }
+    else if (Save_ITIs.RoomID == undefined || Save_ITIs.RoomID == 0){
+      setError(true);
+      setAlertMessage("กรุณาเลือกตึกและห้องที่ต้องการให้คนไข้เข้าพัก")
+    }
+    else if (Save_ITIs.StateID == undefined|| Save_ITIs.StateID == 0){
+      setError(true);
+      setAlertMessage("กรุณาสถานะการรักษา")
+    }
 
-      Date_checkin: Save_ITIs.Date_checkin,
-      Date_checkout: Save_ITIs.Date_checkin,
+    else {
+      let upsave = {
+        ID: Save_ITIs.ID,
 
-      TreatmentID: Save_ITIs.TreatmentID,
-      //BuildingID: Number(Save_ITIs.BuildingID),
-      RoomID: Number(Save_ITIs.RoomID),
-      StateID: Number(Save_ITIs.StateID),
-    };
+        Date_checkin: Save_ITIs.Date_checkin,
+        Date_checkout: Save_ITIs.Date_checkin,
+        TextSave: Save_ITIs.TextSave,
 
-    const requestOptions = {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(upsave),
-    };
-    console.log(upsave);
+        DoctorID: convertType(Save_ITIs.DoctorID),
+        TreatmentID: (Save_ITIs.TreatmentID),
+        //BuildingID: Number(Save_ITIs.BuildingID),
+        RoomID: Number(Save_ITIs.RoomID),
+        StateID: Number(Save_ITIs.StateID),
+      };
 
-    fetch(`http://localhost:8080/Save_ITIUpdate`, requestOptions)
-      .then((response) => response.json())
-      .then(async (res) => {
-        console.log(res);
-        if (res.data) {
+      const requestOptions = {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(upsave),
+      };
+      console.log(upsave);
+
+      fetch(`http://localhost:8080/Save_ITIUpdate`, requestOptions)
+        .then((response) => response.json())
+        .then(async (res) => {
+          console.log(res);
+          if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
-          await timeout(1000); //for 1 sec delay
-          window.location.reload();     
-          
-        } else {
-          setError(true);
-        }
-      });
+          } else {
+            setAlertMessage(res.error);
+            setError(true);
+          }
+        });
+    }
   }
 
-  const getSave_ITI = async () => {
-    const requestOptions = {
-      method: "GET",
+const getSave_ITI = async () => {
+  const requestOptions = {
+    method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    };
-
-    fetch(`http://localhost:8080/Save_ITI/${params.id}`, requestOptions )
-      .then((response) => response.json())
-      .then((res) => {
-        console.log(res.data)
-        if (res.data) {
-          setSave_ITIs(res.data);
-          setSave_ITIs_ID(res.data.ID);
-        }
-      });
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
+
+  fetch(`http://localhost:8080/Save_ITI/${params.id}`, requestOptions )
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res.data)
+      if (res.data) {
+        setSave_ITIs(res.data);
+        setSave_ITIs_ID(res.data.ID);
+        getTreatmentOne(res.data.TreatmentID)
+      }
+    });
+};
+
+const getTreatmentOne = async (id: any) => {
+  let res = await GetReady_Treat(id);
+  if (res) {
+    setTreatOne(res)
+    settreatmentOne(res)
+    console.log("One Treatment")
+    console.log(res)
+  }
+};
+
+// เอาฟังก์ชั่นมารวมกัน
+const final_Change =async (e: SelectChangeEvent) => {
+  const id = e.target.value
+  const name = e.target.name as keyof typeof Save_ITIs;
+  const value = e.target.value;
+  setSave_ITIs({
+    ...Save_ITIs,
+    [name]: value,
+  });
+  let res = await GetReady_Treat(id);
+  if (res) {
+    setTreatOne(res);
+  }
+  console.log(`${name}: ${value}`);
+  console.log(TreatOne);
+}
 
 const handleChange = (event: SelectChangeEvent) => {
   const name = event.target.name as keyof typeof Save_ITIs;
@@ -183,6 +214,16 @@ const handleChange = (event: SelectChangeEvent) => {
       [name]: value,
   });
   console.log(`${name}: ${value}`);
+};
+
+const handleInputChange = (
+  event: React.ChangeEvent<{ id?: string; value: any }>
+) => {
+  const id = event.target.id as keyof typeof treatment;
+
+  const { value } = event.target;
+
+  setSave_ITIs({ ...Save_ITIs, [id]: value });
 };
   
   const getTreatment = async () => {
@@ -230,15 +271,17 @@ const handleChange = (event: SelectChangeEvent) => {
   return (
     <Container maxWidth="md">
       <Snackbar
+        id="success"
         open={success}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="success">
-          บันทึกข้อมูลสำเร็จ
+          {message}
         </Alert>
       </Snackbar>
+
       <Snackbar
         open={error}
         autoHideDuration={6000}
@@ -246,9 +289,10 @@ const handleChange = (event: SelectChangeEvent) => {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleClose} severity="error">
-          บันทึกข้อมูลไม่สำเร็จ
+          {message}
         </Alert>
       </Snackbar>
+
       <Paper>
         <Box
           display="flex"
@@ -270,7 +314,7 @@ const handleChange = (event: SelectChangeEvent) => {
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
 
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>การรักษา</p>
               <Select
@@ -284,6 +328,9 @@ const handleChange = (event: SelectChangeEvent) => {
                 <option aria-label="None" value="">
                   กรุณาเลือกการรักษา
                 </option>
+                <option value={treatmentOne.ID} key={treatmentOne.ID}>
+                    {treatmentOne.TREATMENT_ID}
+                </option>
                 {treatment.map((item: TreatmentsInterface) => (
                   <option value={item.ID} key={item.ID}>
                     {item.TREATMENT_ID}
@@ -293,7 +340,7 @@ const handleChange = (event: SelectChangeEvent) => {
             </FormControl>
           </Grid>
 
-        <Grid item xs={4.5}>
+        <Grid item xs={4}>
           <p>ชื่อแพทย์ที่รับผิดชอบ</p>
           <FormControl fullWidth >
             <TextField
@@ -305,12 +352,12 @@ const handleChange = (event: SelectChangeEvent) => {
                 name: "Explain",
               }}
               value={DoctorByUID?.FirstNameEN + ""}
-              // onChange={handleInputChange_Text}
+              //onChange={handleInputChange_Text}
             />
           </FormControl>
         </Grid>
 
-        <Grid item xs={4.5}>
+        <Grid item xs={4}>
           <p>ชื่อผู้ป่วย</p>
           <FormControl fullWidth >
             <TextField
@@ -323,7 +370,7 @@ const handleChange = (event: SelectChangeEvent) => {
               }}
               // แก้ไขตัวแปร ******************
               value={TreatOne?.Patient?.Patient_Name + ""}
-              // onChange={handleInputChange_Text}
+              onChange={handleInputChange}
             />
           </FormControl>
         </Grid>
@@ -374,7 +421,7 @@ const handleChange = (event: SelectChangeEvent) => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={7}>
+          <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
               <p>สถานะ</p>
               <Select
@@ -394,6 +441,20 @@ const handleChange = (event: SelectChangeEvent) => {
                   </option>
                 ))}
               </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={8}>
+            <p>แผนการรักษา</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                fullWidth
+                id="TextSave"
+                type="string"
+                variant="outlined"
+                value={Save_ITIs.TextSave}
+                onChange={handleInputChange}
+              />
             </FormControl>
           </Grid>
 
@@ -439,19 +500,21 @@ const handleChange = (event: SelectChangeEvent) => {
           <Grid item xs={12}>
             <Button
               component={RouterLink}
-              to="/Save_ITICreate"
+              to="/Save_ITI"
               variant="contained"
-              color="inherit"
+              color="primary"
+              startIcon={<BedIcon />}
             >
-              กลับ
+              ดูข้อมูลคนไข้ภายใน
             </Button>
             <Button
               style={{ float: "right" }}
               onClick={update}
               variant="contained"
               color="primary"
+              startIcon={<DataSaverOffIcon />}
             >
-              บันทึก
+              บันทึกข้อมูลคนไข้ภายใน
             </Button>
           </Grid>
         </Grid>

@@ -249,13 +249,19 @@ function RequestUpdate() {
             <Grid item xs={6}>
               <p>จำนวน</p>
               <FormControl fullWidth variant="outlined">
-              <TextField
+              {/* <TextField
                 id="QUANTITY"
-                
+                 
                 type="Number"
                 inputProps={{ name: "Number", min: 0 ,max:1000}} 
                 value={request.QUANTITY}
                 onChange={handleInputChange}
+              /> */}
+              <TextField
+                value={request.QUANTITY}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
             </FormControl>
               {/* <TextField

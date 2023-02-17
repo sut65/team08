@@ -60,7 +60,7 @@ func main() {
 			router.GET("/Operating_Rooms", controller.ListOperating_Rooms)
 			router.GET("/Operating_Room/:id", controller.GetOperating_Room)
 			router.POST("/Operating_RoomCreate", controller.CreateOperating_Room)
-			router.PATCH("/Operating_RoomUpdate", controller.UpdateOperating_Room)
+			router.PATCH("/Operating_RoomUpdate/:id", controller.UpdateOperating_Room)
 			router.DELETE("/Operating_Room/:id", controller.DeleteOperating_Room)
 			//---------------------------------------------------
 

@@ -3,8 +3,9 @@ package controller
 import (
 	"net/http"
 
-	"github.com/sut65/team08/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
+	"github.com/sut65/team08/entity"
 )
 
 // POST /save_iti
@@ -65,15 +66,20 @@ func CreateSave_ITI(c *gin.Context) {
 
 	// 15: สร้าง Save_ITI
 	save := entity.Save_ITI{
-		Date_checkin: Save_ITI.Date_checkin,
+		Date_checkin:  Save_ITI.Date_checkin,
 		Date_checkout: Save_ITI.Date_checkout,
-		TextSave: Save_ITI.TextSave,
+		TextSave:      Save_ITI.TextSave,
 
-		Doctor: Doctor,
-		Treatment: 	Treatment,
-		//Building:  	Building,
-		Room:		Room,
-		State:		State,
+		DoctorID:    Save_ITI.DoctorID,
+		TreatmentID: Save_ITI.TreatmentID,
+		//BuildingID:  	Save_ITI.BuildingID,
+		RoomID:  Save_ITI.RoomID,
+		StateID: Save_ITI.StateID,
+	}
+
+	if _, err := govalidator.ValidateStruct(save); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// 16: บันทึก
@@ -81,6 +87,7 @@ func CreateSave_ITI(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	c.JSON(http.StatusCreated, gin.H{"data": save})
 }
 
@@ -123,23 +130,23 @@ func UpdateSave_ITI(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	
+
 	// สร้าง
 	upsave := entity.Save_ITI{
-		Date_checkin: Save_ITI.Date_checkin,
+		Date_checkin:  Save_ITI.Date_checkin,
 		Date_checkout: Save_ITI.Date_checkout,
-		TextSave: Save_ITI.TextSave,
-		
-		TreatmentID: 	Save_ITI.TreatmentID,
+		TextSave:      Save_ITI.TextSave,
+
+		TreatmentID: Save_ITI.TreatmentID,
 		//BuildingID:  	Save_ITI.BuildingID,
-		RoomID:		Save_ITI.RoomID,
-		StateID:		Save_ITI.StateID,
+		RoomID:  Save_ITI.RoomID,
+		StateID: Save_ITI.StateID,
 	}
 
-	// if _, err := govalidator.ValidateStruct(u_p); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
+	if _, err := govalidator.ValidateStruct(upsave); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if err := entity.DB().Where("id = ?", Save_ITI.ID).Updates(&upsave).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -152,12 +159,11 @@ func UpdateSave_ITI(c *gin.Context) {
 func ListReady_Save(c *gin.Context) {
 	var operating_rooms []entity.Save_ITI
 	if err := entity.DB().Preload("Treatment").Preload("Building").Preload("Room").Preload("State").
-	Raw("select * from save_itis where id not in " +
-	"(select t.id from save_itis t INNER JOIN operating_rooms o on t.id = o.save_iti_id )" +
-	"and state_id = 1").Find(&operating_rooms).Error; err != nil {
+		Raw("select * from save_itis where id not in " +
+			"(select t.id from save_itis t INNER JOIN operating_rooms o on t.id = o.save_iti_id )" +
+			"and state_id = 1").Find(&operating_rooms).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": operating_rooms})
 }
-

@@ -57,12 +57,39 @@ func CreateRequest(c *gin.Context) {
 		return
 	}
 
-	// 13: บันทึก
-	if err := entity.DB().Create(&wv).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	///////////////////////////////////////////////
+	//สร้าง ข้อมูลสำหรับใช้ในการอัปเดต Stock ของ softener
+	s_u := entity.Med_Equipment{
+		Quantity: med_equipment.Quantity - int(request.QUANTITY),
 	}
-	c.JSON(http.StatusCreated, gin.H{"data": wv})
+
+	if s_u.Quantity < 0 {
+		//Alert ว่าไม่เพียงพอ
+		if err := c.ShouldBindJSON(&request); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "จำนวนอุปกรณ์มีไม่เพียงพอ"})
+			return
+		}
+		return
+
+	}
+
+	if s_u.Quantity >= 0 {
+
+		//function สำหรับอัพเดท Quantity
+		if err := entity.DB().Where("id = ?", request.Med_EquipmentID).Updates(&s_u).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		// 13: บันทึก
+		if err := entity.DB().Create(&wv).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": wv})
+	///////////////////////////////////////////////
+
 }
 
 // GET
@@ -123,7 +150,6 @@ func UpdateRequest(c *gin.Context) {
 		return
 	}
 
-
 	// if tx := entity.DB().Where("id = ?", id).Updates(&uprequest); tx.RowsAffected == 0 {
 	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "request not found"})
 	// 	return
@@ -132,7 +158,6 @@ func UpdateRequest(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 
 	// if err := entity.DB().Save(&request).Error; err != nil {
 	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

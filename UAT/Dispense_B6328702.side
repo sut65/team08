@@ -1,0 +1,1786 @@
+{
+  "id": "b89dfe80-3577-43e5-bcba-8241b8728b3f",
+  "version": "2.0",
+  "name": "Dispense_B6328702",
+  "url": "http://localhost:3000/DispenseCreate",
+  "tests": [{
+    "id": "70e36a58-1c72-4ba9-9db6-c6c641b81147",
+    "name": "All_Pass",
+    "commands": [{
+      "id": "6c11b449-b85a-448e-b0b7-8da03647bb71",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/DispenseCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c46ace52-8db1-4d35-98ad-c475fc22f755",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x818",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "716ca77f-9e56-41bb-a047-c2b40817fb4e",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[3]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "482830dd-eda9-48b0-a7af-c8879f15fa66",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ เชิงดี"
+    }, {
+      "id": "e1e6c892-02fc-476c-a33f-34365478d9d0",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e9b1e5ba-dc1c-4761-a8df-768dcdc51132",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=Dispense_ID-label",
+      "targets": [
+        ["id=Dispense_ID-label", "id"],
+        ["css=#Dispense_ID-label", "css:finder"],
+        ["xpath=//label[@id='Dispense_ID-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'รายละเอียดยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c74d56ba-af0f-4b5e-b6d6-3aae99997b00",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aec88337-7a2e-4b0e-b84c-4a9fb3fb1cda",
+      "comment": "",
+      "command": "type",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "DP123456"
+    }, {
+      "id": "86dc59d5-c7c9-4941-8f8b-d11076d87461",
+      "comment": "",
+      "command": "click",
+      "target": "name=DrugID",
+      "targets": [
+        ["name=DrugID", "name"],
+        ["css=.Mui-focused > .MuiNativeSelect-select", "css:finder"],
+        ["xpath=//select[@name='DrugID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "96d64607-17eb-4407-81bc-1b1aae2a5228",
+      "comment": "",
+      "command": "select",
+      "target": "name=DrugID",
+      "targets": [],
+      "value": "label=Betahistine (เบตาฮีสทีน)"
+    }, {
+      "id": "9612cef9-e295-4f82-8524-cd4eb762f7cf",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d32a30d0-c0f6-4429-982b-0b46bc3d1e80",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=setNumber-label",
+      "targets": [
+        ["id=setNumber-label", "id"],
+        ["css=#setNumber-label", "css:finder"],
+        ["xpath=//label[@id='setNumber-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/label", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Number')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5e6868b3-e29d-4af6-9334-8b3b432ff9da",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-6 > .MuiFormControl-root > .MuiFormControl-root",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-6 > .MuiFormControl-root > .MuiFormControl-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "95f08383-faf6-481a-809b-226a90ab3970",
+      "comment": "",
+      "command": "type",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "20"
+    }, {
+      "id": "25f35327-d80e-4e4c-b974-ded6d9eb47e5",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-PracticeID",
+      "targets": [
+        ["id=mui-component-select-PracticeID", "id"],
+        ["css=#mui-component-select-PracticeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-PracticeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[8]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "40280c8c-e684-4ca3-b68a-6ece39f78a9e",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cfdbf744-7fde-4626-8168-91fdfd0e4477",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d1374a42-d14f-4a68-a7b1-c9598da408c5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'ยาก่อนอาหาร ควรรับประทานก่อนอาหารอย่างน้อย 30 นาที')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5a972ee7-f4c3-4243-b4d2-276163253e46",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "36c50608-439e-4de6-950a-f1dae477d8cf",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "วันละ 2 ครั้ง"
+    }, {
+      "id": "f4e06a4a-8693-435c-b199-8316bbe2dec0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bdbc9a6e-61f2-482b-9164-f0f2fdd845e6",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='success']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลสำเร็จ"
+    }]
+  }, {
+    "id": "56c6a181-269c-4cd7-8049-7d7f5f55e28d",
+    "name": "Null_DispenseID",
+    "commands": [{
+      "id": "8e90abee-90a3-44f3-8970-096a0c41ad0d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/DispenseCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7702c232-2d5f-418d-9863-a1f2c0aaf48a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b676862b-f3e7-490c-a2fa-57dfaafb38e0",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[3]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9506716a-9570-48cb-aa0e-51cf607cf895",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ ชวนโพธิ์"
+    }, {
+      "id": "8d657e9f-3c79-40db-9625-d9f62a0f5f4e",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "34732595-c1cc-41b2-b799-8de04f89ffb9",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=Dispense_ID-label",
+      "targets": [
+        ["id=Dispense_ID-label", "id"],
+        ["css=#Dispense_ID-label", "css:finder"],
+        ["xpath=//label[@id='Dispense_ID-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'รายละเอียดยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "64075d76-0577-4208-b9fd-19af24f3fbbe",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "39274b63-7f1f-42a2-b39b-134417c55eae",
+      "comment": "",
+      "command": "click",
+      "target": "name=DrugID",
+      "targets": [
+        ["name=DrugID", "name"],
+        ["css=.Mui-focused > .MuiNativeSelect-select", "css:finder"],
+        ["xpath=//select[@name='DrugID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2695d5d8-4677-4135-964d-ef3a09bae4b5",
+      "comment": "",
+      "command": "select",
+      "target": "name=DrugID",
+      "targets": [],
+      "value": "label=Betahistine (เบตาฮีสทีน)"
+    }, {
+      "id": "e4258de3-e317-495b-a34f-554554511d0c",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7e5d4b20-af8f-4713-bcca-7913004adc6d",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=setNumber-label",
+      "targets": [
+        ["id=setNumber-label", "id"],
+        ["css=#setNumber-label", "css:finder"],
+        ["xpath=//label[@id='setNumber-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/label", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Number')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c51269e-5c9e-4e23-bdfb-834503bff55d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-6 > .MuiFormControl-root > .MuiFormControl-root",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-6 > .MuiFormControl-root > .MuiFormControl-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e6dfc0fb-8df9-42ea-8a73-93902f781837",
+      "comment": "",
+      "command": "type",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "60"
+    }, {
+      "id": "cca977ab-f0e4-4ff1-bdc8-d836d7888b24",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-PracticeID",
+      "targets": [
+        ["id=mui-component-select-PracticeID", "id"],
+        ["css=#mui-component-select-PracticeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-PracticeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[8]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f76f6f5b-3d70-43e7-acef-4d3d7c6a178c",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a54968d4-626e-490a-a8a6-91bb3cb62029",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8c45a443-dfe2-4c50-8d81-d17334981872",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5310e42b-6e90-4760-8b22-7a0cdc98aa63",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b9c22b70-51fe-435e-a483-13dfac209e69",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "ยากัดกระเพราะ"
+    }, {
+      "id": "5c868e84-1f90-48f7-b00d-2de052ef954b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5dfe6efe-7df0-4ead-8152-e0145d356de8",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "หมายเลขการจ่ายยาเป็นค่าว่าง ตัวอย่าง:DPxxxxxx"
+    }]
+  }, {
+    "id": "48f1ca4c-67bd-4a4b-ae83-80c5d00a5aef",
+    "name": "Past_Date",
+    "commands": [{
+      "id": "4a22bfac-8c58-4490-b485-7eca8e558381",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/DispenseCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cc6f354f-d7fd-4807-beec-ef06c00e646c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ab469a68-a9c7-4f7e-9064-c671d5c7c7ec",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[3]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a5878d44-dda9-46e0-93db-bb91a6ca1dc4",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ เชิงดี"
+    }, {
+      "id": "2ccdda18-4d9a-4f57-b345-ebc570c3ac6f",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d49c8f3e-62ee-457c-807e-9683b1a6ed04",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=Dispense_ID-label",
+      "targets": [
+        ["id=Dispense_ID-label", "id"],
+        ["css=#Dispense_ID-label", "css:finder"],
+        ["xpath=//label[@id='Dispense_ID-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'รายละเอียดยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a3d064c3-271d-4d85-bb16-8d5516b76953",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d4168ce9-4440-4cd8-8fcd-9dee7ef4c9ee",
+      "comment": "",
+      "command": "type",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "DP123450"
+    }, {
+      "id": "66cf67a8-f474-445b-b841-05b277a4998b",
+      "comment": "",
+      "command": "click",
+      "target": "name=DrugID",
+      "targets": [
+        ["name=DrugID", "name"],
+        ["css=.Mui-focused > .MuiNativeSelect-select", "css:finder"],
+        ["xpath=//select[@name='DrugID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "53d510c7-a142-416f-94d2-f3457953a7d9",
+      "comment": "",
+      "command": "select",
+      "target": "name=DrugID",
+      "targets": [],
+      "value": "label=Fentanyl (เฟนทานิล)"
+    }, {
+      "id": "0c81eff8-4a2f-452a-9ab3-70185b0833b5",
+      "comment": "",
+      "command": "click",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "46b551f3-ca8e-430b-be09-09ffebcbfb0d",
+      "comment": "",
+      "command": "type",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "b81d1b64-41bc-4a19-9c6d-f0a20e49fe8e",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-PracticeID",
+      "targets": [
+        ["id=mui-component-select-PracticeID", "id"],
+        ["css=#mui-component-select-PracticeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-PracticeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[8]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "49f5750b-5484-4869-91fb-6693f08756cf",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "74c3e884-cd57-404b-96ed-d27620af855f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e868d6e1-da71-43f9-8cec-79fec2632938",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d3ebc5a8-fa0e-44ea-9982-bd84297a243a",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c01e996a-2a3a-4b1f-82c9-6c6ecd7668be",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiIconButton-edgeEnd > .MuiSvgIcon-root",
+      "targets": [
+        ["css=.MuiIconButton-edgeEnd > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad108850-e5f4-4ff8-9aef-0f8a59cd22ac",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "ทำให้ง่วงซึม"
+    }, {
+      "id": "863e98ef-e29c-4632-b6ba-55273d38776f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiIconButton-edgeEnd > .MuiSvgIcon-root",
+      "targets": [
+        ["css=.MuiIconButton-edgeEnd > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "c03bf1bd-0369-4546-8b5d-adc7b339d828",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root > .MuiSvgIcon-root",
+      "targets": [
+        ["css=.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "424ce8de-df6e-4860-991c-bf1127151fdb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiDayPicker-weekContainer:nth-child(2) > .MuiButtonBase-root:nth-child(6)",
+      "targets": [
+        ["css=.MuiDayPicker-weekContainer:nth-child(2) > .MuiButtonBase-root:nth-child(6)", "css:finder"],
+        ["xpath=(//button[@type='button'])[18]", "xpath:attributes"],
+        ["xpath=//button[6]", "xpath:position"],
+        ["xpath=//button[contains(.,'10')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "20236343-3c12-4c27-af42-5247db3b560b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiContainer-maxWidthLg",
+      "targets": [
+        ["css=.MuiContainer-maxWidthLg", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]", "xpath:idRelative"],
+        ["xpath=//main/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "40853b7e-4bf3-475b-bef0-6e2723e13096",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f546cbc-1b61-4b1b-921e-25adc3e07689",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "โปรดระบุวันที่และเวลาเป็นปัจจุบัน"
+    }]
+  }, {
+    "id": "25b56895-1de7-44a9-89f0-25a742ccb144",
+    "name": "Dispense_NotNullText",
+    "commands": [{
+      "id": "ce86673c-e29b-4dd5-ad7b-56715632686e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/DispenseCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "52cafbf4-7316-46fe-8212-f1a614cab25c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "99932e0d-5bcb-4f2b-aa17-987fc1683b87",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[3]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8c9f5b37-3e0b-4e7d-a3ae-3b14d45e6ce5",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ เชิงดี"
+    }, {
+      "id": "2e1fd3ac-ef59-47d9-873f-764d1e963780",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7feeecfa-5704-4d47-9bf0-9b08c392f9ae",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=Dispense_ID-label",
+      "targets": [
+        ["id=Dispense_ID-label", "id"],
+        ["css=#Dispense_ID-label", "css:finder"],
+        ["xpath=//label[@id='Dispense_ID-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'รายละเอียดยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f8265183-0adc-42a0-afd1-91d105284bb7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "171b156a-3ac3-4409-a5cb-02b758b913e1",
+      "comment": "",
+      "command": "type",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "DP123456"
+    }, {
+      "id": "9a40bc1f-2d1c-451c-a04b-2bcdd94cba57",
+      "comment": "",
+      "command": "click",
+      "target": "name=DrugID",
+      "targets": [
+        ["name=DrugID", "name"],
+        ["css=.Mui-focused > .MuiNativeSelect-select", "css:finder"],
+        ["xpath=//select[@name='DrugID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2734b6c-d5bb-4fa6-9e58-f8012a9140a7",
+      "comment": "",
+      "command": "select",
+      "target": "name=DrugID",
+      "targets": [],
+      "value": "label=Budesonide (บูเดโซไนด์)"
+    }, {
+      "id": "c6faf74e-3db3-4987-bdaa-c61dd96b01f8",
+      "comment": "",
+      "command": "click",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a5fdbda-eaaa-4d41-8d11-3365e61b7f21",
+      "comment": "",
+      "command": "type",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "80"
+    }, {
+      "id": "7dc12383-3e1f-4440-89e6-f5e2e6cf1fb2",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,0)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "979470a1-c4b3-411e-af2e-18d3509881e3",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-PracticeID",
+      "targets": [
+        ["id=mui-component-select-PracticeID", "id"],
+        ["css=#mui-component-select-PracticeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-PracticeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[8]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aeebfed6-e58b-410e-a313-a71ee20c8132",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a99ed79-be16-4762-9ed5-d32d81aee962",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ed0e8cda-ab2e-40ee-9ae9-46235e9cb1ca",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "159c9487-30d9-4bb7-bf27-c3810ac63785",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "867a5f91-ab46-45c0-a733-f2a04b48b081",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "โปรดระบุรายละเอียดของยา"
+    }]
+  }, {
+    "id": "9fe9a132-c1a9-4c34-acc7-9119e25380ac",
+    "name": "Dispense_OverText",
+    "commands": [{
+      "id": "dd60ec4e-2acd-403e-bb14-1557b84aab63",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/DispenseCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ae533073-93ef-430a-b7de-117194fbad0e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8bd4495f-5276-472d-a0e4-5419dd41ff9e",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[3]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a7603ed1-0160-4292-bc0d-443e76515db7",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ เชิงดี"
+    }, {
+      "id": "5e6dc017-2fac-496d-9a36-b2ebcc97956f",
+      "comment": "",
+      "command": "click",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bd3b0172-c191-4b20-9de0-316be605a938",
+      "comment": "",
+      "command": "type",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "DP123450"
+    }, {
+      "id": "8047be2c-3cd8-42cf-89bb-40e3117e901d",
+      "comment": "",
+      "command": "click",
+      "target": "name=DrugID",
+      "targets": [
+        ["name=DrugID", "name"],
+        ["css=.Mui-focused > .MuiNativeSelect-select", "css:finder"],
+        ["xpath=//select[@name='DrugID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ac17b79-580f-41f8-a959-3f9f854d6019",
+      "comment": "",
+      "command": "select",
+      "target": "name=DrugID",
+      "targets": [],
+      "value": "label=Betahistine (เบตาฮีสทีน)"
+    }, {
+      "id": "e68f58b8-6b61-4c23-8ddd-345fdaeab50c",
+      "comment": "",
+      "command": "click",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c59dda14-007d-4b50-8b19-8e0c95f530f3",
+      "comment": "",
+      "command": "type",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "20"
+    }, {
+      "id": "e023caf4-5921-4eac-8339-1b41fe868d07",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-PracticeID",
+      "targets": [
+        ["id=mui-component-select-PracticeID", "id"],
+        ["css=#mui-component-select-PracticeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-PracticeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[8]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d3a20f1b-5990-4526-812c-76daf6b28917",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'ยาก่อนอาหาร ควรรับประทานก่อนอาหารอย่างน้อย 30 นาที')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1959dc4-d61d-43b9-8dfc-b97ba5d4f163",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "49212f3d-e7ab-46b1-823d-38979bf3f704",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ยาหลังอาหาร ควรรับประทานยาหลังมื้ออาหาร 15 – 30 นาที')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9288131-83fd-4b29-a193-9f9398af7449",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "942e030b-a3bd-43c1-8ff6-4b3d0d0c6b4e",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "30d59635-682f-4af8-89b9-345270161b9b",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "gkfodgdfhfhjfipx[odhjdigkjhndgpspigkbdpgkfodgdfhfhjfipx[odhjdigkjhndgpspigkbdpgkfodgdfhfhjfipx[odhjdfffffff"
+    }, {
+      "id": "8c3dde1e-257a-459f-8ea3-c67080cdf1b8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2ec7fba4-1dce-4603-b6a2-e527fd9a34fb",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "โปรดระบุรายละเอียดของยาไม่เกิน 50 ตัวอักษร"
+    }]
+  }, {
+    "id": "bfab2412-506e-404a-9aa7-46b48702bd67",
+    "name": "dispense_Overdrug",
+    "commands": [{
+      "id": "732ef5ec-be21-4fae-97dd-017db006d6ca",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/DispenseCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca450b67-7526-41a8-96c9-5c40aff4297a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4ff15ccf-1fd1-4add-8b62-3255f24a782f",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[3]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9221799-e7c8-4ffd-8d40-76fb0c4c3ef0",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ เชิงดี"
+    }, {
+      "id": "0bcc24ad-5f29-494e-9c06-65cb475e772d",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "018d5382-e907-4a6d-b3fd-76c12875df03",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=Dispense_ID-label",
+      "targets": [
+        ["id=Dispense_ID-label", "id"],
+        ["css=#Dispense_ID-label", "css:finder"],
+        ["xpath=//label[@id='Dispense_ID-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'รายละเอียดยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "30d39362-452f-4549-a06e-6c4c48c894fe",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d2269d94-dceb-4547-bace-184ce0d65bd9",
+      "comment": "",
+      "command": "type",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "DP123450"
+    }, {
+      "id": "60e49b04-d215-404a-9dc0-d673dc326416",
+      "comment": "",
+      "command": "click",
+      "target": "name=DrugID",
+      "targets": [
+        ["name=DrugID", "name"],
+        ["css=.Mui-focused > .MuiNativeSelect-select", "css:finder"],
+        ["xpath=//select[@name='DrugID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d7f0b85-3450-4b0d-b180-fdd95ae11ecb",
+      "comment": "",
+      "command": "select",
+      "target": "name=DrugID",
+      "targets": [],
+      "value": "label=Clozapine (โคลซาปีน)"
+    }, {
+      "id": "96094b56-8cc4-4f60-8525-6396fd27be28",
+      "comment": "",
+      "command": "click",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a43e82a6-32b8-43f9-b38a-62d000d755f2",
+      "comment": "",
+      "command": "type",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "118"
+    }, {
+      "id": "75e2e135-35bf-4168-b1c8-b59d021c8b91",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-PracticeID",
+      "targets": [
+        ["id=mui-component-select-PracticeID", "id"],
+        ["css=#mui-component-select-PracticeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-PracticeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[8]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "452cde13-1aa4-4072-b16e-bad11ec15107",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "237550e0-e171-4ad0-8551-a1d0fe7da92a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b5f3d81a-0a63-446d-86c3-13a16a0ca8cf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'ยาก่อนอาหาร ควรรับประทานก่อนอาหารอย่างน้อย 30 นาที')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "45ceb586-5369-4dc0-872b-21fd1f4f930a",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e10ac06b-aaa9-4984-aa53-8240558798ec",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "gkfodgdfhfhjfipx[odhjdigkjhndgpspigkbdpgkfodgdfhfhjfipx[odhjdigkjhndgpspigkbdpgkfodgdfhfhjfipx[odhjdfffffff"
+    }, {
+      "id": "798400dc-d9fd-4d66-a33b-006355f28287",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-root:nth-child(9)",
+      "targets": [
+        ["css=.MuiGrid-root:nth-child(9)", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]", "xpath:idRelative"],
+        ["xpath=//div[9]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "360108b2-861b-4520-b4fa-11805295fcd3",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "ยาทำให้ง่วงซึม"
+    }, {
+      "id": "554d2685-48a9-4e32-acd3-44b1885eb203",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb0cffcf-70f7-4736-b550-9dcb0911f1c3",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "กรุณาใส่จำนวนยาให้ถูกต้อง"
+    }]
+  }, {
+    "id": "dadb6167-c71a-4793-a0c2-850be03cecc1",
+    "name": "Dispense_combobox",
+    "commands": [{
+      "id": "80cdcdf4-1188-40d4-8e6d-bf9146bf247a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/DispenseCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "07005b7c-72d3-4080-bf68-7b7bd1b2a0ee",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ad0862eb-3412-4e54-9ee3-301844394f60",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[3]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "59c98b72-d00d-48cf-91c2-ce192924a5d3",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ เชิงดี"
+    }, {
+      "id": "073f7ef8-8fd9-4124-bd41-bffe85f129a2",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f7d7a69-e734-4bc2-ba75-d74605b66b26",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=Dispense_ID-label",
+      "targets": [
+        ["id=Dispense_ID-label", "id"],
+        ["css=#Dispense_ID-label", "css:finder"],
+        ["xpath=//label[@id='Dispense_ID-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'รายละเอียดยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "457b0f8a-35a0-4970-9008-9f76b94409d8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-4 > .MuiFormControl-root > .MuiFormControl-fullWidth", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ca7838c-4992-4f7a-93e0-17828d89cb86",
+      "comment": "",
+      "command": "type",
+      "target": "id=Dispense_ID",
+      "targets": [
+        ["id=Dispense_ID", "id"],
+        ["css=#Dispense_ID", "css:finder"],
+        ["xpath=//input[@id='Dispense_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "DP123456"
+    }, {
+      "id": "e9f3521e-25d1-4c27-9aa6-5c9018d2a894",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "622eb4f1-fa9a-4acb-bcc1-50e562873d84",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=setNumber-label",
+      "targets": [
+        ["id=setNumber-label", "id"],
+        ["css=#setNumber-label", "css:finder"],
+        ["xpath=//label[@id='setNumber-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/label", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Number')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a33d5499-ffdf-4b1d-9c08-f751e73e6839",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-xs-6 > .MuiFormControl-root > .MuiFormControl-root",
+      "targets": [
+        ["css=.MuiGrid-grid-xs-6 > .MuiFormControl-root > .MuiFormControl-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "85bb65b2-f3c2-4dd1-bad2-8aff700dc26d",
+      "comment": "",
+      "command": "type",
+      "target": "id=setNumber",
+      "targets": [
+        ["id=setNumber", "id"],
+        ["name=Number", "name"],
+        ["css=#setNumber", "css:finder"],
+        ["xpath=//input[@id='setNumber']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "26"
+    }, {
+      "id": "4d660cf3-f322-4c32-a286-f8e3f105581f",
+      "comment": "",
+      "command": "click",
+      "target": "name=DrugID",
+      "targets": [
+        ["name=DrugID", "name"],
+        ["css=.Mui-focused > .MuiNativeSelect-select", "css:finder"],
+        ["xpath=//select[@name='DrugID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd0d4076-6d86-4f50-b438-20dfffaaa1a2",
+      "comment": "",
+      "command": "select",
+      "target": "name=DrugID",
+      "targets": [],
+      "value": "label=Betahistine (เบตาฮีสทีน)"
+    }, {
+      "id": "bd50265f-50a3-41c7-bf5e-a542f4a3ea76",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-PracticeID",
+      "targets": [
+        ["id=mui-component-select-PracticeID", "id"],
+        ["css=#mui-component-select-PracticeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-PracticeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[8]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19cd259e-f987-441f-a105-93640117c432",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cb8f1739-4640-48b9-8169-e22f0e89e79b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "96b0fadf-a904-44e2-8c2b-c6a37eaba407",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-PracticeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "09df022a-7f2a-4b3f-b255-ad0cb136a1fe",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d424320-28ae-4be5-ae2e-815f0c082d85",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "ยากัดกระเพราะ"
+    }, {
+      "id": "6aad4c3b-247d-493e-85ca-e811c43797ad",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "71069bcb-db88-462e-834c-7af64fcee07c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ff48d19-c2bf-4e9b-b94b-7bd9d84d8ed5",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div[2]/div[2]/div[11]/button", "xpath:idRelative"],
+        ["xpath=//div[11]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการจ่ายยา')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb563f65-b973-49e7-8525-759ec1d8b7ea",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "กรุณาเลือกประเภทการรับประทานยา"
+    }]
+  }],
+  "suites": [{
+    "id": "56907825-9b56-4594-8400-b6a455410611",
+    "name": "All_pass",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:3000/", "http://localhost:3000/DispenseCreate"],
+  "plugins": []
+}

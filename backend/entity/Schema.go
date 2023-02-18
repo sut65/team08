@@ -196,7 +196,7 @@ type Doctor struct {
 	ReOther       string    `valid:"-"`
 	NationalityID *uint     `valid:"-"`
 	CountryID     *uint     `valid:"-"`
-	TelPhone      string    `valid:"-"`
+	TelPhone      string    `valid:"matches(^[0]\\d{9}$)`
 	TelOffice     string    `valid:"-"`
 
 	Email       string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`

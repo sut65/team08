@@ -1,16 +1,19 @@
 package entity
 
 import (
+
+	// "fmt"
 	"testing"
+
 	"github.com/asaskevich/govalidator"
-	"github.com/onsi/gomega"
+	.	"github.com/onsi/gomega"
+
 	"time"
 )
 
-func TestUserNameNotBlank(t *testing.T) {
+func TestDoctorUserNameNotBlank(t *testing.T) {
 	t1, _ := time.Parse("2006-01-02", "2001-07-05")
-	g := gomega.NewGomegaWithT(t)
-
+	g := NewGomegaWithT(t)
 	user := Doctor{
 		DocterCode:   "D6300237",
 		DocterIDCard: "1234567890111",
@@ -52,12 +55,8 @@ func TestUserNameNotBlank(t *testing.T) {
 		EndEducation:   t1,
 		DocPassword: "0123456789",
 	}
-
 	ok, err := govalidator.ValidateStruct(user)
-
-	g.Expect(ok).ToNot(gomega.BeTrue())
-
-	g.Expect(err).ToNot(gomega.BeNil())
-
-	g.Expect(err.Error()).To(gomega.Equal("Name cannot be blank"))
+	g.Expect(ok).ToNot(BeTrue())
+	g.Expect(err).ToNot(BeNil())
+	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อด้วยค่ะ"))
 }

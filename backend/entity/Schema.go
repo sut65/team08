@@ -183,7 +183,7 @@ type Doctor struct {
 	DocterCode   string `valid:"-"`
 	DocterIDCard string `valid:"-"`
 	DocPrefixID  *uint  `valid:"-"`
-	FirstNameTH  string `valid:"required~Name cannot be blank"`
+	FirstNameTH  string `valid:"required~กรุณากรอกชื่อด้วยค่ะ"`
 	LastNameTH   string `valid:"-"`
 	FirstNameEN  string `valid:"-"`
 

@@ -199,7 +199,7 @@ type Doctor struct {
 	TelPhone      string    `valid:"-"`
 	TelOffice     string    `valid:"-"`
 
-	Email       string `valid:"-"`
+	Email       string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
 	AllAddress  string `valid:"-"`
 	Subdistrict string `valid:"-"`
 	District    string `valid:"-"`

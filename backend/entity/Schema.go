@@ -319,7 +319,7 @@ type Treatment struct {
 	TREATMENT_ID string    `valid:"matches(^T\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:Txxxxxx,required~เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"`
 	TREATMENT    string    `valid:"maxstringlength(20)~กรอกค่าได้สูงสุด20ตัวอักษร,required~ กรุณากรอกอาการเบื้องต้น"`
 	DATE         time.Time `valid:"required,CheckDateTime~ กรุณาเลือกเวลาที่เป็นปัจจุบัน"`
-	APPOINTMENT  uint      `valid:"range(0|100)~ กรุณากรอกค่าที่อยู่ในช่วง 0-100,required~กรุณากรอกจำนวนวัน"`
+	APPOINTMENT  uint      `valid:"range(1|100)~ กรุณากรอกค่าที่อยู่ในช่วง 1-100,required~กรุณากรอกจำนวนวัน"`
 	CONCLUSION   string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~ กรุณากรอกสรุปผลการรักษา"`
 	GUIDANCE     string    `valid:"maxstringlength(100)~กรอกค่าได้สูงสุด100ตัวอักษร,required~ กรุณากรอกคำแนะนำ"`
 

@@ -212,7 +212,7 @@ func TestPhoneNotBlank(t *testing.T) {
 	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่เบอร์โทรศัพท์"))
 }
 
-func TestfinishPatient(t *testing.T) {
+func Test_finishPatient(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
 	Patient := Patient{

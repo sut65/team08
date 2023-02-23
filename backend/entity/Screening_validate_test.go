@@ -271,7 +271,7 @@ func TestEmailMustBeInValidPattern(t *testing.T) {
 	g.Expect(err.Error()).To(gomega.Equal("กรุณาใส่อีเมลให้ถูกต้อง"))
 }
 
-func TestfinishSc_officer(t *testing.T) {
+func Test_finishSc_officer(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
 	Screening_officer := Screening_officer{

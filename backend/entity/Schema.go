@@ -65,7 +65,7 @@ type Screening_officer struct {
 	NationalityID   *uint  `valid:"-"`
 	ScreeningIDCard string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$)~กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก,required~กรุณาใส่รหัสบัตรประชาชน"`
 
-	Phone string `valid:"matches(^[06||08||09]\\d{8}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
+	Phone string `valid:"matches(^[06||08||09]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
 	Email string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
 	//หน้าต่างข้อมูลการศึกษา
 	EducationID    *uint  `valid:"-"`
@@ -105,7 +105,7 @@ type Patient struct {
 	IDCard              string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$)~กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก,required~กรุณาใส่รหัสบัตรประชาชน"`
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
-	Phone     string `valid:"matches(^[06||08||09]\\d{8}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
+	Phone     string `valid:"matches(^[06||08||09]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
 	House_ID  string `valid:"required~กรุณาใส่บ้านเลขที่"`
 	AddressID *uint  `valid:"-"`
 
@@ -196,7 +196,7 @@ type Doctor struct {
 	ReOther       string    `valid:"-"`
 	NationalityID *uint     `valid:"-"`
 	CountryID     *uint     `valid:"-"`
-	TelPhone      string    `valid:"matches(^[0]\\d{9}$)"`
+	TelPhone      string    `valid:"matches(^[0]\\d{9}$)`
 	TelOffice     string    `valid:"-"`
 
 	Email       string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
@@ -423,7 +423,7 @@ type Practice struct {
 
 type Dispense struct {
 	gorm.Model
-	Date time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 
 	Number      uint   `valid:"range(0|100)~กรุณาใส่จำนวนยาให้ถูกต้อง"`
 	Text        string `valid:"maxstringlength(50)~โปรดระบุรายละเอียดของยาไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดของยา"`
@@ -454,7 +454,7 @@ type Department struct {
 }
 type Appoint struct {
 	gorm.Model
-	Date_now            time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
+	Date_now            time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาเป็นปัจจุบัน"`
 	Date_appoint        time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาในการนัดให้ถูกต้อง"`
 	Text_appoint        string    `valid:"maxstringlength(50)~โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร,required~โปรดระบุรายละเอียดการนัด"`
 	Appoint_ID          string    `valid:"matches(^AP\\d{6}$)~ผิดรูปแบบ ตัวอย่าง:APxxxxxx,required~หมายเลขการนัดหมายป็นค่าว่าง ตัวอย่าง:APxxxxxx"`

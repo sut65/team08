@@ -65,7 +65,7 @@ type Screening_officer struct {
 	NationalityID   *uint  `valid:"-"`
 	ScreeningIDCard string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$)~กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก,required~กรุณาใส่รหัสบัตรประชาชน"`
 
-	Phone string `valid:"matches(^[0]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
+	Phone string `valid:"matches(^[06||08||09]\\d{8}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
 	Email string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
 	//หน้าต่างข้อมูลการศึกษา
 	EducationID    *uint  `valid:"-"`
@@ -105,7 +105,7 @@ type Patient struct {
 	IDCard              string `gorm:"uniqueIndex" valid:"matches(^[1-9]\\d{12}$)~กรุณาใส่ข้อมูลรหัสบัตรประชาชนให้ถูกต้องและครบ 13 หลัก,required~กรุณาใส่รหัสบัตรประชาชน"`
 
 	//หน้าต่างข้อมูลการติดต่อส่วนตัว
-	Phone     string `valid:"matches(^[0]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
+	Phone     string `valid:"matches(^[06||08||09]\\d{8}$)~กรุณาใส่เบอร์โทรให้ถูกต้องและครบ 10 หลัก,required~กรุณาใส่เบอร์โทรศัพท์"`
 	House_ID  string `valid:"required~กรุณาใส่บ้านเลขที่"`
 	AddressID *uint  `valid:"-"`
 

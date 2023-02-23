@@ -180,7 +180,7 @@ function MedicalEquipmentsList() {
             color="primary"
             gutterBottom
           >
-            ข้อมูลการรักษาคนไข้ภายใน
+            ข้อมูลเครื่องมือแพทย์
           </Typography>
         </Box>
         <Box>
@@ -190,7 +190,7 @@ function MedicalEquipmentsList() {
             variant="contained"
             color="primary"
           >
-            จัดการข้อมูลการรักษาคนไข้ภายใน
+            จัดการข้อมูลข้อมูลเครื่องมือแพทย์
           </Button>
         </Box>
       </Box>

@@ -288,3 +288,26 @@ func TestEmailMedicalEmployeeNotBlank(t *testing.T) {
 
 	g.Expect(err.Error()).To(Equal("กรุณากรอกอีเมล"))
 }
+
+func TestMedicalEmployeePasswordNotLessThen6(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	m := Med_Employee{
+		Name:           "nantawat",
+		Age:            21,
+		Phone:          "0123541252", // ผิด
+		Email:          "med@gmail.com",
+		Password:       "12345",
+		University:     "University",
+		EducationName:  "EducationName",
+		EducationMajor: "EducationMajor",
+	}
+
+	ok, err := govalidator.ValidateStruct(m)
+
+	g.Expect(ok).ToNot(BeTrue())
+
+	g.Expect(err).ToNot(BeNil())
+
+	g.Expect(err.Error()).To(Equal("รหัสผ่านต้องมีอย่างน้อย 6 ตัว"))
+}

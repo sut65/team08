@@ -5,7 +5,7 @@
   "url": "http://localhost:3000/AppointCreate",
   "tests": [{
     "id": "be20f1e7-c3ca-4201-a7ac-9f15e82c4acc",
-    "name": "All_Pass",
+    "name": "Test_AppointAll",
     "commands": [{
       "id": "8525964b-1317-43a8-b27b-a4084e4d5808",
       "comment": "",
@@ -201,7 +201,7 @@
     }]
   }, {
     "id": "a5b76e31-af8e-4c83-a69c-5fa79b3bb3a5",
-    "name": "AppointID_Null",
+    "name": "Test_AppointNotNullID",
     "commands": [{
       "id": "50146553-df33-4f1d-9ecd-ec6a3095be4f",
       "comment": "",
@@ -371,7 +371,7 @@
     }]
   }, {
     "id": "d0ae1b4f-935c-45f6-a960-7257aae7da4c",
-    "name": "Appoint_Date-Now_Past",
+    "name": "Test_AppointTimeNow",
     "commands": [{
       "id": "b41b4ba9-54e5-4679-ad29-24e791f4f794",
       "comment": "",
@@ -593,7 +593,7 @@
     }]
   }, {
     "id": "fe129ddd-0eb1-490f-b06b-688b94bf99b9",
-    "name": "Date_Appoint_wrong",
+    "name": "Test_AppointTime",
     "commands": [{
       "id": "de492d83-253b-476a-a0dc-b853dbb207da",
       "comment": "",
@@ -764,7 +764,7 @@
     }]
   }, {
     "id": "3e68caf1-e1d5-4fca-99a8-b65e8a95f00d",
-    "name": "Text_appoint_Null",
+    "name": "Test_appointTextNotNull",
     "commands": [{
       "id": "d2dfed61-ada1-4956-9204-370a336bdc8a",
       "comment": "",
@@ -1211,6 +1211,483 @@
         ["xpath=//div/div/div[2]", "xpath:position"]
       ],
       "value": "กรุณาแผนกที่ทำการนัด"
+    }]
+  }, {
+    "id": "554d6362-a16b-4c7d-bccd-9ac423352e09",
+    "name": "Test_AppointID",
+    "commands": [{
+      "id": "25e55e9e-2cfb-4244-905a-66edaac275c0",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/AppointCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "454b1f19-2670-4a61-85c4-918d107c6592",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x818",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d902fd4-54dd-40c4-81f2-5c15e9964abf",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[2]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "058da4eb-f460-49ed-80ef-f6f17b314509",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ เชิงดี"
+    }, {
+      "id": "784805d8-645d-41b9-907a-a8a9388fbc39",
+      "comment": "",
+      "command": "click",
+      "target": "id=Appoint_ID",
+      "targets": [
+        ["id=Appoint_ID", "id"],
+        ["css=#Appoint_ID", "css:finder"],
+        ["xpath=//input[@id='Appoint_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[4]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7d6efc0-02a3-4394-b6ba-2b8431d334fc",
+      "comment": "",
+      "command": "type",
+      "target": "id=Appoint_ID",
+      "targets": [
+        ["id=Appoint_ID", "id"],
+        ["css=#Appoint_ID", "css:finder"],
+        ["xpath=//input[@id='Appoint_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[4]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "AP123"
+    }, {
+      "id": "4b02fc52-4a91-4bcd-a122-77ccd61ea73f",
+      "comment": "",
+      "command": "click",
+      "target": "id=LevelcureID",
+      "targets": [
+        ["id=LevelcureID", "id"],
+        ["name=LevelcureID", "name"],
+        ["css=#LevelcureID", "css:finder"],
+        ["xpath=//select[@id='LevelcureID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "54b7b29d-e83d-46ad-a192-474b487da155",
+      "comment": "",
+      "command": "select",
+      "target": "id=LevelcureID",
+      "targets": [],
+      "value": "label=สิทธิประกันสังคม"
+    }, {
+      "id": "96ea00bb-6741-4893-810f-8e19a4e25585",
+      "comment": "",
+      "command": "click",
+      "target": "id=DepartmentID",
+      "targets": [
+        ["id=DepartmentID", "id"],
+        ["name=DepartmentID", "name"],
+        ["css=#DepartmentID", "css:finder"],
+        ["xpath=//select[@id='DepartmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a867818-d96a-4f56-b891-17ad475cc282",
+      "comment": "",
+      "command": "select",
+      "target": "id=DepartmentID",
+      "targets": [],
+      "value": "label=แผนกฉุกเฉินและอุบัติเหตุ – Emergency Room"
+    }, {
+      "id": "de944195-153a-4021-8375-68d55d961a90",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4fbd99b9-f844-4463-8d99-957ff33d9a03",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "งดอาหาร"
+    }, {
+      "id": "cf3232c2-8b13-480e-8fb2-5b0d504a7bb4",
+      "comment": "",
+      "command": "click",
+      "target": "id=:rf:",
+      "targets": [
+        ["id=:rf:", "id"],
+        ["css=#\\3Arf\\3A", "css:finder"],
+        ["xpath=//input[@id=':rf:']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[11]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9e6ec35c-ef88-4adf-99c5-c73c1e3401c2",
+      "comment": "",
+      "command": "click",
+      "target": "id=:rf:",
+      "targets": [
+        ["id=:rf:", "id"],
+        ["css=#\\3Arf\\3A", "css:finder"],
+        ["xpath=//input[@id=':rf:']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[11]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "920c97cc-7122-4c10-a75b-bb549fc8ca15",
+      "comment": "",
+      "command": "type",
+      "target": "id=:rf:",
+      "targets": [
+        ["id=:rf:", "id"],
+        ["css=#\\3Arf\\3A", "css:finder"],
+        ["xpath=//input[@id=':rf:']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[11]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "03/16/2023 04:26 pm"
+    }, {
+      "id": "acfc443d-c5ac-4bb5-85c1-b18fa774506f",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[12]/button", "xpath:idRelative"],
+        ["xpath=//div[12]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการนัดหมาย')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1171251c-0e65-4ce7-83ca-8ac97fffd16f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[12]/button", "xpath:idRelative"],
+        ["xpath=//div[12]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการนัดหมาย')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4e7e5318-4da7-4465-8a3b-609fcd7e839d",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div[2]/div[2]/div[12]/button", "xpath:idRelative"],
+        ["xpath=//div[12]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการนัดหมาย')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f478fc0-68de-4a92-aa54-5588db76c02b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ผิดรูปแบบ ตัวอย่าง:APxxxxxx"
+    }]
+  }, {
+    "id": "88393f29-807a-4e2f-b4cf-f43a0d7ab62d",
+    "name": "Test_appointText",
+    "commands": [{
+      "id": "795e110a-8b5e-43ff-8f54-42b366387272",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/AppointCreate",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "30fec094-9b7c-4bd0-a410-81f64a298d8a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6d0b7c14-cd64-44a3-8f73-cfd9daa534e8",
+      "comment": "",
+      "command": "click",
+      "target": "id=TreatmentID",
+      "targets": [
+        ["id=TreatmentID", "id"],
+        ["name=TreatmentID", "name"],
+        ["css=#TreatmentID", "css:finder"],
+        ["xpath=//select[@id='TreatmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[2]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5076ceec-d222-4c19-84a6-4dd556380b78",
+      "comment": "",
+      "command": "select",
+      "target": "id=TreatmentID",
+      "targets": [],
+      "value": "label=สไบทิพย์ ชวนโพธิ์"
+    }, {
+      "id": "5f993836-ac00-41ca-9f5a-87bc40430980",
+      "comment": "",
+      "command": "click",
+      "target": "id=Appoint_ID",
+      "targets": [
+        ["id=Appoint_ID", "id"],
+        ["css=#Appoint_ID", "css:finder"],
+        ["xpath=//input[@id='Appoint_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[4]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c3292ea-4fb6-4ca8-81f3-022f6b0962bd",
+      "comment": "",
+      "command": "type",
+      "target": "id=Appoint_ID",
+      "targets": [
+        ["id=Appoint_ID", "id"],
+        ["css=#Appoint_ID", "css:finder"],
+        ["xpath=//input[@id='Appoint_ID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[4]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "AP123459"
+    }, {
+      "id": "b783b823-602f-4955-b50e-ff2ab08ab444",
+      "comment": "",
+      "command": "click",
+      "target": "id=LevelcureID",
+      "targets": [
+        ["id=LevelcureID", "id"],
+        ["name=LevelcureID", "name"],
+        ["css=#LevelcureID", "css:finder"],
+        ["xpath=//select[@id='LevelcureID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[6]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "52fb1cd3-e11c-4962-916e-574ea9ebc65e",
+      "comment": "",
+      "command": "select",
+      "target": "id=LevelcureID",
+      "targets": [],
+      "value": "label=สิทธิหลักประกันสุขภาพ30บาท"
+    }, {
+      "id": "389e219d-3b2b-4cc0-99a5-cc7b29f8b8bb",
+      "comment": "",
+      "command": "click",
+      "target": "id=DepartmentID",
+      "targets": [
+        ["id=DepartmentID", "id"],
+        ["name=DepartmentID", "name"],
+        ["css=#DepartmentID", "css:finder"],
+        ["xpath=//select[@id='DepartmentID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/div/div/select", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "45753098-3173-4273-a292-4b524aa0fa3e",
+      "comment": "",
+      "command": "select",
+      "target": "id=DepartmentID",
+      "targets": [],
+      "value": "label=แผนกรังสีกรรม – Radiology Department"
+    }, {
+      "id": "3951bc4d-12c9-479a-b736-53669f16defd",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e34e15fa-f698-41e5-a1dd-f4e5922fa098",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "ะ้ั้พ"
+    }, {
+      "id": "087cdab0-e59b-4f85-a72b-3a698f5c3062",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-container",
+      "targets": [
+        ["css=.MuiGrid-container", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ef101a56-6623-49a0-af00-49bcdf113b1a",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "css=.MuiGrid-container",
+      "targets": [
+        ["css=.MuiGrid-container", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "23d8ed99-505e-4211-8ca7-8a4c0c175f13",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-root:nth-child(9)",
+      "targets": [
+        ["css=.MuiGrid-root:nth-child(9)", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]", "xpath:idRelative"],
+        ["xpath=//div[9]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a21ef11-db03-4ba1-b30e-dfedb382347d",
+      "comment": "",
+      "command": "click",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8dbca223-7753-4913-b0b7-af45ef693681",
+      "comment": "",
+      "command": "type",
+      "target": "id=Name",
+      "targets": [
+        ["id=Name", "id"],
+        ["css=#Name", "css:finder"],
+        ["xpath=//input[@id='Name']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[9]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "gkfodgdfhfhjfipx[odhjdigkjhndgpspigkbdpgkfodgdfhfhjfipx[odhjdigkjhndgpspigkbdpgkfodgdfhfhjfipx[odhjdfffffff"
+    }, {
+      "id": "43c12b5a-0e65-4be2-8921-c39cf900b75b",
+      "comment": "",
+      "command": "click",
+      "target": "id=:rf:",
+      "targets": [
+        ["id=:rf:", "id"],
+        ["css=#\\3Arf\\3A", "css:finder"],
+        ["xpath=//input[@id=':rf:']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[11]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0db2f74e-5713-4cfa-aa3f-556160126696",
+      "comment": "",
+      "command": "click",
+      "target": "id=:rf:",
+      "targets": [
+        ["id=:rf:", "id"],
+        ["css=#\\3Arf\\3A", "css:finder"],
+        ["xpath=//input[@id=':rf:']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[11]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2fe0e249-1f2a-4e1f-849d-3862b5134733",
+      "comment": "",
+      "command": "type",
+      "target": "id=:rf:",
+      "targets": [
+        ["id=:rf:", "id"],
+        ["css=#\\3Arf\\3A", "css:finder"],
+        ["xpath=//input[@id=':rf:']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[11]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[11]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "03/16/2023 04:30 pm"
+    }, {
+      "id": "5f348d6a-a26f-4419-8402-01f26dbd1710",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[12]/button", "xpath:idRelative"],
+        ["xpath=//div[12]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึกข้อมูลการนัดหมาย')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2672d388-3b98-490d-a015-7b58f4de2df0",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "โปรดระบุรายละเอียดการนัดไม่เกิน 50 ตัวอักษร"
     }]
   }],
   "suites": [{

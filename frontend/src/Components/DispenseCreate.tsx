@@ -56,11 +56,11 @@ function DispenseCreate() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  //เพิ่ม
+  
   const [treatment_Dis, setTreatment_Dis] = useState<TreatmentsInterface>({});
   const [DoctorByUID, setDoctorByUID] = useState<DoctorInterface>({});
 
-  ///
+  
   const [message, setAlertMessage] = React.useState("");
 
   const convertType = (data: string | number | undefined) => {

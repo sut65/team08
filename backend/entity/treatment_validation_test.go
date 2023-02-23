@@ -8,7 +8,7 @@ import (
 	"github.com/onsi/gomega"
 )
 
-///1 
+// /1
 func TestTreatmentPass(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
@@ -32,7 +32,7 @@ func TestTreatmentPass(t *testing.T) {
 	g.Expect(err).To(gomega.BeNil())
 }
 
-//////2
+// ////2
 func TestTreatmentID(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
@@ -57,7 +57,8 @@ func TestTreatmentID(t *testing.T) {
 
 	g.Expect(err.Error()).To(gomega.Equal("ผิดรูปแบบ ตัวอย่าง:Txxxxxx"))
 }
-/////3
+
+// ///3
 func TestTreatment_APPOINTMENT(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
@@ -80,9 +81,10 @@ func TestTreatment_APPOINTMENT(t *testing.T) {
 	// err ต้องเป็น nil แปลว่าไม่มี error
 	g.Expect(err).ToNot(gomega.BeNil())
 
-	g.Expect(err.Error()).To(gomega.Equal(" กรุณากรอกค่าที่อยู่ในช่วง 0-100"))
+	g.Expect(err.Error()).To(gomega.Equal(" กรุณากรอกค่าที่อยู่ในช่วง 1-100"))
 }
-////////4
+
+// //////4
 func TestTreatment_DATE(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
@@ -107,7 +109,8 @@ func TestTreatment_DATE(t *testing.T) {
 
 	g.Expect(err.Error()).To(gomega.Equal(" กรุณาเลือกเวลาที่เป็นปัจจุบัน"))
 }
-/////5
+
+// ///5
 func TestTreatment_TREATMENT(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
@@ -214,4 +217,54 @@ func TestTREATMENTID_NotBlank(t *testing.T) {
 	g.Expect(err).ToNot(gomega.BeNil())
 
 	g.Expect(err.Error()).To(gomega.Equal("เลขกำกับห้ามเป็นค่าว่าง ตัวอย่าง:Txxxxxx"))
+}
+
+func TestTreatment_CONCLUSION(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	// เช็คข้อมูล TREATMENT = ไม่เกิน20ตัว
+	Treatment := Treatment{
+		TREATMENT_ID: "T666666",
+		TREATMENT:    "ปวดหลังง",
+		DATE:         time.Now(),
+		APPOINTMENT:  20,
+		CONCLUSION:   "ตรวจพบหมอนรองกระดูกด้วยอันตรายมากๆต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดดต้องได้รับการผ่าตัดด",
+		GUIDANCE:     "นั่งให้ถูกลักษณะ",
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(Treatment)
+
+	// ok ต้องเป็น true แปลว่าไม่มี error
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	// err ต้องเป็น nil แปลว่าไม่มี error
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("กรอกค่าได้สูงสุด100ตัวอักษร"))
+}
+
+func TestTreatment_GUIDANCE(t *testing.T) {
+	g := gomega.NewGomegaWithT(t)
+
+	// เช็คข้อมูล TREATMENT = ไม่เกิน20ตัว
+	Treatment := Treatment{
+		TREATMENT_ID: "T666666",
+		TREATMENT:    "ปวดหลัง",
+		DATE:         time.Now(),
+		APPOINTMENT:  20,
+		CONCLUSION:   "ตรวจพบหมอนรองกระดูกด้วย",
+		GUIDANCE:     "นั่งให้ถูกลักษณะไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตรายไม่อย่างนั้นจะไม่หายและยิ่งจะเป็นอันตราย",
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(Treatment)
+
+	// ok ต้องเป็น true แปลว่าไม่มี error
+	g.Expect(ok).ToNot(gomega.BeTrue())
+
+	// err ต้องเป็น nil แปลว่าไม่มี error
+	g.Expect(err).ToNot(gomega.BeNil())
+
+	g.Expect(err.Error()).To(gomega.Equal("กรอกค่าได้สูงสุด100ตัวอักษร"))
 }

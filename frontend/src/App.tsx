@@ -143,7 +143,7 @@ const menu = [
 
   { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'doctor'}, 
   { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" ,role: 'doctor'},
-  { name: "ข้อมูลคนไข้ใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'doctor'}, 
+  { name: "ข้อมูลคนไข้ภายใน", icon: <HotelIcon />, path: "Save_ITI" ,role: 'doctor'}, 
   { name: "ข้อมูลการจองห้องผ่าตัด", icon: <AddLocationIcon />, path: "/Operating_Room" ,role: 'doctor'},
 
 ];

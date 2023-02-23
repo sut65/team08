@@ -9,7 +9,6 @@ import (
 	"github.com/sut65/team08/entity"
 )
 
-// POST Request มีทุกอันยกเว้น officer ไม่รู้ทำไม
 func CreateRequest(c *gin.Context) {
 	var medemployees entity.Med_Employee
 	var request entity.Request
@@ -58,7 +57,6 @@ func CreateRequest(c *gin.Context) {
 	}
 
 	///////////////////////////////////////////////
-	//สร้าง ข้อมูลสำหรับใช้ในการอัปเดต Stock ของ softener
 	s_u := entity.Med_Equipment{
 		Quantity: med_equipment.Quantity - int(request.QUANTITY),
 	}

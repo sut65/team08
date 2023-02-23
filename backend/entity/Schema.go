@@ -477,7 +477,7 @@ type Med_Employee struct {
 	Age            int    `valid:"range(0|100)~กรุณาใส่อายุให้ถูกต้อง"`
 	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
 	Email          string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง, required~กรุณากรอกอีเมล"`
-	Password       string `valid:"required~กรุณากรอกรหัสผ่าน"`
+	Password       string `valid:"required~กรุณากรอกรหัสผ่าน,minstringlength(6)~รหัสผ่านต้องมีอย่างน้อย 6 ตัว"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
 	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
 	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชา"`

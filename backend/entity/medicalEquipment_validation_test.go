@@ -81,6 +81,28 @@ func TestQuantityNotNegtive(t *testing.T) {
 
 }
 
+func TestEquipmentShopLessThen50(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	user := Med_Equipment{
+		Equipment: "aa",
+		Quantity:  12,
+		Shop:      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+	}
+
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(user)
+
+	// ok ต้องไม่เป็นค่า true แปลว่าต้องจับ error ได้
+	g.Expect(ok).ToNot(BeTrue())
+
+	// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
+	g.Expect(err).ToNot(BeNil())
+
+	// err.Error ต้องมี error message แสดงออกมา
+	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อร้านค้าไม่เกิน50ตัวอักษร"))
+}
+
 func TestEquipmentShopNotBlank(t *testing.T) {
 	g := NewGomegaWithT(t)
 
@@ -100,5 +122,6 @@ func TestEquipmentShopNotBlank(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณากรอกร้านค้าที่รับเข้า"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อร้านค้า"))
 }
+

@@ -196,7 +196,7 @@ type Doctor struct {
 	ReOther       string    `valid:"-"`
 	NationalityID *uint     `valid:"-"`
 	CountryID     *uint     `valid:"-"`
-	TelPhone      string    `valid:"matches(^[0]\\d{9}$)`
+	TelPhone      string    `valid:"matches(^[0]\\d{9}$)"`
 	TelOffice     string    `valid:"-"`
 
 	Email       string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
@@ -515,7 +515,7 @@ type Med_Equipment struct {
 	gorm.Model
 	Equipment      string `valid:"required~กรุณากรอกอุปกรณ์"`
 	Quantity       int    `valid:"range(0|1000)~กรุณากรอกจำนวนอุปกรณ์ไม่เกิน 1000"`
-	Shop           string `valid:"required~กรุณากรอกร้านค้าที่รับเข้า"`
+	Shop           string `valid:"required~กรุณากรอกชื่อร้านค้า,maxstringlength(50)~กรุณากรอกชื่อร้านค้าไม่เกิน50ตัวอักษร"`
 	BrandID        *uint
 	Brand          Brand `gorm:"references:id" valid:"-"`
 	Med_StatusID   *uint

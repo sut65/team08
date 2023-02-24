@@ -25,7 +25,7 @@ func TestValueMaxcharector15(t *testing.T) {
 
     user := Lab{
         Lab_test: "negative",
-        Value:    "234349483454596.4845949649099009090032",
+        Value:    "-483454596.48459010002149649099009090032",
     }
 
     ok, err := govalidator.ValidateStruct(user)

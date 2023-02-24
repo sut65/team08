@@ -3,6 +3,8 @@ package controller
 import (
 	"github.com/sut65/team08/entity"
 
+	"github.com/asaskevich/govalidator"
+
 	"github.com/gin-gonic/gin"
 
 	"net/http"
@@ -21,20 +23,26 @@ func CreateLab(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	if _, err := govalidator.ValidateStruct(Lab); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if tx := entity.DB().Where("id = ?", Lab.LabNameID).First(&Lab_Name); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Lab_NameID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกประเภทแลป"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Lab.TreatmentID).First(&Treatment); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "TreatmentID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกเลขกำกับการรักษา"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Lab.Med_EmployeeID).First(&Med_Employee); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Med_EmployeeID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเข้าสู่ระบบใหม่อีกครั้ง"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Lab.DoctorID).First(&Doctor); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "DoctorID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบไอดีของแพทย์"})
 		return
 	}
 
@@ -99,20 +107,26 @@ func UpdateLab(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	if _, err := govalidator.ValidateStruct(Lab); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if tx := entity.DB().Where("id = ?", Lab.LabNameID).First(&Lab_Name); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Lab_NameID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกประเภทแลป"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Lab.TreatmentID).First(&Treatment); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "TreatmentID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกเลขกำกับการรักษา"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Lab.Med_EmployeeID).First(&Med_Employee); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Med_EmployeeID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเข้าสู่ระบบใหม่อีกครั้ง"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", Lab.DoctorID).First(&Doctor); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "DoctorID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบไอดีของแพทย์"})
 		return
 	}
 

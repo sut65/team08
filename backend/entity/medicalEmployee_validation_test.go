@@ -96,7 +96,7 @@ func TestMedicalEmployeeNameValidate(t *testing.T) {
 
 	g.Expect(err).ToNot(BeNil())
 
-	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อ"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อ-นามสกุล"))
 }
 
 func TestMedicalEmployeePasswordValidate(t *testing.T) {

@@ -50,7 +50,7 @@ func TestEquipmentNameNotBlank(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณากรอกอุปกรณ์"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกเครื่องมือ"))
 }
 
 func TestQuantityNotNegtive(t *testing.T) {
@@ -66,7 +66,7 @@ func TestQuantityNotNegtive(t *testing.T) {
 
 		med_equipment := Med_Equipment{
 			Equipment: "aaaaa",
-			Quantity:  quantity,
+			Quantity:  quantity, //ผิด
 			Shop:      "aa",
 		}
 
@@ -76,7 +76,7 @@ func TestQuantityNotNegtive(t *testing.T) {
 
 		g.Expect(err).ToNot(BeNil())
 
-		g.Expect(err.Error()).To(Equal("กรุณากรอกจำนวนอุปกรณ์ไม่เกิน 1000"))
+		g.Expect(err.Error()).To(Equal("กรุณากรอกจำนวนระหว่าง 0-1000"))
 	}
 
 }
@@ -87,7 +87,7 @@ func TestEquipmentShopLessThen50(t *testing.T) {
 	user := Med_Equipment{
 		Equipment: "aa",
 		Quantity:  12,
-		Shop:      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		Shop:      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //ผิด
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -109,7 +109,7 @@ func TestEquipmentShopNotBlank(t *testing.T) {
 	user := Med_Equipment{
 		Equipment: "aa",
 		Quantity:  12,
-		Shop:      "",
+		Shop:      "", //ผิด
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -124,4 +124,3 @@ func TestEquipmentShopNotBlank(t *testing.T) {
 	// err.Error ต้องมี error message แสดงออกมา
 	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อร้านค้า"))
 }
-

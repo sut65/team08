@@ -68,6 +68,33 @@ async function GetDoctorByUID() {
 
   return res;
 }
+
+async function GetDoctorFind() {
+
+  const find = localStorage.getItem("find");
+  const requestOptions = {
+      method: "GET",
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json"
+      },
+  };
+
+  let res = await fetch(`${apiUrl}/DoctorFind/${find}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+          if (res.data) {
+              // console.log(res.data);
+              return res.data;
+          } else {
+              return false;
+          }
+      });
+
+  return res;
+}
+
+
 async function Doctor (data: DoctorInterface) {
   const requestOptions = {
       method: "POST",
@@ -615,6 +642,7 @@ async function GetDoctor() {
 
   return res;
 }
+
 async function GetShow() {
   const requestOptions = {
     method: "GET",
@@ -624,7 +652,7 @@ async function GetShow() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/treatmentstatus`, requestOptions)
+  let res = await fetch(`${apiUrl}//treatmentstatus`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -638,6 +666,7 @@ async function GetShow() {
 
   return res;
 }
+
 async function ListLabName() {
   const requestOptions = {
     method: "GET",
@@ -1785,5 +1814,6 @@ export {
   GetDoctorByUID,
   Doctor,
   Create_Doctor,
+  GetDoctorFind,
 
 };

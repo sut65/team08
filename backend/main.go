@@ -147,6 +147,7 @@ func main() {
 			//Doctor
 			router.GET("/Doctors", controller.ListDoctor)
 			router.GET("/Doctor/:id", controller.GetDoctor)
+			router.GET("/DoctorFind/:id", controller.FindDoctor)
 			router.POST("/Doctor", controller.CreateDoctor) ///////
 			router.PATCH("/Doctor", controller.UpdateDoctor)
 			router.DELETE("/Doctor/:id", controller.DeleteDoctor)
@@ -196,7 +197,7 @@ func main() {
 			router.GET("/treatments/ready", controller.ListReady_Treat)
 			router.GET("/treatments/readyyy", controller.ListReady_Dispense)
 			router.GET("/treatments/readyapp", controller.ListReady_Appoint)
-			router.GET("/treatmentstatus", controller.ListTreatment)
+			router.GET("/treatmentstatus", controller.ListTreatmentStatus)
 
 			//Aern
 

@@ -6,7 +6,7 @@ import { DoctorInterface } from "./IDoctor";
 export interface LabInterface {
   ID?: number;
   Lab_test?: string;
-  Value?: number;
+  Value?: string;
 
   LabNameID?: number;
   TreatmentID?: number;

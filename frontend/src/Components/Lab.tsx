@@ -105,6 +105,7 @@ function Lab() {
 
   const [LabID, setLabID] = React.useState(0);
   const [openDelete, setOpendelete] = React.useState(false);
+  const [message, setAlertMessage] = React.useState("");
 
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
     localStorage.setItem("ID", params.row.ID);
@@ -339,9 +340,10 @@ function Lab() {
       width: 100,
     },
     {
-      field: "PatiendID",
+      field: "Patient",
       headerName: "หมายเลขผู้ป่วย",
       width: 120,
+      valueFormatter: (params) => params.value.ID,
     },
     {
       field: "Doctor",
@@ -445,7 +447,7 @@ function Lab() {
   async function submit() {
     let data = {
       Lab_test: Lab.Lab_test || "",
-      Value: convertTypeFloat(ValueInput),
+      Value: ValueInput || "",
       LabNameID: convertType(Lab.LabNameID),
       TreatmentID: convertType(Lab.TreatmentID),
       Med_EmployeeID: convertType(Lab.Med_EmployeeID),
@@ -459,7 +461,7 @@ function Lab() {
     // console.log(res);
     if (res.error) {
       setError(true);
-      // setAlertMessage(res.error);
+      setAlertMessage(res.error);
       console.log(res);
       console.log(res.error);
       console.log("เข้าเงื่อนไข res.error");
@@ -483,7 +485,7 @@ function Lab() {
     let data = {
       ID: convertType(ID),
       Lab_test: Lab.Lab_test || "",
-      Value: convertTypeFloat(ValueInput),
+      Value: ValueInput || "",
       LabNameID: convertType(Lab.LabNameID),
       TreatmentID: convertType(Lab.TreatmentID),
       Med_EmployeeID: convertType(Lab.Med_EmployeeID),
@@ -497,7 +499,7 @@ function Lab() {
     // console.log(res);
     if (res.error) {
       setError(true);
-      // setAlertMessage(res.error);
+      setAlertMessage(res.error);
       console.log(res);
       console.log(res.error);
       console.log("เข้าเงื่อนไข res.error");
@@ -678,13 +680,15 @@ function Lab() {
           </Alert>
         </Snackbar>
         <Snackbar
+          id="error"
           open={error}
           autoHideDuration={6000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert onClose={handleClose} severity="error">
-            บันทึกข้อมูลไม่สำเร็จ
+            {/* บันทึกข้อมูลไม่สำเร็จ */}
+            {message}
           </Alert>
         </Snackbar>
         <Paper>

@@ -196,7 +196,7 @@ type Doctor struct {
 	ReOther       string    `valid:"-"`
 	NationalityID *uint     `valid:"-"`
 	CountryID     *uint     `valid:"-"`
-	TelPhone      string    `valid:"matches(^[0]\\d{9}$)`
+	TelPhone      string    `valid:"matches(^[0]\\d{9}$)~valid phone"`
 	TelOffice     string    `valid:"-"`
 
 	Email       string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
@@ -267,25 +267,25 @@ type Doctor struct {
 
 type Lab_Name struct {
 	gorm.Model
-	Discription string
+	Discription string `valid:"-"`
 
 	Lab []Lab `gorm:"foreignKey:LabNameID"`
 }
 
 type Lab struct {
 	gorm.Model
-	Lab_test string
-	Value    float32
+	Lab_test string 	`valid:"-"`
+	Value    string		`valid:"matches(^(?:[-+]?(?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$)~กรุณากรอกเป็นตัวเลขทศนิยม,maxstringlength(15)~สามารถกรอกค่าแลปได้สูงสุด 15 ตัวอักษรเท่านั้น,required~กรุณากรอกค่ารายงานผล"`
 
 	LabNameID      *uint
 	TreatmentID    *uint
 	Med_EmployeeID *uint
 	DoctorID       *uint
 
-	Lab_Name     Lab_Name     `gorm:"references:id"`
-	Treatment    Treatment    `gorm:"references:id"`
-	Med_Employee Med_Employee `gorm:"references:id"`
-	Doctor       Doctor       `gorm:"references:id"`
+	Lab_Name     Lab_Name     `gorm:"references:id" valid:"-"`
+	Treatment    Treatment    `gorm:"references:id" valid:"-"`
+	Med_Employee Med_Employee `gorm:"references:id" valid:"-"`
+	Doctor       Doctor       `gorm:"references:id" valid:"-"`
 }
 
 // ระบบข้อมูลการรักษา ของกริม

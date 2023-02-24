@@ -141,7 +141,7 @@ func TestPhoneDoctorMustBeInValidPattern(t *testing.T) {
 			TelPhone:   fixture,
 			TelOffice:  "044641002",
 	
-			Email:       "lsfvokx",
+			Email:       "m.suthon@gmail.com",
 			AllAddress:  "1/21 หมู่ 7",
 			Subdistrict: "ดอนอะราง",
 			District:    "หนองกี่",
@@ -175,7 +175,7 @@ func TestPhoneDoctorMustBeInValidPattern(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(user)
 		g.Expect(ok).ToNot(BeTrue())
 		g.Expect(err).ToNot(BeNil())
-		g.Expect(err.Error()).To(Equal("กรุณาใส่อีเมลให้ถูกต้อง"))
+		g.Expect(err.Error()).To(Equal("valid phone"))
 	}
 }
 

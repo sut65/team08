@@ -295,8 +295,8 @@ function Doctor() {
       .then((response) => response.json())
       .then((res) => {
         // console.log(result[6]);
-        // console.log(result[7]);
-        let num: number = +(result[6] + result[7]) * 1000 + res.data.length + 1;
+        console.log('time = ',result);
+        let num: number = +(result[7] + result[8]) * 1000 + res.data.length + 1;
         let docid: string = "D" + num.toString();
         // console.log("The date is: " + docid);
         setDocterCode(docid);

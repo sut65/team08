@@ -132,12 +132,12 @@ function MedEmployee() {
       },
       {
         field: "EducationName",
-        headerName: "การศึกษา",
+        headerName: "ชื่อปริญญา",
         width: 150,
       },
       {
         field: "EducationMajor",
-        headerName: "สาขา",
+        headerName: "สาขาวิชาเอก",
         width: 150,
       },
       {

@@ -53206,14 +53206,17 @@ func SetupDatabase() {
 	db.Model(&Treatment{}).Create(&treatment_2)
 
 	med_employee1 := Med_Employee{
-		Name:           "Name",
+		Name:           "นันทวัฒน์ จันทาทิพย์",
 		Age:            21,
-		Phone:          "Phone",
+		Phone:          "0645068380",
 		Email:          "med@gmail.com",
-		Password:       "$2a$14$N/C5JUA2EGFGtFfTWcWC2.Gy0T1h5sgdJubHKX4yGMf85Ic7NjAga",
-		University:     "University",
-		EducationName:  "EducationName",
-		EducationMajor: "EducationMajor",
+		Password:       "123456",
+		University:     "SUT",
+		EducationName:  "เทคนิคการแพทย์",
+		EducationMajor: "รังสีวิทยา",
+		Prefix: 		Prefix_one,
+		Education: 		Education_one,
+		Gender: 		Gender_one,		
 	}
 	db.Model(&Med_Employee{}).Create(&med_employee1)
 

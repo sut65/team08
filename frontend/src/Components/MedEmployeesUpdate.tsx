@@ -343,14 +343,14 @@ import {GetEducation,GetGender,GetPrefix,CreateMedEmployee,GetOfficerByUID,Med_E
           </Grid>
 
           <Grid item xs={6}>
-                <p>การศึกษา</p>
+                <p>ชื่อปริญญา</p>
                 <TextField fullWidth id="EducationName" type="string" variant="outlined"  
                 value={MedEmployees.EducationName}
                 onChange={handleInputChange} />
           </Grid>
 
           <Grid item xs={6}>
-                <p>สาขา</p>
+                <p>สาขาวิชาเอก</p>
                 <TextField fullWidth id="EducationMajor" type="string" variant="outlined"  
                 value={MedEmployees.EducationMajor}
                 onChange={handleInputChange} />

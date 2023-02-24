@@ -38,7 +38,7 @@ func CreateMedEmployee(c *gin.Context) {
 
 	// 12: ค้นหา Education ด้วย id
 	if tx := entity.DB().Where("id = ?", med_employee.EducationID).First(&education); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกการศึกษา"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "กรุณาเลือกระดับการศึกษา"})
 		return
 	}
 	//  ค้น OfficerID

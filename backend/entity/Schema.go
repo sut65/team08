@@ -274,8 +274,8 @@ type Lab_Name struct {
 
 type Lab struct {
 	gorm.Model
-	Lab_test string 	`valid:"-"`
-	Value    string		`valid:"matches(^(?:[-+]?(?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$)~กรุณากรอกเป็นตัวเลขทศนิยม,maxstringlength(15)~สามารถกรอกค่าแลปได้สูงสุด 15 ตัวอักษรเท่านั้น,required~กรุณากรอกค่ารายงานผล"`
+	Lab_test string `valid:"-"`
+	Value    string `valid:"matches(^(?:[-+]?(?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$)~กรุณากรอกเป็นตัวเลขทศนิยม,maxstringlength(15)~สามารถกรอกค่าแลปได้สูงสุด 15 ตัวอักษรเท่านั้น,required~กรุณากรอกค่ารายงานผล"`
 
 	LabNameID      *uint
 	TreatmentID    *uint
@@ -372,7 +372,7 @@ type State struct {
 
 type Save_ITI struct {
 	gorm.Model
-	Date_checkin  time.Time `valid:"required,IsnotPast~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
+	Date_checkin  time.Time `valid:"required,CheckDateTime~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	Date_checkout time.Time `valid:"required,IsFuture~โปรดระบุวันที่และเวลาให้ถูกต้อง"`
 	TextSave      string    `valid:"maxstringlength(200)~โปรดระบุรายละเอียดแผนการรักษาไม่เกิน 200 ตัวอักษร,required~โปรดระบุรายละเอียดแผนการรักษา"`
 
@@ -482,7 +482,6 @@ type Med_Employee struct {
 	EducationName  string `valid:"required~กรุณากรอกชื่อปริญญา"`
 	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชาเอก"`
 	MedPassword    string
-
 
 	GenderID      *uint           `valid:"-"`
 	PrefixID      *uint           `valid:"-"`

@@ -286,7 +286,7 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <p>รายละเอียดการรักษา</p>
             <FormControl fullWidth variant="outlined">
             <TextField
@@ -297,7 +297,18 @@ const onChangetreat = async (e: SelectChangeEvent) =>{
               />
             </FormControl>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
+            <p>หมายเลขการรักษา</p>
+            <FormControl fullWidth variant="outlined">
+            <TextField
+            value={treatment_Dis?.TREATMENT_ID || ""}
+            InputProps={{
+              readOnly: true,
+            }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={3}>
             <p>เลขกำกับการจ่ายยา</p>
             <FormControl fullWidth variant="outlined">
               <TextField

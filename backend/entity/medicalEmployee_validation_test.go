@@ -55,7 +55,7 @@ func TestPhoneMedicalEmployeeMustBeInValidPattern(t *testing.T) {
 		m := Med_Employee{
 			Name:           "Name",
 			Age:           	21,
-			Phone:          fixture,
+			Phone:          fixture, //ผิด
 			Email:          "med@gmail.com",
 			Password:       "0645068380",
 			University:     "University",
@@ -107,7 +107,7 @@ func TestMedicalEmployeePasswordValidate(t *testing.T) {
 		Age:           	21,
 		Phone:          "0645068380",
 		Email:          "med@gmail.com",
-		Password:       "",
+		Password:       "", //ผิด
 		University:     "University",
 		EducationName:  "EducationName",
 		EducationMajor: "EducationMajor",
@@ -128,7 +128,7 @@ func TestPhoneMedicalEmployeeNotBlank(t *testing.T) {
 	m := Med_Employee{
 		Name:           "Name",
 		Age:           	21,
-		Phone:          "",
+		Phone:          "", //ผิด
 		Email:          "med@gmail.com",
 		Password:       "0645068380",
 		University:     "University",
@@ -157,7 +157,7 @@ func TestEducationNameMedicalEmployeeNotBlank(t *testing.T) {
 		Email:          "med@gmail.com",
 		Password:       "0645068380",
 		University:     "University",
-		EducationName:  "",
+		EducationName:  "", //ผิด
 		EducationMajor: "EducationMajor",
 	}
 
@@ -167,7 +167,7 @@ func TestEducationNameMedicalEmployeeNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(BeNil())
 
-	g.Expect(err.Error()).To(Equal("กรุณากรอกการศึกษา"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อปริญญา"))
 }
 
 func TestEducationMajorMedicalEmployeeNotBlank(t *testing.T) {
@@ -181,7 +181,7 @@ func TestEducationMajorMedicalEmployeeNotBlank(t *testing.T) {
 		Password:       "0645068380",
 		University:     "University",
 		EducationName:  "EducationName",
-		EducationMajor: "",
+		EducationMajor: "", //ผิด
 	}
 
 	ok, err := govalidator.ValidateStruct(m)
@@ -190,7 +190,7 @@ func TestEducationMajorMedicalEmployeeNotBlank(t *testing.T) {
 
 	g.Expect(err).ToNot(BeNil())
 
-	g.Expect(err.Error()).To(Equal("กรุณากรอกสาขาวิชา"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกสาขาวิชาเอก"))
 }
 
 func TestUniversityMajorMedicalEmployeeNotBlank(t *testing.T) {
@@ -202,7 +202,7 @@ func TestUniversityMajorMedicalEmployeeNotBlank(t *testing.T) {
 		Phone:          "0645068380",
 		Email:          "med@gmail.com",
 		Password:       "0645068380",
-		University:     "",
+		University:     "", //ผิด
 		EducationName:  "EducationName",
 		EducationMajor: "EducationMajor",
 	}
@@ -221,7 +221,7 @@ func TestAgeMedEmployeeMustBeInRange(t *testing.T) {
 
 	m := Med_Employee{
 		Name:           "Name",
-		Age:           	101,
+		Age:           	101, //ผิด
 		Phone:          "0645068380",
 		Email:          "test@gmail.com",
 		Password:       "0645068380",
@@ -239,7 +239,7 @@ func TestAgeMedEmployeeMustBeInRange(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณาใส่อายุให้ถูกต้อง"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกอายุให้ถูกต้อง"))
 
 }
 
@@ -250,7 +250,7 @@ func TestEmailMedicalEmployeeMustBeInValidPattern(t *testing.T) {
 		Name:           "Name",
 		Age:           	21,
 		Phone:          "0645068380",
-		Email:          "avdwq",
+		Email:          "avdwq", //ผิด
 		Password:       "0645068380",
 		University:     "University",
 		EducationName:  "EducationName",
@@ -263,7 +263,7 @@ func TestEmailMedicalEmployeeMustBeInValidPattern(t *testing.T) {
 
 	g.Expect(err).ToNot(BeNil())
 
-	g.Expect(err.Error()).To(Equal("กรุณาใส่อีเมลให้ถูกต้อง"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกอีเมลให้ถูกต้อง"))
 }
 
 func TestEmailMedicalEmployeeNotBlank(t *testing.T) {
@@ -273,7 +273,7 @@ func TestEmailMedicalEmployeeNotBlank(t *testing.T) {
 		Name:           "Name",
 		Age:           	21,
 		Phone:          "0645068380",
-		Email:          "",
+		Email:          "", //ผิด
 		Password:       "0645068380",
 		University:     "University",
 		EducationName:  "EducationName",

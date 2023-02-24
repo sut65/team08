@@ -473,15 +473,16 @@ type Appoint struct {
 // ADD
 type Med_Employee struct {
 	gorm.Model
-	Name           string `valid:"required~กรุณากรอกชื่อ"`
-	Age            int    `valid:"range(0|100)~กรุณาใส่อายุให้ถูกต้อง"`
+	Name           string `valid:"required~กรุณากรอกชื่อ-นามสกุล"`
+	Age            int    `valid:"range(0|100)~กรุณากรอกอายุให้ถูกต้อง"`
 	Phone          string `valid:"matches(^[0]\\d{9}$),required~กรุณากรอกเบอร์โทรศัพท์"`
-	Email          string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง, required~กรุณากรอกอีเมล"`
+	Email          string `valid:"email~กรุณากรอกอีเมลให้ถูกต้อง, required~กรุณากรอกอีเมล"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน,minstringlength(6)~รหัสผ่านต้องมีอย่างน้อย 6 ตัว"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`
-	EducationName  string `valid:"required~กรุณากรอกการศึกษา"`
-	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชา"`
+	EducationName  string `valid:"required~กรุณากรอกชื่อปริญญา"`
+	EducationMajor string `valid:"required~กรุณากรอกสาขาวิชาเอก"`
 	MedPassword    string
+
 
 	GenderID      *uint           `valid:"-"`
 	PrefixID      *uint           `valid:"-"`

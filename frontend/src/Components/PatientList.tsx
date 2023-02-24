@@ -96,56 +96,17 @@ const handleClose = () => {
             );
         },
     },
-      {
-        field: "Prefix",
-        headerName: "คำนำหน้า",
-        width: 100,
-        valueFormatter: (params) => params.value.Description,
-      },
-      {
-        field: "Patient_Name",
-        headerName: "ชื่อ-สกุล",
-        width: 180,
-      },
-      {
-        field: "Age",
-        headerName: "อายุ",
-        width: 100,
-      },
-      {
-        field: "Gender",
-        headerName: "เพศ",
-        width: 100,
-        valueFormatter: (params) => params.value.Description,
-      },
-      {
-        field: "Birthday",
-        headerName: "วันเดือนปีเกิด",
-        width: 100,
-      },
-      {
-        field: "IDCard",
-        headerName: "รหัสบัตรประชาชน",
-        width: 150,
-      },
-      {
-        field: "Phone",
-        headerName: "เบอร์โทร",
-        width: 150,
-      },
-
-      {
-        field: "House_ID",
-        headerName: "ที่อยู่",
-        width: 100,
-
-      },
-      {
-        field: "Subdistrict",
-        headerName: "ตำบล",
-        width: 100,
-
-      },
+    {field: "Prefix",headerName: "คำนำหน้า",width: 100,valueFormatter: (params) => params.value.Description,},
+    {field: "Patient_Name",headerName: "ชื่อ-สกุล",width: 180,},
+    {field: "Age",headerName: "อายุ",width: 100,},
+    {field: "Gender",headerName: "เพศ",width: 100,valueFormatter: (params) => params.value.Description,},
+    {field: "Birthday",headerName: "วันเดือนปีเกิด",width: 100,},
+    {field: "Blood",headerName: "กรุ๊ปเลือด",width: 100,valueFormatter: (params) => params.value.Phenotype,},
+    {field: "Religion",headerName: "ศาสนา",width: 150,valueFormatter: (params) => params.value.ReligionType,},
+    {field: "Nationality",headerName: "เชื้อชาติ",width: 150,valueFormatter: (params) => params.value.NationalityType,},
+    {field: "IDCard", headerName: "รหัสบัตรประชาชน",width: 150,},
+    {field: "Phone",headerName: "เบอร์โทร",width: 150,},
+    {field: "House_ID",headerName: "ที่อยู่",width: 100,},
     ];
   
     return (

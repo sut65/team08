@@ -19,6 +19,8 @@ import Button from "@mui/material/Button";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 // import Home from "./components/Home";
  import Screening_officerList from "./Components/Screening_officerList";
@@ -136,10 +138,10 @@ const menu = [
   { name: "ข้อมูลแพทย์", icon: <AssignmentIndIcon />, path: "/Doctor" ,role: 'officer'},
 
   { name: "ข้อมูลการการนัดคนไข้", icon: <CalendarMonthIcon />, path: "/AppointList" ,role: 'screening_officer'},
-  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <AssignmentIndIcon />, path: "/medemployees" ,role: 'officer'},
+  { name: "ข้อมูลเจ้าหน้าที่เทคนิคการแพทย์", icon: <ContactPageIcon />, path: "/medemployees" ,role: 'officer'},
   { name: "ข้อมูลอปุกรณ์แลป", icon: <BuildCircleIcon />, path: "/medicalequipment" ,role: 'med_employee'},
   { name: "ข้อมูลการเบิกอุปกรณ์แลป", icon: <AssignmentIcon />, path: "requests" ,role: 'med_employee'},
-  { name: "ข้อมูลผลแลป", icon: <AssignmentIndIcon />, path: "/Lab" ,role: 'med_employee'},
+  { name: "ข้อมูลผลแลป", icon: <ListAltIcon />, path: "/Lab" ,role: 'med_employee'},
 
   { name: "ข้อมูลการรักษา", icon: <SickIcon />, path: "Treatments" ,role: 'doctor'}, 
   { name: "ข้อมูลการจ่ายยา", icon: <MedicationIcon />, path: "/DispenseList" ,role: 'doctor'},

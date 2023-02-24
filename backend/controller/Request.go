@@ -15,25 +15,25 @@ func CreateRequest(c *gin.Context) {
 	var med_equipment entity.Med_Equipment
 	var location entity.Location
 
-	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร watchVideo
+	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร 
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// 9: ค้นหา video ด้วย id              //ของเราเป็น ค้นหา Equipment ด้วย id
+	// 9: ค้นหา  Equipment ด้วย id
 	if tx := entity.DB().Where("id = ?", request.Med_EquipmentID).First(&med_equipment); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Equipment not found"})
 		return
 	}
 
-	// 10: ค้นหา resolution ด้วย id			//ของเราเป็น ค้นหา Location ด้วย id
+	// 10: ค้นหา  Location ด้วย id
 	if tx := entity.DB().Where("id = ?", request.LocationID).First(&location); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Location not found"})
 		return
 	}
 
-	// // 11: ค้นหา Med_EmployeeID ด้วย id			//ของเราเป็น ค้นหา medemployees ด้วย id
+	// // 11: ค้นหา Med_EmployeeID ด้วย id			
 	if tx := entity.DB().Where("id = ?", request.Med_EmployeeID).First(&medemployees); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "medemployees not found"})
 		return

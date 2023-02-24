@@ -222,7 +222,7 @@ func TestTREATMENTID_NotBlank(t *testing.T) {
 func TestTreatment_CONCLUSION(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
-	// เช็คข้อมูล TREATMENT = ไม่เกิน20ตัว
+	// เช็คข้อมูล CONCLUSION = ไม่เกิน100ตัว
 	Treatment := Treatment{
 		TREATMENT_ID: "T666666",
 		TREATMENT:    "ปวดหลังง",
@@ -247,7 +247,7 @@ func TestTreatment_CONCLUSION(t *testing.T) {
 func TestTreatment_GUIDANCE(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
-	// เช็คข้อมูล TREATMENT = ไม่เกิน20ตัว
+	//  เช็คข้อมูล GUIDANCE = ไม่เกิน100ตัว
 	Treatment := Treatment{
 		TREATMENT_ID: "T666666",
 		TREATMENT:    "ปวดหลัง",

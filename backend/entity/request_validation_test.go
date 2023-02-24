@@ -8,7 +8,7 @@ import (
 	"github.com/onsi/gomega"
 )
 
-// ////1
+///1
 func TestRequestPass(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
@@ -30,7 +30,7 @@ func TestRequestPass(t *testing.T) {
 	g.Expect(err).To(gomega.BeNil())
 }
 
-// /////2
+////2
 func TestRequestID(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
@@ -130,7 +130,7 @@ func TestRequest_NAME(t *testing.T) {
 func TestRequestID_NotBlank(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
-	// เช็คข้อมูล RequestID จะต้องขึ้นต้นด้วย R ตามด้วยเลข 6 ตัว
+	// เช็คข้อมูล RequestID จะต้องไม่เป็นค่าว่าง
 	Request := Request{
 		R_ID:     "",
 		R_NAME:   "ตรวจปัจสาวะ",
@@ -153,7 +153,7 @@ func TestRequestID_NotBlank(t *testing.T) {
 func TestRequest_R_NAME_NotBlank(t *testing.T) {
 	g := gomega.NewGomegaWithT(t)
 
-	// เช็คข้อมูล
+	// เช็คข้อมูล Request_Name จะต้องไม่เป็นค่าว่าง
 	Request := Request{
 		R_ID:     "R100002",
 		R_NAME:   "",

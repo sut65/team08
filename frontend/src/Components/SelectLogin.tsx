@@ -30,6 +30,7 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
 import PersonIcon from '@mui/icons-material/Person';
 import { Grid } from "@mui/material";
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 const drawerWidth = 240;
 
@@ -102,7 +103,7 @@ const mdTheme = createTheme({
 const menu = [
     { name: "ฝ่ายผู้ดูแลระบบ", icon: <ManageAccountsIcon />, path: "/signin_officer" },
     { name: "ฝ่ายคัดกรอง", icon: <PersonSearchIcon />, path: "/signinScreening_officer" },
-    { name: "ฝ่ายแพทย์", icon: <PersonIcon />, path: "/signinDoctor" },
+    { name: "ฝ่ายแพทย์", icon: <HowToRegIcon />, path: "/signinDoctor" },
     { name: "ฝ่ายเทคนิคการแพทย์", icon: <PersonIcon />, path: "/signinMed_employee" },
 ];
 

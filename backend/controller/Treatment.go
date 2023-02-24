@@ -9,7 +9,7 @@ import (
 	"github.com/sut65/team08/entity"
 )
 
-// POST Treatment มีทุกอันยกเว้น officer ไม่รู้ทำไม
+// POST Treatment 
 func CreateTreatment(c *gin.Context) {
 
 	var treatment entity.Treatment
@@ -52,7 +52,7 @@ func CreateTreatment(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "doctor not found"})
 		return
 	}
-	// 12: สร้าง WatchVideo
+	// 14: สร้าง WatchVideo
 	wv := entity.Treatment{
 		DiseaseID:    treatment.DiseaseID, // โยงความสัมพันธ์กับ Entity
 		PatientID:    treatment.PatientID, // โยงความสัมพันธ์กับ Entity
@@ -72,7 +72,7 @@ func CreateTreatment(c *gin.Context) {
 		return
 	}
 
-	// 13: บันทึก
+	// 15: บันทึก
 	if err := entity.DB().Create(&wv).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

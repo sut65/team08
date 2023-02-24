@@ -173,6 +173,16 @@ func GetDoctor(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Doctor})
 }
 
+func FindDoctor(c *gin.Context) {
+	var Doctor entity.Doctor
+	id := c.Param("id")
+	if err := entity.DB().Preload("Address").Preload("Blood").Preload("Country").Preload("DocFaPrefix").Preload("DocMoPrefix").Preload("DocPrefix").Preload("DocWiPrefix").Preload("Education").Preload("Gender").Preload("Marital").Preload("Nationality").Preload("Religion").Raw("SELECT * FROM Doctors WHERE docter_code = '"+id+"'").Scan(&Doctor).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": Doctor})
+}
+
 // GET /Doctor
 func ListDoctor(c *gin.Context) {
 	var Doctor []entity.Doctor

@@ -61,9 +61,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#698269",
-
       light: "#B99B6B",
-
       //สีสว่าง
       contrastText: "#F1DBBF",
     },
@@ -199,7 +197,7 @@ function Lab() {
   const handleChangeLabName = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof Lab;
     const value = event.target.value;
-    console.log(name,value);
+    console.log(name, value);
     setLab({
       ...Lab,
       [name]: value,
@@ -323,11 +321,11 @@ function Lab() {
       });
     }
   };
-  const convertType = (data: string | number | undefined ) => {
+  const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
     return val;
   };
-  const convertTypeFloat = (data: string | number | undefined ) => {
+  const convertTypeFloat = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseFloat(data) : data;
     return val;
   };
@@ -366,14 +364,21 @@ function Lab() {
   ];
 
   const columnsLab: GridColDef[] = [
-    { field: "ID", headerName: "ไอดี", width: 50 },
+    { field: "ID",headerAlign: "center", headerName: "ไอดี", width: 50 },
     {
       field: "UPDATE",
       headerName: "แก้ไข",
-      width: 100,
+      headerAlign: "center",
+      width: 80,
       renderCell: () => {
         return (
           <Button
+            style={{
+              borderRadius: 35,
+              padding: "2px 7px",
+              fontSize: "10px",
+              margin: "0 auto",
+            }}
             variant="contained"
             color="primary"
             size="small"
@@ -388,12 +393,19 @@ function Lab() {
     {
       field: "DELETE",
       headerName: "ลบ",
-      width: 100,
+      headerAlign: "center",
+      width: 80,
       renderCell: () => {
         return (
           <Button
+            style={{
+              borderRadius: 35,
+              padding: "2px 7px",
+              fontSize: "10px",
+              margin: "0 auto",
+            }}
             variant="contained"
-            color="primary"
+            color="secondary"
             size="small"
             onClick={() => setOpendelete(true)}
           >
@@ -411,34 +423,40 @@ function Lab() {
     {
       field: "Lab_Name",
       headerName: "ใบแลป",
+      headerAlign: "center",
       width: 120,
       valueFormatter: (params) => params.value.Discription,
     },
     {
       field: "Lab_test",
       headerName: "ค่าที่รายงาน",
+      headerAlign: "center",
       width: 120,
     },
     {
       field: "Value",
       headerName: "หน่วย",
+      headerAlign: "center",
       width: 80,
     },
     {
       field: "Treatment",
       headerName: "เลขกำกับการรักษา",
+      headerAlign: "center",
       width: 150,
       valueFormatter: (params) => params.value.TREATMENT_ID,
     },
     {
       field: "Doctor",
       headerName: "แพทย์ผู้สั่งแลป",
+      headerAlign: "center",
       width: 120,
       valueFormatter: (params) => params.value.FirstNameTH,
     },
     {
       field: "Med_Employee",
       headerName: "ผู้รายงานผลแลป",
+      headerAlign: "center",
       width: 120,
       valueFormatter: (params) => params.value.Name,
     },
@@ -481,7 +499,7 @@ function Lab() {
     // var TreatmentID = localStorage.getItem("TreatmentID") || undefined;
     // var Med_EmployeeID = localStorage.getItem("Med_EmployeeID") || undefined;
     // var DoctorID = localStorage.getItem("DoctorID") || undefined;
-    
+
     let data = {
       ID: convertType(ID),
       Lab_test: Lab.Lab_test || "",
@@ -512,361 +530,393 @@ function Lab() {
   }
 
   return (
-    <div>
-      {/* ยืนยันการลบ */}
-      <Dialog
-        open={openDelete}
-        onClose={handleCloseRow}
-        fullWidth
-        maxWidth="xs"
-      >
-        <DialogTitle>
-        <h2>ยืนยันการลบรายการ 🗑️</h2>
-        ท่านกำลังเลือกไอดี : {localStorage.getItem("ID")}<br/>
-        เลขกำกับการรักษา : {localStorage.getItem("Treatment_name")}
-        <p></p>
-        </DialogTitle>
-        <DialogContent>
-          <Grid container sx={{ padding: 2 }}>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={2}>
-              <Button variant="outlined" color="primary" onClick={Delete_Lab}>
-                <div className="good-font">ยืนยัน</div>
-              </Button>
-            </Grid>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleCloseRow}
-              >
-                <div className="good-font">ยกเลิก</div>
-              </Button>
-            </Grid>
-            <Grid item xs={3}></Grid>
-          </Grid>
-        </DialogContent>
-      </Dialog>
-
-      {/* ยืนยันการแก้ไข */}
-      <Dialog 
-        open={openEdit} 
-        onClose={handleCloseRow} 
-        fullWidth 
-        maxWidth="md"
-      >
-        <DialogContent>
+    <ThemeProvider theme={theme}>
+      <div>
+        {/* ยืนยันการลบ */}
+        <Dialog
+          open={openDelete}
+          onClose={handleCloseRow}
+          fullWidth
+          maxWidth="xs"
+        >
           <DialogTitle>
-            <h2>แก้ไขข้อมูลแลป 📂</h2>
-            <p >กำลังแก้ไขไอดี -&gt; {localStorage.getItem("ID")} เลขกำกับการรักษา -&gt; {localStorage.getItem("Treatment_name")}</p>
-            </DialogTitle>
-          <Grid container spacing={2} sx={{ padding: 4 }}>
-            <Grid item xs={3}>
-              <FormControl fullWidth variant="outlined" size="small">
-                <Select
-                  native
-                  value={Lab.TreatmentID + ""}
-                  onChange={handleChangeLabName}
-                  inputProps={{
-                    name: "TreatmentID",
-                  }}
+            <h2>ยืนยันการลบรายการ 🗑️</h2>
+            ท่านกำลังเลือกไอดี : {localStorage.getItem("ID")}
+            <br />
+            เลขกำกับการรักษา : {localStorage.getItem("Treatment_name")}
+            <p></p>
+          </DialogTitle>
+          <DialogContent>
+            <Grid container sx={{ padding: 2 }}>
+              <Grid item xs={3}></Grid>
+              <Grid item xs={2}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={Delete_Lab}
                 >
-                  <option aria-label="None" value="">
-                    เลขกำกับการรักษา
-                  </option>
-                  {Show.map((item: TreatmentsInterface) => (
-                    <option value={item.ID} key={item.ID}>
-                      {item.TREATMENT_ID}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={3}>
-              <FormControl fullWidth variant="outlined" size="small">
-                <Select
-                  native
-                  value={Lab.LabNameID + ""}
-                  onChange={handleChangeLabName}
-                  inputProps={{
-                    name: "LabNameID",
-                  }}
-                >
-                  {/* <option aria-label="None" value="default">
-                    ประเภทแลป
-                  </option> */}
-                  
-                  {LabName.map((item: LabNameInterface) => (
-                    <option value={item.ID} key={item.ID} >
-                      {item.Discription}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <br />
-            <br />
-            <br />
-            <Grid item xs={6}></Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth variant="outlined" size="small">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      // disabled={isDisabled}
-                      checked={isDisabled}
-                      onChange={handleChangeBox}
-                      name="Lab_test"
-                      sx={{
-                        color: green[600],
-                        "&.Mui-checked": {
-                          color: green[400],
-                        },
-                      }}
-                    />
-                  }
-                  label="Positive"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      // disabled={isDisabled2}
-                      checked={isDisabled2}
-                      onChange={handleChangeBox2}
-                      name="Lab_test"
-                      sx={{
-                        color: pink[500],
-                        "&.Mui-checked": {
-                          color: pink[300],
-                        },
-                      }}
-                    />
-                  }
-                  label="Negetive"
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={5}>
-              <TextField
-                label="ค่าที่รายงาน"
-                defaultValue = {localStorage.getItem("Value")}
-                fullWidth
-                id="ValueInput"
-                type="string"
-                variant="outlined"
-                size="small"
-                onChange={(event) => setValueInput(event.target.value)}
-              />
-            </Grid>
-            <Grid item xs={4}></Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={handleCloseEdit}>ยกเลิก</Button>
-          <Button variant="contained" onClick={edit}>ยืนยันการแก้ไขข้อมูลผลแลป</Button>
-        </DialogActions>
-      </Dialog>
-
-      <Container maxWidth="md">
-        <Snackbar
-          open={success}
-          autoHideDuration={3000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert onClose={handleClose} severity="success">
-            บันทึกข้อมูลสำเร็จ
-          </Alert>
-        </Snackbar>
-        <Snackbar
-          id="error"
-          open={error}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert onClose={handleClose} severity="error">
-            {/* บันทึกข้อมูลไม่สำเร็จ */}
-            {message}
-          </Alert>
-        </Snackbar>
-        <Paper>
-          <Box
-            display="flex"
-            sx={{
-              marginTop: 2,
-            }}
-          >
-            <Box sx={{ paddingX: 2, paddingY: 1 }}>
-              <Typography
-                component="h2"
-                variant="h6"
-                color="primary"
-                gutterBottom
-              >
-                ส่งผลตรวจแลป
-              </Typography>
-            </Box>
-          </Box>
-          <Divider />
-          <Grid
-            container
-            spacing={1}
-            sx={{ marginX: 0.5, marginY: 0, padding: 2 }}
-          >
-            <div style={{ height: 300, width: "98.5%" }}>
-              <p>ข้อมูลการรักษาที่ยังรอผลตรวจแลป</p>
-              <Grid item xs={12} md={5} sm={12}>
+                  <div className="good-font">ยืนยัน</div>
+                </Button>
+              </Grid>
+              <Grid item xs={2}></Grid>
+              <Grid item xs={2}>
                 <Button
                   variant="outlined"
-                  onClick={handleClickOpen}
-                  startIcon={<AddIcon />}
+                  color="inherit"
+                  onClick={handleCloseRow}
                 >
-                  ส่งข้อมูลผลแลป
+                  <div className="good-font">ยกเลิก</div>
                 </Button>
-                <Dialog
-                  open={openD}
-                  // onClose={touchPage(false)}
-                  fullWidth
-                  maxWidth="md"
-                >
-                  <DialogContent>
-                    <DialogTitle>
-                    <h2>เพิ่มข้อมูลผลแลป 🩺</h2>
-                    </DialogTitle>
-                    <Grid container spacing={2} sx={{ padding: 4 }}>
-                      <Grid item xs={3}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Lab.TreatmentID + ""}
-                            onChange={handleChangeLabName}
-                            inputProps={{
-                              name: "TreatmentID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              เลขกำกับการรักษา
-                            </option>
-                            {Show.map((item: TreatmentsInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.TREATMENT_ID}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <Select
-                            native
-                            value={Lab.LabNameID + ""}
-                            onChange={handleChangeLabName}
-                            inputProps={{
-                              name: "LabNameID",
-                            }}
-                          >
-                            <option aria-label="None" value="">
-                              ประเภทแลป
-                            </option>
-                            {LabName.map((item: LabNameInterface) => (
-                              <option value={item.ID} key={item.ID}>
-                                {item.Discription}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <br />
-                      <br />
-                      <br />
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={12}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                // disabled={isDisabled}
-                                checked={isDisabled}
-                                onChange={handleChangeBox}
-                                name="Lab_test"
-                                sx={{
-                                  color: green[600],
-                                  "&.Mui-checked": {
-                                    color: green[400],
-                                  },
-                                }}
-                              />
-                            }
-                            label="Positive"
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                // disabled={isDisabled2}
-                                checked={isDisabled2}
-                                onChange={handleChangeBox2}
-                                name="Lab_test"
-                                sx={{
-                                  color: pink[500],
-                                  "&.Mui-checked": {
-                                    color: pink[300],
-                                  },
-                                }}
-                              />
-                            }
-                            label="Negetive"
-                          />
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          
-                          label="ค่าที่รายงาน"
-                          fullWidth
-                          id="ValueInput"
-                          type="string"
-                          variant="outlined"
-                          size="small"
-                          onChange={(event) =>
-                            setValueInput(event.target.value)
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={4}></Grid>
-                    </Grid>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleCloseD}>ยกเลิก</Button>
-                    <Button onClick={submit}>บันทึกข้อมูลผลแลป</Button>
-                  </DialogActions>
-                </Dialog>
-                <p></p>
               </Grid>
-              <DataGrid
-                rows={Show}
-                getRowId={(row) => row.ID}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-              <br></br>
-              <p>ผลแลปที่ทำการบันทึกแล้ว</p>
-              <DataGrid
-                rows={ShowLab}
-                getRowId={(row) => row.ID}
-                columns={columnsLab}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                onRowClick={handleRowClick}
-              />
-            </div>
-          </Grid>
-          <Grid container spacing={1} sx={{ marginY: 58, padding: 2 }}></Grid>
-        </Paper>
-      </Container>
-    </div>
+              <Grid item xs={3}></Grid>
+            </Grid>
+          </DialogContent>
+        </Dialog>
+
+        {/* ยืนยันการแก้ไข */}
+        <Dialog
+          open={openEdit}
+          onClose={handleCloseRow}
+          fullWidth
+          maxWidth="md"
+        >
+          <DialogContent>
+            <DialogTitle>
+              <h2>แก้ไขข้อมูลแลป 📂</h2>
+              <p>
+                กำลังแก้ไขไอดี : [ &nbsp;{localStorage.getItem("ID")}&nbsp; ] 🦠
+                เลขกำกับการรักษา : [ &nbsp;
+                {localStorage.getItem("Treatment_name")}&nbsp; ]
+              </p>
+            </DialogTitle>
+            <Grid container spacing={2} sx={{ padding: 4 }}>
+              <Grid item xs={3}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Lab.TreatmentID + ""}
+                    onChange={handleChangeLabName}
+                    inputProps={{
+                      name: "TreatmentID",
+                    }}
+                  >
+                    <option aria-label="None" value="">
+                      เลขกำกับการรักษา
+                    </option>
+                    {Show.map((item: TreatmentsInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.TREATMENT_ID}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={3}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <Select
+                    native
+                    value={Lab.LabNameID + ""}
+                    onChange={handleChangeLabName}
+                    inputProps={{
+                      name: "LabNameID",
+                    }}
+                  >
+                    {/* <option aria-label="None" value="default">
+                    ประเภทแลป
+                  </option> */}
+
+                    {LabName.map((item: LabNameInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.Discription}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <br />
+              <br />
+              <br />
+              <Grid item xs={6}></Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth variant="outlined" size="small">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // disabled={isDisabled}
+                        checked={isDisabled}
+                        onChange={handleChangeBox}
+                        name="Lab_test"
+                        sx={{
+                          color: green[600],
+                          "&.Mui-checked": {
+                            color: green[400],
+                          },
+                        }}
+                      />
+                    }
+                    label="Positive"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // disabled={isDisabled2}
+                        checked={isDisabled2}
+                        onChange={handleChangeBox2}
+                        name="Lab_test"
+                        sx={{
+                          color: pink[500],
+                          "&.Mui-checked": {
+                            color: pink[300],
+                          },
+                        }}
+                      />
+                    }
+                    label="Negetive"
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  label="ค่าที่รายงาน"
+                  defaultValue={localStorage.getItem("Value")}
+                  fullWidth
+                  id="ValueInput"
+                  type="string"
+                  variant="outlined"
+                  size="small"
+                  onChange={(event) => setValueInput(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={4}></Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="outlined" onClick={handleCloseEdit}>
+              ยกเลิก
+            </Button>
+            <Button variant="contained" onClick={edit}>
+              ยืนยันการแก้ไขข้อมูลผลแลป
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Container maxWidth="md">
+          <Snackbar
+            open={success}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert onClose={handleClose} severity="success">
+              บันทึกข้อมูลสำเร็จ
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            id="error"
+            open={error}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert onClose={handleClose} severity="error">
+              {/* บันทึกข้อมูลไม่สำเร็จ */}
+              {message}
+            </Alert>
+          </Snackbar>
+          <Paper>
+            <Box
+              display="flex"
+              sx={{
+                marginTop: 2,
+              }}
+            >
+              <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                <Typography
+                  component="h2"
+                  variant="h6"
+                  color="primary"
+                  gutterBottom
+                >
+                  ส่งผลตรวจแลป
+                </Typography>
+              </Box>
+            </Box>
+            <Divider />
+            <Grid
+              container
+              spacing={1}
+              sx={{ marginX: 0.5, marginY: 0, padding: 2 }}
+            >
+              <div style={{ height: 300, width: "98.5%" }}>
+                <p>ข้อมูลการรักษาที่ยังรอผลตรวจแลป</p>
+                <Grid item xs={12} md={5} sm={12}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleClickOpen}
+                    startIcon={<AddIcon />}
+                  >
+                    ส่งข้อมูลผลแลป
+                  </Button>
+                  <Dialog
+                    open={openD}
+                    // onClose={touchPage(false)}
+                    fullWidth
+                    maxWidth="md"
+                  >
+                    <DialogContent>
+                      <DialogTitle>
+                        <h2>เพิ่มข้อมูลผลแลป 🩺</h2>
+                      </DialogTitle>
+                      <Grid container spacing={2} sx={{ padding: 4 }}>
+                        <Grid item xs={3}>
+                          <FormControl
+                            fullWidth
+                            variant="outlined"
+                            size="small"
+                          >
+                            <Select
+                              native
+                              value={Lab.TreatmentID + ""}
+                              onChange={handleChangeLabName}
+                              inputProps={{
+                                name: "TreatmentID",
+                              }}
+                            >
+                              <option aria-label="None" value="">
+                                เลขกำกับการรักษา
+                              </option>
+                              {Show.map((item: TreatmentsInterface) => (
+                                <option value={item.ID} key={item.ID}>
+                                  {item.TREATMENT_ID}
+                                </option>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <FormControl
+                            fullWidth
+                            variant="outlined"
+                            size="small"
+                          >
+                            <Select
+                              native
+                              value={Lab.LabNameID + ""}
+                              onChange={handleChangeLabName}
+                              inputProps={{
+                                name: "LabNameID",
+                              }}
+                            >
+                              <option aria-label="None" value="">
+                                ประเภทแลป
+                              </option>
+                              {LabName.map((item: LabNameInterface) => (
+                                <option value={item.ID} key={item.ID}>
+                                  {item.Discription}
+                                </option>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <br />
+                        <br />
+                        <br />
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={12}>
+                          <FormControl
+                            fullWidth
+                            variant="outlined"
+                            size="small"
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  // disabled={isDisabled}
+                                  checked={isDisabled}
+                                  onChange={handleChangeBox}
+                                  name="Lab_test"
+                                  sx={{
+                                    color: green[600],
+                                    "&.Mui-checked": {
+                                      color: green[400],
+                                    },
+                                  }}
+                                />
+                              }
+                              label="Positive"
+                            />
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  // disabled={isDisabled2}
+                                  checked={isDisabled2}
+                                  onChange={handleChangeBox2}
+                                  name="Lab_test"
+                                  sx={{
+                                    color: pink[500],
+                                    "&.Mui-checked": {
+                                      color: pink[300],
+                                    },
+                                  }}
+                                />
+                              }
+                              label="Negetive"
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={5}>
+                          <TextField
+                            label="ค่าที่รายงาน"
+                            fullWidth
+                            id="ValueInput"
+                            type="string"
+                            variant="outlined"
+                            size="small"
+                            onChange={(event) =>
+                              setValueInput(event.target.value)
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={4}></Grid>
+                      </Grid>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleCloseD} variant="outlined">
+                        ยกเลิก
+                      </Button>
+                      <Button onClick={submit} variant="contained">
+                        บันทึกข้อมูลผลแลป
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <p></p>
+                </Grid>
+                <DataGrid
+                  rowHeight={35}
+                  rows={Show}
+                  getRowId={(row) => row.ID}
+                  columns={columns}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                />
+                <br></br>
+                <p>ผลแลปที่ทำการบันทึกแล้ว</p>
+                <DataGrid
+                  rowHeight={35}
+                  rows={ShowLab}
+                  getRowId={(row) => row.ID}
+                  columns={columnsLab}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                  onRowClick={handleRowClick}
+                />
+              </div>
+            </Grid>
+            <Grid container spacing={1} sx={{ marginY: 58, padding: 2 }}></Grid>
+          </Paper>
+        </Container>
+      </div>
+    </ThemeProvider>
   );
 }
 

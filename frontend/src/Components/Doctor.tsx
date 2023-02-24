@@ -69,6 +69,7 @@ import {
   CreateDoctor,
   UpdateDoctor,
   GetOfficerByUID,
+  GetDoctorFind,
 } from "../Services/HttpClientService";
 import { OfficersInterface } from "../Models/IOfficer";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -440,7 +441,18 @@ function Doctor() {
       // console.log(res);
     }
   };
+
   const getDoctor = async () => {
+    let res = await GetDoctor();
+    if (res) {
+      setDoctor(res);
+      setDoctorA(res);
+      // console.log("set Doctor & DoctorA");
+      // console.log(res);
+    }
+  };
+
+  const getDoctorFind = async () => {
     let res = await GetDoctor();
     if (res) {
       setDoctor(res);
@@ -1060,26 +1072,6 @@ function Doctor() {
               <Grid item xs={2}></Grid>
             </Grid>
           </DialogContent>
-        </Dialog>
-
-        {/* ยืนยันการแก้ไข */}
-        <Dialog open={openUpdate} onClose={handleCloseRow}>
-          <DialogTitle>
-            <h2>แก้ไขข้อมูลแลป 📂</h2>
-            <p>
-              กำลังแก้ไขไอดี -&gt; {localStorage.getItem("ID")} เลขกำกับการรักษา
-              -&gt; {localStorage.getItem("Treatment_name")}
-            </p>
-          </DialogTitle>
-          <Button
-            variant="contained"
-            color="primary"
-            //กด "ยืนยัน" ไปที่หน้าแก้ไข
-            component={RouterLink}
-            to="/EmployeeattemdanceINUpdate"
-          >
-            <div className="good-font">ยืนยัน</div>
-          </Button>
         </Dialog>
 
         <Dialog
@@ -1871,7 +1863,7 @@ function Doctor() {
                     label="ป้อนรหัสประจำตัวของแพทย์ หรือเลขบัตรประชาชน"
                     variant="outlined"
                     size="small"
-                    // value={FindAddress.ID}
+                    // value={FindDoctor}
                     // onChange={handleInputChange}
                     InputProps={{
                       startAdornment: (

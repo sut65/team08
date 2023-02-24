@@ -196,7 +196,7 @@ type Doctor struct {
 	ReOther       string    `valid:"-"`
 	NationalityID *uint     `valid:"-"`
 	CountryID     *uint     `valid:"-"`
-	TelPhone      string    `valid:"matches(^[0]\\d{9}$)"`
+	TelPhone      string    `valid:"matches(^[0]\\d{9}$)`
 	TelOffice     string    `valid:"-"`
 
 	Email       string `valid:"email~กรุณาใส่อีเมลให้ถูกต้อง"`
@@ -475,7 +475,7 @@ type Med_Employee struct {
 	gorm.Model
 	Name           string `valid:"required~กรุณากรอกชื่อ-นามสกุล"`
 	Age            int    `valid:"range(0|100)~กรุณากรอกอายุให้ถูกต้อง"`
-	Phone          string `valid:"matches(^[06||08||09]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้อง,required~กรุณาใส่เบอร์โทรศัพท์"`
+	Phone          string `valid:"matches(^[06||08||09]\\d{9}$)~กรุณาใส่เบอร์โทรให้ถูกต้อง,required~กรุณากรอกเบอร์โทรศัพท์"`
 	Email          string `valid:"email~กรุณากรอกอีเมลให้ถูกต้อง, required~กรุณากรอกอีเมล"`
 	Password       string `valid:"required~กรุณากรอกรหัสผ่าน,minstringlength(6)~รหัสผ่านต้องมีอย่างน้อย 6 ตัว"`
 	University     string `valid:"required~กรุณากรอกชื่อมหาวิทยาลัย"`

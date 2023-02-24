@@ -1772,6 +1772,7 @@ function Doctor() {
                   <DatePicker
                     views={["year"]}
                     label="ปีที่เข้ารับการศึกษา"
+                    inputFormat="YYYY"
                     value={Doctor.StartEducation}
                     onChange={(e) => {
                       setDoctor({
@@ -1790,6 +1791,7 @@ function Doctor() {
                   <DatePicker
                     views={["year"]}
                     label="ปีที่จบการศึกษา"
+                    inputFormat="YYYY"
                     value={Doctor.EndEducation}
                     onChange={(e) => {
                       setDoctor({
@@ -2628,6 +2630,7 @@ function Doctor() {
                           <DatePicker
                             views={["year"]}
                             label="ปีที่เข้ารับการศึกษา"
+                            inputFormat="YYYY"
                             value={Doctor.StartEducation}
                             onChange={(e) => {
                               setDoctor({
@@ -2646,6 +2649,7 @@ function Doctor() {
                           <DatePicker
                             views={["year"]}
                             label="ปีที่จบการศึกษา"
+                            inputFormat="YYYY"
                             value={Doctor.EndEducation}
                             onChange={(e) => {
                               setDoctor({

@@ -58,3 +58,16 @@ func TestValueNotSpecialCharacters(t *testing.T) {
         g.Expect(err.Error()).To(Equal("กรุณากรอกเป็นตัวเลขทศนิยม"))
     }
 }
+
+func TestLabPass(t *testing.T) {
+	g := NewGomegaWithT(t)
+	
+	user := Lab{
+        Lab_test: "negative",
+        Value:    "-0.4",
+    }
+
+	ok, err := govalidator.ValidateStruct(user)
+	g.Expect(ok).To(BeTrue())
+	g.Expect(err).To(BeNil())
+}

@@ -72,7 +72,7 @@ func TestPhoneMedicalEmployeeMustBeInValidPattern(t *testing.T) {
 		g.Expect(err).ToNot(BeNil())
 
 		// err.Error() ต้องมี message แสดงออกมา
-		g.Expect(err.Error()).To(Equal(fmt.Sprintf(`Phone: %s does not validate as matches(^[0]\d{9}$)`, fixture)))
+		g.Expect(err.Error()).To(Equal("กรุณาใส่เบอร์โทรให้ถูกต้อง"))
 	}
 }
 

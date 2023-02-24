@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"time"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -52859,137 +52858,6 @@ func SetupDatabase() {
 	}
 	db.Model(&DocPrefix{}).Create(&DocPrefix_13)
 
-	t1, _ := time.Parse("2006-01-02", "2001-07-05")
-	t2, _ := time.Parse("2006-01-02", "2001-07-04")
-
-	t3, _ := time.Parse("2006-01-01", "2018-01-01")
-	t4, _ := time.Parse("2006-01-01", "2020-01-01")
-
-	t5, _ := time.Parse("2006-01-01", "2019-01-01")
-	t6, _ := time.Parse("2006-01-01", "2021-01-01")
-
-	// t1 := time.Now()
-
-	idCardOne := "1234567890111"
-	passwordOne, _ := bcrypt.GenerateFromPassword([]byte(idCardOne), 14)
-	idCardTwo := "0987654321000"
-	passwordTwo, _ := bcrypt.GenerateFromPassword([]byte(idCardTwo), 14)
-
-	doc1 := Doctor{
-		DocterCode:   "D66001",
-		DocterIDCard: idCardOne,
-		FirstNameTH:  "บุญญฤทธิ์",
-		LastNameTH:   "มงคลการ",
-		FirstNameEN:  "Bunyalit",
-
-		LastNameEN: "Mongkhonkan",
-		Birthday:   t1,
-		TelPhone:   "0928626111",
-		TelOffice:  "044641001",
-
-		Email:       "b.mongkhonkan@gmail.com",
-		AllAddress:  "24 หมู่ 3",
-		Subdistrict: "โคกสูง",
-		District:    "หนองกี่",
-		Province:    "บุรีรัมย์",
-
-		FaIDCard:     "1000067890111",
-		FaFirstName:  "ไพศาล",
-		FaLastName:   "มงคลการ",
-		FaOccupation: "เกษตรกรรม",
-		MoIDCard:     "2000067890111",
-
-		MoFirstName:  "ฐิติมา",
-		MoLastName:   "มงคลการ",
-		MoOccupation: "เกษตรกรรม",
-		WiIDCard:     "3000067890111",
-
-		EducationName:  "แพทยศาสตร์บัณฑิต",
-		EducationMajor: "แพทยศาสตร์",
-
-		University:     "จุฬาลงกรณ์มหาวิทยาลัย",
-		StartEducation: t3,
-		EndEducation:   t4,
-
-		DocPrefix: DocPrefix_11,
-		Gender:    Gender_one,
-		Blood:     Blood_AB,
-		Marital:   Marital_1,
-
-		Religion:  Religion_1,
-		Address:   AddressThailand_1917,
-		Education: Education_three,
-
-		Nationality: Nationality_89,
-		Country:     Nationality_21,
-
-		DocFaPrefix: DocPrefix_2,
-		DocMoPrefix: DocPrefix_3,
-
-		DocPassword: string(passwordOne),
-	}
-	db.Model(&Doctor{}).Create(&doc1)
-
-	doc2 := Doctor{
-		DocterCode:   "D66002",
-		DocterIDCard: idCardTwo,
-		FirstNameTH:  "มงคล",
-		LastNameTH:   "สุทน",
-		FirstNameEN:  "Mongkhon",
-
-		LastNameEN: "Suthon",
-		Birthday:   t2,
-		TelPhone:   "0928626111",
-		TelOffice:  "044641002",
-
-		Email:       "m.suthon@gmail.com",
-		AllAddress:  "1/21 หมู่ 7",
-		Subdistrict: "ดอนอะราง",
-		District:    "หนองกี่",
-		Province:    "บุรีรัมย์",
-
-		FaIDCard:     "1000067890222",
-		FaFirstName:  "ประวิทย์",
-		FaLastName:   "สุทน",
-		FaOccupation: "ค้าขาย",
-		MoIDCard:     "2000067890222",
-
-		MoFirstName:  "นาง",
-		MoLastName:   "สุทน",
-		MoOccupation: "ข้าราชการ",
-		WiIDCard:     "3000067890222",
-		WiFirstName:  "ณัฐธิดา",
-
-		WiLastName:     "สุทธิธรรม",
-		WiOccupation:   "ธุรกิจส่วนตัว",
-		WiPhone:        "0837520194",
-		EducationName:  "แพทยศาสตร์บัณฑิต",
-		EducationMajor: "แพทยศาสตร์",
-
-		University:     "มหาวิทยาลัยสงขลานครินทร์",
-		StartEducation: t5,
-		EndEducation:   t6,
-
-		DocPrefix: DocPrefix_12,
-		Gender:    Gender_one,
-		Blood:     Blood_O,
-		Marital:   Marital_2,
-
-		Religion:  Religion_1,
-		Address:   AddressThailand_1917,
-		Education: Education_two,
-
-		Nationality: Nationality_89,
-		Country:     Nationality_11,
-
-		DocFaPrefix: DocPrefix_2,
-		DocMoPrefix: DocPrefix_3,
-		DocWiPrefix: DocPrefix_4,
-
-		DocPassword: string(passwordTwo),
-	}
-	db.Model(&Doctor{}).Create(&doc2)
-
 	//Gg
 	// Disease Data
 
@@ -53183,43 +53051,6 @@ func SetupDatabase() {
 	}
 	db.Model(&Med_Status{}).Create(&status_B)
 
-	treatment_1 := Treatment{
-		TREATMENT_ID: "201_TREATMENT_ID",
-		TREATMENT:    "TREATMENT",
-		DATE:         t1,
-		APPOINTMENT:  21,
-		CONCLUSION:   "CONCLUSION",
-		GUIDANCE:     "GUIDANCE",
-		Status:       S2,
-	}
-	db.Model(&Treatment{}).Create(&treatment_1)
-
-	treatment_2 := Treatment{
-		TREATMENT_ID: "treatment_2",
-		TREATMENT:    "TREATMENT",
-		DATE:         t1,
-		APPOINTMENT:  20,
-		CONCLUSION:   "CONCLUSION",
-		GUIDANCE:     "GUIDANCE",
-		Status:       S2,
-	}
-	db.Model(&Treatment{}).Create(&treatment_2)
-
-	med_employee1 := Med_Employee{
-		Name:           "นันทวัฒน์ จันทาทิพย์",
-		Age:            21,
-		Phone:          "0645068380",
-		Email:          "med@gmail.com",
-		Password:       "123456",
-		University:     "SUT",
-		EducationName:  "เทคนิคการแพทย์",
-		EducationMajor: "รังสีวิทยา",
-		Prefix: 		Prefix_one,
-		Education: 		Education_one,
-		Gender: 		Gender_one,		
-	}
-	db.Model(&Med_Employee{}).Create(&med_employee1)
-
 	lab_1 := Lab_Name{
 		Discription: "Biochemistry",
 	}
@@ -53235,25 +53066,5 @@ func SetupDatabase() {
 	}
 	db.Model(&Lab_Name{}).Create(&lab_3)
 
-	lab1 := Lab{
-		Lab_test: "negative",
-		Value:    "2",
 
-		Lab_Name:     lab_1,
-		Treatment:    treatment_1,
-		Med_Employee: med_employee1,
-		Doctor:       doc1,
-	}
-	db.Model(&Lab{}).Create(&lab1)
-
-	lab2 := Lab{
-		Lab_test: "positive",
-		Value:    "5",
-
-		Lab_Name:     lab_2,
-		Treatment:    treatment_1,
-		Med_Employee: med_employee1,
-		Doctor:       doc2,
-	}
-	db.Model(&Lab{}).Create(&lab2)
 }

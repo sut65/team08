@@ -14,6 +14,4 @@
 
 <Br/>
 
-[Go to Facebook Fanpage](https://www.facebook.com/profile.php?id=100088235080744)
-
 
